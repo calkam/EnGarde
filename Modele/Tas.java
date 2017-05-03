@@ -1,6 +1,6 @@
 package Modele;
 
-public class Tas {
+public abstract class Tas {
 	protected int nombre;
 	
 	public int getNb(){
