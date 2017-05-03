@@ -8,7 +8,7 @@ public class AttaqueDirecte extends Action {
 	}
 
 	@Override
-	public int casePossible(Carte maCarte, Figurine maFigurine, Figurine figurineAdverse) {
-		return 0;
+	public Case casePossible(Carte maCarte, Figurine maFigurine, Figurine figurineAdverse) {
+		return null;
 	}
 }
