@@ -1,5 +1,7 @@
 package Modele;
 
+import java.util.ArrayList;
+
 public class PlateauScore extends Rectangle {
 
 	private Jeton jeton1;
