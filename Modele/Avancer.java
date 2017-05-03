@@ -2,8 +2,8 @@ package Modele;
 
 public class Avancer extends Action {
 	
-	@Override
-	public int casePossible(Carte maCarte, Figurine maFigurine, Figurine figurineAdverse) {
+	
+	public int casePossible(Carte maCarte, Piste piste) {
 		
 		return 0;
 	}

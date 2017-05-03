@@ -15,5 +15,5 @@ public abstract class Action {
 	 * @param figurineAdverse
 	 * @return
 	 */
-	public abstract int casePossible(Carte maCarte, Figurine maFigurine, Figurine figurineAdverse);
+	public abstract int casePossible(Carte maCarte, Piste piste);
 }
