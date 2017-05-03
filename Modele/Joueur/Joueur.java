@@ -2,9 +2,11 @@ package Modele.Joueur;
 
 public abstract class Joueur {
 	
-	String nom;
+	String nom ;
+	Main main ;
+	Figurine figurine ;
 	
-	Joueur(String nom) {
+	protected Joueur(String nom) {
 		
 		this.nom = nom ;
 		
