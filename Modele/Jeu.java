@@ -9,8 +9,7 @@ public class Jeu {
 	private Plateau plateau;
 
 	public void init() {
-		// TODO - implement Jeu.init
-		throw new UnsupportedOperationException();
-	}
-
+		
+	}	
+	
 }
