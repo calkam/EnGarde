@@ -2,6 +2,10 @@ package Modele;
 
 import java.util.ArrayList;
 
+/**
+ * @author gourdeaf
+ *
+ */
 public class Observable {
 	ArrayList<Observateur> observateurs;
 	

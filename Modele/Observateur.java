@@ -1,6 +1,10 @@
 package Modele;
 
+/**
+ * @author gourdeaf
+ *
+ */
 public interface Observateur {
 
-	void actualiser(Observable o, Object arg);
+	public void actualiser(Observable o, Object arg);
 }
