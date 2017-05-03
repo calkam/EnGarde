@@ -4,8 +4,7 @@ package Modele;
  * @author gourdeaf
  *
  */
-public abstract class Action {
-	
+public abstract class Action {	
 	
 	/** 
 	 * Test à partir d'une carte de la main du joueur, de la position de sa figurine
@@ -25,5 +24,5 @@ public abstract class Action {
 	 * @param figurineAdverse
 	 * @return
 	 */
-	public abstract int casePossible(Carte maCarte, Figurine maFigurine, Figurine figurineAdverse);
+	public abstract Case casePossible(Carte maCarte, Figurine maFigurine, Figurine figurineAdverse);
 }
