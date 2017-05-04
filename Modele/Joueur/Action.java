@@ -24,6 +24,7 @@ public interface Action {
 	public int peut_reculer (int distance)  ;
 	public int peut_executer_attaque_directe (int portee)  ;
 	public int peut_executer_attaque_indirecte (int deplacement, int portee)  ;
+	public void peut_executer_action (int val_carte) ;
 	
 	
 	
