@@ -17,7 +17,6 @@ public class Plateau {
 
 	public void ajouteObservateur(ObjetMouvant objetMouvant) {
 		// TODO Auto-generated method stub
-		
 	}
 
 }
