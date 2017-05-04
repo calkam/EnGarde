@@ -11,6 +11,12 @@ public class JoueurGauche extends Joueur implements ActionOffensive {
 		super(nom, main, piste) ;
 		
 	}
+	
+	private boolean estlibre (int position) {
+		
+		return position != piste.getFigurineDroite().getPosition() ;
+		
+	}
 
 	private boolean avancer_dans_piste (int distance) {
 		

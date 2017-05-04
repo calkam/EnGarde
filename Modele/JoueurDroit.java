@@ -7,6 +7,12 @@ public class JoueurDroit extends Joueur implements ActionOffensive {
 	public JoueurDroit(String nom, Main main, Piste piste) {
 		super(nom, main, piste) ;
 	}
+	
+	private boolean estlibre (int position) {
+		
+		return position != piste.getFigurineDroite().getPosition() ;
+		
+	}
 
 	private boolean avancer_dans_piste (int distance) {
 		

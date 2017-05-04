@@ -1,7 +1,5 @@
 package Modele;
 
-import java.util.Arrays;
-
 public abstract class Composant {
 
     public Composant() {

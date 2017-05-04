@@ -15,7 +15,6 @@ public class Jeu {
 	private Manche manche;
 
 	public void init() throws Exception {
-		
 		pioche = new Pioche();
 		defausse = new Defausse();
 		plateauScore = new PlateauScore() ;
@@ -24,9 +23,17 @@ public class Jeu {
 		joueur2 = new FabriqueJoueur (2, "Humain", "Joueur2", new Main(), piste).nouveauJoueur() ;
 		completerMain(joueur1);
 		completerMain(joueur2);
-		
+		manche = new Manche(0);
 	}
 
+	public void nouvelleManche(){
+		manche = new Manche(manche.getNumero()+1);
+	}
+	
+	public void jouerManche(){
+		
+	}
+	
 	public void completerMain(Joueur j){
 		int nbCarteMain = j.getMain().getNombreCarte();
 		
@@ -88,7 +95,4 @@ public class Jeu {
 		String str = "Jeu";
 		return str;
 	}
-	
-	
-	
 }
