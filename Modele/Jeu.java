@@ -7,6 +7,8 @@ import Modele.Tas.*;
 
 public class Jeu {
 	
+	private final static int VICTOIRE = 5; 
+	
 	private Joueur joueur1;
 	private Joueur joueur2;
 	private Piste piste;
@@ -18,6 +20,31 @@ public class Jeu {
 		piste = new Piste(new FigurineGauche(), new FigurineDroite()) ;
 		joueur1 = new FabriqueJoueur (1, "Humain", "Joueur1", new Main(), piste).nouveauJoueur() ;
 		joueur2 = new FabriqueJoueur (2, "Humain", "Joueur2", new Main(), piste).nouveauJoueur() ;
+	}
+	
+	/**
+	 * FIN DE PARTIE
+	 */
+	
+	public boolean gainPartie(){
+		boolean gagne = false;
+		
+		if(joueur1.getScore() == VICTOIRE){
+			gagne = true;
+			affichageVictoire(joueur1.getNom(), joueur2.getNom());
+		}
+		if(joueur2.getScore() == VICTOIRE){			
+			gagne = true;
+			affichageVictoire(joueur2.getNom(), joueur1.getNom());
+		}
+		
+		return gagne;
+	}
+	
+	public void affichageVictoire(String nomJoueurVictorieux, String nomJoueurPerdant){
+		System.out.println(nomJoueurVictorieux + " a triomphé de son adversaire !");
+		System.out.println("Gloire à " + nomJoueurVictorieux);
+		System.out.println(nomJoueurPerdant + " est une victime");
 	}
 
 	/**
