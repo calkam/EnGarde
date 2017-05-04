@@ -2,31 +2,37 @@ package Modele;
 
 import java.util.ArrayList;
 
-import Modele.Joueur.Joueur;
+import Modele.Joueur.FigurineGauche;
 
 public class Piste extends Rectangle {
 
-	private int figurine1;
-	private int figurine2;
+	private FigurineGauche figurineGauche;
+	private FigurineDroite figurineDroite;
 	private ArrayList<Case> cases;
 	
-	public Piste(int figurine1, int figurine2) {
+	public Piste(FigurineGauche figurineGauche, FigurineDroite figurineDroite) {
 		super(0, 0);
-		this.figurine1 = figurine1;
-		this.figurine2 = figurine2;
+		this.figurineGauche = figurineGauche ;
+		this.figurineDroite = figurineDroite ;
 		this.cases = new ArrayList<Case>(23);
 	}
 	
-	public int getFigurineJoueur(Joueur j) {
-		return figurine1;
+	public FigurineGauche getFigurineGauche() {
+		return figurineGauche;
 	}
-	
-	public int getFigurine2() {
-		return figurine2;
+
+	public void setFigurineGauche(FigurineGauche figurineGauche) {
+		this.figurineGauche = figurineGauche ;
 	}
-	public void setFigurine2(int figurine2) {
-		this.figurine2 = figurine2;
+
+	public FigurineDroite getFigurineDroite() {
+		return figurineDroite;
 	}
+
+	public void setFigurineDroite(FigurineDroite figurineDroite) {
+		this.figurineDroite = figurineDroite ;
+	}
+
 	public ArrayList<Case> getCases() {
 		return cases;
 	}
@@ -34,7 +40,14 @@ public class Piste extends Rectangle {
 		this.cases = cases;
 	}
 	
-	public static void accepte(Visiteur visiteur) {
+	public boolean estdansPiste (int position) {
+		
+		return position >= 0 && position < cases.size() ;
+		
+	}
+	
+	public boolean accepte(Visiteur visiteur) {
+		return false;
 		// TODO Auto-generated method stub
 	}
 

@@ -4,6 +4,19 @@ import java.util.ArrayList;
 
 public class PlateauScore extends Rectangle {
 
+	
+
+	public PlateauScore(float x, float y, Jeton jeton1, Jeton jeton2, ArrayList<Case> casesJ1, ArrayList<Case> casesJ2,
+		int scoreJ1, int scoreJ2) {
+		super(x, y);
+		this.jeton1 = jeton1;
+		this.jeton2 = jeton2;
+		this.casesJ1 = casesJ1;
+		this.casesJ2 = casesJ2;
+		this.scoreJ1 = scoreJ1;
+		this.scoreJ2 = scoreJ2;
+	}
+
 	private Jeton jeton1;
 	private Jeton jeton2;
 	private ArrayList<Case> casesJ1;

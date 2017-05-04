@@ -2,17 +2,11 @@ package Modele.Joueur;
 
 import java.util.ArrayList;
 
-import Modele.AttaqueDirecte;
-import Modele.AttaqueIndirecte;
-import Modele.Parade;
 import Modele.Piste;
-import Modele.Retraite;
 import Modele.Visiteur;
-import Modele.Avancer;
 import Modele.Carte;
 import Modele.Case;
-import Modele.Reculer;
-import Modele.Action;
+import Modele.ActionOffensive;
 import Modele.Figurine;
 import Modele.Main;
 
@@ -22,9 +16,23 @@ import Modele.Main;
  */
 public abstract class Joueur {
 	
-	String nom ;
-	Main main ;
-	Figurine figurine ;
+	private String nom ;
+	private Main main ;
+	protected Piste piste ;
+	
+	protected boolean deplacer_dans_piste (int distance) {
+		
+		int position_arrivee = piste.getFigurineGauche().getPosition() ;
+		
+		return piste.estdansPiste(position_arrivee) ;
+		
+	}
+
+	protected boolean estlibre (int position) {
+		
+		return position != piste.getFigurineDroite().getPosition() ;
+		
+	}
 	/*ArrayList<Action> lesActions;
 	
 	protected Joueur(String nom) {

@@ -8,18 +8,22 @@ public enum Carte {
 	QUATRE(4),
 	CINQ(5);
 	
-	int contenu;
+	private int contenu;
 	
-	Carte(int i){
-		this.contenu = i;
+	Carte(int contenu){
+		this.contenu = contenu ;
 	}
 	
+	public int getContenu() {
+		return contenu;
+	}
+
 	public boolean equals(Carte c) {
-		return (this.contenu == c.contenu);
+		return (this.getContenu() == c.getContenu());
 	}
 
 	public String toString(){
-		switch (this.contenu) {
+		switch (this.getContenu()) {
 	        case 1: return "un";
 	        case 2: return "deux";
 	        case 3: return "trois";
