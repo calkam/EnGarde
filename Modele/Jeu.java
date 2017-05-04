@@ -12,6 +12,7 @@ public class Jeu {
 	private PlateauScore plateauScore;
 	private Pioche pioche;
 	private Defausse defausse;
+	private Manche manche;
 
 	public void init() {
 		joueur1 = new Humain("Joueur1", new Figurine());
