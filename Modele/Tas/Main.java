@@ -12,6 +12,7 @@ public class Main extends Tas {
 	
 	public void ajouter(Carte c){
 		main.add(c);
+		nombreCarte[c.getContenu()]++ ;
 	}
 	
 	public void supprimer(Carte c){
@@ -21,6 +22,7 @@ public class Main extends Tas {
 		}
 		if(i < main.size()){
 			main.remove(i);
+			nombreCarte[c.getContenu()]-- ;
 		}else{
 			System.out.println("Erreur rien a supprimer");
 		}

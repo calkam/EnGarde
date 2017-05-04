@@ -10,7 +10,7 @@ import Modele.Tas.Main;
 public abstract class Joueur {
 	
 	protected String nom ;
-	private Main main ;
+	protected Main main ;
 	protected Piste piste ;
 
 	public Joueur(String nom, Main main, Piste piste) {
@@ -19,13 +19,9 @@ public abstract class Joueur {
 		this.main = main;
 		this.piste = piste;
 	}
-
-	protected boolean deplacer_dans_piste (int distance) {
-		
-		int position_arrivee = piste.getFigurineGauche().getPosition() + distance ;
-		
-		return piste.estdansPiste(position_arrivee) ;
-		
+	
+	public boolean peut_executer_parade(int attaque, int nombre) {
+		return main.getNombreCarteGroupe(attaque) >= nombre ;
 	}
 	
 	public void ajouterCarteDansMain(Carte c){

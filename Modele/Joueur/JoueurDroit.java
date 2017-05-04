@@ -1,13 +1,20 @@
 package Modele.Joueur;
 
 import Modele.Plateau.Piste;
-import Modele.Tas.Carte;
 import Modele.Tas.Main;
 
-public class JoueurDroit extends Joueur implements ActionOffensive {
+public class JoueurDroit extends Joueur implements Action {
 
 	public JoueurDroit(String nom, Main main, Piste piste) {
 		super(nom, main, piste) ;
+	}
+	
+	private boolean deplacer_dans_piste (int distance) {
+		
+		int position_arrivee = piste.getFigurineGauche().getPosition() - distance ;
+		
+		return piste.estdansPiste(position_arrivee) ;
+		
 	}
 	
 	private boolean estlibre (int position) {
@@ -74,29 +81,23 @@ public class JoueurDroit extends Joueur implements ActionOffensive {
 	}
 	
 	@Override
-	public void avancer(Carte distance) {
+	public void avancer(int distance) {
 		
-		piste.getFigurineGauche().setPosition(piste.getFigurineGauche().getPosition() - distance.getContenu()) ;
-		
-	}
-
-	@Override
-	public void reculer(Carte distance) {
-		
-		piste.getFigurineGauche().setPosition(piste.getFigurineGauche().getPosition() + distance.getContenu()) ;
+		piste.getFigurineGauche().setPosition(piste.getFigurineGauche().getPosition() - distance) ;
 		
 	}
 
 	@Override
-	public void executer_attaque_directe(Carte portee, int nombre) {
-		// TODO Auto-generated method stub
+	public void reculer(int distance) {
+		
+		piste.getFigurineGauche().setPosition(piste.getFigurineGauche().getPosition() + distance) ;
 		
 	}
 
 	@Override
-	public void executer_attaque_indirecte(Carte deplacement, Carte portee, int nombre) {
+	public void executer_attaque_indirecte(int deplacement, int portee, int nombre) {
 		
-		piste.getFigurineGauche().setPosition(piste.getFigurineGauche().getPosition() - deplacement.getContenu()) ;
+		piste.getFigurineGauche().setPosition(piste.getFigurineGauche().getPosition() - deplacement) ;
 		
 	}
 
