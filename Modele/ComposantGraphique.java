@@ -9,6 +9,10 @@ abstract class ComposantGraphique extends Composant {
 
     public abstract float getHauteur();
 
+    public ComposantGraphique(){
+    	
+    }
+    
     ComposantGraphique(float x, float y) {
         coord = new Point(x, y);
     }

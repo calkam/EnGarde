@@ -1,7 +1,6 @@
 package Modele.Joueur;
-
+import Modele.Piste;
 import Modele.Carte;
-import Modele.Figurine;
 import Modele.Main;
 
 /**
@@ -10,22 +9,29 @@ import Modele.Main;
  */
 public abstract class Joueur {
 	
-	String nom ;
-	Main main ;
-	Figurine figurine ;
-	
-	public Joueur(String m_nom) {
-		this(m_nom, new Figurine());
+	protected String nom ;
+	private Main main ;
+	protected Piste piste ;
+
+	public Joueur(String nom, Main main, Piste piste) {
+		
+		this.nom = nom ;
+		this.main = main;
+		this.piste = piste;
 	}
-	
-	public Joueur(String m_nom, Figurine m_figurine) {
-		this(m_nom, m_figurine, new Main());
+
+	protected boolean deplacer_dans_piste (int distance) {
+		
+		int position_arrivee = piste.getFigurineGauche().getPosition() ;
+		
+		return piste.estdansPiste(position_arrivee) ;
+		
 	}
-	
-	public Joueur(String m_nom, Figurine m_figurine, Main m_main) {
-		this.nom = m_nom;
-		this.figurine = m_figurine;
-		this.main = m_main;
+
+	protected boolean estlibre (int position) {
+		
+		return position != piste.getFigurineDroite().getPosition() ;
+		
 	}
 	
 	public void ajouterCarteDansMain(Carte c){
@@ -49,16 +55,10 @@ public abstract class Joueur {
 	public void setMain(Main main) {
 		this.main = main;
 	}
-	public Figurine getFigurine() {
-		return figurine;
-	}
-	public void setFigurine(Figurine figurine) {
-		this.figurine = figurine;
-	}
 
 	@Override
 	public String toString() {
-		return "Joueur [nom=" + nom + ", main=" + main + ", figurine=" + figurine + "]";
+		return "Joueur [nom=" + nom + ", main=" + main + "]";
 	}
 	
 	/*ArrayList<Action> lesActions;

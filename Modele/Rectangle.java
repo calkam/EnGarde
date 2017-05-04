@@ -5,10 +5,17 @@ public class Rectangle extends ComposantGraphique {
 	private float largeur;
 	private float hauteur;
 	
-	Rectangle(float x, float y, float l, float h) {
+	public Rectangle(){
+		
+	}
+	
+	public Rectangle(float x, float y) {
+		super(x, y);
+	}
+	
+	public Rectangle(float x, float y, float l, float h) {
 		super(x, y);
 		initialiser(l, h);
-		// TODO Auto-generated constructor stub
 	}
 	
 	final void initialiser(float l, float h) {

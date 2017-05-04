@@ -14,14 +14,17 @@ public class Jeu {
 	private Defausse defausse;
 	private Manche manche;
 
-	public void init() {
-		joueur1 = new Humain("Joueur1", new Figurine());
-		joueur2 = new Humain("Joueur2", new Figurine());
-		piste = new Piste(joueur1.getFigurine(), joueur2.getFigurine());
+	public void init() throws Exception {
+		
 		pioche = new Pioche();
 		defausse = new Defausse();
+		plateauScore = new PlateauScore() ;
+		piste = new Piste(new FigurineGauche(), new FigurineDroite()) ;
+		joueur1 = new FabriqueJoueur (1, "Humain", "Joueur1", new Main(), piste).nouveauJoueur() ;
+		joueur2 = new FabriqueJoueur (2, "Humain", "Joueur2", new Main(), piste).nouveauJoueur() ;
 		completerMain(joueur1);
 		completerMain(joueur2);
+		
 	}
 
 	public void completerMain(Joueur j){
@@ -31,7 +34,7 @@ public class Jeu {
 			j.ajouterCarteDansMain(pioche.piocher());
 		}
 	}
-	
+
 	public Joueur getJoueur1() {
 		return joueur1;
 	}

@@ -1,15 +1,12 @@
 package Modele.Joueur;
 
-import Modele.Figurine;
+import Modele.Main;
+import Modele.Piste;
 
-public class Humain extends Joueur {
-	
-	public Humain(String m_nom) {
-		super(m_nom);
-	}
-	
-	public Humain(String m_nom, Figurine m_figurine) {
-		super(m_nom, m_figurine);
+public abstract class Humain extends Joueur {
+
+	public Humain(String nom, Main main, Piste piste) {
+		super(nom, main, piste) ;
 	}
 
 }

@@ -2,19 +2,43 @@ package Modele;
 
 import java.util.ArrayList;
 
-import Modele.Joueur.Joueur;
+import Modele.Joueur.FigurineGauche;
 
 public class Piste extends Rectangle {
 
-	private Figurine figurine1;
-	private Figurine figurine2;
+	private FigurineGauche figurineGauche;
+	private FigurineDroite figurineDroite;
 	private ArrayList<Case> cases;
 	
-	public Piste(Figurine m_figurine1, Figurine m_figurine2) {
+	public Piste(FigurineGauche figurineGauche, FigurineDroite figurineDroite) {
 		super(0, 0, 800, 600);
-		this.figurine1 = m_figurine1;
-		this.figurine2 = m_figurine2;
+		this.figurineGauche = figurineGauche ;
+		this.figurineDroite = figurineDroite ;
 		this.initTableauCases();
+	}
+	
+	public Piste() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public FigurineGauche getFigurineGauche() {
+		return figurineGauche;
+	}
+
+	public void setFigurineGauche(FigurineGauche figurineGauche) {
+		this.figurineGauche = figurineGauche ;
+	}
+
+	public FigurineDroite getFigurineDroite() {
+		return figurineDroite;
+	}
+
+	public void setFigurineDroite(FigurineDroite figurineDroite) {
+		this.figurineDroite = figurineDroite ;
+	}
+	
+	public boolean estdansPiste(int position) {
+		return position >=0 && position < cases.size() ;
 	}
 	
 	public void initTableauCases(){
@@ -25,17 +49,6 @@ public class Piste extends Rectangle {
 		}
 	}
 	
-	public Figurine getFigurine1(Joueur j) {
-		return figurine1;
-	}
-	
-	public Figurine getFigurine2() {
-		return figurine2;
-	}
-	public void setFigurine2(Figurine figurine2) {
-		this.figurine2 = figurine2;
-	}
-	
 	public ArrayList<Case> getCases() {
 		return cases;
 	}
@@ -44,9 +57,9 @@ public class Piste extends Rectangle {
 		this.cases = cases;
 	}
 	
-	public boolean accept(Visiteur v) {
-		// TODO Auto-generated method stub
-		return v.visite(this);
+	public boolean accepte(Visiteur visiteur) {
+		return false;
+		
 	}
 
 	public void ajouteObservateur(ObjetMouvant objetMouvant) {
@@ -58,8 +71,8 @@ public class Piste extends Rectangle {
 	public String toString() {
 		String str = "Piste \n";
 		str += "[\n";
-		str += "  figurine1=" + figurine1 + ",\n";
-		str += "  figurine2=" + figurine2 + ",\n";
+		str += "  figurineGauche=" + figurineGauche + ",\n";
+		str += "  figurineDroite=" + figurineDroite + ",\n";
 		str += "  ";
 		for(Case c : cases){
 			str += "{" + c + "}, ";
