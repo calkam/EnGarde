@@ -1,8 +1,11 @@
-package Modele;
+package Modele.Plateau;
 
 import java.util.ArrayList;
 
-import Modele.Joueur.FigurineGauche;
+import Modele.Composant.ObjetMouvant;
+import Modele.Composant.Rectangle;
+import Modele.Composant.Visiteur;
+import Modele.Plateau.Figurine.*;
 
 public class Piste extends Rectangle {
 

@@ -1,6 +1,9 @@
 package Modele;
 
 import Modele.Joueur.*;
+import Modele.Plateau.*;
+import Modele.Plateau.Figurine.*;
+import Modele.Tas.*;
 
 public class Jeu {
 

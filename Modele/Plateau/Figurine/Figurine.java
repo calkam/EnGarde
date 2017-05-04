@@ -1,4 +1,5 @@
-package Modele;
+package Modele.Plateau.Figurine;
+import Modele.Composant.Cercle ;
 
 public abstract class Figurine extends Cercle {
 	protected int position ;

@@ -1,6 +1,8 @@
-package Modele;
+package Modele.Plateau;
 
 import java.util.ArrayList;
+
+import Modele.Composant.Rectangle;
 
 public class PlateauScore extends Rectangle {
 

@@ -1,4 +1,4 @@
-package Modele;
+package Modele.Composant;
 
 public class Rectangle extends ComposantGraphique {
 

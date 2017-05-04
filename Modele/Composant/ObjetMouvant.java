@@ -1,6 +1,8 @@
-package Modele;
+package Modele.Composant;
 
-abstract class ObjetMouvant extends ComposantGraphique implements Observateur {
+import Modele.Plateau.Piste;
+
+public abstract class ObjetMouvant extends ComposantGraphique implements Observateur {
 
     ComposantGraphique delegue;
     Piste piste;

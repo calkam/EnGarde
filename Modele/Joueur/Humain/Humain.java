@@ -1,7 +1,8 @@
-package Modele.Joueur;
+package Modele.Joueur.Humain;
 
-import Modele.Main;
-import Modele.Piste;
+import Modele.Tas.Main;
+import Modele.Joueur.Joueur;
+import Modele.Plateau.Piste;
 
 public abstract class Humain extends Joueur {
 

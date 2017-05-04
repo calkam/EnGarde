@@ -1,11 +1,19 @@
-package Modele;
+package Modele.Joueur;
 
-import Modele.Joueur.Joueur;
+import Modele.Plateau.Piste;
+import Modele.Tas.Carte;
+import Modele.Tas.Main;
 
 public class JoueurDroit extends Joueur implements ActionOffensive {
 
 	public JoueurDroit(String nom, Main main, Piste piste) {
 		super(nom, main, piste) ;
+	}
+	
+	private boolean estlibre (int position) {
+		
+		return position != piste.getFigurineGauche().getPosition() ;
+		
 	}
 
 	private boolean avancer_dans_piste (int distance) {

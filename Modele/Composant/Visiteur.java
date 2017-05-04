@@ -1,4 +1,6 @@
-package Modele;
+package Modele.Composant;
+
+import Modele.Plateau.Case;
 
 /**
  * @author gourdeaf

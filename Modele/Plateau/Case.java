@@ -1,4 +1,9 @@
-package Modele;
+package Modele.Plateau;
+
+import Modele.Composant.ComposantGraphique;
+import Modele.Composant.Rectangle;
+import Modele.Composant.Visitable;
+import Modele.Composant.Visiteur;
 
 public class Case extends Rectangle implements Visitable {
 
@@ -23,8 +28,7 @@ public class Case extends Rectangle implements Visitable {
 		this.couleur = couleur;
 	}
 
-	@Override
-    ComposantGraphique copieVers(float x, float y) {
+	ComposantGraphique copieVers(float x, float y) {
         return new Case(couleur, x, y);
     }
 

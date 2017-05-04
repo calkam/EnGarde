@@ -1,4 +1,6 @@
-package Modele;
+package Modele.Joueur;
+
+import Modele.Tas.Carte;
 
 /**
  * @author gourdeaf

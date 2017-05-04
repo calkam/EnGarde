@@ -1,14 +1,20 @@
 package Modele.Joueur;
-import Modele.ActionOffensive ;
-import Modele.Carte;
-import Modele.Main;
-import Modele.Piste;
+import Modele.Joueur.ActionOffensive ;
+import Modele.Tas.Carte;
+import Modele.Tas.Main;
+import Modele.Plateau.Piste;
 
 public class JoueurGauche extends Joueur implements ActionOffensive {
 	
 	
 	public JoueurGauche(String nom, Main main, Piste piste) {
 		super(nom, main, piste) ;
+		
+	}
+	
+	private boolean estlibre (int position) {
+		
+		return position != piste.getFigurineDroite().getPosition() ;
 		
 	}
 

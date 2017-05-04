@@ -1,4 +1,4 @@
-package Modele;
+package Modele.Tas;
 
 import java.util.Stack;
 
@@ -6,7 +6,7 @@ public class Defausse extends Tas {
 	private Stack<Carte> d;
 	
 	public Defausse(){
-		super(0);
+		super();
 		d = new Stack<Carte>();
 	}
 	
@@ -17,12 +17,12 @@ public class Defausse extends Tas {
 	
 	public void ajouter(Carte c){
 		d.push(c);
+		nombreCarte[c.getContenu()]++ ;
 	}
 
 	@Override
 	public String toString() {
 		return "Defausse [d=" + d + "]";
 	}
-	
-	
+		
 }

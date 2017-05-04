@@ -1,6 +1,4 @@
-package Modele.Joueur;
-
-import Modele.Figurine;
+package Modele.Plateau.Figurine;
 
 public class FigurineGauche extends Figurine {
 	

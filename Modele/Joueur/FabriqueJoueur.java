@@ -1,10 +1,9 @@
 package Modele.Joueur;
 
-import Modele.Main;
-import Modele.Piste;
-import Modele.Joueur.IA.IADifficile;
-import Modele.Joueur.IA.IAFacile;
-import Modele.Joueur.IA.IAMoyen;
+import Modele.Tas.Main;
+import Modele.Plateau.Piste;
+import Modele.Joueur.Humain.*;
+import Modele.Joueur.IA.*;
 
 public class FabriqueJoueur {
 	

@@ -1,4 +1,4 @@
-package Modele;
+package Modele.Tas;
 
 import java.util.ArrayList;
 

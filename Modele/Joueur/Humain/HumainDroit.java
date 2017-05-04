@@ -1,8 +1,8 @@
-package Modele.Joueur;
+package Modele.Joueur.Humain;
 
-import Modele.JoueurDroit;
-import Modele.Main;
-import Modele.Piste;
+import Modele.Joueur.JoueurDroit;
+import Modele.Tas.Main;
+import Modele.Plateau.Piste;
 
 public class HumainDroit extends JoueurDroit {
 

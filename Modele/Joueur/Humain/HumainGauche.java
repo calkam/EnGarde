@@ -1,6 +1,7 @@
-package Modele.Joueur;
-import Modele.Main;
-import Modele.Piste;
+package Modele.Joueur.Humain;
+import Modele.Tas.Main;
+import Modele.Joueur.JoueurGauche;
+import Modele.Plateau.Piste;
 
 public class HumainGauche extends JoueurGauche {
 

@@ -1,4 +1,4 @@
-package Modele;
+package Modele.Plateau.Figurine;
 
 public class FigurineDroite extends Figurine {
 	

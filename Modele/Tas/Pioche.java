@@ -1,4 +1,4 @@
-package Modele;
+package Modele.Tas;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -36,6 +36,9 @@ public class Pioche extends Tas {
 			}
 			
 			p.push(jeu.get(index).get(0));
+			nombreCarte[index+1]++ ;
+			
+			
 			jeu.get(index).remove(0);
 			
 			if(jeu.get(index).isEmpty()){
@@ -46,8 +49,10 @@ public class Pioche extends Tas {
 	}
 	
 	public Carte piocher(){
-		nombreCarte--;
-		return p.pop();
+		nombreCarte[0]--;
+		Carte c = p.pop();
+		nombreCarte[c.getContenu()]--;
+		return c ;
 	}
 		
 	public String toString(){

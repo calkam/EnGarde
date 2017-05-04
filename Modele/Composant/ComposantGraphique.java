@@ -1,6 +1,6 @@
-package Modele;
+package Modele.Composant;
 
-abstract class ComposantGraphique extends Composant {
+public abstract class ComposantGraphique extends Composant {
     private Point coord;
 
     abstract ComposantGraphique copieVers(float x, float y);

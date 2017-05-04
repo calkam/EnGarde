@@ -1,6 +1,6 @@
-package Modele;
+package Modele.Composant;
 
-class Cercle extends ComposantGraphique {
+public class Cercle extends ComposantGraphique {
 
     float rayon;
     
@@ -9,7 +9,7 @@ class Cercle extends ComposantGraphique {
 		rayon = 0;
 	}
 
-	Cercle(float x, float y, float rayon) {
+	protected Cercle(float x, float y, float rayon) {
         super(x, y);
         this.rayon = rayon;
     }

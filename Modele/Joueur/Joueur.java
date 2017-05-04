@@ -1,7 +1,7 @@
 package Modele.Joueur;
-import Modele.Piste;
-import Modele.Carte;
-import Modele.Main;
+import Modele.Plateau.Piste;
+import Modele.Tas.Carte;
+import Modele.Tas.Main;
 
 /**
  * @author gourdeaf
@@ -22,15 +22,9 @@ public abstract class Joueur {
 
 	protected boolean deplacer_dans_piste (int distance) {
 		
-		int position_arrivee = piste.getFigurineGauche().getPosition() ;
+		int position_arrivee = piste.getFigurineGauche().getPosition() + distance ;
 		
 		return piste.estdansPiste(position_arrivee) ;
-		
-	}
-
-	protected boolean estlibre (int position) {
-		
-		return position != piste.getFigurineDroite().getPosition() ;
 		
 	}
 	
