@@ -25,7 +25,7 @@ public abstract class Joueur {
 	String nom ;
 	Main main ;
 	Figurine figurine ;
-	ArrayList<Action> lesActions;
+	/*ArrayList<Action> lesActions;
 	
 	protected Joueur(String nom) {
 		
@@ -37,7 +37,7 @@ public abstract class Joueur {
 		lesActions.add(new Retraite());
 		lesActions.add(new Avancer());
 		lesActions.add(new Reculer());
-	}
+	}*/
 	
 	/**
 	 * Met en surbrillance les cases correpondantes à des actions possibles
@@ -46,7 +46,7 @@ public abstract class Joueur {
 	 * 
 	 * @param maCarte
 	 */
-	public void selectionCarte(Carte maCarte){
+	/*public void selectionCarte(Carte maCarte){
 		Object figurineAdverse;
 		
 		for(Action a : lesActions){
@@ -62,5 +62,5 @@ public abstract class Joueur {
 				});
 			}
 		}
-	}
+	}*/
 }

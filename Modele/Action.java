@@ -4,7 +4,7 @@ package Modele;
  * @author gourdeaf
  *
  */
-public abstract class Action {	
+interface Action {	
 	
 	/** 
 	 * Si l'action est possible, retourne l'indice de la case où il est possible de se rendre
@@ -14,9 +14,14 @@ public abstract class Action {
 	 * @param figurineAdverse
 	 * @return
 	 */
-
-	public abstract Case casePossible(Carte maCarte, Figurine maFigurine, Figurine figurineAdverse);
-
+	
+	public void avancer (int déplacement, int pos_fig_adv)  ;
+	public void reculer (int déplacement, int pos_fig_adv)  ;
+	public void attaque_directe (int déplacement, int pos_fig_adv)  ;
+	public void attaque_indirecte (int déplacement, int pos_fig_adv)  ;
+	public void parade (int déplacement, int pos_fig_adv)  ;
+	public void retraite (int déplacement, int pos_fig_adv)  ;
+	
 	public abstract int casePossible(Carte maCarte, Piste piste);
 	
 }
