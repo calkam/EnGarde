@@ -1,4 +1,58 @@
 package Modele;
 
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.Stack;
+
 public class Pioche extends Tas {
+	private Stack<Carte> p;
+	
+	public Pioche(){
+		p = new Stack<Carte>();
+		this.nombre = 25;
+	}
+	
+	public void melanger(){
+		ArrayList<ArrayList<Carte> > jeu = new ArrayList<> (5);
+		ArrayList<Carte> tas;
+		
+		int index = 0;
+		Random r = new Random();
+			
+		for(Carte c :Carte.values()){
+			tas = new ArrayList<>();
+			for(int j = 1 ; j <= 5 ; j++){
+				tas.add(c);
+			}
+			jeu.add(tas);
+		}
+		
+		do{
+			if(jeu.size()==1){
+				index = 0;
+			}else{
+				index = r.nextInt(jeu.size());
+			}
+			
+			p.push(jeu.get(index).get(0));
+			jeu.get(index).remove(0);
+			
+			if(jeu.get(index).isEmpty()){
+				jeu.remove(index);
+			}			
+		}while(!jeu.isEmpty());
+		
+	}
+	
+	public Carte piocher(){
+		nombre --;
+		return p.pop();
+	}
+		
+	public String toString(){
+		String resultat = "Pile: "+p.size()+'\n' ;
+		resultat += p.toString();
+		return resultat;
+		
+	}
 }

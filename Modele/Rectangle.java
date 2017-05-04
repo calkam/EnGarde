@@ -4,24 +4,45 @@ public class Rectangle extends ComposantGraphique {
 
 	private Float largeur;
 	private Float hauteur;
+	
+	Rectangle(float x, float y) {
+		super(x, y);
+		// TODO Auto-generated constructor stub
+	}
+	
+	final void initialiser(float l, float h) {
+        largeur = l;
+        hauteur = h;
+    }
 
-	/**
-	 * 
-	 * @param l
-	 * @param h
-	 */
-	public void FixeDimension(Float l, Float h) {
-		// TODO - implement Rectangle.FixeDimension
-		throw new UnsupportedOperationException();
+	void fixeDimensions(float l, float h) {
+        initialiser(l, h);
+    }
+
+	public Boolean estCollision(Rectangle r) {
+		if (dansLaBoite(r)) {
+            return true;
+        } else {
+            return false;
+        }
+	}
+	
+	@Override
+	ComposantGraphique copieVers(float x, float y) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	/**
-	 * 
-	 * @param r
-	 */
-	public Boolean estCollision(Rectangle r) {
-		// TODO - implement Rectangle.estCollision
-		throw new UnsupportedOperationException();
+	@Override
+	public float getLargeur() {
+		// TODO Auto-generated method stub
+		return this.largeur;
+	}
+
+	@Override
+	public float getHauteur() {
+		// TODO Auto-generated method stub
+		return this.hauteur;
 	}
 
 }
