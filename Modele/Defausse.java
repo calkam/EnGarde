@@ -5,17 +5,24 @@ import java.util.Stack;
 public class Defausse extends Tas {
 	private Stack<Carte> d;
 	
-	Defausse(){
-		super();
-		d = new Stack();
-		this.nombre = 0;
+	public Defausse(){
+		super(0);
+		d = new Stack<Carte>();
 	}
-	Defausse(int nombre){
-		d = new Stack();
-		this.nombre = nombre;
+	
+	public Defausse(int nombre){
+		super(nombre);
+		d = new Stack<Carte>();
 	}
 	
 	public void ajouter(Carte c){
 		d.push(c);
 	}
+
+	@Override
+	public String toString() {
+		return "Defausse [d=" + d + "]";
+	}
+	
+	
 }

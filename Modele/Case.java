@@ -1,39 +1,42 @@
 package Modele;
 
-public class Case extends Rectangle {
+public class Case extends Rectangle implements Visitable {
 
-    int couleur;
-    Observable attaches;
-
-    public int lisCouleur() {
-        return couleur;
-    }
+    private int couleur;
+    final static float largeur = 30;
+    final static float hauteur = 30;
 
     private void initialise(int c) {
         couleur = c;
     }
 
-    Case(int c) {
-        this(c, 0, 0);
-    }
-
     Case(int c, float x, float y) {
-    	super(x, y);
+    	super(x, y, largeur, hauteur);
         initialise(c);
     }
 
-    @Override
+    public int getCouleur() {
+		return couleur;
+	}
+
+	public void setCouleur(int couleur) {
+		this.couleur = couleur;
+	}
+
+	@Override
     ComposantGraphique copieVers(float x, float y) {
         return new Case(couleur, x, y);
     }
 
     @Override
-    boolean accepte(Visiteur v) {
-        return v.visite(this);
+    public String toString() {
+        return "[" + posX() + ", " + posY() + "]," + " couleur " + couleur + "";
     }
 
-    @Override
-    public String toString() {
-        return "Brique en (" + posX() + ", " + posY() + ")," + ", couleur s" + couleur;
-    }
+	@Override
+	public boolean accept(Visiteur v) {
+		// TODO Auto-generated method stub
+		return v.visite(this);
+	}
+
 }

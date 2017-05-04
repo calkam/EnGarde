@@ -1,10 +1,17 @@
 package Modele.Joueur;
 import Modele.ActionOffensive ;
 import Modele.Carte;
+import Modele.Main;
+import Modele.Piste;
 
 public class JoueurGauche extends Joueur implements ActionOffensive {
 	
 	
+	public JoueurGauche(String nom, Main main, Piste piste) {
+		super(nom, main, piste) ;
+		
+	}
+
 	private boolean avancer_dans_piste (int distance) {
 		
 		int position_arrivee = piste.getFigurineGauche().getPosition() + distance ;
@@ -90,7 +97,6 @@ public class JoueurGauche extends Joueur implements ActionOffensive {
 		
 		piste.getFigurineGauche().setPosition(piste.getFigurineGauche().getPosition() + deplacement.getContenu()) ;
 		
-	}	
-	
+	}
 
 }

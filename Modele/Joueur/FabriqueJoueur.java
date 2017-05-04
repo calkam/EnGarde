@@ -1,25 +1,42 @@
 package Modele.Joueur;
 
+import Modele.Main;
+import Modele.Piste;
 import Modele.Joueur.IA.IADifficile;
 import Modele.Joueur.IA.IAFacile;
 import Modele.Joueur.IA.IAMoyen;
 
 public class FabriqueJoueur {
 	
+	int position ;
 	String type ;
 	String nom ;
+	Main main ;
+	Piste piste ;
 	
-	FabriqueJoueur(String type, String nom) {
+	public FabriqueJoueur(int position, String type, String nom, Main main, Piste piste) {
 		
+		this.position = position ;
 		this.type = type ;
 		this.nom = nom ;
+		this.main = main ;
+		this.piste = piste ;
+		
 	}
 	
 	public Joueur nouveauJoueur () throws Exception {
 		
-		switch(type) {
+		switch (type) {
 		
-		case "Humain" : return new Humain(nom) ;
+		case "Humain" : 
+			
+			switch (position) {
+			
+			case 1 : return new HumainGauche(nom, main, piste) ;
+			case 2 : return new HumainDroit(nom, main, piste) ;
+			default : throw new Exception("Modele.Joueur.FabriqueJoueur.nouveauJoueur : position du joueur inconnue") ;
+			
+		}
 		case "IA" :
 			
 			switch (nom) {

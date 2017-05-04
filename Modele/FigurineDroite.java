@@ -1,9 +1,11 @@
 package Modele;
 
 public class FigurineDroite extends Figurine {
-
-	public FigurineDroite(float x, float y, float rayon, String nomJoueur, int position) {
-		super(x, y, rayon, nomJoueur, position) ;
+	
+	public FigurineDroite() {} ;
+	
+	public FigurineDroite(float x, float y, float rayon, int position) {
+		super(x, y, rayon, position) ;
 	}
 
 }

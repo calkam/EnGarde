@@ -36,5 +36,4 @@ public interface ActionOffensive {
 	public void executer_attaque_indirecte (Carte deplacement, Carte portee, int nombre)  ;
 	
 	
-	
 }

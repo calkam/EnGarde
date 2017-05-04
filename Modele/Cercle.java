@@ -3,8 +3,13 @@ package Modele;
 class Cercle extends ComposantGraphique {
 
     float rayon;
+    
+    public Cercle() {
+		super(0, 0);
+		rayon = 0;
+	}
 
-    Cercle(float x, float y, float rayon) {
+	Cercle(float x, float y, float rayon) {
         super(x, y);
         this.rayon = rayon;
     }

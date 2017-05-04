@@ -3,21 +3,21 @@ package Modele;
 abstract class ObjetMouvant extends ComposantGraphique implements Observateur {
 
     ComposantGraphique delegue;
-    Plateau plateau;
+    Piste piste;
 
     ObjetMouvant(ComposantGraphique d, Point v) {
         super(v.x(), v.y());
         delegue = d;
     }
     
-    void observe(Plateau p) {
-        plateau = p;
-        plateau.ajouteObservateur(this);
+    void observe(Piste p) {
+        piste = p;
+        piste.ajouteObservateur(this);
     }
     
     @Override
-    public boolean miseAJour() {
-        return false;
+    public void miseAJour(Observable o, Object arg) {
+        
     }
 
     @Override
@@ -30,15 +30,15 @@ abstract class ObjetMouvant extends ComposantGraphique implements Observateur {
     }
 
     void fixeVitesse(float x, float y) {
-        coord.fixe(x, y);
+        this.getCoord().fixe(x, y);
     }
 
     float vitX() {
-        return coord.x();
+        return this.getCoord().x();
     }
 
     float vitY() {
-        return coord.y();
+        return this.getCoord().y();
     }
 
     @Override

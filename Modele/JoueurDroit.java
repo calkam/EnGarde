@@ -4,7 +4,11 @@ import Modele.Joueur.Joueur;
 
 public class JoueurDroit extends Joueur implements ActionOffensive {
 
-private boolean avancer_dans_piste (int distance) {
+	public JoueurDroit(String nom, Main main, Piste piste) {
+		super(nom, main, piste) ;
+	}
+
+	private boolean avancer_dans_piste (int distance) {
 		
 		int position_arrivee = piste.getFigurineGauche().getPosition() ;
 		

@@ -1,20 +1,18 @@
-import Modele.*;
+package Modele;
 public class Test {
 
+	static Jeu jeu;
+	
 	public static void main(String[] args) {
-		Pioche  p = new Pioche();
-		p.melanger();
-		System.out.println(p);
-
-		Main m = new Main();
-		m.ajouter(p.piocher());
-		m.ajouter(p.piocher());
-		m.ajouter(p.piocher());
-		System.out.println(m);
-		System.out.println(p);
-		
-		m.supprimer(m.getCarte(0));
-		System.out.println(m);
+		jeu = new Jeu();
+		try {
+			jeu.init();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(jeu.getJoueur1());
+		System.out.println(jeu.getPioche());
 	}
-
+	
 }

@@ -4,7 +4,8 @@ import java.util.Arrays;
 
 public abstract class Composant {
 
-    Composant() {
+    public Composant() {
+    	
     }
 
     // Un composant peut accepter un visiteur destiné à

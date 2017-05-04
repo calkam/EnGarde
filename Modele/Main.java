@@ -6,8 +6,8 @@ public class Main extends Tas {
 	private ArrayList<Carte> main;
 	
 	public Main(){
+		super(0);
 		this.main = new ArrayList<Carte>();
-		this.nombre = 0;
 	}
 	
 	public void ajouter(Carte c){

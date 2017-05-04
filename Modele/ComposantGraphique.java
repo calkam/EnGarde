@@ -1,7 +1,7 @@
 package Modele;
 
 abstract class ComposantGraphique extends Composant {
-    Point coord;
+    private Point coord;
 
     abstract ComposantGraphique copieVers(float x, float y);
 
@@ -9,6 +9,10 @@ abstract class ComposantGraphique extends Composant {
 
     public abstract float getHauteur();
 
+    public ComposantGraphique(){
+    	
+    }
+    
     ComposantGraphique(float x, float y) {
         coord = new Point(x, y);
     }
@@ -21,6 +25,10 @@ abstract class ComposantGraphique extends Composant {
         return coord.y();
     }
 
+    public Point getCoord(){
+    	return coord;
+    }
+    
     void deplacePosition(float x, float y) {
         coord.ajoute(x, y);
     }

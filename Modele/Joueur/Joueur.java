@@ -1,13 +1,6 @@
 package Modele.Joueur;
-
-import java.util.ArrayList;
-
 import Modele.Piste;
-import Modele.Visiteur;
 import Modele.Carte;
-import Modele.Case;
-import Modele.ActionOffensive;
-import Modele.Figurine;
 import Modele.Main;
 
 /**
@@ -16,10 +9,17 @@ import Modele.Main;
  */
 public abstract class Joueur {
 	
-	private String nom ;
+	protected String nom ;
 	private Main main ;
 	protected Piste piste ;
-	
+
+	public Joueur(String nom, Main main, Piste piste) {
+		
+		this.nom = nom ;
+		this.main = main;
+		this.piste = piste;
+	}
+
 	protected boolean deplacer_dans_piste (int distance) {
 		
 		int position_arrivee = piste.getFigurineGauche().getPosition() ;
@@ -33,6 +33,34 @@ public abstract class Joueur {
 		return position != piste.getFigurineDroite().getPosition() ;
 		
 	}
+	
+	public void ajouterCarteDansMain(Carte c){
+		main.ajouter(c);
+	}
+	
+	public Carte jouerUneCarte(int i){
+		main.supprimer(main.getCarte(i));
+		return main.getCarte(i); 
+	}
+	
+	public String getNom() {
+		return nom;
+	}
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+	public Main getMain() {
+		return main;
+	}
+	public void setMain(Main main) {
+		this.main = main;
+	}
+
+	@Override
+	public String toString() {
+		return "Joueur [nom=" + nom + ", main=" + main + "]";
+	}
+	
 	/*ArrayList<Action> lesActions;
 	
 	protected Joueur(String nom) {
