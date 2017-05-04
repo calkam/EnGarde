@@ -1,13 +1,21 @@
 package Modele;
 
 public abstract class Tas {
-	protected int nombre;
+	protected int nombreCarte;
 	
-	public int getNb(){
-		return nombre;
+	public Tas(){
+		this(0);
 	}
 	
-	public void setNb(int i){
-		nombre =i;
+	public Tas(int m_nombreCarte){
+		this.nombreCarte = m_nombreCarte;
+	}
+	
+	public int getNombreCarte(){
+		return nombreCarte;
+	}
+	
+	public void setNombreCarte(int i){
+		nombreCarte=i;
 	}
 }

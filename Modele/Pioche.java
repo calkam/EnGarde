@@ -8,8 +8,9 @@ public class Pioche extends Tas {
 	private Stack<Carte> p;
 	
 	public Pioche(){
+		super(25);
 		p = new Stack<Carte>();
-		this.nombre = 25;
+		this.melanger();
 	}
 	
 	public void melanger(){
@@ -45,7 +46,7 @@ public class Pioche extends Tas {
 	}
 	
 	public Carte piocher(){
-		nombre --;
+		nombreCarte--;
 		return p.pop();
 	}
 		
