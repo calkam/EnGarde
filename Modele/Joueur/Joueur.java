@@ -1,18 +1,5 @@
 package Modele.Joueur;
 
-import java.util.ArrayList;
-
-import Modele.AttaqueDirecte;
-import Modele.AttaqueIndirecte;
-import Modele.Parade;
-import Modele.Piste;
-import Modele.Retraite;
-import Modele.Visiteur;
-import Modele.Avancer;
-import Modele.Carte;
-import Modele.Case;
-import Modele.Reculer;
-import Modele.Action;
 import Modele.Figurine;
 import Modele.Main;
 
@@ -25,6 +12,32 @@ public abstract class Joueur {
 	String nom ;
 	Main main ;
 	Figurine figurine ;
+	
+	public Joueur(String nom) {
+		this.nom = nom;
+	}
+	
+	public String getNom() {
+		return nom;
+	}
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+	public Main getMain() {
+		return main;
+	}
+	public void setMain(Main main) {
+		this.main = main;
+	}
+	public Figurine getFigurine() {
+		return figurine;
+	}
+	public void setFigurine(Figurine figurine) {
+		this.figurine = figurine;
+	}
+	
+	
+	
 	/*ArrayList<Action> lesActions;
 	
 	protected Joueur(String nom) {

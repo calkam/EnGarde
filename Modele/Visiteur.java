@@ -6,15 +6,19 @@ package Modele;
  */
 public abstract class Visiteur {
 
-	public void visite(Case c){		
+	public boolean visite(Case c){
+		return false;
 	};
 	
-	public void visite(Composant c) {
+	public boolean visite(Composant c) {
+		return false;
 	}
 	
-	public void visite(ComposantGraphique c) {
+	public boolean visite(ComposantGraphique c) {
+		return false;
 	}
 	
-	public void visite(ObjetMouvant o) {
+	public boolean visite(ObjetMouvant o) {
+		return false;
 	}
 }

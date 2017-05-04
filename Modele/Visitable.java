@@ -6,5 +6,5 @@ package Modele;
  */
 public interface Visitable {
 
-	public void accept(Visiteur v);	
+	public boolean accept(Visiteur v);	
 }

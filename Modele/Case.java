@@ -1,6 +1,6 @@
 package Modele;
 
-public class Case extends Rectangle {
+public class Case extends Rectangle implements Visitable {
 
     int couleur;
     Observable attaches;
@@ -36,4 +36,5 @@ public class Case extends Rectangle {
     public String toString() {
         return "Brique en (" + posX() + ", " + posY() + ")," + ", couleur s" + couleur;
     }
+
 }
