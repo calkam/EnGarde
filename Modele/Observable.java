@@ -23,7 +23,7 @@ public class Observable {
 	
 	public void notifierObservateurs(Object arg){
 		for(Observateur o : observateurs){
-			o.actualiser(this, arg);
+			o.miseAJour(this, arg);
 		}
 	}
 }

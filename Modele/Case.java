@@ -28,13 +28,14 @@ public class Case extends Rectangle implements Visitable {
     }
 
     @Override
-    boolean accepte(Visiteur v) {
-        return v.visite(this);
-    }
-
-    @Override
     public String toString() {
         return "Brique en (" + posX() + ", " + posY() + ")," + ", couleur s" + couleur;
     }
+
+	@Override
+	public boolean accept(Visiteur v) {
+		// TODO Auto-generated method stub
+		return v.visite(this);
+	}
 
 }

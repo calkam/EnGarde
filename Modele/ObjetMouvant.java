@@ -16,8 +16,8 @@ abstract class ObjetMouvant extends ComposantGraphique implements Observateur {
     }
     
     @Override
-    public boolean miseAJour() {
-        return false;
+    public void miseAJour(Observable o, Object arg) {
+        
     }
 
     @Override

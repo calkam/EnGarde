@@ -5,6 +5,7 @@ public class Figurine extends Cercle {
 	private int position ;
 	
 	Figurine(String nom, int i){
+		super();
 		this.nomJoueur = nom;
 		this.position = i ;
 	}

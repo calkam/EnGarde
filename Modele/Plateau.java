@@ -15,4 +15,9 @@ public class Plateau {
 		throw new UnsupportedOperationException();
 	}
 
+	public void ajouteObservateur(ObjetMouvant objetMouvant) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

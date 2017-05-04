@@ -34,8 +34,9 @@ public class Piste extends Rectangle {
 		this.cases = cases;
 	}
 	
-	public static void accepte(Visiteur visiteur) {
+	public boolean accept(Visiteur v) {
 		// TODO Auto-generated method stub
+		return v.visite(this);
 	}
 
 }

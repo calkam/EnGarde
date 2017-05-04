@@ -5,6 +5,5 @@ package Modele;
  *
  */
 public interface Observateur {
-
-	public void actualiser(Observable o, Object arg);
+	public void miseAJour(Observable o, Object arg);
 }

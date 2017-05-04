@@ -10,6 +10,11 @@ public class PlateauScore extends Rectangle {
 	private ArrayList<Case> casesJ2;
 	private int scoreJ1;
 	private int scoreJ2;
+	
+	PlateauScore(float x, float y) {
+		super(x, y);
+		// TODO Auto-generated constructor stub
+	}
 
 	public Jeton getJeton1() {
 		return this.jeton1;
