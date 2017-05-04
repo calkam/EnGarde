@@ -6,45 +6,40 @@ import Modele.Plateau.Figurine.*;
 import Modele.Tas.*;
 
 public class Jeu {
-
-	private final static int nombreCarteMax = 5;
 	
 	private Joueur joueur1;
 	private Joueur joueur2;
 	private Piste piste;
 	private PlateauScore plateauScore;
-	private Pioche pioche;
-	private Defausse defausse;
 	private Manche manche;
 
 	public void init() throws Exception {
-		pioche = new Pioche();
-		defausse = new Defausse();
 		plateauScore = new PlateauScore() ;
 		piste = new Piste(new FigurineGauche(), new FigurineDroite()) ;
 		joueur1 = new FabriqueJoueur (1, "Humain", "Joueur1", new Main(), piste).nouveauJoueur() ;
 		joueur2 = new FabriqueJoueur (2, "Humain", "Joueur2", new Main(), piste).nouveauJoueur() ;
-		completerMain(joueur1);
-		completerMain(joueur2);
-		manche = new Manche(0);
 	}
 
+	/**
+	 * INITIALISATION MANCHE
+	 */
+	
+	public void initialiserPremiereManche(){
+		manche = new Manche(0);
+		manche.initialiserJoueur(joueur1, joueur2);
+	}
+	
 	public void nouvelleManche(){
 		manche = new Manche(manche.getNumero()+1);
 	}
 	
 	public void lancerLaManche(){
-		manche.jouerManche();
-	}
-	
-	public void completerMain(Joueur j){
-		int nbCarteMain = j.getMain().getNombreCarte();
-		
-		for(int i=nbCarteMain; i<nombreCarteMax; i++){
-			j.ajouterCarteDansMain(pioche.piocher());
-		}
+		manche.jouerManche(joueur1, joueur2);
 	}
 
+	/**
+	 * GETTER / SETTER / TOSTRING
+	 */
 	public Joueur getJoueur1() {
 		return joueur1;
 	}
@@ -75,22 +70,6 @@ public class Jeu {
 
 	public void setPlateauScore(PlateauScore plateauScore) {
 		this.plateauScore = plateauScore;
-	}
-
-	public Pioche getPioche() {
-		return pioche;
-	}
-
-	public void setPioche(Pioche pioche) {
-		this.pioche = pioche;
-	}
-
-	public Defausse getDefausse() {
-		return defausse;
-	}
-
-	public void setDefausse(Defausse defausse) {
-		this.defausse = defausse;
 	}
 
 	@Override
