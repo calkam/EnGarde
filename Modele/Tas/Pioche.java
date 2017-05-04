@@ -44,8 +44,11 @@ public class Pioche extends Tas {
 			if(jeu.get(index).isEmpty()){
 				jeu.remove(index);
 			}			
-		}while(!jeu.isEmpty());
-		
+		}while(!jeu.isEmpty());	
+	}
+	
+	public boolean estVide(){
+		return p.size() == 0;
 	}
 	
 	public Carte piocher(){

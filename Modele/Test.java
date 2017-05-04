@@ -12,7 +12,6 @@ public class Test {
 			e.printStackTrace();
 		}
 		System.out.println(jeu.getJoueur1());
-		System.out.println(jeu.getPioche());
 	}
 	
 }

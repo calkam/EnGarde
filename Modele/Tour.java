@@ -7,11 +7,15 @@ public class Tour{
 	Joueur joueurAttaquant;
 	Joueur joueurDefenseur;
 	
+	public void initialiserTour(Joueur m_joueurAttaquant, Joueur m_joueurDefenseur){
+		this.joueurAttaquant = m_joueurAttaquant;
+		this.joueurAttaquant = m_joueurDefenseur;
+	}
+	
 	public void jouerTour(){
 		selectionnerCarte();
 		choisirAction();
 		executerAction();
-		remplirMain();
 	}
 	
 	public void selectionnerCarte(){
@@ -26,8 +30,23 @@ public class Tour{
 		
 	}
 	
-	public void remplirMain(){
-		
+	/**
+	 * GETTER/SETTER
+	 */
+	public Joueur getJoueurAttaquant() {
+		return joueurAttaquant;
+	}
+
+	public void setJoueurAttaquant(Joueur joueurAttaquant) {
+		this.joueurAttaquant = joueurAttaquant;
+	}
+
+	public Joueur getJoueurDefenseur() {
+		return joueurDefenseur;
+	}
+
+	public void setJoueurDefenseur(Joueur joueurDefenseur) {
+		this.joueurDefenseur = joueurDefenseur;
 	}
 	
 }
