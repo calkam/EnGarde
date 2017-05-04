@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane cacheShape="false" centerShape="false" focusTraversable="true" minHeight="700.0" minWidth="1000.0" styleClass="background" stylesheets="@Theme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <GridPane alignment="TOP_CENTER" cache="true" cacheHint="SCALE" focusTraversable="true" layoutX="310.0" layoutY="329.0" minWidth="380.0" snapToPixel="false" stylesheets="@Theme.css" AnchorPane.bottomAnchor="221.0" AnchorPane.leftAnchor="310.0" AnchorPane.rightAnchor="310.0" AnchorPane.topAnchor="329.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="50.0" valignment="TOP" vgrow="ALWAYS" />
+          <RowConstraints minHeight="10.0" prefHeight="50.0" valignment="TOP" vgrow="ALWAYS" />
+            <RowConstraints minHeight="10.0" prefHeight="50.0" valignment="TOP" vgrow="ALWAYS" />
+            <RowConstraints minHeight="30.0" prefHeight="50.0" valignment="TOP" vgrow="ALWAYS" />
+          <RowConstraints minHeight="10.0" prefHeight="50.0" valignment="TOP" vgrow="ALWAYS" />
+        </rowConstraints>
+         <children>
+            <Button contentDisplay="CENTER" minWidth="342.0" mnemonicParsing="false" text="Nouvelle Partie" textOverrun="CLIP" GridPane.halignment="CENTER" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+               <font>
+                  <Font name="eufm10" size="20.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </Button>
+            <Button mnemonicParsing="false" prefWidth="342.0" stylesheets="@Theme.css" text="Tutoriel" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+               <font>
+                  <Font name="eufm10" size="20.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" prefWidth="342.0" stylesheets="@Theme.css" text="Charger/Sauvegarder Partie" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+               <font>
+                  <Font name="eufm10" size="20.0" />
+               </font>
+            </Button>
+            <Button focusTraversable="false" mnemonicParsing="false" prefWidth="342.0" stylesheets="@Theme.css" text="Quitter" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+               <font>
+                  <Font name="eufm10" size="20.0" />
+               </font>
+            </Button>
+         </children>
+      </GridPane>
+      <Text fill="#0d0d0d" layoutX="315.0" layoutY="224.0" stroke="WHITE" strokeType="OUTSIDE" strokeWidth="3.0" text="En Garde" textAlignment="CENTER" textOrigin="CENTER" AnchorPane.bottomAnchor="404.58935546875" AnchorPane.leftAnchor="315.0" AnchorPane.rightAnchor="314.56591796875" AnchorPane.topAnchor="180.41064453125">
+         <font>
+            <Font name="eufm10" size="91.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>
