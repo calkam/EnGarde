@@ -47,6 +47,7 @@ public abstract class Joueur {
 	 * @param maCarte
 	 */
 	public void selectionCarte(Carte maCarte){
+		Object figurineAdverse;
 		
 		for(Action a : lesActions){
 			if(a.estPossible(maCarte, figurine, figurineAdverse)){
