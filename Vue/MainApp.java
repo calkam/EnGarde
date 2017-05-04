@@ -2,6 +2,9 @@ package Vue;
 
 import java.io.IOException;
 
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -34,6 +37,14 @@ public class MainApp extends Application {
             loader.setLocation(MainApp.class.getResource("/Vue/RootLayout.fxml"));
             rootLayout = (BorderPane) loader.load();
 
+            Media pick = new Media("Ressources/Musics/MenuTheme.mp3"); //throws here
+            MediaPlayer player = new MediaPlayer(pick);
+            player.play();
+            
+            MediaView mediaView = new MediaView(player);
+            
+            rootLayout.setBottom(mediaView);
+            
             // Show the scene containing the root layout.
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
