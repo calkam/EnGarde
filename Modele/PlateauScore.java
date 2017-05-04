@@ -12,7 +12,7 @@ public class PlateauScore extends Rectangle {
 	private int scoreJ2;
 	
 	PlateauScore(float x, float y) {
-		super(x, y);
+		super(x, y, 0, 0);
 		// TODO Auto-generated constructor stub
 	}
 

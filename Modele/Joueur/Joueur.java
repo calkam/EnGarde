@@ -1,5 +1,6 @@
 package Modele.Joueur;
 
+import Modele.Carte;
 import Modele.Figurine;
 import Modele.Main;
 
@@ -13,8 +14,27 @@ public abstract class Joueur {
 	Main main ;
 	Figurine figurine ;
 	
-	public Joueur(String nom) {
-		this.nom = nom;
+	public Joueur(String m_nom) {
+		this(m_nom, new Figurine());
+	}
+	
+	public Joueur(String m_nom, Figurine m_figurine) {
+		this(m_nom, m_figurine, new Main());
+	}
+	
+	public Joueur(String m_nom, Figurine m_figurine, Main m_main) {
+		this.nom = m_nom;
+		this.figurine = m_figurine;
+		this.main = m_main;
+	}
+	
+	public void ajouterCarteDansMain(Carte c){
+		main.ajouter(c);
+	}
+	
+	public Carte jouerUneCarte(int i){
+		main.supprimer(main.getCarte(i));
+		return main.getCarte(i); 
 	}
 	
 	public String getNom() {
@@ -35,8 +55,11 @@ public abstract class Joueur {
 	public void setFigurine(Figurine figurine) {
 		this.figurine = figurine;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "Joueur [nom=" + nom + ", main=" + main + ", figurine=" + figurine + "]";
+	}
 	
 	/*ArrayList<Action> lesActions;
 	

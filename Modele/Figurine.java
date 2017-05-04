@@ -1,17 +1,13 @@
 package Modele;
 
 public class Figurine extends Cercle {
-	private String nomJoueur ;
-	private int position ;
+	private int position;
 	
-	Figurine(String nom, int i){
-		super();
-		this.nomJoueur = nom;
-		this.position = i ;
+	public Figurine(){
 	}
 	
-	public String getNomJoueur() {
-		return nomJoueur;
+	Figurine(int i){
+		this.position = i ;
 	}
 	
 	public int getPosition() {

@@ -2,16 +2,17 @@ package Modele;
 
 public class Rectangle extends ComposantGraphique {
 
-	private Float largeur;
-	private Float hauteur;
+	private float largeur;
+	private float hauteur;
 	
-	Rectangle(float x, float y) {
+	Rectangle(float x, float y, float l, float h) {
 		super(x, y);
+		initialiser(l, h);
 		// TODO Auto-generated constructor stub
 	}
 	
 	final void initialiser(float l, float h) {
-        largeur = l;
+        this.largeur = l;
         hauteur = h;
     }
 
