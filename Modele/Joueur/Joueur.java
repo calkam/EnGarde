@@ -1,6 +1,7 @@
 package Modele.Joueur;
 
 import Modele.Couple;
+import Modele.Tour;
 import Modele.Plateau.Piste;
 import Modele.Plateau.Score;
 import Modele.Tas.Carte;
@@ -11,6 +12,15 @@ import Modele.Tas.Main;
  *
  */
 public abstract class Joueur {
+	
+	public final static int ActionImpossible = -1 ;
+	public final static int Reculer = 0 ;
+	public final static int Avancer = 1 ;
+	public final static int AttaqueDirecte = 2 ;
+	public final static int AttaqueIndirecte  = 3 ;
+	public final static int Parade = 4 ;
+	public final static int Fuite = 5 ;
+	
 	
 	protected String nom ;
 	protected Main main ;
@@ -36,62 +46,52 @@ public abstract class Joueur {
 	abstract public void reculer (int distance)  ;
 	abstract public void executer_attaque_indirecte (int deplacement, int portee, int nombre)  ;
 	
-	public ActionsJouables peutFaireAction(boolean est_attaque) {
+	public ActionsJouables peutFaireAction(int est_attaque) {
 		
 		int position ;
 		ActionsJouables actions_jouables = new ActionsJouables () ;
 		
-		if (! est_attaque) {
-		
-			for (Carte val_carte : main.getMain()) {
+		for (Carte val_carte : main.getMain()) {
 			
-				if ((position = peut_reculer(val_carte.getContenu())) != -1)
+			if ((position = peut_reculer(val_carte.getContenu())) != ActionImpossible)
+				
+				actions_jouables.ajouterChoix(Reculer, position, val_carte, null) ;
+		
+			if (est_attaque == Tour.pasAttaque) {
 					
-					actions_jouables.ajouterChoix("Reculer", position, val_carte, null) ;
+				Couple <Boolean, Integer> test_avancer_ou_attaquer ;
 				
-					Couple <Boolean, Integer> test_avancer_ou_attaquer ;
-				
-				if ((test_avancer_ou_attaquer = peut_avancer_ou_attaquer_directement(val_carte.getContenu())).getC2() != 1) {
+				if ((test_avancer_ou_attaquer = peut_avancer_ou_attaquer_directement(val_carte.getContenu())).getC2() != ActionImpossible) {
 					
 					if (! test_avancer_ou_attaquer.getC1())
 						
-						actions_jouables.ajouterChoix("Attaque directe", test_avancer_ou_attaquer.getC2(), val_carte, null) ;
+						actions_jouables.ajouterChoix(AttaqueDirecte, test_avancer_ou_attaquer.getC2(), val_carte, null) ;
 					
 					else {
 						
-						actions_jouables.ajouterChoix("Avancer", test_avancer_ou_attaquer.getC2(), val_carte, null) ;
+						actions_jouables.ajouterChoix(Avancer, test_avancer_ou_attaquer.getC2(), val_carte, null) ;
 					
-						for (Carte c : main.getMain())
+						for (Carte c : main.getMain()) {
+							
+							int position_attaque_indirecte ;
 					
-							if ((position = peut_attaquer_indirectement(val_carte.getContenu() + test_avancer_ou_attaquer.getC2(), c.getContenu())) != 1)
+							if ((position = test_avancer_ou_attaquer.getC2()) != ActionImpossible && 
+									(position_attaque_indirecte = peut_attaquer_indirectement(val_carte.getContenu(), c.getContenu())) != ActionImpossible)
 						
-								actions_jouables.ajouterChoix("Attaque indirecte", position, val_carte, c) ;
+								actions_jouables.ajouterChoix(AttaqueIndirecte, position + position_attaque_indirecte, val_carte, c) ;
+							
+						}
 					}
-				
-				}
-			
+				}	
 			}
 			
+			else if (peut_executer_parade(val_carte.getContenu(), 1))
+						
+				actions_jouables.ajouterChoix(Parade, position, val_carte, null) ;		
 		}
-		
-		else {
 			
-			for (Carte val_carte : main.getMain()) {
-			
-				if ((position = peut_reculer(val_carte.getContenu())) != -1)
-				
-					actions_jouables.ajouterChoix("Fuire", position, val_carte, null) ;
-				
-				if (peut_executer_parade(val_carte.getContenu(), 1))
-					
-					actions_jouables.ajouterChoix("Parer", position, val_carte, null) ;
-				
-			}
-			
-		}
-		
 		return actions_jouables ;
-		
+			
 	}
 	
 	public void ajouterCarteDansMain(Carte c){

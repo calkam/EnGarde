@@ -1,5 +1,6 @@
 package Modele;
 
+import Modele.Joueur.ActionsJouables;
 import Modele.Joueur.Joueur;
 import Modele.Tas.Pioche;
 
@@ -15,9 +16,9 @@ public class Tour{
 	public final static int aucunJoueurPerdu = 2;
 	public final static int piocheVide = 3;
 	
-	private final static int pasAttaque = 0;
-	private final static int attaqueDirect = 1;
-	private final static int attaqueIndirect = 2;
+	public final static int pasAttaque = 0;
+	public final static int attaqueDirect = 1;
+	public final static int attaqueIndirect = 2;
 	
 	private Joueur joueurPremier;
 	private Joueur joueurSecond;
@@ -52,23 +53,24 @@ public class Tour{
 	}
 	
 	public boolean jouerTourJoueur(Joueur joueur){
-		String choixAction;	
+		int choixAction ;	
+		ActionsJouables actions_jouables ;
 		
-		joueur.getActionPossible(estAttaque);
-		choixAction = selectionnerAction();
+		actions_jouables = joueur.peutFaireAction(estAttaque);
+		choixAction = selectionnerAction(actions_jouables);
 		
-		if(choixAction == ""){
+		if(choixAction == Joueur.ActionImpossible){
 			return joueurPerdu;
 		}else{
 			estAttaque = executerAction(choixAction);			
 		}
 		
-		if(choixAction == "Parade"){
+		if(choixAction == Joueur.Parade){
 			estAttaque = pasAttaque;
-			joueur.getActionPossible(estAttaque);
-			choixAction = selectionnerAction();
+			actions_jouables = joueur.peutFaireAction(estAttaque);
+			choixAction = selectionnerAction(actions_jouables);
 			
-			if(choixAction == ""){
+			if(choixAction == Joueur.ActionImpossible){
 				return joueurPerdu;
 			}else{
 				estAttaque = executerAction(choixAction);			
@@ -78,7 +80,7 @@ public class Tour{
 		
 		return joueurPasPerdu;
 	}
-	
+
 	private void remplirMain(Joueur j){		
 		int nbCarteMain = j.getMain().getNombreCarte();
 		
@@ -88,6 +90,11 @@ public class Tour{
 			j.ajouterCarteDansMain(pioche.piocher());
 		}
 	}
+	
+	private int selectionnerAction(ActionsJouables actions_jouables) {
+		// TODO Auto-generated method stub
+		return 0;
+	} 
 	
 	/**
 	 * GETTER/SETTER

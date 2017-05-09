@@ -1,22 +1,17 @@
 package Modele.Tas;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Main extends Tas {
 	private ArrayList<Carte> main;
-	private HashMap <Integer, ArrayList<Carte>> typecartes ;
 	
 	public Main(){
 		super(0);
 		this.main = new ArrayList<>();
-		this.typecartes = new HashMap<>();
 	}
 	
 	public void ajouter(Carte c){
 		main.add(c);
-		typecartes.putIfAbsent(c.getContenu(), new ArrayList<>()) ;
-		typecartes.get(c.getContenu()).add(c) ;
 		nombreCarte[c.getContenu()]++ ;
 	}
 	
@@ -31,16 +26,6 @@ public class Main extends Tas {
 			nombreCarte[c.getContenu()]-- ;
 		}else {
 			throw new Exception ("Modele.Tas.Main.supprimer : rien a supprimer");
-		}
-		
-		try {
-		
-			typecartes.get(c.getContenu()).remove(0) ;
-			
-		} catch (IndexOutOfBoundsException e) {
-			
-			throw new Exception ("Modele.Tas.Main.supprimer : rien a supprimer");
-			
 		}
 		
 	}

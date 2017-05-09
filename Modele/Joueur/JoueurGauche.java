@@ -42,7 +42,7 @@ public class JoueurGauche extends Joueur {
 			
 			return position_arrivee ;
 		
-		return -1 ;
+		return ActionImpossible ;
 		
 	}
 
@@ -53,7 +53,7 @@ public class JoueurGauche extends Joueur {
 		
 		if(!avancer_dans_piste (position_arrivee))
 			
-			return new Couple <> (null, -1) ;
+			return new Couple <> (null, ActionImpossible) ;
 			
 		if (estlibre(position_arrivee))
 				
@@ -74,7 +74,7 @@ public class JoueurGauche extends Joueur {
 		
 			return position_arrivee;
 		
-		return -1 ;
+		return ActionImpossible ;
 	}
 
 	@Override
