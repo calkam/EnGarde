@@ -11,7 +11,7 @@
 
 <AnchorPane cacheShape="false" centerShape="false" focusTraversable="true" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1600.0" styleClass="background" stylesheets="@Theme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Vue.ControleurAcceuil">
    <children>
-      <GridPane alignment="TOP_CENTER" cache="true" cacheHint="SCALE" focusTraversable="true" layoutX="327.0" layoutY="393.0" minWidth="380.0" snapToPixel="false" stylesheets="@Theme.css" AnchorPane.bottomAnchor="157.0" AnchorPane.leftAnchor="327.0" AnchorPane.rightAnchor="293.0" AnchorPane.topAnchor="393.0">
+      <GridPane alignment="TOP_CENTER" cache="true" cacheHint="SCALE" focusTraversable="true" layoutX="310.0" layoutY="393.0" minWidth="380.0" snapToPixel="false" stylesheets="@Theme.css" AnchorPane.bottomAnchor="157.0" AnchorPane.leftAnchor="310.0" AnchorPane.rightAnchor="310.0" AnchorPane.topAnchor="393.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
@@ -48,14 +48,10 @@
             </Button>
          </children>
       </GridPane>
-      <AnchorPane layoutX="636.48681640625" layoutY="165.5" AnchorPane.leftAnchor="635.9736328125" AnchorPane.rightAnchor="591.0263671875" AnchorPane.topAnchor="169.0">
-         <children>
-            <Text fill="#0d0d0d" layoutY="3.5" nodeOrientation="LEFT_TO_RIGHT" smooth="false" stroke="WHITE" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="3.0" styleClass="text" text="En Garde" textAlignment="CENTER" textOrigin="TOP">
-               <font>
-                  <Font name="eufm10" size="91.0" />
-               </font>
-            </Text>
-         </children>
-      </AnchorPane>
+      <Text fill="#0d0d0d" layoutY="165.0" nodeOrientation="LEFT_TO_RIGHT" smooth="false" stroke="WHITE" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="3.0" styleClass="text" text="En Garde" textAlignment="CENTER" textOrigin="TOP" AnchorPane.leftAnchor="613.75" AnchorPane.rightAnchor="613.76318359375">
+         <font>
+            <Font name="eufm10" size="91.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>
