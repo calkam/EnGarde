@@ -1,7 +1,7 @@
 package Modele ;
 
 public class Triplet <C1, C2, C3> {
-	
+
 	protected C1 c1 ;
 	protected C2 c2 ;
 	protected C3 c3 ;
@@ -45,6 +45,10 @@ public class Triplet <C1, C2, C3> {
 	public void setC3(C3 c3) {
 		this.c3 = c3;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Triplet [c1=" + c1 + ", c2=" + c2 + ", c3=" + c3 + "]";
+	}	
 }
 

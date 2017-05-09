@@ -65,8 +65,11 @@ public class Pioche extends Tas {
 	}
 		
 	public String toString(){
-		String resultat = "Pile: "+p.size()+'\n' ;
-		resultat += p.toString();
+		String resultat = "";
+		resultat += "Pioche [\n";
+		resultat += "  size= " + p.size() + "\n";
+		resultat += "  pioche= " + p.toString() + "\n";
+		resultat += "]\n";
 		return resultat;
 		
 	}

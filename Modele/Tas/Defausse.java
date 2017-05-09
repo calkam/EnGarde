@@ -22,7 +22,12 @@ public class Defausse extends Tas {
 
 	@Override
 	public String toString() {
-		return "Defausse [d=" + d + "]";
+		String resultat = "";
+		resultat += "Defausse [\n";
+		resultat += "  size= " + d.size() + "\n";
+		resultat += "  defausse= " + d.toString() + "\n";
+		resultat += "]\n";
+		return resultat;
 	}
 		
 }

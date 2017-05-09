@@ -20,6 +20,8 @@ public class Jeu {
 		piste = new Piste(new FigurineGauche(), new FigurineDroite()) ;
 		joueur1 = new FabriqueJoueur (1, "Humain", "Joueur1", new Main(), piste).nouveauJoueur() ;
 		joueur2 = new FabriqueJoueur (2, "Humain", "Joueur2", new Main(), piste).nouveauJoueur() ;
+		joueur1.setScore(0);
+		joueur2.setScore(0);
 	}
 	
 	/**
@@ -61,7 +63,7 @@ public class Jeu {
 	}
 	
 	public void lancerLaManche(){
-		manche.jouerManche(joueur1, joueur2);
+		manche.jouerManche();
 	}
 
 	/**
@@ -97,6 +99,14 @@ public class Jeu {
 
 	public void setPlateauScore(PlateauScore plateauScore) {
 		this.plateauScore = plateauScore;
+	}
+
+	public Manche getManche() {
+		return manche;
+	}
+
+	public void setManche(Manche manche) {
+		this.manche = manche;
 	}
 
 	@Override

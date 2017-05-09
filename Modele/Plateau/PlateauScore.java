@@ -47,5 +47,7 @@ public class PlateauScore extends Rectangle {
 	public void setJeton2(Jeton jeton2) {
 		this.jeton2 = jeton2;
 	}
+	
+	
 
 }

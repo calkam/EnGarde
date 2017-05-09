@@ -1,5 +1,7 @@
 package Modele;
 
+import java.util.Scanner;
+
 import Modele.Joueur.ActionsJouables;
 import Modele.Joueur.Joueur;
 import Modele.Tas.Pioche;
@@ -25,15 +27,15 @@ public class Tour{
 	private Pioche pioche;
 	private int estAttaque;
 	
-	public Tour(){}
+	public Tour(){
+		this.estAttaque = pasAttaque;
+	}
 	
 	public Tour(Joueur m_joueurPremier, Joueur m_joueurSecond, Pioche pioche){
 		this.joueurPremier = m_joueurPremier;
 		this.joueurSecond = m_joueurSecond;
 		this.pioche = new Pioche();
-		this.estAttaque = 0;
-		remplirMain(joueurPremier);
-		remplirMain(joueurSecond);
+		this.estAttaque = pasAttaque;
 	}
 	
 	public int jouerTour(){
@@ -57,6 +59,7 @@ public class Tour{
 		ActionsJouables actions_jouables ;
 		
 		actions_jouables = joueur.peutFaireAction(estAttaque);
+		System.out.println(actions_jouables);
 		choixAction = selectionnerAction(actions_jouables);
 		
 		if(choixAction == Joueur.ActionImpossible){
@@ -81,20 +84,30 @@ public class Tour{
 		return joueurPasPerdu;
 	}
 
-	private void remplirMain(Joueur j){		
+	public void remplirMain(Joueur j){		
 		int nbCarteMain = j.getMain().getNombreCarte();
 		
-		int i=nbCarteMain;
-		
-		while(i < nombreCarteMax && !pioche.estVide()){
-			j.ajouterCarteDansMain(pioche.piocher());
+		if(nbCarteMain < nombreCarteMax){
+			int i=nbCarteMain;
+			
+			while(!pioche.estVide() && i < nombreCarteMax){
+				j.ajouterCarteDansMain(pioche.piocher());
+				i++;
+			}
 		}
 	}
 	
 	private int selectionnerAction(ActionsJouables actions_jouables) {
-		// TODO Auto-generated method stub
+		Scanner s = new Scanner(System.in);
+		
+		s.nextLine();
+		
 		return 0;
-	} 
+	}
+	
+	private int executerAction(int choixAction){
+		return 0;
+	}
 	
 	/**
 	 * GETTER/SETTER
