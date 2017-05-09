@@ -51,7 +51,7 @@ public class Manche {
 	public void jouerManche(Joueur joueur1, Joueur joueur2){
 		Joueur joueurAttaquant = joueur1;
 		Joueur joueurDefenseur = joueur2;
-		while(!pioche.estVide() && joueurAttaquant.peutFaireAction()){
+		while(!pioche.estVide() && ! joueurAttaquant.peutFaireAction(true).isEmpty()){
 			tourEnCours.initialiserTour(joueurAttaquant, joueurDefenseur);
 			tourEnCours.jouerTour();
 			remplirMain(joueurAttaquant);

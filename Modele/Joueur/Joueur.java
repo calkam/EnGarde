@@ -1,4 +1,6 @@
 package Modele.Joueur;
+
+import Modele.Couple;
 import Modele.Plateau.Piste;
 import Modele.Tas.Carte;
 import Modele.Tas.Main;
@@ -22,6 +24,71 @@ public abstract class Joueur {
 	
 	public boolean peut_executer_parade(int attaque, int nombre) {
 		return main.getNombreCarteGroupe(attaque) >= nombre ;
+	}
+	
+	abstract public int peut_reculer (int distance)  ;
+	abstract public Couple<Boolean, Integer> peut_avancer_ou_attaquer_directement (int distance)  ;
+	abstract public int peut_attaquer_indirectement (int deplacement, int portee)  ;
+	abstract public void avancer (int distance)  ;
+	abstract public void reculer (int distance)  ;
+	abstract public void executer_attaque_indirecte (int deplacement, int portee, int nombre)  ;
+	
+	public ActionsJouables peutFaireAction(boolean est_attaque) {
+		
+		int position ;
+		ActionsJouables actions_jouables = new ActionsJouables () ;
+		
+		if (! est_attaque) {
+		
+			for (Carte val_carte : main.getMain()) {
+			
+				if ((position = peut_reculer(val_carte.getContenu())) != -1)
+					
+					actions_jouables.ajouterChoix("Reculer", position, val_carte, null) ;
+				
+					Couple <Boolean, Integer> test_avancer_ou_attaquer ;
+				
+				if ((test_avancer_ou_attaquer = peut_avancer_ou_attaquer_directement(val_carte.getContenu())).getC2() != 1) {
+					
+					if (! test_avancer_ou_attaquer.getC1())
+						
+						actions_jouables.ajouterChoix("Attaque directe", test_avancer_ou_attaquer.getC2(), val_carte, null) ;
+					
+					else {
+						
+						actions_jouables.ajouterChoix("Avancer", test_avancer_ou_attaquer.getC2(), val_carte, null) ;
+					
+						for (Carte c : main.getMain())
+					
+							if ((position = peut_attaquer_indirectement(val_carte.getContenu() + test_avancer_ou_attaquer.getC2(), c.getContenu())) != 1)
+						
+								actions_jouables.ajouterChoix("Attaque indirecte", position, val_carte, c) ;
+					}
+				
+				}
+			
+			}
+			
+		}
+		
+		else {
+			
+			for (Carte val_carte : main.getMain()) {
+			
+				if ((position = peut_reculer(val_carte.getContenu())) != -1)
+				
+					actions_jouables.ajouterChoix("Fuire", position, val_carte, null) ;
+				
+				if (peut_executer_parade(val_carte.getContenu(), 1))
+					
+					actions_jouables.ajouterChoix("Parer", position, val_carte, null) ;
+				
+			}
+			
+		}
+		
+		return actions_jouables ;
+		
 	}
 	
 	public void ajouterCarteDansMain(Carte c){

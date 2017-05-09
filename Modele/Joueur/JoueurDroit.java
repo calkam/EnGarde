@@ -1,12 +1,10 @@
 package Modele.Joueur;
 
-import java.util.ArrayList;
-
+import Modele.Couple;
 import Modele.Plateau.Piste;
-import Modele.Tas.Carte;
 import Modele.Tas.Main;
 
-public class JoueurDroit extends Joueur implements Action {
+public class JoueurDroit extends Joueur {
 
 	public JoueurDroit(String nom, Main main, Piste piste) {
 		super(nom, main, piste) ;
@@ -48,35 +46,30 @@ public class JoueurDroit extends Joueur implements Action {
 	}
 
 	@Override
-	public int peut_avancer(int distance) {
+	public Couple <Boolean, Integer> peut_avancer_ou_attaquer_directement(int distance) {
 		
 		int position_arrivee = piste.getFigurineGauche().getPosition() - distance ;
 		
-		if(avancer_dans_piste (position_arrivee) && estlibre(position_arrivee))
+		if(!avancer_dans_piste (position_arrivee))
 			
-			return position_arrivee ;
+			return new Couple <> (null, -1) ;
+			
+		if (estlibre(position_arrivee))
+				
+			return new Couple <> (true, position_arrivee) ;
+			
+		else
+				
+			return new Couple <> (false, position_arrivee) ;
 		
-		return -1 ;
 	}
 
 	@Override
-	public int peut_executer_attaque_directe(int portee) {
-		
-		int position_arrivee = piste.getFigurineGauche().getPosition() - portee ;
-		
-		if(avancer_dans_piste (position_arrivee) && ! estlibre(position_arrivee))
-		
-			return position_arrivee ;
-		
-		return -1 ;
-	}
+	public int peut_attaquer_indirectement(int position_apres_deplacement, int portee) {
 
-	@Override
-	public int peut_executer_attaque_indirecte(int deplacement, int portee) {
-
-		int position_arrivee = piste.getFigurineGauche().getPosition() - deplacement ;
+		int position_arrivee = position_apres_deplacement - portee ;
 		
-		if(peut_avancer (position_arrivee) != -1 && peut_executer_attaque_directe (position_arrivee - portee) != -1)
+		if(! estlibre(position_arrivee))
 		
 			return position_arrivee;
 		
@@ -101,35 +94,6 @@ public class JoueurDroit extends Joueur implements Action {
 	public void executer_attaque_indirecte(int deplacement, int portee, int nombre) {
 		
 		piste.getFigurineGauche().setPosition(piste.getFigurineGauche().getPosition() - deplacement) ;
-		
-	}
-	
-	@Override
-	public ArrayList <CartesDefaussees> peut_executer_action(int val_carte) {
-		
-		int position ;
-		ArrayList <CartesDefaussees> choix_possibles = new ArrayList <> () ;
-		
-		if ((position = peut_reculer(val_carte)) != -1)
-			
-			choix_possibles.add(new CartesDefaussees ("Reculer", position)) ;
-		
-		if ((position = peut_avancer(val_carte)) != 1) {
-			
-			choix_possibles.add(new CartesDefaussees ("Avancer", position)) ;
-			
-			if ((position = peut_executer_attaque_directe(val_carte)) != 1)
-				
-				choix_possibles.add(new CartesDefaussees ("Attaque directe", position)) ;
-			
-			for (Carte c : main.getMain())
-			
-				if ((position = peut_executer_attaque_indirecte(val_carte, c.getContenu())) != 1)
-				
-					choix_possibles.add(new CartesDefaussees ("Attaque indirecte", position)) ;
-		}
-		
-		return choix_possibles ;
 		
 	}
 

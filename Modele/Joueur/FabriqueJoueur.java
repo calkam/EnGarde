@@ -33,16 +33,44 @@ public class FabriqueJoueur {
 			
 			case 1 : return new HumainGauche(nom, main, piste) ;
 			case 2 : return new HumainDroit(nom, main, piste) ;
-			default : throw new Exception("Modele.Joueur.FabriqueJoueur.nouveauJoueur : position du joueur inconnue") ;
+			default : throw new Exception("Modele.Joueur.FabriqueJoueur.nouveauJoueur.nouveauJoueurHumain : position du joueur inconnue") ;
 			
 		}
+		
 		case "IA" :
 			
 			switch (nom) {
 			
-			case "Facile" : return new IAFacile() ;
-			case "Moyen" : return new IAMoyen() ;
-			case "Difficile" : return new IADifficile() ;
+			case "Facile" :
+				
+				switch (position) {
+				
+				case 1 : return new IAFacileGauche(nom, main, piste) ;
+				case 2 : return new IAFacileDroit(nom, main, piste) ;
+				default : throw new Exception("Modele.Joueur.FabriqueJoueur.nouveauJoueur.nouvelleIAFacile : position du joueur inconnue") ;
+				
+				}
+			
+			case "Moyen" :
+			
+				switch (position) {
+			
+				case 1 : return new IAMoyenGauche(nom, main, piste) ;
+				case 2 : return new IAMoyenDroit(nom, main, piste) ;
+				default : throw new Exception("Modele.Joueur.FabriqueJoueur.nouveauJoueur.nouvelleIAMoyen : position du joueur inconnue") ;
+				
+				}
+					
+			case "Difficile" : 
+				
+				switch (position) {
+				
+				case 1 : return new IADifficileGauche(nom, main, piste) ;
+				case 2 : return new IADifficileDroit(nom, main, piste) ;
+				default : throw new Exception("Modele.Joueur.FabriqueJoueur.nouveauJoueur.nouvelleIADifficile : position du joueur inconnue") ;
+				
+				}
+			
 			default : throw new Exception("Modele.Joueur.FabriqueJoueur.nouveauJoueur : difficulté inconnue") ;
 			
 			}
