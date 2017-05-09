@@ -1,12 +1,12 @@
 package Modele;
 
+import java.util.Random;
+
 import Modele.Joueur.Joueur;
 import Modele.Tas.Defausse;
 import Modele.Tas.Pioche;
 
 public class Manche {
-	
-	private final static int nombreCarteMax = 5;
 	
 	private int numero;
 	private int nbTourRealise;
@@ -17,16 +17,12 @@ public class Manche {
 	private Joueur joueur1;
 	private Joueur joueur2;
 	
-	public Manche(int numero, int nbTourRealise, Tour tourEnCours) {
+	public Manche(int numero, int nbTourRealise, Tour tour) {
 		this.numero = numero;
 		this.nbTourRealise = nbTourRealise;
-		this.tourEnCours = tourEnCours;
 		defausse = new Defausse();
 		pioche = new Pioche();
-	}
-	
-	public Manche(int numero, Tour tour) {
-		this(numero, 0, tour);
+		tourEnCours = tour;
 	}
 	
 	public Manche(int numero){
@@ -36,32 +32,38 @@ public class Manche {
 	public void initialiserJoueur(Joueur j1, Joueur j2){
 		joueur1 = j1;
 		joueur2 = j2;
-		remplirMain(joueur1);
-		remplirMain(joueur2);
 	}
 	
-	public void remplirMain(Joueur j){
-		int nbCarteMain = j.getMain().getNombreCarte();
-		
-		for(int i=nbCarteMain; i<nombreCarteMax; i++){
-			j.ajouterCarteDansMain(pioche.piocher());
+	private void choisirPremier(Joueur joueurPremier, Joueur joueurSecond){
+		Random rand = new Random();
+		boolean choix = rand.nextBoolean();
+		if(choix){
+			joueurPremier = joueur1;
+			joueurSecond = joueur2;
+		}else{
+			joueurPremier = joueur2;
+			joueurSecond = joueur1;
 		}
 	}
 	
+	private boolean estPasFini(int resultat){
+		return resultat == Tour.aucunJoueurPerdu;
+	}
+	
 	public void jouerManche(Joueur joueur1, Joueur joueur2){
-		Joueur joueurAttaquant = joueur1;
-		Joueur joueurDefenseur = joueur2;
-		while(!pioche.estVide() && ! joueurAttaquant.peutFaireAction(true).isEmpty()){
-			tourEnCours.initialiserTour(joueurAttaquant, joueurDefenseur);
-			tourEnCours.jouerTour();
-			remplirMain(joueurAttaquant);
-			if(joueurAttaquant.equals(joueur1)){
-				joueurAttaquant = joueur2;
-				joueurDefenseur = joueur1;
-			}else{
-				joueurAttaquant = joueur1;
-				joueurDefenseur = joueur2;
-			}
+		Joueur joueurPremier = null;
+		Joueur joueurSecond = null;
+		int resultat;
+		choisirPremier(joueurPremier, joueurSecond);
+		tourEnCours.setPioche(pioche);
+		tourEnCours.setJoueurPremier(joueurPremier);
+		tourEnCours.setJoueurSecond(joueurSecond);
+		do{
+			resultat = tourEnCours.jouerTour();
+			nbTourRealise++;
+		}while(estPasFini(resultat));
+		
+		if(resultat == Tour.piocheVide){
 		}
 	}
 	

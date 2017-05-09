@@ -2,6 +2,7 @@ package Modele.Joueur;
 
 import Modele.Couple;
 import Modele.Plateau.Piste;
+import Modele.Plateau.Score;
 import Modele.Tas.Carte;
 import Modele.Tas.Main;
 
@@ -14,12 +15,14 @@ public abstract class Joueur {
 	protected String nom ;
 	protected Main main ;
 	protected Piste piste ;
+	protected Score score ;
 
 	public Joueur(String nom, Main main, Piste piste) {
 		
 		this.nom = nom ;
 		this.main = main;
 		this.piste = piste;
+		this.score = new Score();
 	}
 	
 	public boolean peut_executer_parade(int attaque, int nombre) {
@@ -112,15 +115,11 @@ public abstract class Joueur {
 	public void setMain(Main main) {
 		this.main = main;
 	}
-	
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((main == null) ? 0 : main.hashCode());
-		result = prime * result + ((nom == null) ? 0 : nom.hashCode());
-		result = prime * result + ((piste == null) ? 0 : piste.hashCode());
-		return result;
+	public int getScore() {
+		return score.getNbPoints();
+	}
+	public void setScore(int nbPoints) {
+		this.score.setNbPoints(nbPoints);
 	}
 
 	@Override

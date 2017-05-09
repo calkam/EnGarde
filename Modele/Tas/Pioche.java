@@ -48,7 +48,7 @@ public class Pioche extends Tas {
 	}
 	
 	public boolean estVide(){
-		return p.size() == 0;
+		return (p.size() == 0);
 	}
 	
 	public Carte piocher(){
