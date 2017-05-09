@@ -95,7 +95,7 @@ public abstract class Joueur {
 		main.ajouter(c);
 	}
 	
-	public Carte jouerUneCarte(int i){
+	public Carte jouerUneCarte(int i) throws Exception{
 		main.supprimer(main.getCarte(i));
 		return main.getCarte(i); 
 	}

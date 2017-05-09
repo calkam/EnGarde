@@ -20,7 +20,7 @@ public class Main extends Tas {
 		nombreCarte[c.getContenu()]++ ;
 	}
 	
-	public void supprimer(Carte c){
+	public void supprimer(Carte c) throws Exception{
 		
 		int i = 0;
 		while(i < main.size() && (!main.get(i).equals(c))){
