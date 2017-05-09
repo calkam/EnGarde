@@ -14,4 +14,9 @@ public class Score {
 	public void setNbPoints(int nbPoints) {
 		this.nbPoints = nbPoints;
 	}
+
+	@Override
+	public String toString() {
+		return Integer.toString(nbPoints);
+	}
 }

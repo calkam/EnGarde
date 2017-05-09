@@ -28,7 +28,6 @@ public abstract class Joueur {
 	protected Score score ;
 
 	public Joueur(String nom, Main main, Piste piste) {
-		
 		this.nom = nom ;
 		this.main = main;
 		this.piste = piste;
@@ -151,7 +150,13 @@ public abstract class Joueur {
 
 	@Override
 	public String toString() {
-		return "Joueur [nom=" + nom + ", main=" + main + "]";
+		String str = "";
+		str += "Joueur [\n";
+		str += "  nom= " + nom + ",\n";
+		str += "  " + main;
+		str += "  score=" + score + ",\n";
+		str += "]\n";
+		return str;
 	}
 	
 	/*ArrayList<Action> lesActions;

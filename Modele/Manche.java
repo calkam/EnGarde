@@ -34,30 +34,33 @@ public class Manche {
 		joueur2 = j2;
 	}
 	
-	private void choisirPremier(Joueur joueurPremier, Joueur joueurSecond){
+	private Couple<Joueur, Joueur> choisirPremier(){
 		Random rand = new Random();
 		boolean choix = rand.nextBoolean();
+		Couple<Joueur, Joueur> c;
+		
 		if(choix){
-			joueurPremier = joueur1;
-			joueurSecond = joueur2;
+			c = new Couple<>(joueur1, joueur2);
 		}else{
-			joueurPremier = joueur2;
-			joueurSecond = joueur1;
+			c = new Couple<>(joueur2, joueur1);
 		}
+		
+		return c;
 	}
 	
 	private boolean estPasFini(int resultat){
 		return resultat == Tour.aucunJoueurPerdu;
 	}
 	
-	public void jouerManche(Joueur joueur1, Joueur joueur2){
-		Joueur joueurPremier = null;
-		Joueur joueurSecond = null;
+	public void jouerManche(){
+		Couple<Joueur, Joueur> tmp;
 		int resultat;
-		choisirPremier(joueurPremier, joueurSecond);
+		tmp = choisirPremier();
 		tourEnCours.setPioche(pioche);
-		tourEnCours.setJoueurPremier(joueurPremier);
-		tourEnCours.setJoueurSecond(joueurSecond);
+		tourEnCours.setJoueurPremier(tmp.getC1());
+		tourEnCours.setJoueurSecond(tmp.getC2());
+		tourEnCours.remplirMain(tourEnCours.getJoueurPremier());
+		tourEnCours.remplirMain(tourEnCours.getJoueurSecond());
 		do{
 			resultat = tourEnCours.jouerTour();
 			nbTourRealise++;
@@ -67,6 +70,11 @@ public class Manche {
 		}
 	}
 	
+	/**
+	 * 
+	 * GETTER/SETTER
+	 */
+	
 	public int getNumero() {
 		return numero;
 	}
@@ -74,5 +82,55 @@ public class Manche {
 	public void setNumero(int numero) {
 		this.numero = numero;
 	}
+
+	public int getNbTourRealise() {
+		return nbTourRealise;
+	}
+
+	public void setNbTourRealise(int nbTourRealise) {
+		this.nbTourRealise = nbTourRealise;
+	}
+
+	public Tour getTourEnCours() {
+		return tourEnCours;
+	}
+
+	public void setTourEnCours(Tour tourEnCours) {
+		this.tourEnCours = tourEnCours;
+	}
+
+	public Pioche getPioche() {
+		return pioche;
+	}
+
+	public void setPioche(Pioche pioche) {
+		this.pioche = pioche;
+	}
+
+	public Defausse getDefausse() {
+		return defausse;
+	}
+
+	public void setDefausse(Defausse defausse) {
+		this.defausse = defausse;
+	}
+
+	public Joueur getJoueur1() {
+		return joueur1;
+	}
+
+	public void setJoueur1(Joueur joueur1) {
+		this.joueur1 = joueur1;
+	}
+
+	public Joueur getJoueur2() {
+		return joueur2;
+	}
+
+	public void setJoueur2(Joueur joueur2) {
+		this.joueur2 = joueur2;
+	}
+	
+	
 	
 }

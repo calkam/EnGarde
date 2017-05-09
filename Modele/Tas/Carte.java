@@ -24,11 +24,11 @@ public enum Carte {
 
 	public String toString(){
 		switch (this.getContenu()) {
-	        case 1: return "un";
-	        case 2: return "deux";
-	        case 3: return "trois";
-	        case 4: return "quatre";
-	        case 5: return "cinq";
+	        case 1: return Integer.toString(1);
+	        case 2: return Integer.toString(2);
+	        case 3: return Integer.toString(3);
+	        case 4: return Integer.toString(4);
+	        case 5: return Integer.toString(5);
 	        default: throw new RuntimeException("Ajout de carte sur " + this +" impossible");
 		}
 	}

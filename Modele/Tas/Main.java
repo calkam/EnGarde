@@ -13,6 +13,7 @@ public class Main extends Tas {
 	public void ajouter(Carte c){
 		main.add(c);
 		nombreCarte[c.getContenu()]++ ;
+		nombreCarte[0]++ ;
 	}
 	
 	public void supprimer(Carte c) throws Exception{
@@ -24,6 +25,7 @@ public class Main extends Tas {
 		if(i < main.size()){
 			main.remove(i);
 			nombreCarte[c.getContenu()]-- ;
+			nombreCarte[0]-- ;
 		}else {
 			throw new Exception ("Modele.Tas.Main.supprimer : rien a supprimer");
 		}
@@ -41,12 +43,14 @@ public class Main extends Tas {
 	public void setMain(ArrayList<Carte> m) {
 		this.main = m;
 	}
-
+	
 	public String toString(){
-		String resultat = "Main: "+ main.size() +'\n' ;
-		resultat += main.toString();
+		String resultat = "";
+		resultat += "Main [\n";
+		resultat += "    size= " + main.size() + "\n";
+		resultat += "    main= " + main.toString() + "\n";
+		resultat += "  ]\n";
 		return resultat;
-		
 	}
 			
 }
