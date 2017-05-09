@@ -19,7 +19,6 @@ public class ActionsJouables extends Hashtable <Integer, ArrayList<Triplet<Integ
 	public Triplet <Integer, Carte, Carte> ajouterChoix (Integer action, int position, Carte carte, Carte carte_attaque_indirecte) {
 		
 		return put(action, new Triplet <Integer, Carte, Carte> (position, carte, carte_attaque_indirecte));
-		
 	}
 
 	@Override
