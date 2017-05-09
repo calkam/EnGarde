@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -19,21 +18,20 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <ButtonBar layoutX="211.0" layoutY="496.0" prefHeight="40.0" AnchorPane.leftAnchor="170.0" AnchorPane.rightAnchor="170.0">
-        <buttons>
-          <Button mnemonicParsing="false" text="Charger" textOverrun="CLIP">
-               <font>
-                  <Font name="eufm10" size="20.0" />
-               </font></Button>
-            <Button mnemonicParsing="false" prefWidth="340.0" text="Sauvegarder" textOverrun="CLIP">
-               <font>
-                  <Font name="eufm10" size="20.0" />
-               </font></Button>
-            <Button mnemonicParsing="false" onMouseClicked="#menu" text="Menu Principal" textOverrun="CLIP">
-               <font>
-                  <Font name="eufm10" size="20.0" />
-               </font></Button>
-        </buttons>
-      </ButtonBar>
+    <Button layoutX="1055.0" layoutY="496.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="275.0" text="Charger" textOverrun="CLIP">
+         <font>
+            <Font name="eufm10" size="20.0" />
+         </font>
+      </Button>
+      <Button layoutY="496.0" mnemonicParsing="false" onMouseClicked="#menu" prefHeight="40.0" prefWidth="275.0" text="Menu Principal" textOverrun="CLIP" AnchorPane.leftAnchor="270.0">
+         <font>
+            <Font name="eufm10" size="20.0" />
+         </font>
+      </Button>
+      <Button layoutX="754.0" layoutY="496.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="275.0" text="Supprimer" textOverrun="CLIP">
+         <font>
+            <Font name="eufm10" size="20.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
