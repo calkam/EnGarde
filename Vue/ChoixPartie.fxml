@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="900.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Vue.ControleurChoixPartie">
+   <children>
+      <Button layoutX="573.0" layoutY="243.0" mnemonicParsing="false" onAction="#lancerPartie" prefHeight="415.0" prefWidth="455.0" text="Lancer Partie" />
+   </children>
+</AnchorPane>
