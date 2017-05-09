@@ -48,7 +48,7 @@
             </Button>
          </children>
       </GridPane>
-      <Text fill="#0d0d0d" layoutY="165.0" nodeOrientation="LEFT_TO_RIGHT" smooth="false" stroke="WHITE" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="3.0" styleClass="text" text="En Garde" textAlignment="CENTER" textOrigin="TOP" AnchorPane.leftAnchor="613.75" AnchorPane.rightAnchor="613.76318359375">
+      <Text layoutY="165.0" nodeOrientation="LEFT_TO_RIGHT" smooth="false" stroke="WHITE" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="3.0" styleClass="text" text="En Garde" textAlignment="CENTER" textOrigin="TOP" AnchorPane.leftAnchor="613.75" AnchorPane.rightAnchor="613.76318359375">
          <font>
             <Font name="eufm10" size="91.0" />
          </font>

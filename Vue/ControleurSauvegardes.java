@@ -7,7 +7,6 @@ import Vue.MainApp;
 
 public class ControleurSauvegardes {
 		
-    private Stage dialogStage;
     private MainApp mainApp;
     
     public ControleurSauvegardes(){
@@ -15,10 +14,6 @@ public class ControleurSauvegardes {
     
 	public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
-    }
-	
-	public void setDialogStage(Stage dialogStage) {
-        this.dialogStage = dialogStage;
     }
 	
 	@FXML

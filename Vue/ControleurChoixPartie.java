@@ -7,7 +7,6 @@ import Vue.MainApp;
 
 public class ControleurChoixPartie {
 		
-    private Stage dialogStage;
     private MainApp mainApp;
     
     public ControleurChoixPartie(){
@@ -21,5 +20,10 @@ public class ControleurChoixPartie {
     private void lancerPartie(){
 		mainApp.jeu();
     }
+	
+	@FXML
+	private void menu(){
+		mainApp.acceuil();
+	}
 }
 
