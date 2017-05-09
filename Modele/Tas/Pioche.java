@@ -13,6 +13,12 @@ public class Pioche extends Tas {
 		this.melanger();
 	}
 	
+	// On mélange les cartes de la pioche selon l'algo suivant :
+	// On crée 5 tas de 5 cartes de valeurs identiques de 1 à 5
+	// On ajoute dans la pioche une carte d'un des tas d'indice i tiré aléatoirement
+	// Si un tas est vide, il est "écrasé" par le tas le plus à droite
+	// On continue d'ajouter des cartes tant qu'il reste des tas
+	
 	public void melanger(){
 		ArrayList<ArrayList<Carte> > jeu = new ArrayList<> (5);
 		ArrayList<Carte> tas;
