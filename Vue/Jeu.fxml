@@ -5,6 +5,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Vue.ControleurJeu">
    <children>
-      <Button layoutX="1204.0" layoutY="14.0" mnemonicParsing="false" text="Button" />
+      <Button layoutX="1417.0" layoutY="26.0" mnemonicParsing="false" onAction="#menuPrincipal" prefHeight="37.0" prefWidth="151.0" text="Menu Principal" />
+      <Button layoutX="1235.0" layoutY="26.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="151.0" text="Sauvegarder" />
    </children>
 </AnchorPane>

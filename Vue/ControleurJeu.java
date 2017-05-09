@@ -14,4 +14,8 @@ public class ControleurJeu {
         this.mainApp = mainApp;
     }
 	
+	@FXML
+    private void menuPrincipal(){
+		mainApp.acceuil();
+    }
 }
