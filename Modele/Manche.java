@@ -64,7 +64,6 @@ public class Manche {
 		}while(estPasFini(resultat));
 		
 		if(resultat == Tour.piocheVide){
-			
 		}
 	}
 	
