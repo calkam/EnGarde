@@ -64,7 +64,7 @@ public class ControleurJeu {
     }
 
     private void dessinerJoueurDroit(){
-        gc.rect(0, 0, terrain.getWidth()/2, terrain.getHeight());
+        gc.strokeRect(terrain.getWidth()/23, 0, terrain.getWidth()/23, terrain.getHeight());
         System.out.println("You have draw J1");
     }
     
