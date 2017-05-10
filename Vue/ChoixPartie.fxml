@@ -10,7 +10,7 @@
 
 <AnchorPane prefHeight="900.0" prefWidth="1600.0" styleClass="background" stylesheets="@Theme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Vue.ControleurChoixPartie">
    <children>
-      <Pane layoutX="449.0" layoutY="242.0" prefHeight="396.0" prefWidth="674.0" styleClass="fondQuitter" AnchorPane.leftAnchor="450.0" AnchorPane.rightAnchor="450.0">
+      <Pane layoutX="449.0" layoutY="242.0" prefHeight="396.0" prefWidth="674.0" AnchorPane.leftAnchor="450.0" AnchorPane.rightAnchor="450.0">
          <children>
             <Text fill="WHITE" layoutX="20.0" layoutY="55.0" stroke="BLACK" strokeType="OUTSIDE" text="Choix des combattants">
                <font>
@@ -23,36 +23,36 @@
                </font>
             </Text>
             <ChoiceBox fx:id="ChoixCombattant1" layoutX="50.0" layoutY="140.0" prefHeight="26.0" prefWidth="200.0" />
-            <Text fill="#fffefe" layoutX="320.0" layoutY="120.0" stroke="#070707" strokeType="OUTSIDE" text="Niveau du combattant 1" visible="false">
+            <Text fx:id="TexteNiveau1" fill="#fffefe" layoutX="320.0" layoutY="120.0" stroke="#070707" strokeType="OUTSIDE" text="Niveau du combattant 1" visible="false">
                <font>
                   <Font name="eufm10" size="30.0" />
                </font>
             </Text>
             <ChoiceBox fx:id="NiveauCombattant1" layoutX="320.0" layoutY="140.0" prefHeight="26.0" prefWidth="200.0" visible="false" />
-            <Text fill="#fffefe" layoutX="320.0" layoutY="120.0" stroke="#070707" strokeType="OUTSIDE" text="Nom de combattant 1" visible="false">
+            <Text fx:id="TexteNom1" fill="#fffefe" layoutX="320.0" layoutY="120.0" stroke="#070707" strokeType="OUTSIDE" text="Nom de combattant 1">
                <font>
                   <Font name="eufm10" size="30.0" />
                </font>
             </Text>
-            <TextField layoutX="320.0" layoutY="140.0" prefHeight="26.0" prefWidth="200.0" promptText="entrez un nom..." visible="false" />
+            <TextField fx:id="NomCombattant1" layoutX="320.0" layoutY="140.0" prefHeight="26.0" prefWidth="200.0" promptText="entrez un nom..." />
             <Text fill="WHITE" stroke="BLACK" strokeType="OUTSIDE" text="Combattant 2" x="50.0" y="240.0">
                <font>
                   <Font name="eufm10" size="30.0" />
                </font>
             </Text>
             <ChoiceBox fx:id="ChoixCombattant2" layoutX="50.0" layoutY="260.0" prefHeight="26.0" prefWidth="200.0" />
-            <Text fill="#fffefe" layoutX="320.0" layoutY="240.0" stroke="#070707" strokeType="OUTSIDE" text="Niveau du combattant 2" visible="false">
+            <Text fx:id="TexteNiveau2" fill="#fffefe" layoutX="320.0" layoutY="240.0" stroke="#070707" strokeType="OUTSIDE" text="Niveau du combattant 2">
                <font>
                   <Font name="eufm10" size="30.0" />
                </font>
             </Text>
-            <ChoiceBox fx:id="NiveauCombattant2" layoutX="320.0" layoutY="260.0" prefHeight="26.0" prefWidth="200.0" visible="false" />
-            <Text fill="#fffefe" layoutX="320.0" layoutY="240.0" stroke="#070707" strokeType="OUTSIDE" text="Nom de combattant 2" visible="false">
+            <ChoiceBox fx:id="NiveauCombattant2" layoutX="320.0" layoutY="260.0" prefHeight="26.0" prefWidth="200.0" />
+            <Text fx:id="TexteNom2" fill="#fffefe" layoutX="320.0" layoutY="240.0" stroke="#070707" strokeType="OUTSIDE" text="Nom de combattant 2" visible="false">
                <font>
                   <Font name="eufm10" size="30.0" />
                </font>
             </Text>
-            <TextField layoutX="320.0" layoutY="260.0" prefHeight="26.0" prefWidth="200.0" promptText="entrez un nom..." visible="false" />
+            <TextField fx:id="NomCombattant2" layoutX="320.0" layoutY="260.0" prefHeight="26.0" prefWidth="200.0" promptText="entrez un nom..." visible="false" />
             <Button layoutX="40.0" layoutY="330.0" mnemonicParsing="false" onAction="#menu" prefHeight="40.0" prefWidth="200.0" text="Menu Principal">
                <font>
                   <Font name="eufm10" size="20.0" />
