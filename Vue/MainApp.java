@@ -6,6 +6,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
+import javafx.scene.Group;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -67,7 +68,7 @@ public class MainApp extends Application {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("/Vue/Acceuil.fxml"));
             AnchorPane personOverview = (AnchorPane) loader.load();
-
+            
             // Set person overview into the center of root layout.
             rootLayout.setCenter(personOverview);
             
@@ -78,6 +79,7 @@ public class MainApp extends Application {
             Image imageC = new Image("/Ressources/SourisEpee.png");
             primaryStage.getScene().setCursor(new ImageCursor(imageC));
 
+            Utils.playSound("MainTheme.mp3");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -152,6 +154,7 @@ public class MainApp extends Application {
             // Give the controller access to the main app.
             ControleurJeu controller = loader.getController();
             controller.setMainApp(this);
+            controller.initGraphics();
             
             Image imageC = new Image("/Ressources/SourisEpee.png");
             primaryStage.getScene().setCursor(new ImageCursor(imageC));
