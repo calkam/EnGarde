@@ -26,10 +26,10 @@ public class Pioche extends Tas {
 		int index = 0;
 		Random r = new Random();
 			
-		for(Carte c :Carte.values()){
+		for(int i=1; i<=5; i++){
 			tas = new ArrayList<>();
 			for(int j = 1 ; j <= 5 ; j++){
-				tas.add(c);
+				tas.add(new Carte((i-1)*5+j, i));
 			}
 			jeu.add(tas);
 		}

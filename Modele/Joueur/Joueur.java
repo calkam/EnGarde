@@ -25,6 +25,7 @@ public abstract class Joueur {
 	protected String nom ;
 	protected Main main ;
 	protected Piste piste ;
+
 	protected Score score ;
 
 	public Joueur(String nom, Main main, Piste piste) {
@@ -44,49 +45,70 @@ public abstract class Joueur {
 	abstract public void avancer (int distance)  ;
 	abstract public void reculer (int distance)  ;
 	abstract public void executer_attaque_indirecte (int deplacement, int portee, int nombre)  ;
+	abstract public int getPositionFigurine() ;
 	
-	public ActionsJouables peutFaireAction(int est_attaque) {
+	public ActionsJouables peutFaireAction(Couple<Integer, Integer> est_attaque) {
 		
 		int position ;
 		ActionsJouables actions_jouables = new ActionsJouables () ;
+		Carte carte;
+		Carte carteOpt;
 		
-		for (Carte val_carte : main.getMain()) {
+		for(int i=0; i<main.getNombreCarte(); i++){
 			
-			if ((position = peut_reculer(val_carte.getContenu())) != ActionImpossible)
-				
-				actions_jouables.ajouterChoix(Reculer, position, val_carte, null) ;
-		
-			if (est_attaque == Tour.pasAttaque) {
-					
+			carte = main.getCarte(i);
+			
+			if(est_attaque.getC1() == Tour.pasAttaque){
 				Couple <Boolean, Integer> test_avancer_ou_attaquer ;
 				
-				if ((test_avancer_ou_attaquer = peut_avancer_ou_attaquer_directement(val_carte.getContenu())).getC2() != ActionImpossible) {
+				if((position = peut_reculer(carte.getContenu())) != ActionImpossible){
+					actions_jouables.ajouterActionNeutre(carte.getID(), Reculer, position, carte) ;
+				}
+				
+				if ((test_avancer_ou_attaquer = peut_avancer_ou_attaquer_directement(carte.getContenu())).getC2() != ActionImpossible) {
 					
-					if (! test_avancer_ou_attaquer.getC1())
+					if (!test_avancer_ou_attaquer.getC1()) {
 						
-						actions_jouables.ajouterChoix(AttaqueDirecte, test_avancer_ou_attaquer.getC2(), val_carte, null) ;
-					
-					else {
-						
-						actions_jouables.ajouterChoix(Avancer, test_avancer_ou_attaquer.getC2(), val_carte, null) ;
-					
-						for (Carte c : main.getMain()) {
-							
-							int position_attaque_indirecte ;
-					
-							if ((position = test_avancer_ou_attaquer.getC2()) != ActionImpossible && 
-									(position_attaque_indirecte = peut_attaquer_indirectement(val_carte.getContenu(), c.getContenu())) != ActionImpossible)
-						
-								actions_jouables.ajouterChoix(AttaqueIndirecte, position + position_attaque_indirecte, val_carte, c) ;
-							
+						for(int j=1; j<=main.getNombreCarteGroupe(carte.getContenu()); j++){
+							actions_jouables.ajouterActionOffensive(carte.getID(), AttaqueDirecte, test_avancer_ou_attaquer.getC2(), null, carte, j);
 						}
-					}
-				}	
-			}
-			
-			else if (peut_executer_parade(val_carte.getContenu(), 1))
+							
+					} else {
 						
-				actions_jouables.ajouterChoix(Parade, position, val_carte, null) ;		
+						actions_jouables.ajouterActionNeutre(carte.getID(), Avancer, test_avancer_ou_attaquer.getC2(), carte) ;
+					
+						for (int j=0; j<main.getNombreCarte(); j++) {
+							if(i!=j){
+								carteOpt = main.getCarte(j);
+								
+								int position_attaque_indirecte ;
+						
+								if (((position = test_avancer_ou_attaquer.getC2()) != ActionImpossible) && 
+								    ((position_attaque_indirecte = peut_attaquer_indirectement(position, carteOpt.getContenu())) != ActionImpossible)){
+							
+									for(int k=1; k<=main.getNombreCarteGroupe(carte.getContenu()); k++){
+										actions_jouables.ajouterActionOffensive(carte.getID(), AttaqueIndirecte, position + position_attaque_indirecte, carte, carteOpt, k+1) ;
+									}
+									
+								}
+							}
+						}
+						
+					}
+				}
+			}else{
+				
+				if(peut_executer_parade(carte.getContenu(), est_attaque.getC2())){
+					actions_jouables.ajouterActionDefensive(carte.getID(), Parade, getPositionFigurine(), null, carte, est_attaque.getC2());
+				}
+				
+				if(est_attaque.getC1() == Tour.attaqueIndirect){
+					if((position = peut_reculer(carte.getContenu())) != ActionImpossible){
+						actions_jouables.ajouterActionDefensive(carte.getID(), Parade, position, carte, null, 1);
+					}
+				}
+				
+			}
 		}
 			
 		return actions_jouables ;
@@ -97,9 +119,8 @@ public abstract class Joueur {
 		main.ajouter(c);
 	}
 	
-	public Carte jouerUneCarte(int i) throws Exception{
-		main.supprimer(main.getCarte(i));
-		return main.getCarte(i); 
+	public void defausserUneCarte(Carte c) throws Exception{
+		main.supprimer(c);
 	}
 	
 	public String getNom() {
@@ -119,6 +140,13 @@ public abstract class Joueur {
 	}
 	public void setScore(int nbPoints) {
 		this.score.setNbPoints(nbPoints);
+	}
+	public Piste getPiste() {
+		return piste;
+	}
+
+	public void setPiste(Piste piste) {
+		this.piste = piste;
 	}
 
 	@Override

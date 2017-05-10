@@ -41,12 +41,12 @@ public class Piste extends Rectangle {
 	}
 	
 	public boolean estdansPiste(int position) {
-		return position >=0 && position < cases.size() ;
+		return position >=1 && position < cases.size() ;
 	}
 	
 	public void initTableauCases(){
 		cases = new ArrayList<Case>();
-		for(int i=0; i<23; i++){
+		for(int i=0; i<24; i++){
 			Case c = new Case(0, i*Case.largeur, 0);
 			cases.add(c);
 		}
@@ -74,9 +74,9 @@ public class Piste extends Rectangle {
 	public String toString() {
 		String str = "Piste \n";
 		str += "[\n";
-		str += "  figurineGauche=" + figurineGauche + ",\n";
-		str += "  figurineDroite=" + figurineDroite + ",\n";
-		str += "  ";
+		str += "  figurineGauche=" + figurineGauche.toString() + ",\n";
+		str += "  figurineDroite=" + figurineDroite.toString() + ",\n";
+		str += "  cases=";
 		for(Case c : cases){
 			str += "{" + c + "}, ";
 		}

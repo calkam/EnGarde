@@ -7,5 +7,4 @@ public class FigurineDroite extends Figurine {
 	public FigurineDroite(float x, float y, float rayon, int position) {
 		super(x, y, rayon, position) ;
 	}
-
 }

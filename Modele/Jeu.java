@@ -17,17 +17,16 @@ public class Jeu {
 
 	public void init() throws Exception {
 		plateauScore = new PlateauScore() ;
-		piste = new Piste(new FigurineGauche(), new FigurineDroite()) ;
-		joueur1 = new FabriqueJoueur (1, "Humain", "Joueur1", new Main(), piste).nouveauJoueur() ;
-		joueur2 = new FabriqueJoueur (2, "Humain", "Joueur2", new Main(), piste).nouveauJoueur() ;
+		piste = new Piste(new FigurineGauche(0,0,0,1), new FigurineDroite(0,0,0,23)) ;
+		joueur1 = new FabriqueJoueur (1, "Humain", "Kaiba (Joueur 1)", new Main(), piste).nouveauJoueur() ;
+		joueur2 = new FabriqueJoueur (2, "Humain", "Yugi (Joueur 2)", new Main(), piste).nouveauJoueur() ;
 		joueur1.setScore(0);
 		joueur2.setScore(0);
 	}
 	
 	/**
 	 * FIN DE PARTIE
-	 */
-	
+	 */	
 	public boolean gainPartie(){
 		boolean gagne = false;
 		
@@ -62,7 +61,7 @@ public class Jeu {
 		manche = new Manche(manche.getNumero()+1);
 	}
 	
-	public void lancerLaManche(){
+	public void lancerLaManche() throws Exception{
 		manche.jouerManche();
 	}
 

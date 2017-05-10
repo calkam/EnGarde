@@ -11,13 +11,14 @@ public class JoueurGauche extends Joueur {
 		
 	}
 	
-	private boolean deplacer_dans_piste (int distance) {
+	// INUTILISEE
+	/*private boolean deplacer_dans_piste (int distance) {
 		
 		int position_arrivee = piste.getFigurineGauche().getPosition() + distance ;
 		
 		return piste.estdansPiste(position_arrivee) ;
 		
-	}
+	}*/
 	
 	private boolean estlibre (int position) {
 		
@@ -29,8 +30,9 @@ public class JoueurGauche extends Joueur {
 		
 		int position_arrivee = piste.getFigurineGauche().getPosition() + distance ;
 		
-		return deplacer_dans_piste(position_arrivee) && position_arrivee <= piste.getFigurineDroite().getPosition() ;
+		//C'EST DE LA MERDE return deplacer_dans_piste(position_arrivee) && position_arrivee <= piste.getFigurineDroite().getPosition() ;
 		
+		return position_arrivee <= piste.getFigurineDroite().getPosition() ;
 	}
 	
 	@Override
@@ -38,7 +40,7 @@ public class JoueurGauche extends Joueur {
 		
 		int position_arrivee = piste.getFigurineGauche().getPosition() - distance ;
 		
-		if(deplacer_dans_piste (position_arrivee))
+		if(piste.estdansPiste(position_arrivee))
 			
 			return position_arrivee ;
 		
@@ -51,7 +53,7 @@ public class JoueurGauche extends Joueur {
 		
 		int position_arrivee = piste.getFigurineGauche().getPosition() + distance ;
 		
-		if(!avancer_dans_piste (position_arrivee))
+		if(!avancer_dans_piste (distance))
 			
 			return new Couple <> (null, ActionImpossible) ;
 			
@@ -98,4 +100,8 @@ public class JoueurGauche extends Joueur {
 		
 	}
 
+	public int getPositionFigurine(){
+		return this.getPiste().getFigurineGauche().getPosition();
+	}
+	
 }

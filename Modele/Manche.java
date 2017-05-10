@@ -52,16 +52,20 @@ public class Manche {
 		return resultat == Tour.aucunJoueurPerdu;
 	}
 	
-	public void jouerManche(){
+	public void jouerManche() throws Exception{
 		Couple<Joueur, Joueur> tmp;
 		int resultat;
 		tmp = choisirPremier();
 		tourEnCours.setPioche(pioche);
+		tourEnCours.setDefausse(defausse);
 		tourEnCours.setJoueurPremier(tmp.getC1());
 		tourEnCours.setJoueurSecond(tmp.getC2());
 		tourEnCours.remplirMain(tourEnCours.getJoueurPremier());
 		tourEnCours.remplirMain(tourEnCours.getJoueurSecond());
 		do{
+			System.out.println(joueur1.toString());
+			System.out.println(joueur2.toString());
+			System.out.println(joueur1.getPiste().toString());
 			resultat = tourEnCours.jouerTour();
 			nbTourRealise++;
 		}while(estPasFini(resultat));

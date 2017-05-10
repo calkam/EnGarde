@@ -23,5 +23,8 @@ public abstract class Figurine extends Cercle {
 		this.position = position;
 	}
 
-	
+	@Override
+	public String toString() {
+		return "[position=" + position + "]";
+	}	
 }

@@ -4,19 +4,17 @@ public class Test {
 
 	static Jeu jeu;
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		
 		jeu = new Jeu();
 		try {
 			jeu.init();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}		
 		
-		jeu.initialiserPremiereManche();
+		jeu.initialiserPremiereManche();		
 		jeu.lancerLaManche();
-		
 	}
 	
 }
