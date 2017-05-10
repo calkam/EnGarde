@@ -18,17 +18,17 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-    <Button layoutX="1055.0" layoutY="496.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="275.0" text="Charger" textOverrun="CLIP">
-         <font>
-            <Font name="eufm10" size="20.0" />
-         </font>
-      </Button>
       <Button layoutY="496.0" mnemonicParsing="false" onMouseClicked="#menu" prefHeight="40.0" prefWidth="275.0" text="Menu Principal" textOverrun="CLIP" AnchorPane.leftAnchor="270.0">
          <font>
             <Font name="eufm10" size="20.0" />
          </font>
       </Button>
-      <Button layoutX="754.0" layoutY="496.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="275.0" text="Supprimer" textOverrun="CLIP">
+    <Button disable="true" layoutX="1055.0" layoutY="496.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="275.0" text="Charger" textOverrun="CLIP">
+         <font>
+            <Font name="eufm10" size="20.0" />
+         </font>
+      </Button>
+      <Button disable="true" layoutX="754.0" layoutY="496.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="275.0" text="Supprimer" textOverrun="CLIP">
          <font>
             <Font name="eufm10" size="20.0" />
          </font>
