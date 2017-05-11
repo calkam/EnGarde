@@ -25,8 +25,9 @@ public class Manche {
 		tourEnCours = tour;
 	}
 	
-	public Manche(int numero){
+	public Manche(int numero, Joueur joueur1, Joueur joueur2){
 		this(numero, 0, new Tour());
+		initialiserJoueur(joueur1, joueur2);
 	}
 
 	public void initialiserJoueur(Joueur j1, Joueur j2){
@@ -52,9 +53,23 @@ public class Manche {
 		return resultat == Tour.aucunJoueurPerdu;
 	}
 	
+	private void joueurAGagne(Joueur joueur){
+		System.out.println(joueur.getNom() + " a gagné la manche !");
+		joueur.setScore(joueur.getScore()+1);
+	}
+	
+	private int calculerNormeEntreDeuxPositions(int position1, int position2){
+		return Math.abs(position1 - position2);
+	}
+	
+	public void reinitialiserPiste(){
+		joueur1.reinitialiserPositionFigurine();
+		joueur2.reinitialiserPositionFigurine();
+	}
+	
 	public void jouerManche() throws Exception{
-		Couple<Joueur, Joueur> tmp;
 		int resultat;
+		Couple<Joueur, Joueur> tmp;
 		tmp = choisirPremier();
 		tourEnCours.setPioche(pioche);
 		tourEnCours.setDefausse(defausse);
@@ -62,23 +77,51 @@ public class Manche {
 		tourEnCours.setJoueurSecond(tmp.getC2());
 		tourEnCours.remplirMain(tourEnCours.getJoueurPremier());
 		tourEnCours.remplirMain(tourEnCours.getJoueurSecond());
+		
 		System.out.println(joueur1.toString());
 		System.out.println(joueur2.toString());
 		System.out.println(joueur1.getPiste().toString());
+		System.out.println(pioche);
+		
 		do{
 			resultat = tourEnCours.jouerTour();
 			nbTourRealise++;
 		}while(estPasFini(resultat));
 		
 		if(resultat == Tour.joueurPremierPerdu){			
-			System.out.println(tourEnCours.getJoueurSecond().getNom() + " a gagné la manche !");
-			joueur2.setScore(joueur1.getScore()+1);
-		}
-		else if(resultat == Tour.joueurSecondPerdu){
-			System.out.println(tourEnCours.getJoueurPremier().getNom() + " a gagné la manche !");
-			joueur1.setScore(joueur1.getScore()+1);
+			joueurAGagne(tourEnCours.getJoueurSecond());
+		}else if(resultat == Tour.joueurSecondPerdu){
+			joueurAGagne(tourEnCours.getJoueurPremier());
 		}else if(resultat == Tour.piocheVide){
 			System.out.println("Pioche vide");
+			
+			int distanceEntreFigurineJ1EtFigurineJ2 = calculerNormeEntreDeuxPositions(joueur1.getPositionFigurine(), joueur2.getPositionFigurine());
+			
+			if(distanceEntreFigurineJ1EtFigurineJ2 < 6){
+				int nbCartesDistanceJ1 = joueur1.getMain().getNombreCarteGroupe(distanceEntreFigurineJ1EtFigurineJ2);
+				int nbCartesDistanceJ2 = joueur2.getMain().getNombreCarteGroupe(distanceEntreFigurineJ1EtFigurineJ2);
+				
+				if(nbCartesDistanceJ1 > nbCartesDistanceJ2){
+					System.out.println("Le joueur 1 a plus de carte pour défoncer l'autre");
+					joueurAGagne(joueur1);
+				}else if(nbCartesDistanceJ1 < nbCartesDistanceJ2){
+					System.out.println("Le joueur 2 a plus de carte pour défoncer l'autre");
+					joueurAGagne(joueur2);
+				}
+			}else{
+				int distanceEntreCaseMedianeEtFigurineJ1 = calculerNormeEntreDeuxPositions(12, joueur1.getPositionFigurine());
+				int distanceEntreCaseMedianeEtFigurineJ2 = calculerNormeEntreDeuxPositions(12, joueur2.getPositionFigurine());
+				
+				if(distanceEntreCaseMedianeEtFigurineJ1 > distanceEntreCaseMedianeEtFigurineJ2){
+					System.out.println("Le joueur 2 est plus proche du centre");
+					joueurAGagne(joueur2);
+				}else if(distanceEntreCaseMedianeEtFigurineJ1 < distanceEntreCaseMedianeEtFigurineJ2){
+					System.out.println("Le joueur 1 est plus proche du centre");
+					joueurAGagne(joueur1);
+				}else{
+					System.out.println("Manche nulle !");
+				}
+			}
 		}
 	}
 	

@@ -13,8 +13,7 @@ public class Test {
 			e.printStackTrace();
 		}		
 		
-		jeu.initialiserPremiereManche();		
-		jeu.lancerLaManche();
+		jeu.lancerJeu();
 	}
 	
 }

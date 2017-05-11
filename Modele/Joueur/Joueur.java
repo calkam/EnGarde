@@ -38,7 +38,7 @@ public abstract class Joueur {
 		this.score = new Score();
 	}
 	
-	public boolean peut_executer_parade(int valeurCarteMain, int nombreDeCartes, int valeurCarteAttaque) {
+	public boolean peut_executer_parade(int valeurCarteMain, int nombreDeCartes, int valeurCarteAttaque) throws Exception {
 		boolean b = false;
 		
 		if(valeurCarteMain == valeurCarteAttaque && main.getNombreCarteGroupe(valeurCarteMain) >= nombreDeCartes){
@@ -54,9 +54,12 @@ public abstract class Joueur {
 	abstract public void avancer (int distance)  ;
 	abstract public void reculer (int distance)  ;
 	abstract public void executer_attaque_indirecte (int deplacement, int portee, int nombre)  ;
-	abstract public int getPositionFigurine() ;
 	
-	public ActionsJouables peutFaireAction(Triplet<Integer, Integer, Integer> est_attaque) {
+	abstract public int getPositionFigurine() ;
+	abstract public void setPositionFigurine(int position) ;
+	abstract public void reinitialiserPositionFigurine() ;
+	
+	public ActionsJouables peutFaireAction(Triplet<Integer, Integer, Integer> est_attaque) throws Exception {
 		
 		int position ;
 		ActionsJouables actions_jouables = new ActionsJouables () ;
