@@ -4,32 +4,45 @@ import Modele.Tas.Carte;
 
 public class ActionOffensive extends Action {
 
-	private Carte deplacement;
-	private Carte attaque;
+	private Carte carteDeplacement;
+	private Carte carteAttaque;
 	
-	public ActionOffensive(int typeAction, int nbCartes, int positionArrivee, Carte deplacement, Carte attaque) {
+	public ActionOffensive(int typeAction, int nbCartes, int positionArrivee, Carte carteDeplacement, Carte carteAttaque) {
 		super(typeAction, nbCartes, positionArrivee);
-		this.deplacement = deplacement;
-		this.attaque = attaque;
+		this.carteDeplacement = carteDeplacement;
+		this.carteAttaque = carteAttaque;
 	}
 	
-	public Carte getDeplacement() {
-		return deplacement;
+	public Carte getCarteDeplacement() {
+		return carteDeplacement;
 	}
-	public void setDeplacement(Carte deplacement) {
-		this.deplacement = deplacement;
+	public void setCarteDeplacement(Carte carteDeplacement) {
+		this.carteDeplacement = carteDeplacement;
 	}
-	public Carte getAttaque() {
-		return attaque;
+	public Carte getCarteAction() {
+		return carteAttaque;
 	}
-	public void setAttaque(Carte attaque) {
-		this.attaque = attaque;
+	public void setCarteAction(Carte carteAttaque) {
+		this.carteAttaque = carteAttaque;
 	}
 	
 	@Override
 	public String toString() {
-		String str = "ActionOffensive [ typeAction= " + typeAction + ", nbCartes= " + nbCartes 
-				+ ", positionArrivee= " + positionArrivee + ", deplacement= " + deplacement + ", attaque= " + attaque + " ]";
+		String strTypeAction = "";
+		
+		switch(typeAction){
+			case Joueur.ActionImpossible: strTypeAction += "ActionImpossible";break;
+			case Joueur.Reculer: strTypeAction += "Reculer";break;
+			case Joueur.Avancer: strTypeAction += "Avancer";break;
+			case Joueur.AttaqueDirecte: strTypeAction += "AttaqueDirecte";break;
+			case Joueur.AttaqueIndirecte: strTypeAction += "AttaqueIndirecte";break;
+			case Joueur.Parade: strTypeAction += "Parade";break;
+			case Joueur.Fuite: strTypeAction += "Fuite";break;
+			default: strTypeAction += "Erreur";
+		}
+		
+		String str = "ActionOffensive [ typeAction= " + strTypeAction + ", nbCartes= " + nbCartes 
+				+ ", positionArrivee= " + positionArrivee + ", deplacement= " + carteDeplacement + ", attaque= " + carteAttaque + " ]";
 		
 		return str;
 	}
@@ -37,8 +50,8 @@ public class ActionOffensive extends Action {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + ((attaque == null) ? 0 : attaque.hashCode());
-		result = prime * result + ((deplacement == null) ? 0 : deplacement.hashCode());
+		result = prime * result + ((carteAttaque == null) ? 0 : carteAttaque.hashCode());
+		result = prime * result + ((carteDeplacement == null) ? 0 : carteDeplacement.hashCode());
 		return result;
 	}
 	@Override
@@ -50,15 +63,15 @@ public class ActionOffensive extends Action {
 		if (getClass() != obj.getClass())
 			return false;
 		ActionOffensive other = (ActionOffensive) obj;
-		if (attaque == null) {
-			if (other.attaque != null)
+		if (carteAttaque == null) {
+			if (other.carteAttaque != null)
 				return false;
-		} else if (!attaque.equals(other.attaque))
+		} else if (!carteAttaque.equals(other.carteAttaque))
 			return false;
-		if (deplacement == null) {
-			if (other.deplacement != null)
+		if (carteDeplacement == null) {
+			if (other.carteDeplacement != null)
 				return false;
-		} else if (!deplacement.equals(other.deplacement))
+		} else if (!carteDeplacement.equals(other.carteDeplacement))
 			return false;
 		return true;
 	}

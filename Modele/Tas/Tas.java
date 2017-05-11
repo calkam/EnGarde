@@ -23,12 +23,13 @@ public abstract class Tas {
 	public int getNombreCarte(){
 		return nombreCarte[0];
 	}
-	
-	public int getNombreCarteGroupe(int i){
-		
+	public void setNombreCarte(int nbCartes){
+		nombreCarte[0] = nbCartes;
+	}	
+	public int getNombreCarteGroupe(int i){		
 		return nombreCarte[i];
-		
 	}
-	
-	
+	public void setNombreCarteGroupe(int i, int nbCartes){
+		nombreCarte[i] = nbCartes;
+	}
 }

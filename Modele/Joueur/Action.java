@@ -1,5 +1,7 @@
 package Modele.Joueur;
 
+import Modele.Tas.Carte;
+
 public abstract class Action {
 
 	protected int typeAction;
@@ -12,6 +14,11 @@ public abstract class Action {
 		this.nbCartes = nbCartes;
 		this.positionArrivee = positionArrivee;
 	}
+	
+	public abstract Carte getCarteDeplacement();
+	public abstract void setCarteDeplacement(Carte deplacement);
+	public abstract Carte getCarteAction();
+	public abstract void setCarteAction(Carte action);
 	
 	public int getTypeAction() {
 		return typeAction;

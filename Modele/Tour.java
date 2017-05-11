@@ -1,10 +1,12 @@
 package Modele;
 
+import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.Scanner;
 
+import Modele.Joueur.Action;
 import Modele.Joueur.ActionsJouables;
 import Modele.Joueur.Joueur;
-import Modele.Joueur.JoueurDroit;
 import Modele.Tas.Carte;
 import Modele.Tas.Defausse;
 import Modele.Tas.Pioche;
@@ -29,11 +31,11 @@ public class Tour{
 	private Joueur joueurSecond;
 	private Pioche pioche;
 	private Defausse defausse;
-	// Type de l'attaque, nombre de carte attaque
-	private Couple<Integer, Integer> estAttaque;
+	// Type de l'attaque, nombre de cartes attaque, valeur de la carte attaque
+	private Triplet<Integer, Integer, Integer> estAttaque;
 	
 	public Tour(){
-		this.estAttaque = new Couple<>(pasAttaque, 0);
+		this.estAttaque = new Triplet<>(pasAttaque, 0, 0);
 	}
 	
 	public Tour(Joueur m_joueurPremier, Joueur m_joueurSecond){
@@ -41,7 +43,7 @@ public class Tour{
 		this.joueurSecond = m_joueurSecond;
 		this.pioche = new Pioche();
 		this.defausse = new Defausse();
-		this.estAttaque = new Couple<>(pasAttaque, 0);
+		this.estAttaque = new Triplet<>(pasAttaque, 0, 0);
 	}
 	
 	public int jouerTour() throws Exception{
@@ -64,30 +66,51 @@ public class Tour{
 	public boolean jouerTourJoueur(Joueur joueur) throws Exception{
 		int choixAction ;	
 		ActionsJouables actions_jouables ;
+		Action actionChoisie;
 		
 		actions_jouables = joueur.peutFaireAction(estAttaque);
-		choixAction = selectionnerAction(actions_jouables);
+		choixAction = selectionnerAction(actions_jouables);		
+		actionChoisie = rechercherAction(choixAction, actions_jouables);
 		
-		if(choixAction == Joueur.ActionImpossible){
+		if(actionChoisie.getTypeAction() == Joueur.ActionImpossible){
 			return joueurPerdu;
 		}else{
-			//estAttaque = executerAction(choixAction, actions_jouables, joueur);			
+			estAttaque = executerAction(actionChoisie, joueur);			
 		}
 		
-		if(choixAction == Joueur.Parade){
-			estAttaque.setC1(pasAttaque); estAttaque.setC2(0); 
+		if(actionChoisie.getTypeAction() == Joueur.Parade){
+			//estAttaque.setC1(pasAttaque); estAttaque.setC2(0); 				INUTILE car fait dans executerAction() ???? 
 			actions_jouables = joueur.peutFaireAction(estAttaque);
 			choixAction = selectionnerAction(actions_jouables);
+			actionChoisie = rechercherAction(choixAction, actions_jouables);
 			
-			if(choixAction == Joueur.ActionImpossible){
+			if(actionChoisie.getTypeAction() == Joueur.ActionImpossible){
 				return joueurPerdu;
 			}else{
-				//estAttaque = executerAction(choixAction, actions_jouables, joueur);	
+				estAttaque = executerAction(actionChoisie, joueur);
 			}
 		}
 		remplirMain(joueur);
 		
 		return joueurPasPerdu;
+	}
+
+	private Action rechercherAction(int choixAction, ActionsJouables actions_jouables) {
+		Action actionCherchee = null;		
+		
+		Enumeration<Action> e = actions_jouables.elements();
+		int i = 0;
+		
+		while(e.hasMoreElements() && i != choixAction){
+			e.nextElement();				
+			i++;
+		}
+		
+		if(i == choixAction){
+			actionCherchee = e.nextElement();
+		}
+		
+		return actionCherchee;
 	}
 
 	public void remplirMain(Joueur j){		
@@ -108,45 +131,113 @@ public class Tour{
 		Scanner s = new Scanner(System.in);
 		
 		System.out.println(actions_jouables);		
-		System.out.print("Veuillez effectuer votre choix d'action : nombre entre 0 et N (N étant un entier naturel)");
+		System.out.println("Veuillez effectuer votre choix d'action : nombre entre 0 et N (N étant un entier naturel)");
 		
 		choixAction = Integer.parseInt(s.nextLine());
 		
 		return choixAction;
 	}
 	
-	private int executerAction(Couple<Integer, Integer> choixAction, ActionsJouables actions_jouables, Joueur joueur) throws Exception{
-		Carte carteJouee = actions_jouables.get(choixAction.getC1()).get(choixAction.getC2()).c2;
+	private ArrayList<Carte> getAutreCarteDeValeur(int valeur, int nbCartes, Joueur joueur){
+		ArrayList<Carte> cartes = new ArrayList<Carte>();
 		
-		switch(choixAction.getC1()){
-			case Joueur.Reculer : 				
-				joueur.reculer(carteJouee.getContenu());
-				defausse.ajouter(carteJouee);
-				joueur.defausserUneCarte(carteJouee);
+		int i=1; //On commence à 1 car une carte a déjà été défaussée dans executerAction() 
+		
+		for(Carte c : joueur.getCartesDeLaMain()){
+			if(c.getContenu() == valeur){
+				cartes.add(c);
+				i++;
+			}
+			if(i>=nbCartes){
 				break;
-			case Joueur.Avancer : 
-				joueur.avancer(carteJouee.getContenu());
-				defausse.ajouter(carteJouee);
-				joueur.defausserUneCarte(carteJouee);
+			}
+		}
+		
+		return cartes;
+	}
+	
+	private Triplet<Integer, Integer, Integer> executerAction(Action actionAJouer, Joueur joueur) throws Exception{
+		Carte carteDeplacement;
+		Carte carteAction;
+		
+		int typeAction;
+		int nbCartesAttqJouees;
+		int valeurCarteAttqJouee;
+		
+		ArrayList<Carte> cartesDeMemeValeur;
+		
+		switch(actionAJouer.getTypeAction()){
+			case Joueur.Reculer :
+				carteDeplacement = actionAJouer.getCarteDeplacement();
+				joueur.reculer(carteDeplacement.getContenu());
+				defausse.ajouter(carteDeplacement);
+				joueur.defausserUneCarte(carteDeplacement);
+				typeAction = pasAttaque; nbCartesAttqJouees = 0; valeurCarteAttqJouee = 0;
+				break;
+			case Joueur.Avancer :
+				carteDeplacement = actionAJouer.getCarteDeplacement();
+				joueur.avancer(carteDeplacement.getContenu());
+				defausse.ajouter(carteDeplacement);
+				joueur.defausserUneCarte(carteDeplacement);
+				typeAction = pasAttaque; nbCartesAttqJouees = 0; valeurCarteAttqJouee = 0;
 				break;
 			case Joueur.AttaqueDirecte : 
-				// J'EN SUIS LA !!!
-				// J'EN SUIS LA !!!
-				// J'EN SUIS LA !!!
-				// J'EN SUIS LA !!!
-				// J'EN SUIS LA !!!
-				// J'EN SUIS LA !!!
+				carteAction = actionAJouer.getCarteAction();
+				defausse.ajouter(carteAction);
+				joueur.defausserUneCarte(carteAction);
+				if(actionAJouer.getNbCartes() > 1){
+					cartesDeMemeValeur = getAutreCarteDeValeur(carteAction.getContenu(), actionAJouer.getNbCartes(), joueur);
+					for(Carte c : cartesDeMemeValeur){
+						defausse.ajouter(c);
+						joueur.defausserUneCarte(c);
+					}
+				}
+				typeAction = attaqueDirect; nbCartesAttqJouees = actionAJouer.getNbCartes(); valeurCarteAttqJouee = carteAction.getContenu();
 				break;
-			case Joueur.AttaqueIndirecte : 
+			case Joueur.AttaqueIndirecte :
+				// On avance dans un premier temps
+				carteDeplacement = actionAJouer.getCarteDeplacement();
+				joueur.avancer(carteDeplacement.getContenu());
+				defausse.ajouter(carteDeplacement);
+				joueur.defausserUneCarte(carteDeplacement);
+				
+				// On attaque dans un second temps	
+				carteAction = actionAJouer.getCarteAction();
+				defausse.ajouter(carteAction);
+				joueur.defausserUneCarte(carteAction);
+				if(actionAJouer.getNbCartes() > 1){
+					cartesDeMemeValeur = getAutreCarteDeValeur(carteAction.getContenu(), actionAJouer.getNbCartes(), joueur);
+					for(Carte c : cartesDeMemeValeur){
+						defausse.ajouter(c);
+						joueur.defausserUneCarte(c);
+					}
+				}
+				typeAction = attaqueIndirect; nbCartesAttqJouees = actionAJouer.getNbCartes(); valeurCarteAttqJouee = carteAction.getContenu();
 				break;
-			case Joueur.Parade : 
+			case Joueur.Parade :
+				carteAction = actionAJouer.getCarteAction();
+				defausse.ajouter(carteAction);
+				joueur.defausserUneCarte(carteAction);
+				if(actionAJouer.getNbCartes() > 1){
+					cartesDeMemeValeur = getAutreCarteDeValeur(carteAction.getContenu(), actionAJouer.getNbCartes(), joueur);
+					for(Carte c : cartesDeMemeValeur){
+						defausse.ajouter(c);
+						joueur.defausserUneCarte(c);
+					}
+				}				
+				typeAction = pasAttaque; nbCartesAttqJouees = 0; valeurCarteAttqJouee = 0;
 				break;
-			case Joueur.Fuite : 
+			case Joueur.Fuite :
+				carteDeplacement = actionAJouer.getCarteDeplacement();
+				joueur.reculer(carteDeplacement.getContenu());
+				defausse.ajouter(carteDeplacement);
+				joueur.defausserUneCarte(carteDeplacement);
+				typeAction = pasAttaque; nbCartesAttqJouees = 0; valeurCarteAttqJouee = 0;
 				break;
 			default: throw new Exception("Erreur lors de l'exécution de l'action");
 		}
 		
-		return 0;
+		return new Triplet<>(typeAction, nbCartesAttqJouees, valeurCarteAttqJouee);
 	}
 	
 	/**

@@ -28,8 +28,7 @@ public class Main extends Tas {
 			nombreCarte[0]-- ;
 		}else {
 			throw new Exception ("Modele.Tas.Main.supprimer : rien a supprimer");
-		}
-		
+		}		
 	}
 	
 	public Carte getCarte(int c){

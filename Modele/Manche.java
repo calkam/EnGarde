@@ -71,6 +71,13 @@ public class Manche {
 		}while(estPasFini(resultat));
 		
 		if(resultat == Tour.piocheVide){
+			//Tester qui a gagné ou s'il y a match nul
+		}
+		else if(resultat == Tour.joueurPremierPerdu){			
+			System.out.println(tourEnCours.getJoueurSecond().getNom() + " a gagné la manche !");
+		}
+		else{
+			//System.out.println(x);		
 		}
 	}
 	
