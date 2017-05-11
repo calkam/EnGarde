@@ -1,6 +1,8 @@
 package Vue;
 
 import java.io.IOException;
+
+import Modele.Jeu;
 import javafx.application.Application;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -22,6 +24,7 @@ import javafx.stage.StageStyle;
 
 public class MainApp extends Application {
 
+	static Jeu jeu;
     private Stage primaryStage;
     private BorderPane rootLayout;
     int scene;
@@ -194,10 +197,9 @@ public class MainApp extends Application {
         return primaryStage;
     }
 
-    public static void main(String[] args) {
-        launch(args);
+    public static void creer(String[] args, Jeu j){
+    	launch(args);
     }
-
 	
 
 }
