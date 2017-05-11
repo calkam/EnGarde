@@ -24,6 +24,20 @@ public class Jeu {
 		joueur2.setScore(0);
 	}
 	
+	public void lancerJeu(){
+		try {
+			initialiserPremiereManche();
+			lancerLaManche();
+			while(!gainPartie()){
+				nouvelleManche();
+				lancerLaManche();
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	/**
 	 * FIN DE PARTIE
 	 */	

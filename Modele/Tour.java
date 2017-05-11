@@ -5,6 +5,7 @@ import java.util.Enumeration;
 import java.util.Scanner;
 
 import Modele.Joueur.Action;
+import Modele.Joueur.ActionNeutre;
 import Modele.Joueur.ActionsJouables;
 import Modele.Joueur.Joueur;
 import Modele.Tas.Carte;
@@ -48,7 +49,7 @@ public class Tour{
 	
 	public int jouerTour() throws Exception{
 		
-		if(jouerTourJoueur(joueurPremier)){			
+		if(jouerTourJoueur(joueurPremier)){	
 			if(jouerTourJoueur(joueurSecond)){
 				if(!pioche.estVide()){
 					return aucunJoueurPerdu;
@@ -68,6 +69,10 @@ public class Tour{
 		ActionsJouables actions_jouables ;
 		Action actionChoisie;
 		
+		System.out.println("/*************************************************************************************************************/");
+		System.out.println("Joueur : " + joueur.getNom() + ", position : " + joueur.getPositionFigurine());
+		System.out.println("Main : " + joueur.getMain().getMain() + "\n");
+		
 		actions_jouables = joueur.peutFaireAction(estAttaque);
 		choixAction = selectionnerAction(actions_jouables);		
 		actionChoisie = rechercherAction(choixAction, actions_jouables);
@@ -79,7 +84,9 @@ public class Tour{
 		}
 		
 		if(actionChoisie.getTypeAction() == Joueur.Parade){
-			//estAttaque.setC1(pasAttaque); estAttaque.setC2(0); 				INUTILE car fait dans executerAction() ???? 
+			System.out.println("Joueur : " + joueur.getNom() + ", position : " + joueur.getPositionFigurine());
+			System.out.println("Main : " + joueur.getMain().getMain() + "\n");
+			
 			actions_jouables = joueur.peutFaireAction(estAttaque);
 			choixAction = selectionnerAction(actions_jouables);
 			actionChoisie = rechercherAction(choixAction, actions_jouables);
@@ -92,10 +99,18 @@ public class Tour{
 		}
 		remplirMain(joueur);
 		
+		System.out.println("Joueur : " + joueur.getNom() + ", position : " + joueur.getPositionFigurine());
+		System.out.println("Main : " + joueur.getMain().getMain() + "\n");
+		
 		return joueurPasPerdu;
 	}
 
 	private Action rechercherAction(int choixAction, ActionsJouables actions_jouables) {
+		
+		if(choixAction == Joueur.ActionImpossible){
+			return new ActionNeutre(Joueur.ActionImpossible);
+		}
+		
 		Action actionCherchee = null;		
 		
 		Enumeration<Action> e = actions_jouables.elements();
@@ -130,7 +145,12 @@ public class Tour{
 		@SuppressWarnings("resource")
 		Scanner s = new Scanner(System.in);
 		
-		System.out.println(actions_jouables);		
+		System.out.println(actions_jouables);
+		
+		if(actions_jouables.size() == 0){
+			return Joueur.ActionImpossible;
+		}
+		
 		System.out.println("Veuillez effectuer votre choix d'action : nombre entre 0 et N (N étant un entier naturel)");
 		
 		choixAction = Integer.parseInt(s.nextLine());
@@ -157,8 +177,8 @@ public class Tour{
 	}
 	
 	private Triplet<Integer, Integer, Integer> executerAction(Action actionAJouer, Joueur joueur) throws Exception{
-		Carte carteDeplacement;
-		Carte carteAction;
+		Carte carteDeplacement=null;
+		Carte carteAction=null;
 		
 		int typeAction;
 		int nbCartesAttqJouees;
@@ -236,6 +256,8 @@ public class Tour{
 				break;
 			default: throw new Exception("Erreur lors de l'exécution de l'action");
 		}
+		
+		System.out.println("Vous avez joué : carte de déplacement : " + carteDeplacement + ", carte d'action : " + carteAction);
 		
 		return new Triplet<>(typeAction, nbCartesAttqJouees, valeurCarteAttqJouee);
 	}

@@ -39,7 +39,7 @@ public class ActionsJouables extends Hashtable <Triplet<Integer, Integer, Intege
 		String str = "";		
 		
 		if(this.size() == 0){
-			str += "Erreur : pas d'actions possibles\n";			
+			str += "Perdu : pas d'actions possibles\n";			
 		}
 		else{
 			Enumeration<Action> e = this.elements();

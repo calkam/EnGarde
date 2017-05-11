@@ -62,22 +62,23 @@ public class Manche {
 		tourEnCours.setJoueurSecond(tmp.getC2());
 		tourEnCours.remplirMain(tourEnCours.getJoueurPremier());
 		tourEnCours.remplirMain(tourEnCours.getJoueurSecond());
+		System.out.println(joueur1.toString());
+		System.out.println(joueur2.toString());
+		System.out.println(joueur1.getPiste().toString());
 		do{
-			System.out.println(joueur1.toString());
-			System.out.println(joueur2.toString());
-			System.out.println(joueur1.getPiste().toString());
 			resultat = tourEnCours.jouerTour();
 			nbTourRealise++;
 		}while(estPasFini(resultat));
 		
-		if(resultat == Tour.piocheVide){
-			//Tester qui a gagné ou s'il y a match nul
-		}
-		else if(resultat == Tour.joueurPremierPerdu){			
+		if(resultat == Tour.joueurPremierPerdu){			
 			System.out.println(tourEnCours.getJoueurSecond().getNom() + " a gagné la manche !");
+			joueur2.setScore(joueur1.getScore()+1);
 		}
-		else{
-			//System.out.println(x);		
+		else if(resultat == Tour.joueurSecondPerdu){
+			System.out.println(tourEnCours.getJoueurPremier().getNom() + " a gagné la manche !");
+			joueur1.setScore(joueur1.getScore()+1);
+		}else if(resultat == Tour.piocheVide){
+			System.out.println("Pioche vide");
 		}
 	}
 	

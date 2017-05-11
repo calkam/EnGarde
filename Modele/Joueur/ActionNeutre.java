@@ -12,6 +12,10 @@ public class ActionNeutre extends Action{
 		this.carteDeplacement = carteDeplacement;
 	}
 
+	public ActionNeutre(int typeAction) {
+		super(typeAction);
+	}
+	
 	public Carte getCarteDeplacement() {
 		return carteDeplacement;
 	}

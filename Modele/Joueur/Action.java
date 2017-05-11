@@ -15,6 +15,11 @@ public abstract class Action {
 		this.positionArrivee = positionArrivee;
 	}
 	
+	public Action(int typeAction) {
+		super();
+		this.typeAction = typeAction;
+	}
+	
 	public abstract Carte getCarteDeplacement();
 	public abstract void setCarteDeplacement(Carte deplacement);
 	public abstract Carte getCarteAction();
