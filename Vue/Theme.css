@@ -15,6 +15,10 @@
 	-fx-background-color: transparent;
 }
 
+.check-box:selected .mark {
+    -fx-background-color: -fx-mark-highlight-color, -fx-mark-color;
+}
+
 .button {
   	-fx-background-color: transparent;
     -fx-background-image:url("/Ressources/bouton_nonPresse.png");
