@@ -11,6 +11,10 @@
     -fx-background-position: center center;
 }
 
+.checkbox{
+	-fx-background-color: transparent;
+}
+
 .button {
   	-fx-background-color: transparent;
     -fx-background-image:url("/Ressources/bouton_nonPresse.png");

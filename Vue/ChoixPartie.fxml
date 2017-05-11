@@ -10,7 +10,7 @@
 
 <AnchorPane prefHeight="900.0" prefWidth="1600.0" styleClass="background" stylesheets="@Theme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Vue.ControleurChoixPartie">
    <children>
-      <Pane layoutX="449.0" layoutY="242.0" prefHeight="396.0" prefWidth="674.0" AnchorPane.leftAnchor="450.0" AnchorPane.rightAnchor="450.0">
+      <Pane layoutX="449.0" layoutY="242.0" prefHeight="396.0" prefWidth="674.0" styleClass="fondQuitter" AnchorPane.leftAnchor="450.0" AnchorPane.rightAnchor="450.0">
          <children>
             <Text fill="WHITE" layoutX="20.0" layoutY="55.0" stroke="BLACK" strokeType="OUTSIDE" text="Choix des combattants">
                <font>

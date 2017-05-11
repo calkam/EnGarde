@@ -45,40 +45,55 @@ public class ControleurJeu {
     
     public void initGraphics()
     {
+    	//Association au Terrain
         gc = terrain.getGraphicsContext2D();
         dessinerTerrain();
-        gc = terrain.getGraphicsContext2D();
+        gc.setStroke(Color.BLUE);
         dessinerJoueurDroit();
+        gc.setStroke(Color.RED);
+        dessinerJoueurGauche();
+        
+        //Association a la Pioche
         gc = pioche.getGraphicsContext2D();
-        dessinerPioche();
+        //dessinerPioche();
+        dessinerCarteHori(pioche, 0, 0);
+        
+        //Association a la Defausse
         gc = defausse.getGraphicsContext2D();
-        dessinerDefausse();
+        //dessinerDefausse();
+        dessinerCarteHori(defausse, 0, 0);
+        
+        //Association aux scores
         gc = scoreDroit.getGraphicsContext2D();
-        dessinerScoreDroit();
+        dessinerScoreDroit(2);
+        
         gc = scoreGauche.getGraphicsContext2D();
-        dessinerScoreGauche();
+        dessinerScoreGauche(4);
+        
+        //Association aux mains
         gc = mainDroite.getGraphicsContext2D();
-        dessinerMainDroite();
+        //dessinerMainDroite();
+        gc.setStroke(Color.BLUE);
+        dessinerCarteVerti(mainDroite, 0, 0);
+        
         gc = mainGauche.getGraphicsContext2D();
-        dessinerMainGauche();
+        //dessinerMainGauche();
+        gc.setStroke(Color.RED);
+        dessinerCarteVerti(mainGauche, 0, 0);        
     }
 
-    private void dessinerJoueurDroit(){
-        gc.strokeRect(terrain.getWidth()/23, 0, terrain.getWidth()/23, terrain.getHeight());
-        System.out.println("You have draw J1");
+    private void dessinerJoueurGauche(){
+        gc.strokeRect((terrain.getWidth()*2)/25, 0, terrain.getWidth()/25, terrain.getHeight());
     }
     
-    private void dessinerJoueurGauche(){
-    	
+    private void dessinerJoueurDroit(){
+    	gc.strokeRect((terrain.getWidth()*16)/25, 0, terrain.getWidth()/25, terrain.getHeight());
     }
     
     private void dessinerTerrain()
     {
-        /*gc.clearRect(0, 0, terrain.getWidth(), terrain.getHeight());
-        gc.setFill(Color.WHITE);
-        gc.fillRect(0, 0, terrain.getWidth(), terrain.getHeight());*/
+        gc.clearRect(0, 0, terrain.getWidth(), terrain.getHeight());
         Image a = new Image("/Ressources/arriere_plan.png");
-        System.out.println("You have draw terrain");
         gc.drawImage(a, 0, 0);
     }
     
@@ -86,44 +101,59 @@ public class ControleurJeu {
     	gc.clearRect(0, 0, pioche.getWidth(), pioche.getHeight());
         gc.setFill(Color.RED);
         gc.fillRect(0, 0, pioche.getWidth(), pioche.getHeight());
-        System.out.println("You have draw pioche");
     }
     
     private void dessinerDefausse(){
     	gc.clearRect(0, 0, defausse.getWidth(), defausse.getHeight());
         gc.setFill(Color.GREEN);
         gc.fillRect(0, 0, defausse.getWidth(), defausse.getHeight());
-        System.out.println("You have draw defausse");
     }
     
-    private void dessinerScoreDroit(){
-    	gc.clearRect(0, 0, scoreDroit.getWidth(), scoreDroit.getHeight());
-        gc.setFill(Color.PINK);
-        gc.fillRect(0, 0, scoreDroit.getWidth(), scoreDroit.getHeight());
-        System.out.println("You have draw scoreDroit");
+    //y est le score 1, 2, 3, 4 ou 5 manche(s) gagnée(s)
+    private void dessinerScoreDroit(double y){
+    	if(y==0){
+    		
+    	}else{
+    		for(int i=0; i<y; i++){
+    			gc.setStroke(Color.BLUE);
+    	        gc.strokeRect(0, 0, scoreDroit.getWidth(), scoreDroit.getHeight());
+    	        gc.strokeOval(1, scoreDroit.getHeight()*i/5, scoreDroit.getWidth()-2, scoreDroit.getHeight()/5);
+    		}
+    	}
     }
     
-    private void dessinerScoreGauche(){
-    	gc.clearRect(0, 0, scoreGauche.getWidth(), scoreGauche.getHeight());
-        gc.setFill(Color.YELLOW);
-        gc.fillRect(0, 0, scoreGauche.getWidth(), scoreGauche.getHeight());
-        System.out.println("You have draw scoreGauche");
+    //y est le score 1, 2, 3, 4 ou 5 manche(s) gagnée(s)
+    private void dessinerScoreGauche(double y){
+    	if(y==0){
+    		
+    	}else{
+    		for(int i=0; i<y; i++){
+	    		gc.setStroke(Color.RED);
+	    		gc.strokeRect(0, 0, scoreGauche.getWidth(), scoreGauche.getHeight());
+	            gc.strokeOval(1, scoreGauche.getHeight()*i/5, scoreGauche.getWidth()-2, scoreGauche.getHeight()/5);
+    		}
+    	}
     }
     
     private void dessinerMainDroite(){
     	gc.clearRect(0, 0, mainDroite.getWidth(), mainDroite.getHeight());
         gc.setFill(Color.GREY);
         gc.fillRect(0, 0, mainDroite.getWidth(), mainDroite.getHeight());
-        System.out.println("You have draw mainDroite");
     }
     
     private void dessinerMainGauche(){
     	gc.clearRect(0, 0, mainGauche.getWidth(), mainGauche.getHeight());
         gc.setFill(Color.BLUE);
         gc.fillRect(0, 0, mainGauche.getWidth(), mainGauche.getHeight());
-        System.out.println("You have draw mainGauche");
     }
     
+    private void dessinerCarteVerti(Canvas c, double x, double y){
+    	gc.strokeRect(x, y, x+150, y+200);
+    }
+    
+    private void dessinerCarteHori(Canvas c, double x, double y){
+    	gc.strokeRect(x, y, x+200, y+150);
+    }
     
     @FXML
 	private void menuPrincipal(){
