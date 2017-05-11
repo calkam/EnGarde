@@ -8,25 +8,30 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1600.0" stylesheets="@Theme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Vue.ControleurJeu">
    <children>
-      <Button layoutX="1352.0" layoutY="26.0" mnemonicParsing="false" onAction="#menuPrincipal" prefHeight="40.0" prefWidth="216.0" text="Menu Principal">
+      <Button layoutX="1356.0" layoutY="14.0" mnemonicParsing="false" onAction="#menuPrincipal" prefHeight="40.0" prefWidth="216.0" text="Menu Principal">
          <font>
             <Font name="eufm10" size="20.0" />
          </font></Button>
-      <Button layoutX="1150.0" layoutY="26.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="151.0" text="Sauvegarder">
+      <Button layoutX="1151.0" layoutY="14.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="151.0" text="Sauvegarder">
          <font>
             <Font name="eufm10" size="20.0" />
          </font></Button>
-      <Button layoutX="741.0" layoutY="714.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="123.0" styleClass="finDeTour" text="Fin de tour">
+      <Button layoutX="727.0" layoutY="754.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="151.0" styleClass="finDeTour" text="Fin de tour">
          <font>
             <Font name="eufm10" size="20.0" />
          </font></Button>
-      <CheckBox layoutX="14.0" layoutY="17.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="191.0" text="Activer Animation" />
-      <Canvas fx:id="terrain" height="312.0" layoutX="29.0" layoutY="287.0" width="1548.0" />
-      <Canvas fx:id="pioche" height="182.0" layoutX="280.0" layoutY="93.0" width="532.0" />
-      <Canvas fx:id="defausse" height="182.0" layoutX="812.0" layoutY="93.0" width="532.0" />
-      <Canvas fx:id="scoreGauche" height="275.0" layoutX="29.0" layoutY="615.0" width="123.0" />
-      <Canvas fx:id="mainGauche" height="275.0" layoutX="159.0" layoutY="615.0" width="548.0" />
-      <Canvas fx:id="mainDroite" height="275.0" layoutX="893.0" layoutY="615.0" width="548.0" />
-      <Canvas fx:id="scoreDroit" height="275.0" layoutX="1449.0" layoutY="615.0" width="123.0" />
+      <CheckBox layoutX="29.0" layoutY="19.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="191.0" styleClass="button" text="Activer Animation" textFill="WHITE" />
+      <Canvas fx:id="terrain" height="334.0" layoutX="29.0" layoutY="253.0" width="1548.0" />
+      <Canvas fx:id="pioche" height="170.0" layoutX="525.0" layoutY="90.0" width="275.0" />
+      <Canvas fx:id="defausse" height="170.0" layoutX="803.0" layoutY="90.0" width="275.0" />
+      <Canvas fx:id="mainGauche" height="205.0" layoutX="171.0" layoutY="651.0" width="548.0" />
+      <Canvas fx:id="mainDroite" height="205.0" layoutX="901.0" layoutY="651.0" width="548.0" />
+      <Canvas fx:id="scoreDroit" height="252.0" layoutX="1449.0" layoutY="610.0" width="123.0" />
+      <Canvas fx:id="scoreGauche" height="252.0" layoutX="29.0" layoutY="610.0" width="123.0" />
+      <Button layoutX="728.0" layoutY="696.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="151.0" styleClass="finDeTour" text="Annuler Coup">
+         <font>
+            <Font name="eufm10" size="20.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

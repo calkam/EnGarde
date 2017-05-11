@@ -65,7 +65,7 @@ public class ControleurChoixPartie {
     	
 		ChoixCombattant1.setValue("Joueur");
     	ChoixCombattant1.setItems(ChoixCombattantList);
-    	ChoixCombattant2.setValue("Joueur");
+    	ChoixCombattant2.setValue("IA");
     	ChoixCombattant2.setItems(ChoixCombattantList);
     	NiveauCombattant1.setValue("Facile");
     	NiveauCombattant1.setItems(ChoixNiveauList);
