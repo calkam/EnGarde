@@ -43,12 +43,10 @@ public class Rectangle extends ComposantGraphique {
 		return this.hauteur;
 	}
 	
-	@Override
 	public void setLargeur(float l) {
 		this.largeur = l;
 	}
 	
-	@Override
 	public void setHauteur(float h) {
 		this.hauteur = h;
 	}

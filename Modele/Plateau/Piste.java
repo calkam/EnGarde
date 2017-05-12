@@ -2,6 +2,7 @@ package Modele.Plateau;
 
 import java.util.ArrayList;
 
+import Modele.Reglages;
 import Modele.Visitable;
 import Modele.Visiteur;
 import Modele.Composant.ObjetMouvant;
@@ -17,7 +18,7 @@ public class Piste extends Rectangle implements Visitable {
 	private ArrayList<Case> cases;
 	
 	public Piste(FigurineGauche figurineGauche, FigurineDroite figurineDroite) {
-		super(0, 0, 0, 0);
+		super(0, 0, Reglages.lis("PisteLargeur"), Reglages.lis("PisteHauteur"));
 		this.figurineGauche = figurineGauche ;
 		this.figurineDroite = figurineDroite ;
 		this.initTableauCases();

@@ -2,13 +2,14 @@ package Modele.Tas;
 
 import java.util.Stack;
 
+import Modele.Reglages;
 import Modele.Visiteur;
 
 public class Defausse extends Tas {
 	private Stack<Carte> d;
 	
 	public Defausse(){
-		super();
+		super(0, Reglages.lis("DefausseLargeur"), Reglages.lis("DefausseHauteur"));
 		d = new Stack<Carte>();
 	}
 	

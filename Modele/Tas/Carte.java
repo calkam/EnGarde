@@ -1,5 +1,6 @@
 package Modele.Tas;
 
+import Modele.Reglages;
 import Modele.Visitable;
 import Modele.Visiteur;
 import Modele.Composant.Rectangle;
@@ -22,18 +23,18 @@ public class Carte extends Rectangle implements Visitable {
 	private int tas;
 	
 	Carte(int id, int contenu, int tas, float x, float y, float largeur, float hauteur){
-		super(x, y, largeur, hauteur);
+		super(x, y, Reglages.lis("CarteLargeur"), Reglages.lis("CarteHauteur"));
 		this.id = id;
 		this.tas = tas;
 		this.contenu = contenu ;
 	}
 	
 	Carte(int id, int contenu, float x, float y, float largeur, float hauteur){
-		this(id, contenu, 0, x, y, largeur, hauteur);
+		this(id, contenu, 0, x, y, Reglages.lis("CarteLargeur"), Reglages.lis("CarteHauteur"));
 	}
 	
 	Carte(int id, int contenu){
-		this(id, contenu, 0, 0, 0, 0);
+		this(id, contenu, 0, 0, Reglages.lis("CarteLargeur"), Reglages.lis("CarteHauteur"));
 	}
 	
 	Carte(int contenu){

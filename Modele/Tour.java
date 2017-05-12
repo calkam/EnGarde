@@ -12,7 +12,7 @@ import Modele.Tas.Carte;
 import Modele.Tas.Defausse;
 import Modele.Tas.Pioche;
 
-public class Tour{
+public class Tour implements Visitable{
 	
 	private final static int nombreCarteMax = 5;
 	
@@ -40,11 +40,22 @@ public class Tour{
 	}
 	
 	public Tour(Joueur m_joueurPremier, Joueur m_joueurSecond){
-		this.joueurPremier = m_joueurPremier;
-		this.joueurSecond = m_joueurSecond;
 		this.pioche = new Pioche();
 		this.defausse = new Defausse();
+		this.joueurPremier = m_joueurPremier;
+		this.joueurSecond = m_joueurSecond;
 		this.estAttaque = new Triplet<>(pasAttaque, 0, 0);
+	}
+	
+	@Override
+	public boolean accept(Visiteur v) {
+		// TODO Auto-generated method stub
+		boolean retour = false;
+		retour = retour || pioche.accept(v);
+		retour = retour || defausse.accept(v);
+		retour = retour || joueurPremier.accept(v);
+		retour = retour || joueurSecond.accept(v);
+		return retour;
 	}
 	
 	public int jouerTour() throws Exception{
@@ -136,7 +147,7 @@ public class Tour{
 			
 		while(!pioche.estVide() && i < nombreCarteMax){
 			Carte c = pioche.piocher();
-			c.setX((i+1)*c.getLargeur());
+			c.setX(i*(c.getLargeur()/2));
 			c.setY(60);
 			j.ajouterCarteDansMain(c);
 			i++;

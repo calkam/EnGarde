@@ -5,12 +5,12 @@ import Modele.Plateau.Piste;
 
 public abstract class ObjetMouvant extends ComposantGraphique implements Observateur {
 
-    ComposantGraphique delegue;
+	ComposantGraphique delegue;
     Piste piste;
 
-    ObjetMouvant(ComposantGraphique d, Point v) {
+    public ObjetMouvant(ComposantGraphique d, Point v) {
         super(v.x(), v.y());
-        delegue = d;
+        this.delegue = d;
     }
     
     void observe(Piste p) {
@@ -50,7 +50,7 @@ public abstract class ObjetMouvant extends ComposantGraphique implements Observa
 
     @Override
     public float getHauteur() {
-        return delegue.getHauteur();
+    	return delegue.getHauteur();
     }
 
     @Override
@@ -60,7 +60,7 @@ public abstract class ObjetMouvant extends ComposantGraphique implements Observa
 
     @Override
     public float getY() {
-        return delegue.getY();
+    	return delegue.getY();
     }
 
     @Override

@@ -17,7 +17,11 @@ public abstract class Tas extends Rectangle implements Visitable {
 	}
 
 	public Tas(int m_nombreCarte){
-		super(0, 0, 0, 0);
+		this(m_nombreCarte, 0, 0);
+	}
+	
+	public Tas(int m_nombreCarte, float largeur, float hauteur){
+		super(0, 0, largeur, hauteur);
 		this.nombreCarte = new int [nombreMaxCarte] ;
 		this.nombreCarte[0] = m_nombreCarte ;
 		for (int i = 1 ; i < nombreMaxCarte; i++)

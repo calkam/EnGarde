@@ -5,8 +5,6 @@ public abstract class ComposantGraphique extends Composant {
 
 	public abstract float getLargeur();
     public abstract float getHauteur();
-    public abstract void setLargeur(float l);
-    public abstract void setHauteur(float h);
     
     public ComposantGraphique(float x, float y) {
         coord = new Point(x, y);

@@ -1,17 +1,21 @@
 package Modele.Plateau.Figurine;
-import Modele.Composant.Cercle ;
+import Modele.Reglages;
+import Modele.Visitable;
+import Modele.Visiteur;
+import Modele.Composant.ObjetMouvant;
+import Modele.Composant.Point;
+import Modele.Composant.Rectangle;
 
-public abstract class Figurine extends Cercle {
+public abstract class Figurine extends ObjetMouvant implements Visitable {
 	protected int position ;
 	
-	public Figurine(){}
-	
-	public Figurine(float x, float y, float rayon, int position) {
-		super(x, y, rayon);
+	public Figurine(float x, float y, int position) {
+		super(new Rectangle(x, y, Reglages.lis("FigurineLargeur"), Reglages.lis("FigurineHauteur")), new Point(0, 0));
 		this.position = position;
 	}
 	
-	Figurine(int i){
+	public Figurine(int i){
+		this(0, 0, 0);
 		this.position = i;
 	}
 	
@@ -26,5 +30,11 @@ public abstract class Figurine extends Cercle {
 	@Override
 	public String toString() {
 		return "[position=" + position + "]";
-	}	
+	}
+	
+	@Override
+	public boolean accept(Visiteur v) {
+		// TODO Auto-generated method stub
+		return v.visite(this);
+	}
 }

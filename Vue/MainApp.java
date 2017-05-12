@@ -1,6 +1,7 @@
 package Vue;
 
 import java.io.IOException;
+import java.util.Properties;
 
 import Modele.Jeu;
 import javafx.application.Application;
@@ -18,6 +19,8 @@ import javafx.stage.StageStyle;
 public class MainApp extends Application {
 
 	static Jeu jeu;
+	static Properties prop;
+	
     private Stage primaryStage;
     private BorderPane rootLayout;
     int scene;
@@ -198,8 +201,9 @@ public class MainApp extends Application {
         return primaryStage;
     }
 
-    public static void creer(String[] args, Jeu j){
+    public static void creer(String[] args, Jeu j, Properties p){
     	jeu = j;
+    	prop = p;
     	launch(args);
     }
 	

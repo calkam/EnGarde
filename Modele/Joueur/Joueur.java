@@ -42,7 +42,7 @@ public abstract class Joueur implements Visitable{
 	@Override
 	public boolean accept(Visiteur v) {
 		// TODO Auto-generated method stub
-        return v.visite(this.getMain());
+        return main.accept(v);
 	}
 	
 	public boolean peut_executer_parade(int valeurCarteMain, int nombreDeCartes, int valeurCarteAttaque) throws Exception {

@@ -18,26 +18,35 @@ public class Manche implements Visitable{
 	private Joueur joueur1;
 	private Joueur joueur2;
 	
-	public Manche(int numero, int nbTourRealise, Tour tour) {
+	public Manche(int numero, int nbTourRealise, Joueur j1, Joueur j2, Tour tour) {
 		this.numero = numero;
 		this.nbTourRealise = nbTourRealise;
 		defausse = new Defausse();
 		pioche = new Pioche();
+		initialiserJoueur(j1, j2);
 		tourEnCours = tour;
+		initialiserTour();
 	}
 	
 	public Manche(int numero, Joueur joueur1, Joueur joueur2){
-		this(numero, 0, new Tour());
-		initialiserJoueur(joueur1, joueur2);
+		this(numero, 0, joueur1, joueur2, new Tour());
 	}
 
+	public void initialiserTour(){
+		Couple<Joueur, Joueur> tmp;
+		tmp = choisirPremier();
+		tourEnCours.setPioche(pioche);
+		tourEnCours.setDefausse(defausse);
+		tourEnCours.setJoueurPremier(tmp.getC1());
+		tourEnCours.setJoueurSecond(tmp.getC2());
+		tourEnCours.remplirMain(tourEnCours.getJoueurPremier());
+		tourEnCours.remplirMain(tourEnCours.getJoueurSecond());
+	}
+	
 	@Override
 	public boolean accept(Visiteur v) {
 		// TODO Auto-generated method stub
-		boolean retour = false;
-		retour = retour || pioche.accept(v);
-		retour = retour || defausse.accept(v);
-		return retour;
+		return tourEnCours.accept(v);
 	}
 	
 	public void initialiserJoueur(Joueur j1, Joueur j2){
@@ -83,14 +92,6 @@ public class Manche implements Visitable{
 	
 	public void jouerManche() throws Exception{
 		int resultat;
-		Couple<Joueur, Joueur> tmp;
-		tmp = choisirPremier();
-		tourEnCours.setPioche(pioche);
-		tourEnCours.setDefausse(defausse);
-		tourEnCours.setJoueurPremier(tmp.getC1());
-		tourEnCours.setJoueurSecond(tmp.getC2());
-		tourEnCours.remplirMain(tourEnCours.getJoueurPremier());
-		tourEnCours.remplirMain(tourEnCours.getJoueurSecond());
 		
 		System.out.println(joueur1.toString());
 		System.out.println(joueur2.toString());

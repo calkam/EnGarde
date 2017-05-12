@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Stack;
 
+import Modele.Reglages;
 import Modele.Visiteur;
 
 public class Pioche extends Tas {
 	private Stack<Carte> p;
 	
 	public Pioche(){
-		super(25);
+		super(25, Reglages.lis("PiocheLargeur"), Reglages.lis("PiocheHauteur"));
 		p = new Stack<Carte>();
 		this.melanger();
 	}
@@ -36,7 +37,7 @@ public class Pioche extends Tas {
 		for(int i=1; i<=5; i++){
 			tas = new ArrayList<>();
 			for(int j = 1 ; j <= 5 ; j++){
-				tas.add(new Carte((i-1)*5+j, i, Carte.pioche, 0, 0, this.getLargeur(), this.getHauteur()));
+				tas.add(new Carte((i-1)*5+j, i, Carte.pioche, 0, 0, Reglages.lis("CarteLargeur"), Reglages.lis("CarteHauteur")));
 			}
 			jeu.add(tas);
 		}

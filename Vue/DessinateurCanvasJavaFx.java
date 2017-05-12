@@ -3,6 +3,8 @@ package Vue;
 import Modele.Visiteur;
 import Modele.Plateau.Case;
 import Modele.Plateau.Piste;
+import Modele.Plateau.Figurine.FigurineDroite;
+import Modele.Plateau.Figurine.FigurineGauche;
 import Modele.Tas.Carte;
 import Modele.Tas.Defausse;
 import Modele.Tas.Main;
@@ -11,7 +13,6 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-import javafx.scene.transform.Rotate;
 
 public class DessinateurCanvasJavaFx extends Visiteur {
 
@@ -39,11 +40,8 @@ public class DessinateurCanvasJavaFx extends Visiteur {
 	}
     
     public void initGraphics(){
-    	gcDefausse = defausse.getGraphicsContext2D();
     	gcScoreDroit = scoreDroit.getGraphicsContext2D();
     	gcScoreGauche = scoreGauche.getGraphicsContext2D();
-
-
     }
     
     public boolean visite(Piste p){
@@ -90,13 +88,21 @@ public class DessinateurCanvasJavaFx extends Visiteur {
     public boolean visite(Carte c){
     	if(c.getTas() == Carte.mainDroite){
     		gcMainDroite.setStroke(Color.BLUE);
-    		System.out.println(c.getX() + ", " + c.getY());
     		dessinerCarteVerti(gcMainDroite, c.getX(), c.getY());
     	}else if(c.getTas() == Carte.mainGauche){
     		gcMainGauche.setStroke(Color.RED);
-    		System.out.println(c.getX() + ", " + c.getY());
     		dessinerCarteVerti(gcMainGauche, c.getX(), c.getY());
     	}
+    	return false;
+    }
+    
+    public boolean visite(FigurineDroite c){
+    	dessinerJoueurDroit(gcTerrain);
+    	return false;
+    }
+    
+    public boolean visite(FigurineGauche c){
+    	dessinerJoueurGauche(gcTerrain);
     	return false;
     }
 	
