@@ -71,7 +71,8 @@ public class Tour{
 		
 		System.out.println("/*************************************************************************************************************/");
 		System.out.println("Joueur : " + joueur.getNom() + ", position : " + joueur.getPositionFigurine());
-		System.out.println("Main : " + joueur.getMain().getMain() + "\n");
+		System.out.println("Main : " + joueur.getMain().getMain());
+		System.out.println("Nb cartes pioche : " + pioche.getNombreCarte() + "\n");
 		afficherPiste(joueurPremier.getPositionFigurine(), joueurSecond.getPositionFigurine());
 		
 		actions_jouables = joueur.peutFaireAction(estAttaque);
@@ -102,6 +103,7 @@ public class Tour{
 		
 		System.out.println("Joueur : " + joueur.getNom() + ", position : " + joueur.getPositionFigurine());
 		System.out.println("Main : " + joueur.getMain().getMain() + "\n");
+		System.out.println("Nb cartes pioche : " + pioche.getNombreCarte() + "\n");
 		
 		return joueurPasPerdu;
 	}
@@ -265,20 +267,28 @@ public class Tour{
 	
 	public void afficherPiste(int positionF1, int positionF2){
 		String str = "";
+		String strPosition = "";
 		
 		for(int i = 1 ; i < 24; i++){
 			if(i == positionF1){
-				str += "♙ ";
+				str += "♟   ";
 			}else if(i == positionF2){
-				str += "♟ ";
+				str += "♙   ";
 			}else{
-				str += "_ ";
-			}	
+				str += "_   ";
+			}
+			
+			if(i < 10){
+				strPosition += i + "   ";		
+			}else{
+				strPosition += i + "  ";
+			}
 		}
 		
-		str += "\n";
+		strPosition += "\n";
 		
 		System.out.println(str);
+		System.out.println(strPosition);
 	}
 	
 	/**
