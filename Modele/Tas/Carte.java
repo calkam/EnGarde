@@ -16,7 +16,7 @@ public class Carte {
 		this.contenu = contenu ;
 	}
 	
-	Carte(int contenu){
+	public Carte(int contenu){
 		this(0, contenu);
 	}
 	

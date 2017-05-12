@@ -18,6 +18,7 @@ public class Defausse extends Tas {
 	public void ajouter(Carte c){
 		d.push(c);
 		nombreCarte[c.getContenu()]++ ;
+		nombreCarte[0]++ ;
 	}
 
 	@Override
