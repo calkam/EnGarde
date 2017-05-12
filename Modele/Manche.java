@@ -5,6 +5,7 @@ import java.util.Random;
 import Modele.Joueur.Joueur;
 import Modele.Tas.Defausse;
 import Modele.Tas.Pioche;
+import Modele.Tas.Tas;
 
 public class Manche {
 	
@@ -103,7 +104,7 @@ public class Manche {
 			
 			int distanceEntreFigurineJ1EtFigurineJ2 = calculerNormeEntreDeuxPositions(joueur1.getPositionFigurine(), joueur2.getPositionFigurine());
 			
-			if(distanceEntreFigurineJ1EtFigurineJ2 < 6){
+			if(distanceEntreFigurineJ1EtFigurineJ2 < Tas.nombreMaxCarte){
 				int nbCartesDistanceJ1 = joueur1.getMain().getNombreCarteGroupe(distanceEntreFigurineJ1EtFigurineJ2);
 				int nbCartesDistanceJ2 = joueur2.getMain().getNombreCarteGroupe(distanceEntreFigurineJ1EtFigurineJ2);
 				

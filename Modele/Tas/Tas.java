@@ -5,7 +5,7 @@ public abstract class Tas {
 	// nombreCarte est un tableau de 6 entiers
 	// La case d'indice i > 0 contient le nombre de cartes de valeur i du Tas
 	// La case d'indice 0 contient le nombre de cartes totales du Tas
-	private final static int nombreMaxCarte = 6;
+	public final static int nombreMaxCarte = 6;
 	
 	protected int [] nombreCarte ;
 	
