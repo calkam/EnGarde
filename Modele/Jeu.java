@@ -29,11 +29,11 @@ public class Jeu {
 			initialiserPremiereManche();
 			lancerLaManche();
 			while(!gainPartie()){
+				System.out.println("\n/*************************************************************************************************************/");
 				nouvelleManche();
 				lancerLaManche();
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
