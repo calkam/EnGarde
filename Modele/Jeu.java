@@ -24,6 +24,20 @@ public class Jeu {
 		joueur2.setScore(0);
 	}
 	
+	public void lancerJeu(){
+		try {
+			initialiserPremiereManche();
+			lancerLaManche();
+			while(!gainPartie()){
+				System.out.println("\n/*************************************************************************************************************/");
+				nouvelleManche();
+				lancerLaManche();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	/**
 	 * FIN DE PARTIE
 	 */	
@@ -53,16 +67,16 @@ public class Jeu {
 	 */
 	
 	public void initialiserPremiereManche(){
-		manche = new Manche(0);
-		manche.initialiserJoueur(joueur1, joueur2);
+		manche = new Manche(0, joueur1, joueur2);
 	}
 	
 	public void nouvelleManche(){
-		manche = new Manche(manche.getNumero()+1);
+		manche = new Manche(manche.getNumero()+1, joueur1, joueur2);
 	}
 	
 	public void lancerLaManche() throws Exception{
 		manche.jouerManche();
+		manche.reinitialiserPiste();
 	}
 
 	/**

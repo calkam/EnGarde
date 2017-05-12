@@ -101,5 +101,16 @@ public class JoueurDroit extends Joueur {
 	public int getPositionFigurine(){
 		return this.getPiste().getFigurineDroite().getPosition();
 	}
+
+	@Override
+	public void setPositionFigurine(int position) {
+		this.getPiste().getFigurineDroite().setPosition(position);
+	}
+
+	@Override
+	public void reinitialiserPositionFigurine() {
+		// TODO Auto-generated method stub
+		this.setPositionFigurine(23);
+	}
 	
 }

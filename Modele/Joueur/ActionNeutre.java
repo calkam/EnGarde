@@ -4,25 +4,51 @@ import Modele.Tas.Carte;
 
 public class ActionNeutre extends Action{
 
-	private Carte deplacement;
+	private Carte carteDeplacement;
+	private Carte carteAction=null;
 
-	public ActionNeutre(int typeAction, int nbCartes, int positionArrivee, Carte deplacement) {
+	public ActionNeutre(int typeAction, int nbCartes, int positionArrivee, Carte carteDeplacement) {
 		super(typeAction, nbCartes, positionArrivee);
-		this.deplacement = deplacement;
+		this.carteDeplacement = carteDeplacement;
 	}
 
-	public Carte getDeplacement() {
-		return deplacement;
+	public ActionNeutre(int typeAction) {
+		super(typeAction);
+	}
+	
+	public Carte getCarteDeplacement() {
+		return carteDeplacement;
 	}
 
-	public void setDeplacement(Carte deplacement) {
-		this.deplacement = deplacement;
+	public void setCarteDeplacement(Carte carteDeplacement) {
+		this.carteDeplacement = carteDeplacement;
+	}
+	
+	public Carte getCarteAction(){
+		return carteAction;
+	}
+	
+	public void setCarteAction(Carte carteAction){
+		return;
 	}
 
 	@Override
 	public String toString() {
-		String str = "ActionDefensive [ typeAction= " + typeAction + ", nbCartes= " + nbCartes 
-				+ ", positionArrivee= " + positionArrivee + ", deplacement= " + deplacement + " ]";
+		String strTypeAction = "";
+		
+		switch(typeAction){
+			case Joueur.ActionImpossible: strTypeAction += "ActionImpossible";break;
+			case Joueur.Reculer: strTypeAction += "Reculer";break;
+			case Joueur.Avancer: strTypeAction += "Avancer";break;
+			case Joueur.AttaqueDirecte: strTypeAction += "AttaqueDirecte";break;
+			case Joueur.AttaqueIndirecte: strTypeAction += "AttaqueIndirecte";break;
+			case Joueur.Parade: strTypeAction += "Parade";break;
+			case Joueur.Fuite: strTypeAction += "Fuite";break;
+			default: strTypeAction += "Erreur";
+		}
+		
+		String str = "ActionNeutre [ typeAction= " + strTypeAction + ", nbCartes= " + nbCartes 
+				+ ", positionArrivee= " + positionArrivee + ", deplacement= " + carteDeplacement + " ]";
 		
 		return str;
 	}
@@ -31,7 +57,7 @@ public class ActionNeutre extends Action{
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + ((deplacement == null) ? 0 : deplacement.hashCode());
+		result = prime * result + ((carteDeplacement == null) ? 0 : carteDeplacement.hashCode());
 		return result;
 	}
 
@@ -44,10 +70,10 @@ public class ActionNeutre extends Action{
 		if (getClass() != obj.getClass())
 			return false;
 		ActionNeutre other = (ActionNeutre) obj;
-		if (deplacement == null) {
-			if (other.deplacement != null)
+		if (carteDeplacement == null) {
+			if (other.carteDeplacement != null)
 				return false;
-		} else if (!deplacement.equals(other.deplacement))
+		} else if (!carteDeplacement.equals(other.carteDeplacement))
 			return false;
 		return true;
 	}

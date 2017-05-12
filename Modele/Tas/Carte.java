@@ -54,7 +54,7 @@ public class Carte {
 	}
 
 	public String toString(){
-		String str = "Carte ["+id+", ";
+		String str = "Carte : ";
 		switch (this.getContenu()) {
 	        case 1: str += Integer.toString(1); break;
 	        case 2: str += Integer.toString(2); break;
@@ -63,7 +63,6 @@ public class Carte {
 	        case 5: str += Integer.toString(5); break;
 	        default: throw new RuntimeException("Ajout de carte sur " + this +" impossible");
 		}
-		str += "]";
 		return str;
 	}
 	

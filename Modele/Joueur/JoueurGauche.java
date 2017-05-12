@@ -103,5 +103,17 @@ public class JoueurGauche extends Joueur {
 	public int getPositionFigurine(){
 		return this.getPiste().getFigurineGauche().getPosition();
 	}
+
+	@Override
+	public void setPositionFigurine(int position) {
+		// TODO Auto-generated method stub
+		this.getPiste().getFigurineGauche().setPosition(position);
+	}
+	
+	@Override
+	public void reinitialiserPositionFigurine() {
+		// TODO Auto-generated method stub
+		this.setPositionFigurine(1);
+	}
 	
 }

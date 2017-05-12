@@ -1,7 +1,10 @@
 package Modele.Joueur;
 
+import java.util.ArrayList;
+
 import Modele.Couple;
 import Modele.Tour;
+import Modele.Triplet;
 import Modele.Plateau.Piste;
 import Modele.Plateau.Score;
 import Modele.Tas.Carte;
@@ -35,8 +38,14 @@ public abstract class Joueur {
 		this.score = new Score();
 	}
 	
-	public boolean peut_executer_parade(int attaque, int nombre) {
-		return main.getNombreCarteGroupe(attaque) >= nombre ;
+	public boolean peut_executer_parade(int valeurCarteMain, int nombreDeCartes, int valeurCarteAttaque) throws Exception {
+		boolean b = false;
+		
+		if(valeurCarteMain == valeurCarteAttaque && main.getNombreCarteGroupe(valeurCarteMain) >= nombreDeCartes){
+			b = true;			
+		}	
+		
+		return b;
 	}
 	
 	abstract public int peut_reculer (int distance)  ;
@@ -45,9 +54,12 @@ public abstract class Joueur {
 	abstract public void avancer (int distance)  ;
 	abstract public void reculer (int distance)  ;
 	abstract public void executer_attaque_indirecte (int deplacement, int portee, int nombre)  ;
-	abstract public int getPositionFigurine() ;
 	
-	public ActionsJouables peutFaireAction(Couple<Integer, Integer> est_attaque) {
+	abstract public int getPositionFigurine() ;
+	abstract public void setPositionFigurine(int position) ;
+	abstract public void reinitialiserPositionFigurine() ;
+	
+	public ActionsJouables peutFaireAction(Triplet<Integer, Integer, Integer> est_attaque) throws Exception {
 		
 		int position ;
 		ActionsJouables actions_jouables = new ActionsJouables () ;
@@ -70,7 +82,7 @@ public abstract class Joueur {
 					if (!test_avancer_ou_attaquer.getC1()) {
 						
 						for(int j=1; j<=main.getNombreCarteGroupe(carte.getContenu()); j++){
-							actions_jouables.ajouterActionOffensive(carte.getID(), AttaqueDirecte, test_avancer_ou_attaquer.getC2(), null, carte, j);
+							actions_jouables.ajouterActionOffensive(carte.getID(), AttaqueDirecte, getPositionFigurine(), null, carte, j);
 						}
 							
 					} else {
@@ -80,16 +92,13 @@ public abstract class Joueur {
 						for (int j=0; j<main.getNombreCarte(); j++) {
 							if(i!=j){
 								carteOpt = main.getCarte(j);
-								
-								int position_attaque_indirecte ;
 						
 								if (((position = test_avancer_ou_attaquer.getC2()) != ActionImpossible) && 
-								    ((position_attaque_indirecte = peut_attaquer_indirectement(position, carteOpt.getContenu())) != ActionImpossible)){
+								    (peut_attaquer_indirectement(position, carteOpt.getContenu()) != ActionImpossible)){
 							
-									for(int k=1; k<=main.getNombreCarteGroupe(carte.getContenu()); k++){
-										actions_jouables.ajouterActionOffensive(carte.getID(), AttaqueIndirecte, position + position_attaque_indirecte, carte, carteOpt, k+1) ;
-									}
-									
+									for(int k=1; k<=main.getNombreCarteGroupe(carteOpt.getContenu()); k++){
+										actions_jouables.ajouterActionOffensive(carte.getID(), AttaqueIndirecte, test_avancer_ou_attaquer.getC2(), carte, carteOpt, k) ;
+									}								
 								}
 							}
 						}
@@ -98,13 +107,14 @@ public abstract class Joueur {
 				}
 			}else{
 				
-				if(peut_executer_parade(carte.getContenu(), est_attaque.getC2())){
+				// On a oublié de tester que la valeur de la carte utilisée pour parer est la même que celle du joueur adverse utilisée pour son attaque 				
+				if(peut_executer_parade(carte.getContenu(), est_attaque.getC2(), est_attaque.getC3())){
 					actions_jouables.ajouterActionDefensive(carte.getID(), Parade, getPositionFigurine(), null, carte, est_attaque.getC2());
 				}
 				
 				if(est_attaque.getC1() == Tour.attaqueIndirect){
 					if((position = peut_reculer(carte.getContenu())) != ActionImpossible){
-						actions_jouables.ajouterActionDefensive(carte.getID(), Parade, position, carte, null, 1);
+						actions_jouables.ajouterActionDefensive(carte.getID(), Fuite, position, carte, null, 0);
 					}
 				}
 				
@@ -132,6 +142,11 @@ public abstract class Joueur {
 	public Main getMain() {
 		return main;
 	}
+
+	public ArrayList<Carte> getCartesDeLaMain() {
+		return main.getMain();
+	}
+	
 	public void setMain(Main main) {
 		this.main = main;
 	}
