@@ -158,6 +158,12 @@ public class DessinateurCanvasJavaFx extends Visiteur {
     	}
     }
     
+    //diminuer l'origine des cartes afin de faire croire qu'elles montent
+    private void souleverCarteNumero(Canvas c, double numCarte){
+    	gc.clearRect(numCarte*90, 0, 150, 200 );
+    	dessinerCarteVerti(c, numCarte*90, 0);
+    }
+    
     private void dessinerMainDroite(GraphicsContext gc){
     	gc.clearRect(0, 0, mainDroite.getWidth(), mainDroite.getHeight());
         gc.setFill(Color.GREY);

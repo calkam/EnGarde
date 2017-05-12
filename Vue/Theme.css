@@ -11,8 +11,23 @@
     -fx-background-position: center center;
 }
 
-.checkbox{
-	-fx-background-color: transparent;
+.checkbox {
+	-fx-background-image:url("/Ressources/checkbox_fond.png");
+	-fx-background-size: cover;
+}
+
+.checkbox .box{
+	-fx-background-image:url("/Ressources/checkbox_box.png");
+	-fx-background-size: cover;
+}
+
+.checkbox:selected .box{
+	-fx-background-image:url("/Ressources/checkbox_selected.png");
+	-fx-background-size: cover;
+}
+
+.checkbox:selected .mark{
+	-fx-background-color:transparent;
 }
 
 .button {
