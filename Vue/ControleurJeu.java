@@ -66,7 +66,7 @@ public class ControleurJeu {
         
         //Association aux scores
         gc = scoreDroit.getGraphicsContext2D();
-        dessinerScoreDroit(2);
+        dessinerScoreDroit(3);
         
         gc = scoreGauche.getGraphicsContext2D();
         dessinerScoreGauche(5);
@@ -112,13 +112,13 @@ public class ControleurJeu {
     //y est le score 1, 2, 3, 4 ou 5 manche(s) gagnée(s)
     private void dessinerScoreDroit(double y){
     	Image im = new Image("/Ressources/coeur.png");
+    	Image im2 = new Image("/Ressources/bareeDeVieBleu.png");
+    	gc.drawImage(im2, 0, 0, scoreDroit.getWidth(), scoreDroit.getHeight());
     	if(y==0){
     		
     	}else{
     		for(int i=0; i<y; i++){
-    			gc.setStroke(Color.BLUE);
-    	        gc.strokeRect(0, 0, scoreDroit.getWidth(), scoreDroit.getHeight());
-    	        gc.drawImage(im, scoreDroit.getWidth()/4, scoreDroit.getHeight()*i/5, scoreDroit.getWidth()*2/4, scoreDroit.getHeight()/5);
+    	        gc.drawImage(im, scoreDroit.getWidth()/3, scoreDroit.getHeight()*i/6+25, 40, 40);
     		}
     	}
     }
@@ -126,14 +126,13 @@ public class ControleurJeu {
     //y est le score 1, 2, 3, 4 ou 5 manche(s) gagnée(s)
     private void dessinerScoreGauche(double y){
     	Image im = new Image("/Ressources/coeur.png");
-    	Image im2 = new Image("/Ressources/barreDeVie.png");
-    	gc.drawImage(im2, -20, 0, scoreGauche.getWidth(), scoreGauche.getHeight());
+    	Image im2 = new Image("/Ressources/bareeDeVieRouge.png");
+		gc.drawImage(im2, 0, 0, scoreGauche.getWidth(), scoreGauche.getHeight());
     	if(y==0){
     		
     	}else{
     		for(int i=0; i<y; i++){
-	    		gc.setStroke(Color.RED);
-	    		gc.drawImage(im, scoreDroit.getWidth()/4, scoreDroit.getHeight()*i/5, scoreDroit.getWidth()*2/4, scoreDroit.getHeight()/5);
+    			gc.drawImage(im, scoreGauche.getWidth()/3, scoreGauche.getHeight()*i/6+25, 40, 40);
     		}
     	}
     }
