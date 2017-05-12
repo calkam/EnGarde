@@ -7,6 +7,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 
+import com.sun.imageio.stream.CloseableDisposerRecord;
+
 import Vue.MainApp;
 
 public class ControleurJeu {
@@ -43,8 +45,7 @@ public class ControleurJeu {
         this.mainApp = mainApp;
     }
     
-    public void initGraphics()
-    {
+    public void initGraphics(){
     	//Association au Terrain
         gc = terrain.getGraphicsContext2D();
         dessinerTerrain();
@@ -68,18 +69,17 @@ public class ControleurJeu {
         dessinerScoreDroit(2);
         
         gc = scoreGauche.getGraphicsContext2D();
-        dessinerScoreGauche(4);
+        dessinerScoreGauche(5);
         
         //Association aux mains
         gc = mainDroite.getGraphicsContext2D();
-        //dessinerMainDroite();
         gc.setStroke(Color.BLUE);
-        dessinerCarteVerti(mainDroite, 0, 0);
+        dessinerMainDroite(5, 0);
         
         gc = mainGauche.getGraphicsContext2D();
         //dessinerMainGauche();
         gc.setStroke(Color.RED);
-        dessinerCarteVerti(mainGauche, 0, 0);        
+        dessinerMainGauche(5);
     }
 
     private void dessinerJoueurGauche(){
@@ -111,48 +111,64 @@ public class ControleurJeu {
     
     //y est le score 1, 2, 3, 4 ou 5 manche(s) gagnée(s)
     private void dessinerScoreDroit(double y){
+    	Image im = new Image("/Ressources/coeur.png");
     	if(y==0){
     		
     	}else{
     		for(int i=0; i<y; i++){
     			gc.setStroke(Color.BLUE);
     	        gc.strokeRect(0, 0, scoreDroit.getWidth(), scoreDroit.getHeight());
-    	        gc.strokeOval(1, scoreDroit.getHeight()*i/5, scoreDroit.getWidth()-2, scoreDroit.getHeight()/5);
+    	        gc.drawImage(im, scoreDroit.getWidth()/4, scoreDroit.getHeight()*i/5, scoreDroit.getWidth()*2/4, scoreDroit.getHeight()/5);
     		}
     	}
     }
     
     //y est le score 1, 2, 3, 4 ou 5 manche(s) gagnée(s)
     private void dessinerScoreGauche(double y){
+    	Image im = new Image("/Ressources/coeur.png");
+    	//Image im2 = new Image("/Ressources/barreDeVie.png");
+    	//gc.drawImage(im2, -20, 0, scoreGauche.getWidth(), scoreGauche.getHeight());
     	if(y==0){
     		
     	}else{
     		for(int i=0; i<y; i++){
 	    		gc.setStroke(Color.RED);
-	    		gc.strokeRect(0, 0, scoreGauche.getWidth(), scoreGauche.getHeight());
-	            gc.strokeOval(1, scoreGauche.getHeight()*i/5, scoreGauche.getWidth()-2, scoreGauche.getHeight()/5);
+	    		gc.drawImage(im, scoreDroit.getWidth()/4, scoreDroit.getHeight()*i/5, scoreDroit.getWidth()*2/4, scoreDroit.getHeight()/5);
     		}
     	}
     }
     
-    private void dessinerMainDroite(){
-    	gc.clearRect(0, 0, mainDroite.getWidth(), mainDroite.getHeight());
-        gc.setFill(Color.GREY);
-        gc.fillRect(0, 0, mainDroite.getWidth(), mainDroite.getHeight());
+    private void dessinerMainDroite(double nbCarte, int carteASoulever){
+    	for(int i=0; i<nbCarte; i++){
+    		if(i==carteASoulever){
+    			souleverCarteNumero(mainDroite, i);
+    		}else{
+    			dessinerCarteVerti(mainDroite, i*90, 60);
+    		}
+    	}
     }
     
-    private void dessinerMainGauche(){
-    	gc.clearRect(0, 0, mainGauche.getWidth(), mainGauche.getHeight());
-        gc.setFill(Color.BLUE);
-        gc.fillRect(0, 0, mainGauche.getWidth(), mainGauche.getHeight());
+    private void dessinerMainGauche(double nbCarte){
+    	for(int i=0; i<nbCarte; i++){
+    		dessinerCarteVerti(mainDroite, i*90, 60);
+    	}
+    }
+    
+    //diminuer l'origine des cartes afin de faire croire qu'elles montent
+    private void souleverCarteNumero(Canvas c, double numCarte){
+    	gc.clearRect(numCarte*90, 0, 150, 200 );
+    	dessinerCarteVerti(c, numCarte*90, 0);
     }
     
     private void dessinerCarteVerti(Canvas c, double x, double y){
-    	gc.strokeRect(x, y, x+150, y+200);
+    	Image i = new Image("/Ressources/dosCarte.jpg");
+    	gc.drawImage(i, x, y, 150, 200);
+    	//gc.fillRect(x, y, 150, 200);
+    	gc.strokeRect(x, y, 150, 200);
     }
     
     private void dessinerCarteHori(Canvas c, double x, double y){
-    	gc.strokeRect(x, y, x+200, y+150);
+    	gc.strokeRect(x, y, 200, 150);
     }
     
     @FXML
