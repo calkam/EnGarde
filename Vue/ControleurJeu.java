@@ -3,12 +3,6 @@ package Vue;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import Modele.Jeu;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
-
-import com.sun.imageio.stream.CloseableDisposerRecord;
 
 import Vue.MainApp;
 
@@ -53,9 +47,8 @@ public class ControleurJeu {
 		d = new DessinateurCanvasJavaFx(terrain, pioche, defausse, scoreDroit, mainDroite, scoreGauche, mainGauche);
 		jeu.accept(d);
 	}
-    
 
-    private void dessinerJoueurGauche(){
+    /*private void dessinerJoueurGauche(){
         gc.strokeRect((terrain.getWidth()*2)/25, 0, terrain.getWidth()/25, terrain.getHeight());
     }
     
@@ -111,39 +104,7 @@ public class ControleurJeu {
     	}
     }
     
-    private void dessinerMainDroite(double nbCarte, int carteASoulever){
-    	for(int i=0; i<nbCarte; i++){
-    		if(i==carteASoulever){
-    			souleverCarteNumero(mainDroite, i);
-    		}else{
-    			dessinerCarteVerti(mainDroite, i*90, 60);
-    		}
-    	}
-    }
-    
-    private void dessinerMainGauche(double nbCarte){
-    	for(int i=0; i<nbCarte; i++){
-    		dessinerCarteVerti(mainDroite, i*90, 60);
-    	}
-    }
-    
-    //diminuer l'origine des cartes afin de faire croire qu'elles montent
-    private void souleverCarteNumero(Canvas c, double numCarte){
-    	gc.clearRect(numCarte*90, 0, 150, 200 );
-    	dessinerCarteVerti(c, numCarte*90, 0);
-    }
-    
-    private void dessinerCarteVerti(Canvas c, double x, double y){
-    	Image i = new Image("/Ressources/dosCarte.jpg");
-    	gc.drawImage(i, x, y, 150, 200);
-    	//gc.fillRect(x, y, 150, 200);
-    	gc.strokeRect(x, y, 150, 200);
-    }
-    
-    private void dessinerCarteHori(Canvas c, double x, double y){
-    	gc.strokeRect(x, y, 200, 150);
-    }
->>>>>>> Vue
+    */
     
     @FXML
 	private void menuPrincipal(){

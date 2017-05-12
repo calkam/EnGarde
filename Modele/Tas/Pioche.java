@@ -36,7 +36,7 @@ public class Pioche extends Tas {
 		for(int i=1; i<=5; i++){
 			tas = new ArrayList<>();
 			for(int j = 1 ; j <= 5 ; j++){
-				tas.add(new Carte((i-1)*5+j, i, 0, 0, this.getLargeur(), this.getHauteur()));
+				tas.add(new Carte((i-1)*5+j, i, Carte.pioche, 0, 0, this.getLargeur(), this.getHauteur()));
 			}
 			jeu.add(tas);
 		}

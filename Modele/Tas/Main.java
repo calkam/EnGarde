@@ -25,6 +25,11 @@ public class Main extends Tas {
 	
 	public void ajouter(Carte c){
 		main.add(c);
+		if(cote == droite){
+			c.setTas(Carte.mainDroite);
+		}else{
+			c.setTas(Carte.mainGauche);
+		}
 		nombreCarte[c.getContenu()]++ ;
 		nombreCarte[0]++ ;
 	}

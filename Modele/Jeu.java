@@ -22,11 +22,11 @@ public class Jeu implements Visitable{
 		joueur2 = new FabriqueJoueur (2, "Humain", "Yugi (Joueur 2)", new Main(), piste).nouveauJoueur() ;
 		joueur1.setScore(0);
 		joueur2.setScore(0);
+		initialiserPremiereManche();
 	}
 	
 	public void lancerJeu(){
 		try {
-			initialiserPremiereManche();
 			lancerLaManche();
 			while(!gainPartie()){
 				System.out.println("\n/*************************************************************************************************************/");
@@ -88,6 +88,7 @@ public class Jeu implements Visitable{
 	public boolean accept(Visiteur d) {
 	   if(piste != null){
             piste.accept(d);
+            manche.accept(d);
             joueur1.accept(d);
             joueur2.accept(d);
             return false;

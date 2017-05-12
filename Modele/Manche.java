@@ -7,7 +7,7 @@ import Modele.Tas.Defausse;
 import Modele.Tas.Pioche;
 import Modele.Tas.Tas;
 
-public class Manche {
+public class Manche implements Visitable{
 	
 	private int numero;
 	private int nbTourRealise;
@@ -31,6 +31,15 @@ public class Manche {
 		initialiserJoueur(joueur1, joueur2);
 	}
 
+	@Override
+	public boolean accept(Visiteur v) {
+		// TODO Auto-generated method stub
+		boolean retour = false;
+		retour = retour || pioche.accept(v);
+		retour = retour || defausse.accept(v);
+		return retour;
+	}
+	
 	public void initialiserJoueur(Joueur j1, Joueur j2){
 		joueur1 = j1;
 		joueur2 = j2;
@@ -193,8 +202,6 @@ public class Manche {
 
 	public void setJoueur2(Joueur joueur2) {
 		this.joueur2 = joueur2;
-	}
-	
-	
+	}	
 	
 }

@@ -6,6 +6,11 @@ import Modele.Composant.Rectangle;
 
 public class Carte extends Rectangle implements Visitable {
 	
+	public final static int mainDroite = 0;
+	public final static int mainGauche = 1;
+	public final static int pioche = 2;
+	public final static int defausse = 3;
+	
 	public final static int UN = 1;
 	public final static int DEUX = 2;
 	public final static int TROIS = 3;
@@ -14,11 +19,17 @@ public class Carte extends Rectangle implements Visitable {
 	
 	private int id;
 	private int contenu;
+	private int tas;
 	
-	Carte(int id, int contenu, float x, float y, float largeur, float hauteur){
+	Carte(int id, int contenu, int tas, float x, float y, float largeur, float hauteur){
 		super(x, y, largeur, hauteur);
 		this.id = id;
+		this.tas = tas;
 		this.contenu = contenu ;
+	}
+	
+	Carte(int id, int contenu, float x, float y, float largeur, float hauteur){
+		this(id, contenu, 0, x, y, largeur, hauteur);
 	}
 	
 	Carte(int id, int contenu){
@@ -37,6 +48,14 @@ public class Carte extends Rectangle implements Visitable {
 		return contenu;
 	}
 	
+	public int getTas() {
+		return tas;
+	}
+
+	public void setTas(int tas) {
+		this.tas = tas;
+	}
+
 	@Override
 	public boolean accept(Visiteur v) {
 		// TODO Auto-generated method stub

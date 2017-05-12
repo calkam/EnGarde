@@ -24,6 +24,7 @@ public class Defausse extends Tas {
 	}
 	
 	public void ajouter(Carte c){
+		c.setTas(Carte.defausse);
 		d.push(c);
 		nombreCarte[c.getContenu()]++ ;
 	}
