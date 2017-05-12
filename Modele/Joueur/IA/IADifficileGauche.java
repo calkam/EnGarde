@@ -15,7 +15,7 @@ public class IADifficileGauche extends IAGauche {
 		super(nom, main, piste, defausse);
 	}
 	
-	Action actionIA (int statut) {
+	Action actionIA (int statut) throws Exception {
 		
 		Action action_jouee = new ActionNeutre(Avancer,0,22,new Carte(5))  ;
 		int nbcartes = -100 ;
@@ -143,7 +143,7 @@ public class IADifficileGauche extends IAGauche {
 	}
 	
 	
-	Action TrouverCarteMoinsRisquee(int distance, boolean avancer){
+	Action TrouverCarteMoinsRisquee(int distance, boolean avancer) throws Exception{
 		
 		int nbcartes = -100;
 		Action action_jouee = new ActionNeutre(Avancer,0,22,new Carte(5))  ;
@@ -190,7 +190,7 @@ public class IADifficileGauche extends IAGauche {
 		return action_jouee;
 	}
 	
-	Action ReculerPlus5(int distance){
+	Action ReculerPlus5(int distance) throws Exception{
 		
 		int nbcartes = -100;
 		Action action_jouee = new ActionNeutre(Avancer,0,22,new Carte(5))  ;
