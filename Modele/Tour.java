@@ -72,6 +72,7 @@ public class Tour{
 		System.out.println("/*************************************************************************************************************/");
 		System.out.println("Joueur : " + joueur.getNom() + ", position : " + joueur.getPositionFigurine());
 		System.out.println("Main : " + joueur.getMain().getMain() + "\n");
+		afficherPiste(joueurPremier.getPositionFigurine(), joueurSecond.getPositionFigurine());
 		
 		actions_jouables = joueur.peutFaireAction(estAttaque);
 		choixAction = selectionnerAction(actions_jouables);		
@@ -257,9 +258,27 @@ public class Tour{
 			default: throw new Exception("Erreur lors de l'exécution de l'action");
 		}
 		
-		System.out.println("Vous avez joué : carte de déplacement : " + carteDeplacement + ", carte d'action : " + carteAction);
+		System.out.println("\nVous avez joué : carte de déplacement : " + carteDeplacement + ", carte d'action : " + carteAction);
 		
 		return new Triplet<>(typeAction, nbCartesAttqJouees, valeurCarteAttqJouee);
+	}
+	
+	public void afficherPiste(int positionF1, int positionF2){
+		String str = "";
+		
+		for(int i = 1 ; i < 24; i++){
+			if(i == positionF1){
+				str += "♙ ";
+			}else if(i == positionF2){
+				str += "♟ ";
+			}else{
+				str += "_ ";
+			}	
+		}
+		
+		str += "\n";
+		
+		System.out.println(str);
 	}
 	
 	/**
