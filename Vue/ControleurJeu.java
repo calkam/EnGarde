@@ -99,8 +99,8 @@ public class ControleurJeu {
     //y est le score 1, 2, 3, 4 ou 5 manche(s) gagnée(s)
     private void dessinerScoreGauche(double y){
     	Image im = new Image("/Ressources/coeur.png");
-    	//Image im2 = new Image("/Ressources/barreDeVie.png");
-    	//gc.drawImage(im2, -20, 0, scoreGauche.getWidth(), scoreGauche.getHeight());
+    	Image im2 = new Image("/Ressources/barreDeVie.png");
+    	gc.drawImage(im2, -20, 0, scoreGauche.getWidth(), scoreGauche.getHeight());
     	if(y==0){
     		
     	}else{
