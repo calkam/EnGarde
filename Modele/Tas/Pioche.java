@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Stack;
 
+import Modele.Visiteur;
+
 public class Pioche extends Tas {
 	private Stack<Carte> p;
 	
@@ -13,12 +15,17 @@ public class Pioche extends Tas {
 		this.melanger();
 	}
 	
+	@Override
+	public boolean accept(Visiteur v) {
+		// TODO Auto-generated method stub
+		return v.visite(this);
+	}
+	
 	// On mélange les cartes de la pioche selon l'algo suivant :
 	// On crée 5 tas de 5 cartes de valeurs identiques de 1 à 5
 	// On ajoute dans la pioche une carte d'un des tas d'indice i tiré aléatoirement
 	// Si un tas est vide, il est "écrasé" par le tas le plus à droite
 	// On continue d'ajouter des cartes tant qu'il reste des tas
-	
 	public void melanger(){
 		ArrayList<ArrayList<Carte> > jeu = new ArrayList<> (5);
 		ArrayList<Carte> tas;
@@ -29,7 +36,7 @@ public class Pioche extends Tas {
 		for(int i=1; i<=5; i++){
 			tas = new ArrayList<>();
 			for(int j = 1 ; j <= 5 ; j++){
-				tas.add(new Carte((i-1)*5+j, i));
+				tas.add(new Carte((i-1)*5+j, i, 0, 0, this.getLargeur(), this.getHauteur()));
 			}
 			jeu.add(tas);
 		}

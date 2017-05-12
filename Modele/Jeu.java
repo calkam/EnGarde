@@ -5,7 +5,7 @@ import Modele.Plateau.*;
 import Modele.Plateau.Figurine.*;
 import Modele.Tas.*;
 
-public class Jeu {
+public class Jeu implements Visitable{
 	
 	private final static int VICTOIRE = 5; 
 	
@@ -80,6 +80,23 @@ public class Jeu {
 	}
 
 	/**
+	 * 
+	 * VISITABLE
+	 */
+	
+	@Override
+	public boolean accept(Visiteur d) {
+	   if(piste != null){
+            piste.accept(d);
+            joueur1.accept(d);
+            joueur2.accept(d);
+            return false;
+        }else{
+            return true;
+        }
+	}
+	
+	/**
 	 * GETTER / SETTER / TOSTRING
 	 */
 	public Joueur getJoueur1() {
@@ -127,4 +144,6 @@ public class Jeu {
 		String str = "Jeu";
 		return str;
 	}
+
+
 }

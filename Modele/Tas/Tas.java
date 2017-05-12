@@ -1,6 +1,9 @@
 package Modele.Tas;
 
-public abstract class Tas {
+import Modele.Visitable;
+import Modele.Composant.Rectangle;
+
+public abstract class Tas extends Rectangle implements Visitable {
 	
 	// nombreCarte est un tableau de 6 entiers
 	// La case d'indice i > 0 contient le nombre de cartes de valeur i du Tas
@@ -12,13 +15,18 @@ public abstract class Tas {
 	public Tas(){
 		this(0);
 	}
-	
+
 	public Tas(int m_nombreCarte){
-		
+		super(0, 0, 0, 0);
 		this.nombreCarte = new int [nombreMaxCarte] ;
 		this.nombreCarte[0] = m_nombreCarte ;
 		for (int i = 1 ; i < nombreMaxCarte; i++)
 			this.nombreCarte[i] = 0 ; 
+	}
+	
+	public void fixeDimensions(float l, float h){
+		this.setLargeur(l);
+		this.setHauteur(h);
 	}
 	
 	public int getNombreCarte(){

@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import Modele.Couple;
 import Modele.Tour;
 import Modele.Triplet;
+import Modele.Visitable;
+import Modele.Visiteur;
 import Modele.Plateau.Piste;
 import Modele.Plateau.Score;
 import Modele.Tas.Carte;
@@ -14,7 +16,7 @@ import Modele.Tas.Main;
  * @author gourdeaf
  *
  */
-public abstract class Joueur {
+public abstract class Joueur implements Visitable{
 	
 	public final static int ActionImpossible = -1 ;
 	public final static int Reculer = 0 ;
@@ -23,7 +25,6 @@ public abstract class Joueur {
 	public final static int AttaqueIndirecte  = 3 ;
 	public final static int Parade = 4 ;
 	public final static int Fuite = 5 ;
-	
 	
 	protected String nom ;
 	protected Main main ;
@@ -36,6 +37,12 @@ public abstract class Joueur {
 		this.main = main;
 		this.piste = piste;
 		this.score = new Score();
+	}
+	
+	@Override
+	public boolean accept(Visiteur v) {
+		// TODO Auto-generated method stub
+        return v.visite(this.getMain());
 	}
 	
 	public boolean peut_executer_parade(int valeurCarteMain, int nombreDeCartes, int valeurCarteAttaque) throws Exception {
@@ -201,43 +208,4 @@ public abstract class Joueur {
 		str += "]\n";
 		return str;
 	}
-	
-	/*ArrayList<Action> lesActions;
-	
-	protected Joueur(String nom) {
-		
-		this.nom = nom ;
-		lesActions = new ArrayList<>();
-		lesActions.add(new AttaqueDirecte());
-		lesActions.add(new AttaqueIndirecte());
-		lesActions.add(new Parade());
-		lesActions.add(new Retraite());
-		lesActions.add(new Avancer());
-		lesActions.add(new Reculer());
-	}*/
-	
-	/**
-	 * Met en surbrillance les cases correpondantes à des actions possibles
-	 * en fonction de la carte sélectionnée dans la main du joueur, la position
-	 * de sa figurine et de celle du joueur adverse
-	 * 
-	 * @param maCarte
-	 */
-	/*public void selectionCarte(Carte maCarte){
-		Object figurineAdverse;
-		
-		for(Action a : lesActions){
-			if(a.estPossible(maCarte, figurine, figurineAdverse)){
-				Case casePossible = a.casePossible(maCarte, figurine, figurineAdverse);
-				
-				Piste.accepte(new Visiteur(){
-					void visite(Case c){
-						if(c.equals(casePossible)){
-							// On met le flag de la case c à true pour mettre la case en surbrillance					
-						}
-					}
-				});
-			}
-		}
-	}*/
 }

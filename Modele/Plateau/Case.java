@@ -1,22 +1,19 @@
 package Modele.Plateau;
 
-import Modele.Composant.ComposantGraphique;
+import Modele.Visitable;
+import Modele.Visiteur;
 import Modele.Composant.Rectangle;
-import Modele.Composant.Visitable;
-import Modele.Composant.Visiteur;
 
 public class Case extends Rectangle implements Visitable {
 
     private int couleur;
-    final static float largeur = 30;
-    final static float hauteur = 30;
 
     private void initialise(int c) {
         couleur = c;
     }
 
     Case(int c, float x, float y) {
-    	super(x, y, largeur, hauteur);
+    	super(x, y, 0, 0);
         initialise(c);
     }
 
@@ -28,13 +25,9 @@ public class Case extends Rectangle implements Visitable {
 		this.couleur = couleur;
 	}
 
-	ComposantGraphique copieVers(float x, float y) {
-        return new Case(couleur, x, y);
-    }
-
-    @Override
+	@Override
     public String toString() {
-        return "[" + posX() + ", " + posY() + "]," + " couleur " + couleur + "";
+        return "[" + getX() + ", " + getY() + "]," + " couleur " + couleur + "";
     }
 
 	@Override

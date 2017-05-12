@@ -14,7 +14,7 @@ public class PlateauScore extends Rectangle {
 	private int scoreJ2;
 	
 	public PlateauScore(){
-		super();
+		super(0, 0);
 	}
 
 	public PlateauScore(float x, float y, Jeton jeton1, Jeton jeton2, ArrayList<Case> casesJ1, ArrayList<Case> casesJ2, int scoreJ1, int scoreJ2) {

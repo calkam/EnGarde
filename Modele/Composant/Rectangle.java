@@ -2,12 +2,8 @@ package Modele.Composant;
 
 public class Rectangle extends ComposantGraphique {
 
-	private float largeur;
-	private float hauteur;
-	
-	public Rectangle(){
-		
-	}
+	protected float largeur;
+	protected float hauteur;
 	
 	public Rectangle(float x, float y) {
 		super(x, y);
@@ -20,10 +16,10 @@ public class Rectangle extends ComposantGraphique {
 	
 	final void initialiser(float l, float h) {
         this.largeur = l;
-        hauteur = h;
+        this.hauteur = h;
     }
 
-	void fixeDimensions(float l, float h) {
+	public void fixeDimensions(float l, float h) {
         initialiser(l, h);
     }
 
@@ -33,12 +29,6 @@ public class Rectangle extends ComposantGraphique {
         } else {
             return false;
         }
-	}
-	
-	@Override
-	ComposantGraphique copieVers(float x, float y) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
@@ -51,6 +41,16 @@ public class Rectangle extends ComposantGraphique {
 	public float getHauteur() {
 		// TODO Auto-generated method stub
 		return this.hauteur;
+	}
+	
+	@Override
+	public void setLargeur(float l) {
+		this.largeur = l;
+	}
+	
+	@Override
+	public void setHauteur(float h) {
+		this.hauteur = h;
 	}
 
 }

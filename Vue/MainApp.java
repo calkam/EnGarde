@@ -32,7 +32,8 @@ public class MainApp extends Application {
 
         initRootLayout();
         
-        acceuil();  
+        //acceuil();
+        jeu();
     }
     
     /**
@@ -157,7 +158,7 @@ public class MainApp extends Application {
             // Give the controller access to the main app.
             ControleurJeu controller = loader.getController();
             controller.setMainApp(this);
-            controller.initGraphics();
+            controller.init(jeu);
             
             Image imageC = new Image("/Ressources/SourisEpee.png");
             primaryStage.getScene().setCursor(new ImageCursor(imageC));
@@ -198,6 +199,7 @@ public class MainApp extends Application {
     }
 
     public static void creer(String[] args, Jeu j){
+    	jeu = j;
     	launch(args);
     }
 	

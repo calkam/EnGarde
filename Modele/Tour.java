@@ -135,7 +135,10 @@ public class Tour{
 		int i=nbCarteMain;
 			
 		while(!pioche.estVide() && i < nombreCarteMax){
-			j.ajouterCarteDansMain(pioche.piocher());
+			Carte c = pioche.piocher();
+			c.setX((i+1)*c.getLargeur());
+			c.setY(60);
+			j.ajouterCarteDansMain(c);
 			i++;
 		}
 	}

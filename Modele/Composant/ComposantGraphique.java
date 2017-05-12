@@ -3,40 +3,47 @@ package Modele.Composant;
 public abstract class ComposantGraphique extends Composant {
     private Point coord;
 
-    abstract ComposantGraphique copieVers(float x, float y);
-
-    public abstract float getLargeur();
-
+	public abstract float getLargeur();
     public abstract float getHauteur();
-
-    public ComposantGraphique(){
-    	
-    }
+    public abstract void setLargeur(float l);
+    public abstract void setHauteur(float h);
     
-    ComposantGraphique(float x, float y) {
+    public ComposantGraphique(float x, float y) {
         coord = new Point(x, y);
     }
     
-    public float posX() {
+    public float getX() {
         return coord.x();
     }
 
-    public float posY() {
+    public float getY() {
         return coord.y();
+    }
+    
+    public void setX(float x) {
+        this.coord.setX(x);
+    }
+
+    public void setY(float y) {
+    	this.coord.setY(y);
     }
 
     public Point getCoord(){
     	return coord;
     }
     
+    public void setCoord(Point coord) {
+		this.coord = coord;
+	}
+    
     void deplacePosition(float x, float y) {
         coord.ajoute(x, y);
     }
 
     boolean dansLaBoite(ComposantGraphique c) {
-        return (c.posX() < posX() + getLargeur())
-                && (c.posX() + c.getLargeur() > posX())
-                && (c.posY() < posY() + getHauteur())
-                && (c.posY() + c.getHauteur() > posY());
+        return (c.getX() < getX() + getLargeur())
+                && (c.getX() + c.getLargeur() > getX())
+                && (c.getY() < getY() + getHauteur())
+                && (c.getY() + c.getHauteur() > getY());
     }
 }

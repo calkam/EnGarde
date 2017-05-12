@@ -17,6 +17,14 @@ class Point {
         return y;
     }
     
+    void setX(float x){
+    	this.x = x;
+    }
+    
+    void setY(float y){
+    	this.y = y;
+    }
+    
     Point fixe(float x, float y) {
         this.x = x;
         this.y = y;

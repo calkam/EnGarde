@@ -23,11 +23,6 @@ public class Cercle extends ComposantGraphique {
     }
 
     @Override
-    ComposantGraphique copieVers(float x, float y) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public float getLargeur() {
         return rayon * 2;
     }
@@ -36,4 +31,16 @@ public class Cercle extends ComposantGraphique {
     public float getHauteur() {
         return rayon * 2;
     }
+
+	@Override
+	public void setLargeur(float l) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setHauteur(float h) {
+		// TODO Auto-generated method stub
+		
+	}
 }

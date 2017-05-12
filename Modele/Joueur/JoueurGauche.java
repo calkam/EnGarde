@@ -8,17 +8,9 @@ public class JoueurGauche extends Joueur {
 	
 	public JoueurGauche(String nom, Main main, Piste piste) {
 		super(nom, main, piste) ;
+		main.setPosition(Main.gauche);
 		
 	}
-	
-	// INUTILISEE
-	/*private boolean deplacer_dans_piste (int distance) {
-		
-		int position_arrivee = piste.getFigurineGauche().getPosition() + distance ;
-		
-		return piste.estdansPiste(position_arrivee) ;
-		
-	}*/
 	
 	private boolean estlibre (int position) {
 		
@@ -30,8 +22,6 @@ public class JoueurGauche extends Joueur {
 		
 		int position_arrivee = piste.getFigurineGauche().getPosition() + distance ;
 		
-		//C'EST DE LA MERDE return deplacer_dans_piste(position_arrivee) && position_arrivee <= piste.getFigurineDroite().getPosition() ;
-		
 		return position_arrivee <= piste.getFigurineDroite().getPosition() ;
 	}
 	
@@ -40,7 +30,7 @@ public class JoueurGauche extends Joueur {
 		
 		int position_arrivee = piste.getFigurineGauche().getPosition() - distance ;
 		
-		if(piste.estdansPiste(position_arrivee))
+		if(piste.estDansPiste(position_arrivee))
 			
 			return position_arrivee ;
 		

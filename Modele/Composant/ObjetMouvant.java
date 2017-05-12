@@ -1,5 +1,6 @@
 package Modele.Composant;
 
+import Modele.Visiteur;
 import Modele.Plateau.Piste;
 
 public abstract class ObjetMouvant extends ComposantGraphique implements Observateur {
@@ -42,12 +43,6 @@ public abstract class ObjetMouvant extends ComposantGraphique implements Observa
     float vitY() {
         return this.getCoord().y();
     }
-
-    @Override
-    ComposantGraphique copieVers(float x, float y) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
     @Override
     public float getLargeur() {
         return delegue.getLargeur();
@@ -59,13 +54,13 @@ public abstract class ObjetMouvant extends ComposantGraphique implements Observa
     }
 
     @Override
-    public float posX() {
-        return delegue.posX();
+    public float getX() {
+        return delegue.getX();
     }
 
     @Override
-    public float posY() {
-        return delegue.posY();
+    public float getY() {
+        return delegue.getY();
     }
 
     @Override
@@ -74,7 +69,7 @@ public abstract class ObjetMouvant extends ComposantGraphique implements Observa
     }
 
     void fixePosition(float x, float y) {
-        delegue.deplacePosition(x - delegue.posX(), y - delegue.posY());
+        delegue.deplacePosition(x - delegue.getX(), y - delegue.getY());
     }
    
 }

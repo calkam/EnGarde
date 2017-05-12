@@ -93,8 +93,7 @@ public class Manche {
 			nbTourRealise++;
 		}while(estPasFini(resultat));
 		
-		System.out.println("/*************************************************************************************************************/");
-		tourEnCours.afficherPiste(positionF1, positionF2);		
+		System.out.println("/*************************************************************************************************************/");	
 		
 		if(resultat == Tour.joueurPremierPerdu){			
 			joueurAGagne(tourEnCours.getJoueurSecond());

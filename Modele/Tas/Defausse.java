@@ -2,12 +2,20 @@ package Modele.Tas;
 
 import java.util.Stack;
 
+import Modele.Visiteur;
+
 public class Defausse extends Tas {
 	private Stack<Carte> d;
 	
 	public Defausse(){
 		super();
 		d = new Stack<Carte>();
+	}
+	
+	@Override
+	public boolean accept(Visiteur v) {
+		// TODO Auto-generated method stub
+		return v.visite(this);
 	}
 	
 	public Defausse(int nombre){

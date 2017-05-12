@@ -2,8 +2,21 @@ package Modele.Tas;
 
 import java.util.ArrayList;
 
+import Modele.Visiteur;
+
 public class Main extends Tas {
+	
+	public final static int droite = 0;
+	public final static int gauche = 1;
+	
 	private ArrayList<Carte> main;
+	int cote;
+	
+	public Main(int cote){
+		super(0);
+		this.main = new ArrayList<>();
+		this.cote = cote;
+	}
 	
 	public Main(){
 		super(0);
@@ -31,6 +44,16 @@ public class Main extends Tas {
 		}		
 	}
 	
+	@Override
+	public boolean accept(Visiteur v) {
+		// TODO Auto-generated method stub
+		boolean retour = v.visite(this);
+        for (Carte c : this.getMain()) {
+            retour = retour || c.accept(v);
+        }
+		return retour;
+	}
+	
 	public Carte getCarte(int c){
 		return this.main.get(c);
 	}
@@ -43,6 +66,14 @@ public class Main extends Tas {
 		this.main = m;
 	}
 	
+	public int getCote() {
+		return cote;
+	}
+
+	public void setPosition(int cote) {
+		this.cote = cote;
+	}
+
 	public String toString(){
 		String resultat = "";
 		resultat += "Main [\n";

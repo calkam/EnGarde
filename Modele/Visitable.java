@@ -1,4 +1,4 @@
-package Modele.Composant;
+package Modele;
 
 /**
  * @author gourdeaf

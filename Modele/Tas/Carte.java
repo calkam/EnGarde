@@ -1,6 +1,10 @@
 package Modele.Tas;
 
-public class Carte {
+import Modele.Visitable;
+import Modele.Visiteur;
+import Modele.Composant.Rectangle;
+
+public class Carte extends Rectangle implements Visitable {
 	
 	public final static int UN = 1;
 	public final static int DEUX = 2;
@@ -11,9 +15,14 @@ public class Carte {
 	private int id;
 	private int contenu;
 	
-	Carte(int id, int contenu){
+	Carte(int id, int contenu, float x, float y, float largeur, float hauteur){
+		super(x, y, largeur, hauteur);
 		this.id = id;
 		this.contenu = contenu ;
+	}
+	
+	Carte(int id, int contenu){
+		this(id, contenu, 0, 0, 0, 0);
 	}
 	
 	Carte(int contenu){
@@ -26,6 +35,12 @@ public class Carte {
 	
 	public int getContenu() {
 		return contenu;
+	}
+	
+	@Override
+	public boolean accept(Visiteur v) {
+		// TODO Auto-generated method stub
+		return v.visite(this);
 	}
 	
 	@Override
@@ -65,5 +80,5 @@ public class Carte {
 		}
 		return str;
 	}
-	
+
 }
