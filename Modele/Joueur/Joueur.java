@@ -8,7 +8,9 @@ import Modele.Triplet;
 import Modele.Plateau.Piste;
 import Modele.Plateau.Score;
 import Modele.Tas.Carte;
+import Modele.Tas.Defausse;
 import Modele.Tas.Main;
+import Modele.Tas.Pioche;
 
 /**
  * @author gourdeaf
@@ -47,6 +49,8 @@ public abstract class Joueur {
 		
 		return b;
 	}
+	
+	abstract public Action actionIA(Triplet<Integer, Integer, Integer> attaque, Pioche pioche, Defausse defausse) throws Exception;
 	
 	abstract public int peut_reculer (int distance)  ;
 	abstract public Couple<Boolean, Integer> peut_avancer_ou_attaquer_directement (int distance)  ;

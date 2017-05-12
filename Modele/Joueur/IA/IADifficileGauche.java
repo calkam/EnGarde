@@ -1,5 +1,6 @@
 package Modele.Joueur.IA;
 
+import Modele.Triplet;
 import Modele.Joueur.Action;
 import Modele.Joueur.ActionDefensive;
 import Modele.Joueur.ActionNeutre;
@@ -11,38 +12,44 @@ import Modele.Tas.Main;
 
 public class IADifficileGauche extends IAGauche {
 
-	public IADifficileGauche(String nom, Main main, Piste piste, Defausse defausse) {
-		super(nom, main, piste, defausse);
+	public IADifficileGauche(String nom, Main main, Piste piste) {
+		super(nom, main, piste);
 	}
 	
-	Action actionIA (int statut) throws Exception {
+	public Action actionIA (Triplet<Integer, Integer, Integer> attaque, Defausse defausse) throws Exception {
 		
 		Action action_jouee = new ActionNeutre(Avancer,0,22,new Carte(5))  ;
 		int nbcartes = -100 ;
 		int distance = piste.getFigurineDroite().getPosition() - piste.getFigurineGauche().getPosition();
 		int surplus = 0;
 		
-		if (statut == AttaqueIndirecte) { //Attaque indirecte subie
+		if (attaque.getC1() == AttaqueIndirecte) { //Attaque indirecte subie
 			
-			if ( 2*(main.getNombreCarteGroupe(distance)) < (5 - defausse.getNombreCarteGroupe(distance)) || main.getNombreCarteGroupe(attaque.getC1().getContenu()) < attaque.getC2() ) {
+			if ( 2*(main.getNombreCarteGroupe(distance)) < (5 - defausse.getNombreCarteGroupe(distance)) || main.getNombreCarteGroupe(attaque.getC3()) < attaque.getC2() ) {
 				//Si je ne peux pas parer, ou bien que je peux parer mais que je peux perde en attaquant directement juste après
 				
-				action_jouee = ReculerPlus5(distance); //On regarde si on peux reculer a une distance >= 6
+				action_jouee = ReculerPlus5(distance, defausse); //On regarde si on peux reculer a une distance >= 6
 				
 				if((action_jouee.equals(new ActionNeutre(Avancer,0,22,new Carte(5))))){ //Si on a aucune carte permettant de reculer a une distance >= 6
 					
-					action_jouee = TrouverCarteMoinsRisquee(distance, false); //On choisis alors de reculer la ou le risque de perde est le moins élevé
+					action_jouee = TrouverCarteMoinsRisquee(distance, false, defausse); //On choisis alors de reculer la ou le risque de perde est le moins élevé
 				}
 				
 			}else{ //On decide de parer l'attaque indirecte si on peut attaquer directement sans rique après
 				
-				action_jouee = new ActionDefensive(Parade,attaque.getC2(),piste.getFigurineGauche().getPosition(),null,attaque.getC1());
+				for (Carte c : main.getMain()){
+					if(c.getContenu() == attaque.getC3()){
+						action_jouee = new ActionDefensive(Parade,attaque.getC2(),piste.getFigurineGauche().getPosition(),null,c);
+					}
+				}
+				
+				//action_jouee = new ActionDefensive(Parade,attaque.getC2(),piste.getFigurineGauche().getPosition(),null,attaque.getC1());
 				//Dans ce cas, on doit directement relancer l'IA pour décider de son coup après parade !
 			}
 			
 		}
 		
-		if(statut == pasAttaque){ //Si on a pas encore decider du coup a jouer (si on a pas subie d'attaque indirecte/directe)
+		if(attaque.getC1() == pasAttaque){ //Si on a pas encore decider du coup a jouer (si on a pas subie d'attaque indirecte/directe)
 			
 			if(defausse.getNombreCarte() == 1){ //Si il n'y a plus qu'une carte dans la pioche au début de mon tour
 				
@@ -57,11 +64,11 @@ public class IADifficileGauche extends IAGauche {
 				if((action_jouee.equals(new ActionNeutre(Avancer,0,22,new Carte(5))))){ 
 					// Si la pioche est vide, mais qu'on ne peux pas fuir et gagner comme le roi des voleurs
 					
-					action_jouee = TrouverCarteMoinsRisquee(distance, true);
+					action_jouee = TrouverCarteMoinsRisquee(distance, true, defausse);
 					
 					if((action_jouee.equals(new ActionNeutre(Avancer,0,22,new Carte(5))))){
 						
-						action_jouee = TrouverCarteMoinsRisquee(distance, false);
+						action_jouee = TrouverCarteMoinsRisquee(distance, false, defausse);
 					}
 				}
 				
@@ -99,7 +106,7 @@ public class IADifficileGauche extends IAGauche {
 				if((action_jouee.equals(new ActionNeutre(Avancer,0,22,new Carte(5))))){ 
 					//Si on a decider de ne pas attaquer indirectement, on dois alors choisir la derniere action possible : le deplacement uniquement 
 
-					action_jouee = ReculerPlus5(distance);
+					action_jouee = ReculerPlus5(distance, defausse);
 					
 					if((action_jouee.equals(new ActionNeutre(Avancer,0,22,new Carte(5))))){ 
 						//Si on n'a pas de carte permettant de reculer a une distance >= 6
@@ -124,11 +131,11 @@ public class IADifficileGauche extends IAGauche {
 					
 					if((action_jouee.equals(new ActionNeutre(Avancer,0,22,new Carte(5))))){ //Si on ne peux pas avancer a une case non-mortelle 
 								
-							action_jouee = TrouverCarteMoinsRisquee(distance, false);
+							action_jouee = TrouverCarteMoinsRisquee(distance, false, defausse);
 							
 							if((action_jouee.equals(new ActionNeutre(Avancer,0,22,new Carte(5))))){ 
 								//Si on est obliger d'avancer a une case potentiellement mortelle
-								action_jouee = TrouverCarteMoinsRisquee(distance, true);
+								action_jouee = TrouverCarteMoinsRisquee(distance, true, defausse);
 						}
 					}
 				}
@@ -143,7 +150,7 @@ public class IADifficileGauche extends IAGauche {
 	}
 	
 	
-	Action TrouverCarteMoinsRisquee(int distance, boolean avancer) throws Exception{
+	Action TrouverCarteMoinsRisquee(int distance, boolean avancer, Defausse defausse) throws Exception{
 		
 		int nbcartes = -100;
 		Action action_jouee = new ActionNeutre(Avancer,0,22,new Carte(5))  ;
@@ -190,7 +197,7 @@ public class IADifficileGauche extends IAGauche {
 		return action_jouee;
 	}
 	
-	Action ReculerPlus5(int distance) throws Exception{
+	Action ReculerPlus5(int distance, Defausse defausse) throws Exception{
 		
 		int nbcartes = -100;
 		Action action_jouee = new ActionNeutre(Avancer,0,22,new Carte(5))  ;
@@ -218,24 +225,4 @@ public class IADifficileGauche extends IAGauche {
 		
 		return action_jouee;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

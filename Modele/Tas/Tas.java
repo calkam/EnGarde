@@ -28,8 +28,9 @@ public abstract class Tas {
 		nombreCarte[0] = nbCartes;
 	}	
 	public int getNombreCarteGroupe(int i) throws Exception{	
-		if(i > nombreMaxCarte){
-			throw new Exception("Il n'y pas autant de carte dans la main");
+		if(i > nombreMaxCarte - 1 || i < 1){
+			//throw new Exception("Il n'y pas autant de carte dans la main");
+			return 0;
 		}
 		return nombreCarte[i];
 	}

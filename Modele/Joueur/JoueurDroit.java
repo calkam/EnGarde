@@ -1,8 +1,11 @@
 package Modele.Joueur;
 
 import Modele.Couple;
+import Modele.Triplet;
 import Modele.Plateau.Piste;
+import Modele.Tas.Defausse;
 import Modele.Tas.Main;
+import Modele.Tas.Pioche;
 
 public class JoueurDroit extends Joueur {
 
@@ -111,6 +114,11 @@ public class JoueurDroit extends Joueur {
 	public void reinitialiserPositionFigurine() {
 		// TODO Auto-generated method stub
 		this.setPositionFigurine(23);
+	}
+
+	// NON IMPLEMENTE
+	public Action actionIA(Triplet<Integer, Integer, Integer> attaque, Pioche pioche, Defausse defausse) throws Exception {
+		return null;
 	}
 	
 }

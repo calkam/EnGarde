@@ -4,7 +4,7 @@ import java.util.Stack;
 
 public class Defausse extends Tas {
 	private Stack<Carte> d;
-	
+
 	public Defausse(){
 		super();
 		d = new Stack<Carte>();
@@ -30,5 +30,11 @@ public class Defausse extends Tas {
 		resultat += "]\n";
 		return resultat;
 	}
-		
+	
+	public Stack<Carte> getD() {
+		return d;
+	}
+	public void setD(Stack<Carte> d) {
+		this.d = d;
+	}		
 }
