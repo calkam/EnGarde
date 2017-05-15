@@ -71,6 +71,8 @@ public class Piste extends Rectangle implements Visitable {
         for (Case c : cases) {
             retour = retour || c.accept(v);
         }
+        retour = retour || figurineDroite.accept(v);
+		retour = retour || figurineGauche.accept(v);
         return retour;
 	}
 

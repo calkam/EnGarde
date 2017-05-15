@@ -1,7 +1,6 @@
 package Modele.Plateau.Figurine;
 import Modele.Reglages;
 import Modele.Visitable;
-import Modele.Visiteur;
 import Modele.Composant.ObjetMouvant;
 import Modele.Composant.Point;
 import Modele.Composant.Rectangle;
@@ -32,9 +31,4 @@ public abstract class Figurine extends ObjetMouvant implements Visitable {
 		return "[position=" + position + "]";
 	}
 	
-	@Override
-	public boolean accept(Visiteur v) {
-		// TODO Auto-generated method stub
-		return v.visite(this);
-	}
 }
