@@ -25,9 +25,9 @@ public Action actionIA (Triplet<Integer, Integer, Integer> attaque, Pioche pioch
 		int distance = piste.getFigurineDroite().getPosition() - piste.getFigurineGauche().getPosition();
 		int surplus = 0;
 		
-		if (attaque.getC1() == AttaqueIndirecte) { //Attaque indirecte subie
+		if (attaque.getC1() == 2) { //Attaque indirecte subie
 			
-			if ( 2*(main.getNombreCarteGroupe(distance)) < (5 - defausse.getNombreCarteGroupe(distance)) || main.getNombreCarteGroupe(attaque.getC3()) < attaque.getC2() ) {
+			if ( 2*(main.getNombreCarteGroupe(distance)) < (5 - defausse.getNombreCarteGroupe(distance)) || main.getNombreCarteGroupe(attaque.getC3()) <= attaque.getC2() ) {
 				//Si je ne peux pas parer, ou bien que je peux parer mais que je peux perde en attaquant directement juste après
 				
 				action_jouee = ReculerPlus5(distance, defausse); //On regarde si on peux reculer a une distance >= 6
@@ -37,7 +37,7 @@ public Action actionIA (Triplet<Integer, Integer, Integer> attaque, Pioche pioch
 					action_jouee = TrouverCarteMoinsRisquee(distance, false, defausse); //On choisis alors de reculer la ou le risque de perde est le moins élevé
 				}
 				
-			}else{ //On decide de parer l'attaque indirecte si on peut attaquer directement sans rique après
+			}else{ //On decide de parer l'attaque indirecte si on peut attaquer directement sans rique après, et qu'on a au moins une carte pour l'attaque !
 				
 
 				for (Carte c : main.getMain()){
@@ -54,7 +54,7 @@ public Action actionIA (Triplet<Integer, Integer, Integer> attaque, Pioche pioch
 		
 		if(attaque.getC1() == pasAttaque){ //Si on a pas encore decider du coup a jouer (si on a pas subie d'attaque indirecte/directe)
 			
-			if(pioche.getNombreCarte() == 1){ //Si il n'y a plus qu'une carte dans la pioche au début de mon tour
+			if(pioche.getNombreCarte() == 1){ //Si il n'y a plus qu'une carte dans la pioche au debut de mon tour
 				
 				for (Carte c : main.getMain()) {//On regarde dans le cas ou on est plus avancer que l'adversaire sur la piste, si on peut reculer a une distance >=6 pour gagner directement
 					
@@ -75,7 +75,7 @@ public Action actionIA (Triplet<Integer, Integer, Integer> attaque, Pioche pioch
 					}
 				}
 				
-			}else{ //Si la pioche n'est pas vide
+			}else{ //Si la pioche n'est pas bientot vide
 				//System.out.println("BBBBBBBB\n");
 				int nbcartedist = 0;
 				int nbcartedistdefausse = 0;
@@ -122,7 +122,7 @@ public Action actionIA (Triplet<Integer, Integer, Integer> attaque, Pioche pioch
 					//Si on a decider de ne pas attaquer indirectement, on dois alors choisir la derniere action possible : le deplacement uniquement 
 					System.out.println("RENTRER\n");
 					nbcartes = -100;
-					for (Carte c : main.getMain()) {
+					/*for (Carte c : main.getMain()) { //Test si on peut avancer a une case non-mortelle
 						surplus = 0;
 						if(distance == 2*c.getContenu()){
 							surplus = 1;
@@ -139,13 +139,30 @@ public Action actionIA (Triplet<Integer, Integer, Integer> attaque, Pioche pioch
 								}
 							}
 						}
+					}*/
+					for (Carte c : main.getMain()) { //On teste si on peut avancer à une case 'non-mortelle'
+						surplus = 0;
+						if(distance == 2*c.getContenu()){
+							surplus = 1;
+						}
+						if ( (2*(main.getNombreCarteGroupe(distance - c.getContenu())-surplus) + defausse.getNombreCarteGroupe(distance - c.getContenu()) -5) >= 0 || (distance - c.getContenu()) >= 6 ){
+							if (2*(main.getNombreCarteGroupe(distance - c.getContenu())-surplus) + defausse.getNombreCarteGroupe(distance - c.getContenu()) -5 > nbcartes || (distance - c.getContenu()) >= 6 ) {
+								//Si plusieurs cartes permettent ce déplacement, on choisis celle qui a été le plus jouée :
+								//Tel que nb de cette carte dans main + defausse est maximal !
+								nbcartes = 2*(main.getNombreCarteGroupe(distance - c.getContenu())-surplus) + defausse.getNombreCarteGroupe(distance - c.getContenu()) -5;
+								action_jouee = new ActionNeutre (Avancer,0,piste.getFigurineDroite().getPosition()-c.getContenu(),c);
+								//On renvoie comme action la carte jouée, et on avance
+								
+							}
+							
+						}
 					}
 					
-					if((action_jouee.equals(new ActionNeutre(Reculer,0,22,new Carte(5))))){ 
+					if((action_jouee.equals(new ActionNeutre(Reculer,0,22,new Carte(5))))){ //Si on ne peut avancer a une case non-mortelle, on regarde si on peut reculer a une distance >= 6
 						action_jouee = ReculerPlus5(distance, defausse);
 					}
 					
-					if((action_jouee.equals(new ActionNeutre(Reculer,0,22,new Carte(5))))){ 
+					/*if((action_jouee.equals(new ActionNeutre(Reculer,0,22,new Carte(5))))){ 
 						System.out.println("RENTRER142146142164\n");
 						
 						//Si on n'a pas de carte permettant de reculer a une distance >= 6
@@ -167,8 +184,8 @@ public Action actionIA (Triplet<Integer, Integer, Integer> attaque, Pioche pioch
 							}
 						}
 					}
-					
-					if((action_jouee.equals(new ActionNeutre(Reculer,0,22,new Carte(5))))){ //Si on ne peux pas avancer a une case non-mortelle 
+					*/
+					if((action_jouee.equals(new ActionNeutre(Reculer,0,22,new Carte(5))))){ //Si on ne peux pas avancer a une case non-mortelle, ni reculer a une distance >= 6 
 								
 							action_jouee = TrouverCarteMoinsRisquee(distance, false, defausse);
 							
