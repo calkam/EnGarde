@@ -24,14 +24,10 @@ public Action actionIA (Triplet<Integer, Integer, Integer> attaque, Pioche pioch
 		int nbcartes = -100 ;
 		int distance = piste.getFigurineDroite().getPosition() - piste.getFigurineGauche().getPosition();
 		int surplus = 0;
-		System.out.println("AAAAAAAAAAAAAAAAAAAAAA : " + attaque.getC1() + "\n");
 		if (attaque.getC1() == 2) { //Attaque indirecte subie
-			System.out.println("BBBBBBBBBBBBBBBBBBBBBBBBB\n");
 			if ( (2*(main.getNombreCarteGroupe(distance)) < (5 - defausse.getNombreCarteGroupe(distance))) || (main.getNombreCarteGroupe(attaque.getC3()) < attaque.getC2()) ) {
 				//Si je ne peux pas parer, ou bien que je peux parer mais que je peux perde en attaquant directement juste après
-				System.out.println("CCCCCCCCCCCCCCCCCCCCCCCCCC\n");
 				action_jouee = ReculerPlus5(distance, defausse); //On regarde si on peux reculer a une distance >= 6
-				System.out.println("DDDDDDDDDDDDDDDDDDDDDDDDDDDDD\n");
 				if((action_jouee.equals(new ActionNeutre(Reculer,0,22,new Carte(5))))){ //Si on a aucune carte permettant de reculer a une distance >= 6
 					
 					action_jouee = TrouverCarteMoinsRisquee(distance, false, defausse); //On choisis alors de reculer la ou le risque de perde est le moins élevé
