@@ -41,13 +41,7 @@ public abstract class Joueur {
 	}
 	
 	public boolean peut_executer_parade(int valeurCarteMain, int nombreDeCartes, int valeurCarteAttaque) throws Exception {
-		boolean b = false;
-		
-		if(valeurCarteMain == valeurCarteAttaque && main.getNombreCarteGroupe(valeurCarteMain) >= nombreDeCartes){
-			b = true;			
-		}	
-		
-		return b;
+		return valeurCarteMain == valeurCarteAttaque && main.getNombreCarteGroupe(valeurCarteMain) >= nombreDeCartes ;
 	}
 	
 	abstract public Action actionIA(Triplet<Integer, Integer, Integer> attaque, Pioche pioche, Defausse defausse) throws Exception;
@@ -208,43 +202,4 @@ public abstract class Joueur {
 	
 	@Override
 	abstract public Joueur clone () ;
-	
-	/*ArrayList<Action> lesActions;
-	
-	protected Joueur(String nom) {
-		
-		this.nom = nom ;
-		lesActions = new ArrayList<>();
-		lesActions.add(new AttaqueDirecte());
-		lesActions.add(new AttaqueIndirecte());
-		lesActions.add(new Parade());
-		lesActions.add(new Retraite());
-		lesActions.add(new Avancer());
-		lesActions.add(new Reculer());
-	}*/
-	
-	/**
-	 * Met en surbrillance les cases correpondantes à des actions possibles
-	 * en fonction de la carte sélectionnée dans la main du joueur, la position
-	 * de sa figurine et de celle du joueur adverse
-	 * 
-	 * @param maCarte
-	 */
-	/*public void selectionCarte(Carte maCarte){
-		Object figurineAdverse;
-		
-		for(Action a : lesActions){
-			if(a.estPossible(maCarte, figurine, figurineAdverse)){
-				Case casePossible = a.casePossible(maCarte, figurine, figurineAdverse);
-				
-				Piste.accepte(new Visiteur(){
-					void visite(Case c){
-						if(c.equals(casePossible)){
-							// On met le flag de la case c à true pour mettre la case en surbrillance					
-						}
-					}
-				});
-			}
-		}
-	}*/
 }

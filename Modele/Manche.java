@@ -26,8 +26,8 @@ public class Manche {
 		tourEnCours = tour;
 	}
 	
-	public Manche(int numero, Joueur joueur1, Joueur joueur2){
-		this(numero, 0, new Tour());
+	public Manche(int numero, Joueur joueur1, Joueur joueur2, Historique histo){
+		this(numero, 0, new Tour(histo));
 		initialiserJoueur(joueur1, joueur2);
 	}
 

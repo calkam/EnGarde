@@ -1,6 +1,8 @@
 package Modele;
 
 import Modele.Joueur.*;
+import Modele.Joueur.Humain.HumainDroit;
+import Modele.Joueur.Humain.HumainGauche;
 import Modele.Plateau.*;
 import Modele.Plateau.Figurine.*;
 import Modele.Tas.*;
@@ -19,7 +21,7 @@ public class Jeu {
 		plateauScore = new PlateauScore() ;
 		piste = new Piste(new FigurineGauche(0,0,1), new FigurineDroite(0,0,23)) ;
 		joueur1 = new FabriqueJoueur (1, "Humain", "Kaiba (Joueur 1)", new Main(), piste).nouveauJoueur() ;
-		joueur2 = new FabriqueJoueur (2, "IA", "Difficile", new Main(), piste).nouveauJoueur() ;
+		joueur2 = new FabriqueJoueur (2, "IA", "Moyen", new Main(), piste).nouveauJoueur() ;
 		joueur1.setScore(0);
 		joueur2.setScore(0);
 	}
@@ -67,11 +69,29 @@ public class Jeu {
 	 */
 	
 	public void initialiserPremiereManche(){
-		manche = new Manche(0, joueur1, joueur2);
+		
+		Historique histo = null ;
+		
+		if ((joueur1 instanceof HumainGauche && !(joueur2 instanceof HumainDroit)) || (!(joueur1 instanceof HumainGauche) && joueur2 instanceof HumainDroit)) {
+			
+			histo = new Historique () ;
+			
+		}
+		
+		manche = new Manche(0, joueur1, joueur2, histo);
 	}
 	
 	public void nouvelleManche(){
-		manche = new Manche(manche.getNumero()+1, joueur1, joueur2);
+		
+		Historique histo = null ;
+		
+		if ((joueur1 instanceof HumainGauche && !(joueur2 instanceof HumainDroit)) || (!(joueur1 instanceof HumainGauche) && joueur2 instanceof HumainDroit)) {
+			
+			histo = new Historique () ;
+			
+		}
+		
+		manche = new Manche(manche.getNumero()+1, joueur1, joueur2, histo);
 	}
 	
 	public void lancerLaManche() throws Exception{

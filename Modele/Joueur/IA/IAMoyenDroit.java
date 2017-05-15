@@ -5,6 +5,7 @@ import Modele.Joueur.Action;
 import Modele.Joueur.ActionDefensive;
 import Modele.Joueur.ActionNeutre;
 import Modele.Joueur.ActionOffensive;
+import Modele.Joueur.Joueur;
 import Modele.Plateau.Piste;
 import Modele.Tas.Carte;
 import Modele.Tas.Defausse;
@@ -297,6 +298,17 @@ public Action actionIA (Triplet<Integer, Integer, Integer> attaque, Pioche pioch
 		}
 		
 		return action_jouee;
+	}
+
+
+
+	@Override
+	public Joueur clone () {
+		
+		IAMoyenDroit joueur = new IAMoyenDroit(this.nom, this.main.clone(), this.piste.clone()) ;
+		joueur.setScore(this.getScore());
+		return joueur ;
+		
 	}
 	
 	

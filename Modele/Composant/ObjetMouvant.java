@@ -23,6 +23,7 @@ public abstract class ObjetMouvant extends ComposantGraphique implements Observa
     }
 
     @Override
+	public
     boolean accepte(Visiteur v) {
         return v.visite(this);
     }

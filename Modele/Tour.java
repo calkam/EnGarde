@@ -8,6 +8,8 @@ import Modele.Joueur.Action;
 import Modele.Joueur.ActionNeutre;
 import Modele.Joueur.ActionsJouables;
 import Modele.Joueur.Joueur;
+import Modele.Joueur.Humain.HumainDroit;
+import Modele.Joueur.Humain.HumainGauche;
 import Modele.Joueur.IA.IADroite;
 import Modele.Joueur.IA.IAGauche;
 import Modele.Tas.Carte;
@@ -34,10 +36,13 @@ public class Tour{
 	private Joueur joueurSecond;
 	private Pioche pioche;
 	private Defausse defausse;
+	private Historique histo ;
 	// Type de l'attaque, nombre de cartes attaque, valeur de la carte attaque
 	private Triplet<Integer, Integer, Integer> estAttaque;
 	
-	public Tour(){
+	public Tour(Historique histo){
+		
+		this.histo = histo ;
 		this.estAttaque = new Triplet<>(pasAttaque, 0, 0);
 	}
 	
@@ -84,6 +89,13 @@ public class Tour{
 		System.out.println("Main : " + joueur.getMain().getMain());
 		System.out.println("Nb cartes pioche : " + pioche.getNombreCarte() + "\n");
 		afficherPiste(joueurPremier.getPositionFigurine(), joueurSecond.getPositionFigurine());
+		
+		if(histo != null && (joueur instanceof HumainGauche || joueur instanceof HumainDroit)) {
+			
+			histo.ajouterTour(this);
+			System.out.println(histo) ;
+			
+		}
 		
 		if(joueur instanceof IADroite || joueur instanceof IAGauche){
 			actions_jouables = joueur.peutFaireAction(estAttaque);
@@ -321,6 +333,19 @@ public class Tour{
 		
 		System.out.println(str);
 		System.out.println(strPosition);
+	}
+	
+	@Override
+	public Tour clone () {
+		
+		Tour tour = new Tour (this.histo) ;
+		tour.joueurPremier = this.joueurPremier.clone() ;
+		tour.joueurSecond = this.joueurSecond.clone() ;
+		tour.pioche = this.pioche.clone() ;
+		tour.defausse = this.defausse.clone() ;
+		
+		return tour ;
+		
 	}
 	
 	/**
