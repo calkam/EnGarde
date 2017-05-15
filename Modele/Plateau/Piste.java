@@ -17,6 +17,8 @@ public class Piste extends Rectangle implements Visitable {
 	private FigurineDroite figurineDroite;
 	private ArrayList<Case> cases;
 	
+    private long tempsEcoule;
+	
 	public Piste(FigurineGauche figurineGauche, FigurineDroite figurineDroite) {
 		super(0, 0, Reglages.lis("PisteLargeur"), Reglages.lis("PisteHauteur"));
 		this.figurineGauche = figurineGauche ;
@@ -24,6 +26,15 @@ public class Piste extends Rectangle implements Visitable {
 		this.initTableauCases();
 	}
 
+	public void rafraichit(long t) {
+        tempsEcoule = t;
+        //aRafraichir.metAJour();
+    }
+	
+	long tempsEcoule() {
+        return tempsEcoule;
+    }
+	
 	public FigurineGauche getFigurineGauche() {
 		return figurineGauche;
 	}
@@ -100,6 +111,17 @@ public class Piste extends Rectangle implements Visitable {
 		str += "\n";
 		str += "]\n";
 		return str;
+	}
+
+	public void getCasesClick(double x, double y) {
+		// TODO Auto-generated method stub
+		for(Case c : cases){
+			if(c.estCollision((float)x, (float)y)){
+				c.setCouleur(1);
+				System.out.println("coucou");
+			}
+		}
+			
 	}
 
 }

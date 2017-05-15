@@ -14,6 +14,8 @@ public class Jeu implements Visitable{
 	private Piste piste;
 	private PlateauScore plateauScore;
 	private Manche manche;
+	
+	private long dernierChrono;
 
 	public void init() throws Exception {
 		plateauScore = new PlateauScore() ;
@@ -23,6 +25,8 @@ public class Jeu implements Visitable{
 		joueur1.setScore(0);
 		joueur2.setScore(0);
 		initialiserPremiereManche();
+		
+		this.dernierChrono = System.nanoTime();
 	}
 	
 	public void lancerJeu(){
@@ -37,6 +41,18 @@ public class Jeu implements Visitable{
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * RAFFRAICHISSEMENT
+	 */
+	
+	public boolean rafraichit(long nouveau) {
+        final long temps = nouveau - dernierChrono;
+        dernierChrono = nouveau;
+        
+        piste.rafraichit(temps);
+        return false;
+    }
 	
 	/**
 	 * FIN DE PARTIE
@@ -140,7 +156,7 @@ public class Jeu implements Visitable{
 
 	@Override
 	public String toString() {
-		String str = "Jeu";
+		String str = "Jeu" + joueur1;
 		return str;
 	}
 

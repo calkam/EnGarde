@@ -38,10 +38,7 @@ public abstract class ComposantGraphique extends Composant {
         coord.ajoute(x, y);
     }
 
-    boolean dansLaBoite(ComposantGraphique c) {
-        return (c.getX() < getX() + getLargeur())
-                && (c.getX() + c.getLargeur() > getX())
-                && (c.getY() < getY() + getHauteur())
-                && (c.getY() + c.getHauteur() > getY());
+    boolean dansLaBoite(float x, float y) {
+        return (x < getX() + getLargeur() && x > getX() && x < getY() + getHauteur() && y > getY());
     }
 }

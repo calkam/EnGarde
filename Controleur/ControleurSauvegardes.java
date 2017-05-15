@@ -1,4 +1,4 @@
-package Vue;
+package Controleur;
 
 import javafx.fxml.FXML;
 import javafx.stage.Stage;

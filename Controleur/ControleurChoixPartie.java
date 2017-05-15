@@ -1,4 +1,4 @@
-package Vue;
+package Controleur;
 
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;

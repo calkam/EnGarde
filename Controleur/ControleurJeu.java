@@ -1,53 +1,37 @@
-package Vue;
+package Controleur;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.canvas.Canvas;
 import Modele.Jeu;
-
 import Vue.MainApp;
 
 public class ControleurJeu {
-    
-	@FXML
-    private Canvas terrain;
-    
-	@FXML
-    private Canvas pioche;
-    
-	@FXML
-    private Canvas defausse;
-    
-	@FXML
-    private Canvas scoreDroit;
-    
-	@FXML
-    private Canvas mainDroite;
-    
-	@FXML
-    private Canvas scoreGauche;
-    
-	@FXML
-    private Canvas mainGauche;
 
     private MainApp mainApp;
     
     private Jeu jeu;
-    
-    DessinateurCanvasJavaFx d;
-    
-    public ControleurJeu(){
-    }
     
 	public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
     }
 
 	public void init(Jeu j){
-		this.jeu = j;
-		d = new DessinateurCanvasJavaFx(terrain, pioche, defausse, scoreDroit, mainDroite, scoreGauche, mainGauche);
-		jeu.accept(d);
+		this.setJeu(j);
 	}
 
+	@FXML
+	private void menuPrincipal(){
+		mainApp.acceuil();
+	}
+	
+	public Jeu getJeu() {
+		return jeu;
+	}
+
+	public void setJeu(Jeu jeu) {
+		this.jeu = jeu;
+	}
+	
     /*private void dessinerJoueurGauche(){
         gc.strokeRect((terrain.getWidth()*2)/25, 0, terrain.getWidth()/25, terrain.getHeight());
     }
@@ -105,10 +89,5 @@ public class ControleurJeu {
     }
     
     */
-    
-    @FXML
-	private void menuPrincipal(){
-		mainApp.acceuil();
-	}
 
 }

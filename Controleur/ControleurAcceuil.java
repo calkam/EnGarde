@@ -1,13 +1,11 @@
-package Vue;
+package Controleur;
 
 import javafx.fxml.FXML;
-import javafx.stage.Stage;
 import Vue.MainApp;
 
 
 public class ControleurAcceuil {
 		
-    private Stage dialogStage;
     private MainApp mainApp;
     
     public ControleurAcceuil(){
@@ -15,10 +13,6 @@ public class ControleurAcceuil {
     
 	public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
-    }
-	
-	public void setDialogStage(Stage dialogStage) {
-        this.dialogStage = dialogStage;
     }
 	
 	@FXML

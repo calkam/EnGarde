@@ -23,8 +23,8 @@ public class Rectangle extends ComposantGraphique {
         initialiser(l, h);
     }
 
-	public Boolean estCollision(Rectangle r) {
-		if (dansLaBoite(r)) {
+	public Boolean estCollision(float x, float y) {
+		if (dansLaBoite(x, y)) {
             return true;
         } else {
             return false;

@@ -53,7 +53,11 @@ public class DessinateurCanvasJavaFx extends Visiteur {
     }
     
     public boolean visite(Case c){
-    	gcTerrain.setStroke(Color.BLACK);
+    	switch(c.getCouleur()){
+    		case 0 : gcTerrain.setStroke(Color.BLACK); break;
+    		case 1 : gcTerrain.setStroke(Color.GREEN); break;
+    		default : System.out.println("pas de couleur défini");;
+    	}
     	gcTerrain.strokeRect(c.getX(), c.getY(), c.getLargeur(), c.getHauteur());
 		return false;
 	}

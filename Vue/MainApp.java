@@ -3,17 +3,24 @@ package Vue;
 import java.io.IOException;
 import java.util.Properties;
 
+import Controleur.ControleurAcceuil;
+import Controleur.ControleurAlertQuitter;
+import Controleur.ControleurChoixPartie;
+import Controleur.ControleurJeu;
+import Controleur.ControleurSauvegardes;
+import Controleur.SourisJavaFX;
 import Modele.Jeu;
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import Vue.ControleurAcceuil;
 import javafx.stage.StageStyle;
 
 public class MainApp extends Application {
@@ -23,7 +30,21 @@ public class MainApp extends Application {
 	
     private Stage primaryStage;
     private BorderPane rootLayout;
-    int scene;
+    
+	@FXML
+    private Canvas terrain;
+	@FXML
+    private Canvas pioche;
+	@FXML
+    private Canvas defausse;
+	@FXML
+    private Canvas scoreDroit;
+	@FXML
+    private Canvas mainDroite;
+	@FXML
+    private Canvas scoreGauche;
+	@FXML
+    private Canvas mainGauche;
     
     @Override
     public void start(Stage primaryStage) {
@@ -160,8 +181,22 @@ public class MainApp extends Application {
             
             // Give the controller access to the main app.
             ControleurJeu controller = loader.getController();
-            controller.setMainApp(this);
+            controller.setMainApp(this);        
             controller.init(jeu);
+            
+            RafraichissementJavaFX r = new RafraichissementJavaFX(jeu, this.terrain, this.pioche, this.defausse, this.scoreDroit, this.mainDroite, this.scoreGauche, this.mainGauche);
+    		r.start();
+            
+            SourisJavaFX s = new SourisJavaFX(jeu);
+            
+            terrain = new Canvas(800, 800);
+            
+            terrain.widthProperty().bind(rootLayout.widthProperty());
+            terrain.heightProperty().bind(rootLayout.heightProperty());
+            
+            System.out.println(terrain);
+            
+            terrain.setOnMouseClicked(s);
             
             Image imageC = new Image("/Ressources/SourisEpee.png");
             primaryStage.getScene().setCursor(new ImageCursor(imageC));
