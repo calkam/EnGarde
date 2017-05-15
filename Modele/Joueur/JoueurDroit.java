@@ -8,7 +8,7 @@ public class JoueurDroit extends Joueur {
 
 	public JoueurDroit(String nom, Main main, Piste piste) {
 		super(nom, main, piste) ;
-		main.setPosition(Main.droite);
+		main.setCote(Main.droite);
 	}
 	
 	private boolean estlibre (int position) {

@@ -65,7 +65,7 @@ public class Tour implements Visitable{
 	public void possibiliteAction(Joueur joueur, ArrayList<Carte> cartes){
 		try {
 			Action action;
-			ActionsJouables actions_jouables = joueur.peutFaireAction(cartes, estAttaque);
+			ActionsJouables actions_jouables = joueur.peutFaireAction(joueur.getMain().getCote(), cartes, estAttaque);
 			
 			Enumeration<Action> e = actions_jouables.elements();
 			

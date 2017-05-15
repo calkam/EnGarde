@@ -8,7 +8,7 @@ public class JoueurGauche extends Joueur {
 	
 	public JoueurGauche(String nom, Main main, Piste piste) {
 		super(nom, main, piste) ;
-		main.setPosition(Main.gauche);
+		main.setCote(Main.gauche);
 		
 	}
 	

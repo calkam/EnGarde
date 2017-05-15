@@ -66,7 +66,7 @@ public abstract class Joueur implements Visitable{
 	abstract public void setPositionFigurine(int position) ;
 	abstract public void reinitialiserPositionFigurine() ;
 	
-	public ActionsJouables peutFaireAction(ArrayList<Carte> cartes, Triplet<Integer, Integer, Integer> est_attaque) throws Exception {
+	public ActionsJouables peutFaireAction(int cote, ArrayList<Carte> cartes, Triplet<Integer, Integer, Integer> est_attaque) throws Exception {
 		
 		int position ;
 		ActionsJouables actions_jouables = new ActionsJouables () ;
@@ -74,6 +74,7 @@ public abstract class Joueur implements Visitable{
 		Carte carteOpt;
 		
 		Main main = new Main();
+		main.setCote(cote);
 		main.setMain(cartes);
 		
 		for(int i=0; i<main.getNombreCarte(); i++){

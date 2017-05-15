@@ -83,7 +83,7 @@ public class Main extends Tas {
 		return cote;
 	}
 
-	public void setPosition(int cote) {
+	public void setCote(int cote) {
 		this.cote = cote;
 	}
 

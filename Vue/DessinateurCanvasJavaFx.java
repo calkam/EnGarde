@@ -193,9 +193,9 @@ public class DessinateurCanvasJavaFx extends Visiteur {
     }
     
     private void dessinerMain(GraphicsContext gc, Main m){
+    	gc.clearRect(0, 0, m.getLargeur(), m.getHauteur());
         gc.setStroke(Color.BLUE);
         gc.strokeRect(0, 0, m.getLargeur(), m.getHauteur());
-        //gc.clearRect(0, 0, m.getLargeur(), m.getHauteur());
     }
     
     private void dessinerCarteVertiRecto(GraphicsContext gc, double x, double y, double l, double h, int valeur){
