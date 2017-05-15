@@ -1,5 +1,6 @@
 package Modele.Plateau;
 
+import Modele.Reglages;
 import Modele.Visitable;
 import Modele.Visiteur;
 import Modele.Composant.Rectangle;
@@ -13,7 +14,7 @@ public class Case extends Rectangle implements Visitable {
     }
 
     Case(int c, float x, float y) {
-    	super(x, y, 0, 0);
+    	super(x, y, Reglages.lis("CaseLargeur"), Reglages.lis("CaseHauteur"));
         initialise(c);
     }
 

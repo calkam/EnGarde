@@ -3,7 +3,7 @@ package Modele.Composant;
 import Modele.Visiteur;
 import Modele.Plateau.Piste;
 
-public abstract class ObjetMouvant extends ComposantGraphique implements Observateur {
+public abstract class ObjetMouvant extends ComposantGraphique {
 
 	ComposantGraphique delegue;
     Piste piste;
@@ -16,11 +16,6 @@ public abstract class ObjetMouvant extends ComposantGraphique implements Observa
     void observe(Piste p) {
         piste = p;
         piste.ajouteObservateur(this);
-    }
-    
-    @Override
-    public void miseAJour(Observable o, Object arg) {
-        
     }
 
     @Override
@@ -61,6 +56,16 @@ public abstract class ObjetMouvant extends ComposantGraphique implements Observa
     @Override
     public float getY() {
     	return delegue.getY();
+    }
+    
+    @Override
+    public void setX(float x) {
+        delegue.setX(x);
+    }
+
+    @Override
+    public void setY(float y) {
+    	delegue.setY(y);
     }
 
     @Override

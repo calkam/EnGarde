@@ -155,20 +155,21 @@ public class MainApp extends Application {
             Canvas terrain = (Canvas) personOverview.getChildren().get(5);
             Canvas pioche = (Canvas) personOverview.getChildren().get(6);
             Canvas defausse = (Canvas) personOverview.getChildren().get(7);
-            Canvas mainDroite = (Canvas) personOverview.getChildren().get(8);
-            Canvas mainGauche = (Canvas) personOverview.getChildren().get(9);
+            Canvas mainGauche = (Canvas) personOverview.getChildren().get(8);
+            Canvas mainDroite = (Canvas) personOverview.getChildren().get(9);
             Canvas scoreDroit = (Canvas) personOverview.getChildren().get(10);
             Canvas scoreGauche = (Canvas) personOverview.getChildren().get(11);
             
             // Set person overview into the center of root layout.
             rootLayout.setCenter(personOverview);
             
-            terrain.toFront();
             mainDroite.toFront();
             mainGauche.toFront();
+            terrain.toFront();
             
             try {
 				jeu.init();
+				//jeu.lancerJeu();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

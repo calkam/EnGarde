@@ -8,14 +8,13 @@ import Modele.Composant.Rectangle;
 public abstract class Figurine extends ObjetMouvant implements Visitable {
 	protected int position ;
 	
-	public Figurine(float x, float y, int position) {
+	public Figurine(int position, float x, float y) {
 		super(new Rectangle(x, y, Reglages.lis("FigurineLargeur"), Reglages.lis("FigurineHauteur")), new Point(0, 0));
 		this.position = position;
 	}
 	
 	public Figurine(int i){
-		this(0, 0, 0);
-		this.position = i;
+		this(i, 0, 0);
 	}
 	
 	public int getPosition() {

@@ -24,8 +24,14 @@ public class Piste extends Rectangle implements Visitable {
 		this.figurineGauche = figurineGauche ;
 		this.figurineDroite = figurineDroite ;
 		this.initTableauCases();
+		float largeurCase = cases.get(0).getLargeur();
+		
+		figurineGauche.setY(Reglages.lis("PisteHauteur")-figurineGauche.getHauteur()-25);
+		figurineDroite.setY(Reglages.lis("PisteHauteur")-figurineDroite.getHauteur()-25);
+		figurineGauche.setX(largeurCase * figurineGauche.getPosition());
+		figurineDroite.setX(largeurCase * figurineDroite.getPosition());
 	}
-
+	
 	public void rafraichit(long t) {
         tempsEcoule = t;
         //aRafraichir.metAJour();

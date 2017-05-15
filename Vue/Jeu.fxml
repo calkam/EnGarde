@@ -32,8 +32,8 @@
             <Font name="eufm10" size="20.0" />
          </font></CheckBox>
       <Canvas fx:id="terrain" height="334.0" layoutX="29.0" layoutY="253.0" width="1548.0" StyleClass="terrain" />
-      <Canvas fx:id="pioche" height="170.0" layoutX="525.0" layoutY="90.0" width="275.0" />
-      <Canvas fx:id="defausse" height="170.0" layoutX="803.0" layoutY="90.0" width="275.0" />
+      <Canvas fx:id="pioche" height="150.0" layoutX="525.0" layoutY="90.0" width="250.0" />
+      <Canvas fx:id="defausse" height="150.0" layoutX="803.0" layoutY="90.0" width="250.0" />
       <Canvas fx:id="mainGauche" height="265.0" layoutX="171.0" layoutY="591.0" width="548.0" />
       <Canvas fx:id="mainDroite" height="265.0" layoutX="901.0" layoutY="591.0" width="548.0" />
       <Canvas fx:id="scoreDroit" height="252.0" layoutX="1449.0" layoutY="610.0" width="123.0" />

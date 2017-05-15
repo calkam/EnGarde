@@ -2,6 +2,7 @@ package Modele.Tas;
 
 import java.util.ArrayList;
 
+import Modele.Reglages;
 import Modele.Visiteur;
 
 public class Main extends Tas {
@@ -10,17 +11,22 @@ public class Main extends Tas {
 	public final static int gauche = 1;
 	
 	private ArrayList<Carte> main;
-	int cote;
+	private int cote;
+	private boolean visible;
 	
-	public Main(int cote){
-		super(0);
+	public Main(int cote, float x, float y, float largeur, float hauteur){
+		super(0, x, y, largeur, hauteur);
 		this.main = new ArrayList<>();
 		this.cote = cote;
+		visible = false;
+	}
+	
+	public Main(int cote){
+		this(cote, 0, 0, Reglages.lis("MainLargeur"), Reglages.lis("MainHauteur"));
 	}
 	
 	public Main(){
-		super(0);
-		this.main = new ArrayList<>();
+		this(0);
 	}
 	
 	public void ajouter(Carte c){
@@ -79,6 +85,17 @@ public class Main extends Tas {
 		this.cote = cote;
 	}
 
+	public boolean isVisible() {
+		return visible;
+	}
+
+	public void setVisible(boolean visible) {
+		this.visible = visible;
+		for(Carte c : main){
+			c.setVisible(visible);
+		}
+	}
+
 	public String toString(){
 		String resultat = "";
 		resultat += "Main [\n";
@@ -91,14 +108,21 @@ public class Main extends Tas {
 	/**
 	 * ACTION SUR MAIN
 	 */
+	public boolean estCollisionCarte(int i, float x, float y){
+		return main.get(i).estCollision(x, y) && i+1<main.size() && !main.get(i+1).estCollision(x, y) || 
+			   main.get(i).estCollision(x, y) && i==main.size()-1;
+	}
+	
 	public void getCarteClick(double x, double y) {
 		// TODO Auto-generated method stub
 		for(int i=0; i<main.size(); i++){
-			if(main.get(i).estCollision((float)x, (float)y)){
+			if(estCollisionCarte(i, (float)x, (float)y)){
 				if(!main.get(i).isSelectionne()){
 					main.get(i).setSelectionne(true);
+					main.get(i).setY(0);
 				}else{
 					main.get(i).setSelectionne(false);
+					main.get(i).setY(Reglages.lis("PositionXCarte"));
 				}
 			}
 		}

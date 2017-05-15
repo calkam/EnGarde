@@ -1,4 +1,4 @@
-package Modele.Composant;
+package Modele;
 
 import java.util.ArrayList;
 
@@ -21,9 +21,14 @@ public class Observable {
 		observateurs.remove(o);
 	}
 	
-	public void notifierObservateurs(Object arg){
+	public void metAJour(){
+		
 		for(Observateur o : observateurs){
-			o.miseAJour(this, arg);
+			o.miseAJour();
 		}
+	}
+	
+	public int size(){
+		return observateurs.size();
 	}
 }

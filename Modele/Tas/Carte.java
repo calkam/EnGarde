@@ -22,6 +22,7 @@ public class Carte extends Rectangle implements Visitable {
 	private int contenu;
 	private int tas;
 	private boolean selectionne;
+	private boolean visible;
 	
 	Carte(int id, int contenu, int tas, float x, float y, float largeur, float hauteur, boolean select){
 		super(x, y, Reglages.lis("CarteLargeur"), Reglages.lis("CarteHauteur"));
@@ -29,6 +30,7 @@ public class Carte extends Rectangle implements Visitable {
 		this.tas = tas;
 		this.contenu = contenu ;
 		this.selectionne = select;
+		this.visible = false;
 	}
 	
 	Carte(int id, int contenu, float x, float y, float largeur, float hauteur){
@@ -65,6 +67,14 @@ public class Carte extends Rectangle implements Visitable {
 
 	public void setSelectionne(boolean selectionne) {
 		this.selectionne = selectionne;
+	}
+
+	public boolean isVisible() {
+		return visible;
+	}
+
+	public void setVisible(boolean visible) {
+		this.visible = visible;
 	}
 
 	@Override

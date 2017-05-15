@@ -59,7 +59,6 @@ public class Tour implements Visitable{
 	}
 	
 	public int jouerTour() throws Exception{
-		
 		if(jouerTourJoueur(joueurPremier)){	
 			if(jouerTourJoueur(joueurSecond)){
 				if(!pioche.estVide()){
@@ -79,6 +78,8 @@ public class Tour implements Visitable{
 		int choixAction ;	
 		ActionsJouables actions_jouables ;
 		Action actionChoisie;
+		
+		joueur.getMain().setVisible(true);
 		
 		System.out.println("/*************************************************************************************************************/");
 		System.out.println("Joueur : " + joueur.getNom() + ", position : " + joueur.getPositionFigurine());
@@ -114,6 +115,8 @@ public class Tour implements Visitable{
 		System.out.println("Joueur : " + joueur.getNom() + ", position : " + joueur.getPositionFigurine());
 		System.out.println("Main : " + joueur.getMain().getMain() + "\n");
 		
+		joueur.getMain().setVisible(false);
+		
 		return joueurPasPerdu;
 	}
 
@@ -148,7 +151,7 @@ public class Tour implements Visitable{
 		while(!pioche.estVide() && i < nombreCarteMax){
 			Carte c = pioche.piocher();
 			c.setX(i*(c.getLargeur()/2));
-			c.setY(60);
+			c.setY(Reglages.lis("PositionXCarte"));
 			j.ajouterCarteDansMain(c);
 			i++;
 		}

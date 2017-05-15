@@ -19,7 +19,7 @@ public class Jeu implements Visitable{
 
 	public void init() throws Exception {
 		plateauScore = new PlateauScore() ;
-		piste = new Piste(new FigurineGauche(0,0,1), new FigurineDroite(0,0,23)) ;
+		piste = new Piste(new FigurineGauche(1), new FigurineDroite(23)) ;
 		joueur1 = new FabriqueJoueur (1, "Humain", "Kaiba (Joueur 1)", new Main(), piste).nouveauJoueur() ;
 		joueur2 = new FabriqueJoueur (2, "Humain", "Yugi (Joueur 2)", new Main(), piste).nouveauJoueur() ;
 		joueur1.setScore(0);

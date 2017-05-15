@@ -4,12 +4,12 @@ import Modele.Visiteur;
 
 public class FigurineDroite extends Figurine {
 	
-	public FigurineDroite(float x, float y, int position) {
-		super(x, y, position);
+	public FigurineDroite(int position, float x, float y) {
+		super(position, x, y);
 	}
 	
 	public FigurineDroite(int i){
-		this(0, 0, i);
+		this(i, 0, 0);
 	}
 
 	@Override

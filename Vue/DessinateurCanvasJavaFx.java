@@ -39,12 +39,11 @@ public class DessinateurCanvasJavaFx extends Visiteur {
 		this.mainGauche = mainGauche;
 		
 		gcTerrain = terrain.getGraphicsContext2D();
-	}
-    
-    public void initGraphics(){
+		gcMainDroite = mainDroite.getGraphicsContext2D();
+		gcMainGauche = mainGauche.getGraphicsContext2D();
     	gcScoreDroit = scoreDroit.getGraphicsContext2D();
     	gcScoreGauche = scoreGauche.getGraphicsContext2D();
-    }
+	}
     
     public boolean visite(Piste p){
     	piste = p;
@@ -55,7 +54,6 @@ public class DessinateurCanvasJavaFx extends Visiteur {
     }
     
     public boolean visite(Case c){
-    	//System.out.println(c.getCouleur());
     	switch(c.getCouleur()){
     		case 0 : gcTerrain.setStroke(Color.TRANSPARENT); break;
     		case 1 : gcTerrain.setStroke(Color.RED); break;
@@ -66,70 +64,60 @@ public class DessinateurCanvasJavaFx extends Visiteur {
 	}
 
     public boolean visite(Main m){
+    	GraphicsContext gc;
     	if(m.getCote() == Main.droite){
-        	gcMainDroite = mainDroite.getGraphicsContext2D();
-    		m.fixeDimensions((float)mainDroite.getWidth(), (float)mainDroite.getHeight());
-    		dessinerMainDroite(gcMainDroite);
+    		gc = gcMainDroite; 
     	}else{
-        	gcMainGauche = mainGauche.getGraphicsContext2D();
-    		m.fixeDimensions((float)mainGauche.getWidth(), (float)mainGauche.getHeight());
-    		dessinerMainGauche(gcMainGauche);
+        	gc = gcMainGauche;
     	}
+    	m.fixeDimensions((float)mainDroite.getWidth(), (float)mainGauche.getHeight());
+		dessinerMain(gc, m);
     	return false;
     }
     
     public boolean visite(Pioche p){
     	gcPioche = pioche.getGraphicsContext2D();
     	p.fixeDimensions((float)pioche.getWidth(), (float)pioche.getHeight());
-    	dessinerPioche(gcPioche);
+    	dessinerPioche(gcPioche, p);
     	return false;
     }
     
     public boolean visite(Defausse d){
     	gcDefausse = defausse.getGraphicsContext2D();
     	d.fixeDimensions((float)defausse.getWidth(), (float)defausse.getHeight());
-    	dessinerDefausse(gcDefausse);
+    	dessinerDefausse(gcDefausse, d);
     	return false;
     }
     
     public boolean visite(Carte c){
+    	GraphicsContext gc;
     	if(c.getTas() == Carte.mainDroite){
-    		gcMainDroite.setStroke(Color.BLUE);
-    		if(c.isSelectionne()){
-    			dessinerCarteVerti(gcMainDroite, c.getX(), 0);
-    		}else{
-    			dessinerCarteVerti(gcMainDroite, c.getX(), c.getY());
-    		}
-    	}else if(c.getTas() == Carte.mainGauche){
-    		gcMainGauche.setStroke(Color.RED);
-    		if(c.isSelectionne()){
-    			dessinerCarteVerti(gcMainGauche, c.getX(), 0);
-    		}else{
-    			dessinerCarteVerti(gcMainGauche, c.getX(), c.getY());
-    		}
+    		gc = gcMainDroite;
+    	}else{
+    		gc = gcMainGauche; 
+    	}
+    	if(c.isVisible()){
+    		dessinerCarteVertiRecto(gc, c.getX(), c.getY(), c.getLargeur(), c.getHauteur(), c.getContenu());
+    	}else{
+    		dessinerCarteVertiVerso(gc, c.getX(), c.getY(), c.getLargeur(), c.getHauteur());
     	}
     	return false;
     }
     
-    public boolean visite(FigurineDroite c){
-    	dessinerJoueurDroit(gcTerrain);
+    public boolean visite(FigurineDroite fd){
+    	dessinerJoueurDroit(gcTerrain, fd);
     	return false;
     }
     
-    public boolean visite(FigurineGauche c){
-    	dessinerJoueurGauche(gcTerrain);
+    public boolean visite(FigurineGauche fg){
+    	dessinerJoueurGauche(gcTerrain, fg);
     	return false;
     }
-	
-    private void dessinerJoueurGauche(GraphicsContext gc){
-    	gc.setStroke(Color.RED);
-        gc.strokeRect((terrain.getWidth()*2)/25, 0, terrain.getWidth()/25, terrain.getHeight());
-    }
     
-    private void dessinerJoueurDroit(GraphicsContext gc){
-    	gc.setStroke(Color.BLUE);
-    	gc.strokeRect((terrain.getWidth()*16)/25, 0, terrain.getWidth()/25, terrain.getHeight());
-    }
+    /**
+     * 
+     * DESSIN DES INFOS DU JEU
+     */
     
     private void dessinerTerrain(GraphicsContext gc)
     {
@@ -138,17 +126,28 @@ public class DessinateurCanvasJavaFx extends Visiteur {
         gc.drawImage(a, 0, 0);
     }
     
-    private void dessinerPioche(GraphicsContext gc){
+    private void dessinerPioche(GraphicsContext gc, Pioche p){
     	Image i = new Image("/Ressources/dosCartePioche.jpg");
-    	gc.drawImage(i, 0, 0, 200, 150);
-        gc.setFill(Color.RED);
-        dessinerCarteHori(gc, 0, 0);
+    	gc.drawImage(i, 0, 0, p.getLargeur(), p.getHauteur());
+        dessinerCarteHori(gc, 0, 0, p.getLargeur(), p.getHauteur());
     }
     
-    private void dessinerDefausse(GraphicsContext gc){
-    	gc.clearRect(0, 0, defausse.getWidth(), defausse.getHeight());
-        gc.setFill(Color.GREEN);
-        dessinerCarteHori(gc, 0, 0);
+    private void dessinerDefausse(GraphicsContext gc, Defausse d){
+    	gc.clearRect(0, 0, d.getLargeur(), d.getHauteur());
+        gc.setFill(Color.BLACK);
+        dessinerCarteHori(gc, 0, 0, d.getLargeur(), d.getHauteur());
+    }
+    
+    private void dessinerJoueurGauche(GraphicsContext gc, FigurineGauche fg){
+    	Image i = new Image("/Ressources/joueurRouge.png");
+    	gc.drawImage(i, fg.getX(), fg.getY(), fg.getLargeur(), fg.getHauteur());
+    	gc.strokeRect(fg.getX(), fg.getY(), fg.getLargeur(), fg.getHauteur());
+    }
+    
+    private void dessinerJoueurDroit(GraphicsContext gc, FigurineDroite fd){
+    	Image i = new Image("/Ressources/joueurBleu.png");
+    	gc.drawImage(i, fd.getX(), fd.getY(), fd.getLargeur(), fd.getHauteur());
+    	gc.strokeRect(fd.getX(), fd.getY(), fd.getLargeur(), fd.getHauteur());
     }
     
     //y est le score 1, 2, 3, 4 ou 5 manche(s) gagnée(s)
@@ -177,32 +176,26 @@ public class DessinateurCanvasJavaFx extends Visiteur {
     	}
     }
     
-    private void dessinerMainDroite(GraphicsContext gc){
-    	gc.clearRect(0, 0, mainDroite.getWidth(), mainDroite.getHeight());
+    private void dessinerMain(GraphicsContext gc, Main m){
+    	gc.clearRect(0, 0, m.getLargeur(), m.getHauteur());
         gc.setStroke(Color.BLUE);
-        gc.strokeRect(0, 0, mainDroite.getWidth(), mainDroite.getHeight());
+        gc.strokeRect(0, 0, m.getLargeur(), m.getHauteur());
     }
     
-    private void dessinerMainGauche(GraphicsContext gc){
-    	gc.clearRect(0, 0, mainGauche.getWidth(), mainGauche.getHeight());
-        gc.setStroke(Color.RED);
-        gc.strokeRect(0, 0, mainGauche.getWidth(), mainGauche.getHeight());
+    private void dessinerCarteVertiRecto(GraphicsContext gc, double x, double y, double l, double h, int valeur){
+    	Image i = new Image("/Ressources/N"+ valeur +".png");
+    	gc.drawImage(i, x, y, l, h);
+    	gc.strokeRect(x, y, l, h);
     }
     
-  //diminuer l'origine des cartes afin de faire croire qu'elles montent
-    private void souleverCarteNumero(GraphicsContext gc, double numCarte){
-    	gc.clearRect(numCarte*90, 0, 150, 200 );
-    	dessinerCarteVerti(gc, numCarte*90, 0);
-    }
-    
-    private void dessinerCarteVerti(GraphicsContext gc, double x, double y){
+    private void dessinerCarteVertiVerso(GraphicsContext gc, double x, double y, double l, double h){
     	Image i = new Image("/Ressources/dosCarte.jpg");
-    	gc.drawImage(i, x, y, 150, 200);
-    	gc.strokeRect(x, y, 150, 200);
+    	gc.drawImage(i, x, y, l, h);
+    	gc.strokeRect(x, y, l, h);
     }
     
-    private void dessinerCarteHori(GraphicsContext gc, double x, double y){
-    	gc.strokeRect(x, y, 200, 150);
+    private void dessinerCarteHori(GraphicsContext gc, double x, double y, double l, double h){
+    	gc.strokeRect(x, y, l, h);
     }
    
 }
