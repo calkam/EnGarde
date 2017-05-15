@@ -1,6 +1,5 @@
 package Controleur;
 
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import Modele.Jeu;
 import Vue.MainApp;

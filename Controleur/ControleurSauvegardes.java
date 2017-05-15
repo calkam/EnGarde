@@ -1,9 +1,7 @@
 package Controleur;
 
 import javafx.fxml.FXML;
-import javafx.stage.Stage;
 import Vue.MainApp;
-
 
 public class ControleurSauvegardes {
 		

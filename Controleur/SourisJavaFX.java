@@ -14,13 +14,12 @@ public class SourisJavaFX implements EventHandler<MouseEvent> {
    
     @Override
     public void handle(MouseEvent event) {
-    	System.out.println("coucou");
     	switch (event.getButton()) {
 	        case PRIMARY:
+	        	System.out.println("coucou");
 	        	jeu.getPiste().getCasesClick(event.getX(), event.getY());
 	            break;
 	        default:
-	        	System.out.println("coucou");
 	            break;
     	}
     }

@@ -9,13 +9,14 @@ import Controleur.ControleurChoixPartie;
 import Controleur.ControleurJeu;
 import Controleur.ControleurSauvegardes;
 import Controleur.SourisJavaFX;
+import Controleur.TouchesJavaFX;
 import Modele.Jeu;
 import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -30,21 +31,6 @@ public class MainApp extends Application {
 	
     private Stage primaryStage;
     private BorderPane rootLayout;
-    
-	@FXML
-    private Canvas terrain;
-	@FXML
-    private Canvas pioche;
-	@FXML
-    private Canvas defausse;
-	@FXML
-    private Canvas scoreDroit;
-	@FXML
-    private Canvas mainDroite;
-	@FXML
-    private Canvas scoreGauche;
-	@FXML
-    private Canvas mainGauche;
     
     @Override
     public void start(Stage primaryStage) {
@@ -168,9 +154,21 @@ public class MainApp extends Application {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("/Vue/Jeu.fxml"));
             AnchorPane personOverview = (AnchorPane) loader.load();
-
+            
+            Canvas terrain = (Canvas) personOverview.getChildren().get(5);
+            Canvas pioche = (Canvas) personOverview.getChildren().get(6);
+            Canvas defausse = (Canvas) personOverview.getChildren().get(7);
+            Canvas mainDroite = (Canvas) personOverview.getChildren().get(8);
+            Canvas mainGauche = (Canvas) personOverview.getChildren().get(9);
+            Canvas scoreDroit = (Canvas) personOverview.getChildren().get(10);
+            Canvas scoreGauche = (Canvas) personOverview.getChildren().get(11);
+            
             // Set person overview into the center of root layout.
             rootLayout.setCenter(personOverview);
+            
+            terrain.toFront();
+            
+            terrain.setOnMouseClicked(new SourisJavaFX(jeu));
             
             try {
 				jeu.init();
@@ -184,19 +182,8 @@ public class MainApp extends Application {
             controller.setMainApp(this);        
             controller.init(jeu);
             
-            RafraichissementJavaFX r = new RafraichissementJavaFX(jeu, this.terrain, this.pioche, this.defausse, this.scoreDroit, this.mainDroite, this.scoreGauche, this.mainGauche);
+            RafraichissementJavaFX r = new RafraichissementJavaFX(jeu, terrain, pioche, defausse, scoreDroit, mainDroite, scoreGauche, mainGauche);
     		r.start();
-            
-            SourisJavaFX s = new SourisJavaFX(jeu);
-            
-            terrain = new Canvas(800, 800);
-            
-            terrain.widthProperty().bind(rootLayout.widthProperty());
-            terrain.heightProperty().bind(rootLayout.heightProperty());
-            
-            System.out.println(terrain);
-            
-            terrain.setOnMouseClicked(s);
             
             Image imageC = new Image("/Ressources/SourisEpee.png");
             primaryStage.getScene().setCursor(new ImageCursor(imageC));
