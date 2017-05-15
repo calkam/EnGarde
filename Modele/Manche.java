@@ -18,6 +18,8 @@ public class Manche implements Visitable{
 	private Joueur joueur1;
 	private Joueur joueur2;
 	
+	private int resultat;
+	
 	public Manche(int numero, int nbTourRealise, Joueur j1, Joueur j2, Tour tour) {
 		this.numero = numero;
 		this.nbTourRealise = nbTourRealise;
@@ -90,20 +92,23 @@ public class Manche implements Visitable{
 		joueur2.reinitialiserPositionFigurine();
 	}
 	
-	public void jouerManche() throws Exception{
+	public void commencerManche(){
+		resultat = Tour.aucunJoueurPerdu;
+		try {
+			tourEnCours.jouerTour();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	/*public void jouerManche() throws Exception{
 		int resultat;
-		
-		System.out.println(joueur1.toString());
-		System.out.println(joueur2.toString());
-		System.out.println(joueur1.getPiste().toString());
-		System.out.println(pioche);
 		
 		do{
 			resultat = tourEnCours.jouerTour();
 			nbTourRealise++;
 		}while(estPasFini(resultat));
-		
-		System.out.println("/*************************************************************************************************************/");	
 		
 		if(resultat == Tour.joueurPremierPerdu){			
 			joueurAGagne(tourEnCours.getJoueurSecond());
@@ -142,7 +147,7 @@ public class Manche implements Visitable{
 		}
 		
 		afficherScore();
-	}
+	}*/
 	
 	/**
 	 * 

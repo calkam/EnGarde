@@ -44,6 +44,10 @@ public class Carte extends Rectangle implements Visitable {
 	Carte(int contenu){
 		this(0, contenu);
 	}
+	
+	Carte(){
+		super(0, 0, 0, 0);
+	}
 
 	public int getID() {
 		return id;

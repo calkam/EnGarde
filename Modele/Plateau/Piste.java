@@ -143,13 +143,13 @@ public class Piste extends Rectangle implements Visitable {
 	
 	public void getCasesHover(double x, double y) {
 		// TODO Auto-generated method stub
-		for(int i=0; i<cases.size(); i++){
+		/*for(int i=0; i<cases.size(); i++){
 			if(cases.get(i).estCollision((float)x, (float)y)){
 				cases.get(i).setCouleur(1);
 			}else{
 				cases.get(i).setCouleur(0);
 			}
-		}
+		}*/
 	}
 
 }

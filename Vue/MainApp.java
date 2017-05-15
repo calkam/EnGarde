@@ -169,7 +169,7 @@ public class MainApp extends Application {
             
             try {
 				jeu.init();
-				//jeu.lancerJeu();
+				jeu.lancerJeu();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

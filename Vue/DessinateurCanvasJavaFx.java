@@ -57,7 +57,7 @@ public class DessinateurCanvasJavaFx extends Visiteur {
     	switch(c.getCouleur()){
     		case 0 : gcTerrain.setStroke(Color.TRANSPARENT); break;
     		case 1 : gcTerrain.setStroke(Color.RED); break;
-    		default : System.out.println("pas de couleur défini");;
+    		default : System.out.println("pas de couleur défini");
     	}
     	gcTerrain.strokeRect(c.getX(), c.getY(), c.getLargeur(), c.getHauteur());
 		return false;
@@ -65,12 +65,26 @@ public class DessinateurCanvasJavaFx extends Visiteur {
 
     public boolean visite(Main m){
     	GraphicsContext gc;
+    	if(!m.isVisible()){
+    		if(m.getCote() == Main.droite){
+    			mainDroite.setDisable(true);
+    		}else if(m.getCote() == Main.gauche){
+    			mainGauche.setDisable(true);
+    		}
+    	}else{
+    		if(m.getCote() == Main.droite){
+    			mainDroite.setDisable(false);
+    		}else if(m.getCote() == Main.gauche){
+    			mainGauche.setDisable(false);
+    		}
+    	}
+
     	if(m.getCote() == Main.droite){
     		gc = gcMainDroite; 
     	}else{
         	gc = gcMainGauche;
     	}
-    	m.fixeDimensions((float)mainDroite.getWidth(), (float)mainGauche.getHeight());
+    	m.fixeDimensions((float)mainDroite.getWidth(), (float)mainDroite.getHeight());
 		dessinerMain(gc, m);
     	return false;
     }
@@ -91,11 +105,13 @@ public class DessinateurCanvasJavaFx extends Visiteur {
     
     public boolean visite(Carte c){
     	GraphicsContext gc;
+    	
     	if(c.getTas() == Carte.mainDroite){
     		gc = gcMainDroite;
     	}else{
     		gc = gcMainGauche; 
     	}
+    	
     	if(c.isVisible()){
     		dessinerCarteVertiRecto(gc, c.getX(), c.getY(), c.getLargeur(), c.getHauteur(), c.getContenu());
     	}else{
@@ -177,9 +193,9 @@ public class DessinateurCanvasJavaFx extends Visiteur {
     }
     
     private void dessinerMain(GraphicsContext gc, Main m){
-    	gc.clearRect(0, 0, m.getLargeur(), m.getHauteur());
         gc.setStroke(Color.BLUE);
         gc.strokeRect(0, 0, m.getLargeur(), m.getHauteur());
+        //gc.clearRect(0, 0, m.getLargeur(), m.getHauteur());
     }
     
     private void dessinerCarteVertiRecto(GraphicsContext gc, double x, double y, double l, double h, int valeur){

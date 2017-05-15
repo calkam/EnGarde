@@ -58,30 +58,38 @@ public class Tour implements Visitable{
 		return retour;
 	}
 	
-	public int jouerTour() throws Exception{
-		if(jouerTourJoueur(joueurPremier)){	
-			if(jouerTourJoueur(joueurSecond)){
-				if(!pioche.estVide()){
-					return aucunJoueurPerdu;
-				}else{
-					return piocheVide;
-				}
-			}else{
-				return joueurSecondPerdu;
+	public void commencerTour(Joueur joueur){
+		joueur.getMain().setVisible(true);
+	}
+	
+	public void possibiliteAction(Joueur joueur, ArrayList<Carte> cartes){
+		try {
+			Action action;
+			ActionsJouables actions_jouables = joueur.peutFaireAction(cartes, estAttaque);
+			
+			Enumeration<Action> e = actions_jouables.elements();
+			
+			while(e.hasMoreElements()){
+				action = e.nextElement();
+				System.out.println(action);
+				joueur.getPiste().getCases().get(action.getPositionArrivee()-1).setCouleur(1);
 			}
-		}else{
-			return joueurPremierPerdu;
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
-	public boolean jouerTourJoueur(Joueur joueur) throws Exception{
+	public void jouerTour() throws Exception{
+		commencerTour(joueurPremier);
+	}
+	
+	/*public boolean jouerTourJoueur(Joueur joueur) throws Exception{
 		int choixAction ;	
 		ActionsJouables actions_jouables ;
 		Action actionChoisie;
 		
-		joueur.getMain().setVisible(true);
-		
-		System.out.println("/*************************************************************************************************************/");
 		System.out.println("Joueur : " + joueur.getNom() + ", position : " + joueur.getPositionFigurine());
 		System.out.println("Main : " + joueur.getMain().getMain() + "\n");
 		afficherPiste(joueurPremier.getPositionFigurine(), joueurSecond.getPositionFigurine());
@@ -115,10 +123,8 @@ public class Tour implements Visitable{
 		System.out.println("Joueur : " + joueur.getNom() + ", position : " + joueur.getPositionFigurine());
 		System.out.println("Main : " + joueur.getMain().getMain() + "\n");
 		
-		joueur.getMain().setVisible(false);
-		
 		return joueurPasPerdu;
-	}
+	}*/
 
 	private Action rechercherAction(int choixAction, ActionsJouables actions_jouables) {
 		

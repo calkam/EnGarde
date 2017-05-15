@@ -32,11 +32,10 @@ public class Jeu implements Visitable{
 	public void lancerJeu(){
 		try {
 			lancerLaManche();
-			while(!gainPartie()){
-				System.out.println("\n/*************************************************************************************************************/");
+			/*while(!gainPartie()){
 				nouvelleManche();
 				lancerLaManche();
-			}
+			}*/
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -91,8 +90,8 @@ public class Jeu implements Visitable{
 	}
 	
 	public void lancerLaManche() throws Exception{
-		manche.jouerManche();
-		manche.reinitialiserPiste();
+		manche.commencerManche();
+		//manche.reinitialiserPiste();
 	}
 
 	/**

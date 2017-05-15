@@ -74,7 +74,9 @@ public class Main extends Tas {
 	}
 	
 	public void setMain(ArrayList<Carte> m) {
-		this.main = m;
+		for(Carte c : m){
+			ajouter(c);
+		}
 	}
 	
 	public int getCote() {
@@ -101,6 +103,7 @@ public class Main extends Tas {
 		resultat += "Main [\n";
 		resultat += "    size= " + main.size() + "\n";
 		resultat += "    main= " + main.toString() + "\n";
+		resultat += "    visible= " + visible + "\n";
 		resultat += "  ]\n";
 		return resultat;
 	}
@@ -113,19 +116,22 @@ public class Main extends Tas {
 			   main.get(i).estCollision(x, y) && i==main.size()-1;
 	}
 	
-	public void getCarteClick(double x, double y) {
+	public Carte getCarteClick(double x, double y) {
 		// TODO Auto-generated method stub
 		for(int i=0; i<main.size(); i++){
 			if(estCollisionCarte(i, (float)x, (float)y)){
 				if(!main.get(i).isSelectionne()){
 					main.get(i).setSelectionne(true);
 					main.get(i).setY(0);
+					return main.get(i);
 				}else{
 					main.get(i).setSelectionne(false);
 					main.get(i).setY(Reglages.lis("PositionXCarte"));
+					return main.get(i);
 				}
 			}
 		}
+		return new Carte();
 	}
 			
 }

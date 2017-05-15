@@ -4,7 +4,12 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseEvent;
+
+import java.util.ArrayList;
+
 import Modele.Jeu;
+import Modele.Joueur.Joueur;
+import Modele.Tas.Carte;
 import Vue.MainApp;
 
 public class ControleurJeu {
@@ -22,6 +27,8 @@ public class ControleurJeu {
     @FXML
     private Canvas mainDroite;
     
+    private ArrayList<Carte> cartes;
+    
 	public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
     }
@@ -31,6 +38,25 @@ public class ControleurJeu {
 		
 		setActionTerrain();
 		setActionMain();
+		cartes = new ArrayList<Carte>();
+	}
+	
+	private void modifierActionPossible(int numJoueur, double x, double y){
+		Carte carteAction;
+		Joueur joueur;
+		if(numJoueur==1){
+			joueur = jeu.getJoueur1();
+		}else{
+			joueur = jeu.getJoueur2();
+		}
+		carteAction = joueur.getMain().getCarteClick(x, y);
+    	if(!cartes.contains(carteAction)){
+    		cartes.add(carteAction);
+    	}else{
+    		cartes.remove(carteAction);
+    	}
+    	
+    	jeu.getManche().getTourEnCours().possibiliteAction(joueur, cartes);
 	}
 	
 	private void setActionMain(){
@@ -39,7 +65,7 @@ public class ControleurJeu {
             public void handle(MouseEvent event) {
             	switch (event.getButton()) {
         	        case PRIMARY:
-        	        	jeu.getJoueur1().getMain().getCarteClick(event.getX(), event.getY());
+        	        	modifierActionPossible(1, event.getX(), event.getY());
         	            break;
         	        default:
         	            break;
@@ -52,7 +78,7 @@ public class ControleurJeu {
             public void handle(MouseEvent event) {
             	switch (event.getButton()) {
         	        case PRIMARY:
-        	        	jeu.getJoueur2().getMain().getCarteClick(event.getX(), event.getY());
+        	        	modifierActionPossible(2, event.getX(), event.getY());
         	            break;
         	        default:
         	            break;
