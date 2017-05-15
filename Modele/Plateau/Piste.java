@@ -67,6 +67,17 @@ public class Piste extends Rectangle implements Visitable {
 		}
 	}
 	
+	public void setProportion(){
+		int proportion = nombreDeCases + 2;
+		
+		for(int i=0; i<nombreDeCases; i++){
+			cases.get(i).setLargeur(this.getLargeur() / proportion);
+			cases.get(i).setHauteur(this.getHauteur());
+			cases.get(i).setX(((this.getLargeur()*i)/proportion)+cases.get(i).getLargeur());
+			cases.add(cases.get(i));
+		}
+	}
+	
 	public ArrayList<Case> getCases() {
 		return cases;
 	}
@@ -90,7 +101,7 @@ public class Piste extends Rectangle implements Visitable {
 	public void fixeDimensions(float l, float h){
 		this.setLargeur(l);
 		this.setHauteur(h);
-		initTableauCases();
+		setProportion();
 	}
 	
 	public void ajouteObservateur(ObjetMouvant objetMouvant) {
@@ -115,10 +126,9 @@ public class Piste extends Rectangle implements Visitable {
 
 	public void getCasesClick(double x, double y) {
 		// TODO Auto-generated method stub
-		for(Case c : cases){
-			if(c.estCollision((float)x, (float)y)){
-				c.setCouleur(1);
-				System.out.println("coucou");
+		for(int i=0; i<cases.size(); i++){
+			if(cases.get(i).estCollision((float)x, (float)y)){
+				cases.get(i).setCouleur(1);
 			}
 		}
 			

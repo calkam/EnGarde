@@ -16,7 +16,6 @@ public class SourisJavaFX implements EventHandler<MouseEvent> {
     public void handle(MouseEvent event) {
     	switch (event.getButton()) {
 	        case PRIMARY:
-	        	System.out.println("coucou");
 	        	jeu.getPiste().getCasesClick(event.getX(), event.getY());
 	            break;
 	        default:

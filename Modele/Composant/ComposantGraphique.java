@@ -39,6 +39,6 @@ public abstract class ComposantGraphique extends Composant {
     }
 
     boolean dansLaBoite(float x, float y) {
-        return (x < getX() + getLargeur() && x > getX() && x < getY() + getHauteur() && y > getY());
+        return (x < getX() + getLargeur() && x > getX() && y < getY() + getHauteur() && y > getY());
     }
 }

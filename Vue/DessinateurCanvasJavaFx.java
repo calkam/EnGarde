@@ -37,6 +37,8 @@ public class DessinateurCanvasJavaFx extends Visiteur {
 		this.mainDroite = mainDroite;
 		this.scoreGauche = scoreGauche;
 		this.mainGauche = mainGauche;
+		
+		gcTerrain = terrain.getGraphicsContext2D();
 	}
     
     public void initGraphics(){
@@ -47,15 +49,16 @@ public class DessinateurCanvasJavaFx extends Visiteur {
     public boolean visite(Piste p){
     	piste = p;
     	p.fixeDimensions((float)terrain.getWidth(), (float)terrain.getHeight());
-    	gcTerrain = terrain.getGraphicsContext2D();
+    	gcTerrain.clearRect(0, 0, terrain.getWidth(), terrain.getHeight());
     	dessinerTerrain(gcTerrain);
 		return false;
     }
     
     public boolean visite(Case c){
+    	//System.out.println(c.getCouleur());
     	switch(c.getCouleur()){
-    		case 0 : gcTerrain.setStroke(Color.BLACK); break;
-    		case 1 : gcTerrain.setStroke(Color.GREEN); break;
+    		case 0 : gcTerrain.setStroke(Color.TRANSPARENT); break;
+    		case 1 : gcTerrain.setStroke(Color.RED); break;
     		default : System.out.println("pas de couleur défini");;
     	}
     	gcTerrain.strokeRect(c.getX(), c.getY(), c.getLargeur(), c.getHauteur());
