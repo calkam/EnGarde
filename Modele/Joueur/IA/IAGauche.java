@@ -4,7 +4,7 @@ import Modele.Joueur.JoueurGauche;
 import Modele.Plateau.Piste;
 import Modele.Tas.Main;
 
-public class IAGauche extends JoueurGauche {
+abstract public class IAGauche extends JoueurGauche {
 	
 	public final static int pasAttaque = 0;
 	public final static int attaqueDirect = 1;

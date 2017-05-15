@@ -1,13 +1,13 @@
 package Modele.Plateau.Figurine;
-import Modele.Composant.Cercle ;
+import Modele.Composant.Rectangle;
 
-public abstract class Figurine extends Cercle {
+public abstract class Figurine extends Rectangle {
 	protected int position ;
 	
 	public Figurine(){}
 	
-	public Figurine(float x, float y, float rayon, int position) {
-		super(x, y, rayon);
+	public Figurine(float x, float y, int position) {
+		super(x, y);
 		this.position = position;
 	}
 	
@@ -26,5 +26,5 @@ public abstract class Figurine extends Cercle {
 	@Override
 	public String toString() {
 		return "[position=" + position + "]";
-	}	
+	}
 }

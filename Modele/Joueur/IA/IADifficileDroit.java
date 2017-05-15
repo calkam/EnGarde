@@ -5,6 +5,7 @@ import Modele.Joueur.Action;
 import Modele.Joueur.ActionDefensive;
 import Modele.Joueur.ActionNeutre;
 import Modele.Joueur.ActionOffensive;
+import Modele.Joueur.Joueur;
 import Modele.Plateau.Piste;
 import Modele.Tas.Carte;
 import Modele.Tas.Defausse;
@@ -45,6 +46,14 @@ public Action actionIA (Triplet<Integer, Integer, Integer> attaque, Pioche pioch
 					action_jouee = TrouverCarteMoinsRisquee(distance, false, defausse); //On choisis alors de reculer la ou le risque de perde est le moins élevé
 				}
 				
+				if((action_jouee.equals(new ActionNeutre(Reculer,0,22,new Carte(5))))){ //Si on ne peut pas reculer, c'est que l'on dois parer et etre en état de panique après, courage !
+					
+					for (Carte c : main.getMain()){
+						if(c.getContenu() == attaque.getC3()){
+							action_jouee = new ActionDefensive(Parade,attaque.getC2(),piste.getFigurineDroite().getPosition(),null,c);
+						}
+					}
+				}
 			}else{ //On decide de parer l'attaque indirecte si on peut attaquer directement sans rique après, et qu'on a au moins une carte pour l'attaque !
 				
 
@@ -53,7 +62,6 @@ public Action actionIA (Triplet<Integer, Integer, Integer> attaque, Pioche pioch
 						action_jouee = new ActionDefensive(Parade,attaque.getC2(),piste.getFigurineDroite().getPosition(),null,c);
 					}
 				}
-				
 				//action_jouee = new ActionDefensive(Parade,attaque.getC2(),piste.getFigurineDroite().getPosition(),null,attaque.getC1());
 				//Dans ce cas, on doit directement relancer l'IA pour décider de son coup après parade !
 			}
@@ -84,7 +92,6 @@ public Action actionIA (Triplet<Integer, Integer, Integer> attaque, Pioche pioch
 				}
 				
 			}else{ //Si la pioche n'est pas bientot vide
-				//System.out.println("BBBBBBBB\n");
 				int nbcartedist = 0;
 				int nbcartedistdefausse = 0;
 				
@@ -292,6 +299,16 @@ public Action actionIA (Triplet<Integer, Integer, Integer> attaque, Pioche pioch
 		}
 		
 		return action_jouee;
+	}
+
+
+	@Override
+	public Joueur clone () {
+		
+		IADifficileDroit joueur = new IADifficileDroit(this.nom, this.main.clone(), this.piste.clone()) ;
+		joueur.setScore(this.getScore());
+		return joueur ;
+		
 	}
 	
 	

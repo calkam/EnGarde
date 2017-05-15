@@ -73,4 +73,15 @@ public class Pioche extends Tas {
 		return resultat;
 		
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public Pioche clone () {
+		
+		Pioche pioche = new Pioche() ;
+		pioche.nombreCarte = this.nombreCarte.clone() ;
+		pioche.p = (Stack<Carte>) this.p.clone() ;
+		return pioche ;
+		
+	}
 }

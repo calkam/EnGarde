@@ -5,7 +5,7 @@ import Modele.Joueur.JoueurDroit;
 import Modele.Plateau.Piste;
 import Modele.Tas.Main;
 
-public class IADroite extends JoueurDroit{
+abstract public class IADroite extends JoueurDroit{
 
 	public final static int pasAttaque = 0;
 	public final static int attaqueDirect = 1;

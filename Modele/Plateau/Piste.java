@@ -1,7 +1,6 @@
 package Modele.Plateau;
 
 import java.util.ArrayList;
-
 import Modele.Composant.ObjetMouvant;
 import Modele.Composant.Rectangle;
 import Modele.Composant.Visiteur;
@@ -83,6 +82,22 @@ public class Piste extends Rectangle {
 		str += "\n";
 		str += "]\n";
 		return str;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public Piste clone () {
+		
+		Piste piste = new Piste (
+			
+			new FigurineGauche(this.getFigurineGauche().posX(), this.getFigurineGauche().posY(), this.getFigurineGauche().getPosition()),
+			new FigurineDroite(this.getFigurineDroite().posX(), this.getFigurineDroite().posY(), this.getFigurineDroite().getPosition())
+			
+			) ;
+		
+		piste.cases = (ArrayList<Case>) this.cases.clone() ;
+		return piste ;
+		
 	}
 
 }

@@ -5,10 +5,12 @@ import Modele.Joueur.Action;
 import Modele.Joueur.ActionDefensive;
 import Modele.Joueur.ActionNeutre;
 import Modele.Joueur.ActionOffensive;
+import Modele.Joueur.Joueur;
 import Modele.Plateau.Piste;
 import Modele.Tas.Carte;
 import Modele.Tas.Defausse;
 import Modele.Tas.Main;
+import Modele.Tas.Pioche;
 
 public class IADifficileGauche extends IAGauche {
 
@@ -16,7 +18,8 @@ public class IADifficileGauche extends IAGauche {
 		super(nom, main, piste);
 	}
 	
-	public Action actionIA (Triplet<Integer, Integer, Integer> attaque, Defausse defausse) throws Exception {
+	abstract public Action actionIA(Triplet<Integer, Integer, Integer> attaque, Pioche pioche, Defausse defausse) throws Exception;
+	abstract public Action actionIA(Triplet<Integer, Integer, Integer> attaque, Pioche pioche, Defausse defausse) throws Exception {
 		
 		Action action_jouee = new ActionNeutre(Avancer,0,22,new Carte(5))  ;
 		int nbcartes = -100 ;
@@ -224,5 +227,12 @@ public class IADifficileGauche extends IAGauche {
 		}
 		
 		return action_jouee;
+	}
+
+
+	@Override
+	public Joueur clone() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

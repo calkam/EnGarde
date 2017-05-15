@@ -7,7 +7,7 @@ import Modele.Couple;
 import Modele.Triplet;
 import Modele.Plateau.Piste;
 
-public class JoueurGauche extends Joueur {
+abstract public class JoueurGauche extends Joueur {
 	
 	public JoueurGauche(String nom, Main main, Piste piste) {
 		super(nom, main, piste) ;
@@ -119,8 +119,8 @@ public class JoueurGauche extends Joueur {
 		this.setPositionFigurine(1);
 	}
 
-	// NON IMPLEMENTE	
-	public Action actionIA(Triplet<Integer, Integer, Integer> attaque, Pioche pioche, Defausse defausse) throws Exception {
-		return null;
-	}	
+	abstract public Action actionIA(Triplet<Integer, Integer, Integer> attaque, Pioche pioche, Defausse defausse) throws Exception ;
+	
+	@Override
+	abstract public Joueur clone() ;
 }

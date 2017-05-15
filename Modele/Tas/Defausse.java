@@ -36,5 +36,17 @@ public class Defausse extends Tas {
 	}
 	public void setD(Stack<Carte> d) {
 		this.d = d;
-	}		
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public Defausse clone () {
+		
+		Defausse defausse = new Defausse() ;
+		defausse.nombreCarte = this.nombreCarte.clone() ;
+		defausse.d = (Stack<Carte>) this.d.clone() ;
+		return defausse ;
+		
+	}
+	
 }

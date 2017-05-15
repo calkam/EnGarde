@@ -7,7 +7,7 @@ import Modele.Tas.Defausse;
 import Modele.Tas.Main;
 import Modele.Tas.Pioche;
 
-public class JoueurDroit extends Joueur {
+abstract public class JoueurDroit extends Joueur {
 
 	public JoueurDroit(String nom, Main main, Piste piste) {
 		super(nom, main, piste) ;
@@ -116,9 +116,9 @@ public class JoueurDroit extends Joueur {
 		this.setPositionFigurine(23);
 	}
 
-	// NON IMPLEMENTE
-	public Action actionIA(Triplet<Integer, Integer, Integer> attaque, Pioche pioche, Defausse defausse) throws Exception {
-		return null;
-	}
+	abstract public Action actionIA(Triplet<Integer, Integer, Integer> attaque, Pioche pioche, Defausse defausse) throws Exception ;
+	
+	@Override
+	abstract public Joueur clone() ;
 	
 }

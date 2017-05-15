@@ -51,5 +51,16 @@ public class Main extends Tas {
 		resultat += "  ]\n";
 		return resultat;
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public Main clone () {
+		
+		Main main = new Main() ;
+		main.nombreCarte = this.nombreCarte.clone() ;
+		main.setMain((ArrayList<Carte>) this.getMain().clone()) ;
+		return main ;
+		
+	}
 			
 }

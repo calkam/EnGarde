@@ -97,7 +97,7 @@ public abstract class Joueur {
 							if(i!=j){
 								carteOpt = main.getCarte(j);
 						
-								if (((position = test_avancer_ou_attaquer.getC2()) != ActionImpossible) && 
+								if (((position = test_avancer_ou_attaquer.getC2()) != ActionImpossible) && main.getCarte(i).getID() != carteOpt.getID() &&
 								    (peut_attaquer_indirectement(position, carteOpt.getContenu()) != ActionImpossible)){
 							
 									for(int k=1; k<=main.getNombreCarteGroupe(carteOpt.getContenu()); k++){
@@ -205,6 +205,9 @@ public abstract class Joueur {
 		str += "]\n";
 		return str;
 	}
+	
+	@Override
+	abstract public Joueur clone () ;
 	
 	/*ArrayList<Action> lesActions;
 	
