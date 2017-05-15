@@ -24,14 +24,14 @@ public Action actionIA (Triplet<Integer, Integer, Integer> attaque, Pioche pioch
 		int nbcartes = -100 ;
 		int distance = piste.getFigurineDroite().getPosition() - piste.getFigurineGauche().getPosition();
 		int surplus = 0;
-		
-		if (attaque.getC1() == AttaqueIndirecte) { //Attaque indirecte subie
-			
-			if ( 2*(main.getNombreCarteGroupe(distance)) < (5 - defausse.getNombreCarteGroupe(distance)) || main.getNombreCarteGroupe(attaque.getC3()) < attaque.getC2() ) {
+		System.out.println("AAAAAAAAAAAAAAAAAAAAAA : " + attaque.getC1() + "\n");
+		if (attaque.getC1() == 2) { //Attaque indirecte subie
+			System.out.println("BBBBBBBBBBBBBBBBBBBBBBBBB\n");
+			if ( (2*(main.getNombreCarteGroupe(distance)) < (5 - defausse.getNombreCarteGroupe(distance))) || (main.getNombreCarteGroupe(attaque.getC3()) < attaque.getC2()) ) {
 				//Si je ne peux pas parer, ou bien que je peux parer mais que je peux perde en attaquant directement juste après
-				
+				System.out.println("CCCCCCCCCCCCCCCCCCCCCCCCCC\n");
 				action_jouee = ReculerPlus5(distance, defausse); //On regarde si on peux reculer a une distance >= 6
-				
+				System.out.println("DDDDDDDDDDDDDDDDDDDDDDDDDDDDD\n");
 				if((action_jouee.equals(new ActionNeutre(Reculer,0,22,new Carte(5))))){ //Si on a aucune carte permettant de reculer a une distance >= 6
 					
 					action_jouee = TrouverCarteMoinsRisquee(distance, false, defausse); //On choisis alors de reculer la ou le risque de perde est le moins élevé
@@ -93,7 +93,11 @@ public Action actionIA (Triplet<Integer, Integer, Integer> attaque, Pioche pioch
 					if(nbcartedist >= 3 || (nbcartedist == 2 && nbcartedistdefausse >= 1 )
 							|| (nbcartedist == 1 && nbcartedistdefausse >= 3 ) ){
 						//teste si l'attaque directe est SANS risques, on attaque le cas echeant !
-						action_jouee = new ActionOffensive(AttaqueDirecte,main.getNombreCarteGroupe(distance),piste.getFigurineDroite().getPosition(),null,new Carte(distance)); 
+						for (Carte c : main.getMain()) {
+							if(c.getContenu() == distance){
+								action_jouee = new ActionOffensive(AttaqueDirecte,main.getNombreCarteGroupe(distance),piste.getFigurineDroite().getPosition(),null,c); 
+							}
+						}
 						//On attaque directement avec toutes les cartes de valeur distance présentes dans la main
 					}
 				
@@ -123,16 +127,12 @@ public Action actionIA (Triplet<Integer, Integer, Integer> attaque, Pioche pioch
 					System.out.println("RENTRER\n");
 					nbcartes = -100;
 					for (Carte c : main.getMain()) {
-						surplus = 0;
-						if(distance == 2*c.getContenu()){
-							surplus = 1;
-						}
 						if( peut_avancer_ou_attaquer_directement(c.getContenu()).getC1() ){ //Test si on peut avancer avec la carte c
 							if((distance - c.getContenu()) >= 6){
-								if (2*(main.getNombreCarteGroupe(distance - c.getContenu())-surplus) + defausse.getNombreCarteGroupe(distance - c.getContenu()) -5 > nbcartes) {
-									nbcartes = 2*(main.getNombreCarteGroupe(distance - c.getContenu())-surplus) + defausse.getNombreCarteGroupe(distance - c.getContenu()) -5;
+								if (2*(main.getNombreCarteGroupe(c.getContenu())) + defausse.getNombreCarteGroupe(c.getContenu()) -5 > nbcartes) {
+									nbcartes = 2*(main.getNombreCarteGroupe(c.getContenu())) + defausse.getNombreCarteGroupe(c.getContenu()) -5;
 									action_jouee = new ActionNeutre (Avancer,0,piste.getFigurineDroite().getPosition()-c.getContenu(),c);
-								}else if(2*(main.getNombreCarteGroupe(distance - c.getContenu())-surplus) + defausse.getNombreCarteGroupe(distance - c.getContenu()) -5 == nbcartes){
+								}else if(2*(main.getNombreCarteGroupe(c.getContenu())) + defausse.getNombreCarteGroupe(c.getContenu()) -5 == nbcartes){
 									if(action_jouee.getCarteDeplacement().getContenu()<c.getContenu()){
 										action_jouee = new ActionNeutre (Avancer,0,piste.getFigurineDroite().getPosition()-c.getContenu(),c);
 									}
@@ -155,10 +155,10 @@ public Action actionIA (Triplet<Integer, Integer, Integer> attaque, Pioche pioch
 								surplus = 1;
 							}
 							if ( (2*(main.getNombreCarteGroupe(distance - c.getContenu())-surplus) + defausse.getNombreCarteGroupe(distance - c.getContenu()) -5) >= 0 ){
-								if (2*(main.getNombreCarteGroupe(distance - c.getContenu())-surplus) + defausse.getNombreCarteGroupe(distance - c.getContenu()) -5 > nbcartes) {
+								if (2*(main.getNombreCarteGroupe(c.getContenu())-surplus) + defausse.getNombreCarteGroupe(c.getContenu()) -5 > nbcartes) {
 									//Si plusieurs cartes permettent ce déplacement, on choisis celle qui a été le plus jouée :
 									//Tel que nb de cette carte dans main + defausse est maximal !
-									nbcartes = 2*(main.getNombreCarteGroupe(distance - c.getContenu())-surplus) + defausse.getNombreCarteGroupe(distance - c.getContenu()) -5;
+									nbcartes = 2*(main.getNombreCarteGroupe(c.getContenu())-surplus) + defausse.getNombreCarteGroupe(c.getContenu()) -5;
 									action_jouee = new ActionNeutre (Avancer,0,piste.getFigurineDroite().getPosition()-c.getContenu(),c);
 									//On renvoie comme action la carte jouée, et on avance
 									
@@ -201,11 +201,11 @@ public Action actionIA (Triplet<Integer, Integer, Integer> attaque, Pioche pioch
 			if(!avancer){
 				if(peut_reculer(c.getContenu()) != ActionImpossible) { //Test si on peut reculer avec la carte c
 					
-					if (2*(main.getNombreCarteGroupe(distance + c.getContenu())) + defausse.getNombreCarteGroupe(distance + c.getContenu())-5 > nbcartes) {
+					if (2*(main.getNombreCarteGroupe(c.getContenu())) + defausse.getNombreCarteGroupe(c.getContenu())-5 > nbcartes) {
 						//Si plusieurs cartes permettent ce déplacement, on choisis celle qui a été le plus jouée :
 						//Tel que nb de cette carte dans main + defausse est maximal !
 						
-						nbcartes = 2*(main.getNombreCarteGroupe(distance + c.getContenu())) + defausse.getNombreCarteGroupe(distance + c.getContenu())-5;
+						nbcartes = 2*(main.getNombreCarteGroupe(c.getContenu())) + defausse.getNombreCarteGroupe(c.getContenu())-5;
 						action_jouee = new ActionNeutre (Reculer,0,piste.getFigurineDroite().getPosition()+c.getContenu(),c);
 						//On renvoie comme action la carte jouée, et on recule
 						
@@ -219,11 +219,11 @@ public Action actionIA (Triplet<Integer, Integer, Integer> attaque, Pioche pioch
 						surplus = 1;
 					}
 					
-					if (2*(main.getNombreCarteGroupe(distance - c.getContenu())-surplus) + defausse.getNombreCarteGroupe(distance - c.getContenu()) -5> nbcartes) {
+					if (2*(main.getNombreCarteGroupe(c.getContenu())-surplus) + defausse.getNombreCarteGroupe(c.getContenu()) -5> nbcartes) {
 						//Si plusieurs cartes permettent ce déplacement, on choisis celle qui a été le plus jouée :
 						//On choisis la carte avec le moins de risques de perdre au tour adverse !
 						
-						nbcartes = 2*(main.getNombreCarteGroupe(distance - c.getContenu())-surplus) + defausse.getNombreCarteGroupe(distance - c.getContenu())-5;
+						nbcartes = 2*(main.getNombreCarteGroupe(c.getContenu())-surplus) + defausse.getNombreCarteGroupe(c.getContenu())-5;
 						action_jouee = new ActionNeutre (Avancer,0,piste.getFigurineDroite().getPosition()-c.getContenu(),c);
 						//On renvoie comme action la carte jouée, et on avance
 						
@@ -246,12 +246,12 @@ public Action actionIA (Triplet<Integer, Integer, Integer> attaque, Pioche pioch
 			if(peut_reculer(c.getContenu()) != ActionImpossible) { //Test si on peut reculer avec la carte c
 				
 				if (distance + c.getContenu() >= 6) { //Teste si on peut reculer a une distance >= 6 avec la carte c
-		
-					if (2*(main.getNombreCarteGroupe(distance + c.getContenu())) + defausse.getNombreCarteGroupe(distance + c.getContenu())-5 > nbcartes) {
+					
+					if (2*(main.getNombreCarteGroupe(c.getContenu())) + defausse.getNombreCarteGroupe(c.getContenu())-5 > nbcartes) {
 						//Si plusieurs cartes permettent ce déplacement, on choisis celle qui a été le plus jouée :
 						//Tel que nb de cette carte dans main + defausse est maximal !
 						
-						nbcartes = 2*(main.getNombreCarteGroupe(distance + c.getContenu())) + defausse.getNombreCarteGroupe(distance + c.getContenu())-5;
+						nbcartes = 2*(main.getNombreCarteGroupe(c.getContenu())) + defausse.getNombreCarteGroupe(c.getContenu())-5;
 						action_jouee = (Action) new ActionNeutre (Reculer,0,piste.getFigurineDroite().getPosition()+c.getContenu(),c);
 						//On renvoie comme action la carte jouée, et on recule
 						

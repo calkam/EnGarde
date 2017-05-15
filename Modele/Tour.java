@@ -51,13 +51,21 @@ public class Tour{
 	
 	public int jouerTour() throws Exception{
 		
-		if(jouerTourJoueur(joueurPremier)){	
-			if(jouerTourJoueur(joueurSecond)){
-				if(!pioche.estVide()){
-					return aucunJoueurPerdu;
-				}else{
+		if(jouerTourJoueur(joueurPremier)){
+			if(pioche.estVide()){
+				if(estAttaque.getC1() == pasAttaque){
 					return piocheVide;
 				}
+			}
+			
+			if(jouerTourJoueur(joueurSecond)){
+				if(pioche.estVide()){
+					if(estAttaque.getC1() == pasAttaque){
+						return piocheVide;
+					}
+				}
+				
+				return aucunJoueurPerdu;
 			}else{
 				return joueurSecondPerdu;
 			}
@@ -98,7 +106,7 @@ public class Tour{
 			estAttaque = executerAction(actionChoisie, joueur);			
 		}
 		
-		if(actionChoisie.getTypeAction() == Joueur.Parade){
+		if(actionChoisie.getTypeAction() == Joueur.Parade && !pioche.estVide()){
 			System.out.println("Joueur : " + joueur.getNom() + ", position : " + joueur.getPositionFigurine());
 			System.out.println("Main : " + joueur.getMain().getMain() + "\n");
 			
