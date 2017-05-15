@@ -33,11 +33,15 @@ public class Pioche extends Tas {
 		
 		int index = 0;
 		Random r = new Random();
-			
+		
+		int idCarte, valeurCarte;
+		
 		for(int i=1; i<=5; i++){
 			tas = new ArrayList<>();
 			for(int j = 1 ; j <= 5 ; j++){
-				tas.add(new Carte((i-1)*5+j, i, Carte.pioche, 0, 0, Reglages.lis("CarteLargeur"), Reglages.lis("CarteHauteur")));
+				idCarte = (i-1)*5+j;
+				valeurCarte = i;
+				tas.add(new Carte(idCarte, valeurCarte, 0, 0, Reglages.lis("CarteLargeur"), Reglages.lis("CarteHauteur")));
 			}
 			jeu.add(tas);
 		}

@@ -114,7 +114,7 @@ public class Manche implements Visitable{
 			
 			int distanceEntreFigurineJ1EtFigurineJ2 = calculerNormeEntreDeuxPositions(joueur1.getPositionFigurine(), joueur2.getPositionFigurine());
 			
-			if(distanceEntreFigurineJ1EtFigurineJ2 < Tas.nombreMaxCarte){
+			if(distanceEntreFigurineJ1EtFigurineJ2 < Tas.carteValeurMax){
 				int nbCartesDistanceJ1 = joueur1.getMain().getNombreCarteGroupe(distanceEntreFigurineJ1EtFigurineJ2);
 				int nbCartesDistanceJ2 = joueur2.getMain().getNombreCarteGroupe(distanceEntreFigurineJ1EtFigurineJ2);
 				

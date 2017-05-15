@@ -95,10 +95,18 @@ public class DessinateurCanvasJavaFx extends Visiteur {
     public boolean visite(Carte c){
     	if(c.getTas() == Carte.mainDroite){
     		gcMainDroite.setStroke(Color.BLUE);
-    		dessinerCarteVerti(gcMainDroite, c.getX(), c.getY());
+    		if(c.isSelectionne()){
+    			dessinerCarteVerti(gcMainDroite, c.getX(), 0);
+    		}else{
+    			dessinerCarteVerti(gcMainDroite, c.getX(), c.getY());
+    		}
     	}else if(c.getTas() == Carte.mainGauche){
     		gcMainGauche.setStroke(Color.RED);
-    		dessinerCarteVerti(gcMainGauche, c.getX(), c.getY());
+    		if(c.isSelectionne()){
+    			dessinerCarteVerti(gcMainGauche, c.getX(), 0);
+    		}else{
+    			dessinerCarteVerti(gcMainGauche, c.getX(), c.getY());
+    		}
     	}
     	return false;
     }

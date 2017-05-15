@@ -87,5 +87,21 @@ public class Main extends Tas {
 		resultat += "  ]\n";
 		return resultat;
 	}
+	
+	/**
+	 * ACTION SUR MAIN
+	 */
+	public void getCarteClick(double x, double y) {
+		// TODO Auto-generated method stub
+		for(int i=0; i<main.size(); i++){
+			if(main.get(i).estCollision((float)x, (float)y)){
+				if(!main.get(i).isSelectionne()){
+					main.get(i).setSelectionne(true);
+				}else{
+					main.get(i).setSelectionne(false);
+				}
+			}
+		}
+	}
 			
 }

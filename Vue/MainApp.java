@@ -8,15 +8,12 @@ import Controleur.ControleurAlertQuitter;
 import Controleur.ControleurChoixPartie;
 import Controleur.ControleurJeu;
 import Controleur.ControleurSauvegardes;
-import Controleur.SourisJavaFX;
-import Controleur.TouchesJavaFX;
 import Modele.Jeu;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -167,8 +164,8 @@ public class MainApp extends Application {
             rootLayout.setCenter(personOverview);
             
             terrain.toFront();
-            
-            terrain.setOnMouseClicked(new SourisJavaFX(jeu));
+            mainDroite.toFront();
+            mainGauche.toFront();
             
             try {
 				jeu.init();
