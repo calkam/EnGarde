@@ -19,7 +19,7 @@ public class Jeu {
 		plateauScore = new PlateauScore() ;
 		piste = new Piste(new FigurineGauche(0,0,0,1), new FigurineDroite(0,0,0,23)) ;
 		joueur1 = new FabriqueJoueur (1, "Humain", "Kaiba (Joueur 1)", new Main(), piste).nouveauJoueur() ;
-		joueur2 = new FabriqueJoueur (2, "IA", "Difficile", new Main(), piste).nouveauJoueur() ;
+		joueur2 = new FabriqueJoueur (2, "IA", "Moyen", new Main(), piste).nouveauJoueur() ;
 		joueur1.setScore(0);
 		joueur2.setScore(0);
 	}
@@ -71,6 +71,8 @@ public class Jeu {
 	}
 	
 	public void nouvelleManche(){
+		joueur1.viderMain();
+		joueur2.viderMain();
 		manche = new Manche(manche.getNumero()+1, joueur1, joueur2);
 	}
 	

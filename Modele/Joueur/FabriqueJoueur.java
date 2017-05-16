@@ -70,6 +70,16 @@ public class FabriqueJoueur {
 				default : throw new Exception("Modele.Joueur.FabriqueJoueur.nouveauJoueur.nouvelleIADifficile : position du joueur inconnue") ;
 				
 				}
+				
+			case "Legendaire" : 
+				
+				switch (position) {
+				
+				case 1 : return new IALegendaireGauche(nom, main, piste) ;
+				case 2 : return new IALegendaireDroite(nom, main, piste) ;
+				default : throw new Exception("Modele.Joueur.FabriqueJoueur.nouveauJoueur.nouvelleIADifficile : position du joueur inconnue") ;
+				
+				}
 			
 			default : throw new Exception("Modele.Joueur.FabriqueJoueur.nouveauJoueur : difficulté inconnue") ;
 			

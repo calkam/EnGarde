@@ -116,6 +116,20 @@ public class Manche {
 					System.out.println(joueur2.getNom() + " ayant plus de cartes pour attaquer directectement son adversaire...");
 					joueurAGagne(joueur2);
 				}
+				else{
+					int distanceEntreCaseMedianeEtFigurineJ1 = calculerNormeEntreDeuxPositions(12, joueur1.getPositionFigurine());
+					int distanceEntreCaseMedianeEtFigurineJ2 = calculerNormeEntreDeuxPositions(12, joueur2.getPositionFigurine());
+					
+					if(distanceEntreCaseMedianeEtFigurineJ1 > distanceEntreCaseMedianeEtFigurineJ2){
+						System.out.println(joueur2.getNom() + " étant plus proche de la case médiane...");
+						joueurAGagne(joueur2);
+					}else if(distanceEntreCaseMedianeEtFigurineJ1 < distanceEntreCaseMedianeEtFigurineJ2){
+						System.out.println(joueur1.getNom() + " étant plus proche de la case médiane...");
+						joueurAGagne(joueur1);
+					}else{
+						System.out.println("Manche nulle !");
+					}
+				}
 			}else{
 				int distanceEntreCaseMedianeEtFigurineJ1 = calculerNormeEntreDeuxPositions(12, joueur1.getPositionFigurine());
 				int distanceEntreCaseMedianeEtFigurineJ2 = calculerNormeEntreDeuxPositions(12, joueur2.getPositionFigurine());

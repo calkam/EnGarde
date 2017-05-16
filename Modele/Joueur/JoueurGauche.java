@@ -120,7 +120,7 @@ public class JoueurGauche extends Joueur {
 	}
 
 	// NON IMPLEMENTE	
-	public Action actionIA(Triplet<Integer, Integer, Integer> attaque, Pioche pioche, Defausse defausse) throws Exception {
+	public Action actionIA(Triplet<Integer, Integer, Integer> attaque, Pioche pioche, Defausse defausse, Main main_adv) throws Exception {
 		return null;
 	}	
 }

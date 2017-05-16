@@ -11,13 +11,12 @@ import Modele.Tas.Defausse;
 import Modele.Tas.Main;
 import Modele.Tas.Pioche;
 
-public class IADifficileDroit extends IADroite {
+public class IALegendaireDroite extends IADroite {
 
-	public IADifficileDroit(String nom, Main main, Piste piste) {
+	public IALegendaireDroite(String nom, Main main, Piste piste) {
 		super(nom, main, piste);
 	}
 
-	
 public Action actionIA (Triplet<Integer, Integer, Integer> attaque, Pioche pioche, Defausse defausse,Main main_adv) throws Exception {
 		
 		Action action_jouee = new ActionNeutre(Reculer,0,22,new Carte(5))  ;
@@ -58,24 +57,9 @@ public Action actionIA (Triplet<Integer, Integer, Integer> attaque, Pioche pioch
 				}else{
 					double Proba, sauv=100.0;
 					boolean sansrisque = false,deja_passee = false;
-					int x,n,m,a;
-					n = 25 -main.getNombreCarte() -defausse.getNombreCarte();
-					a = n -pioche.getNombreCarte();
 					for (Carte c : main.getMain()){
 						if(peut_reculer(c.getContenu()) != ActionImpossible) { 
-							x = main.getNombreCarteGroupe(distance + c.getContenu())+1;
-							m = 5-main.getNombreCarteGroupe(distance + c.getContenu()) -defausse.getNombreCarteGroupe(distance + c.getContenu()) ;
-							/*if(attaque.getC3() == (distance + c.getContenu())){
-								m = m -attaque.getC2();
-							}*/
-							if((distance + c.getContenu())>5){
-								Proba = 0.0;
-							}else{
-								Proba = ProbaSup(x,n,m,a);
-								System.out.println("Risque : "+ Proba +"\n");
-							}
-								
-							if(Proba <= risque){ //Si on calcule un risque de perdre au tour prochain < 0.2, on recule, on choisis, si plusieurs cartes, celle qui nous permet de reculer le moins possible 
+							if(){ //Si on calcule un risque de perdre au tour prochain < 0.2, on recule, on choisis, si plusieurs cartes, celle qui nous permet de reculer le moins possible 
 								sansrisque = true;
 								if(sauv==100){//Si on a calculer aucun mouvements a perte > 0.2 avant d'en calculer un < 0.2
 									if((action_jouee.equals(new ActionNeutre(Reculer,0,22,new Carte(5))))){

@@ -1,7 +1,6 @@
 package Modele.Joueur;
 
 import java.util.ArrayList;
-
 import Modele.Couple;
 import Modele.Tour;
 import Modele.Triplet;
@@ -50,7 +49,7 @@ public abstract class Joueur {
 		return b;
 	}
 	
-	abstract public Action actionIA(Triplet<Integer, Integer, Integer> attaque, Pioche pioche, Defausse defausse) throws Exception;
+	abstract public Action actionIA(Triplet<Integer, Integer, Integer> attaque, Pioche pioche, Defausse defausse, Main main_adv) throws Exception;
 	
 	abstract public int peut_reculer (int distance)  ;
 	abstract public Couple<Boolean, Integer> peut_avancer_ou_attaquer_directement (int distance)  ;
@@ -127,6 +126,10 @@ public abstract class Joueur {
 			
 		return actions_jouables ;
 			
+	}
+	
+	public void viderMain(){		
+		main = new Main();
 	}
 	
 	public void ajouterCarteDansMain(Carte c){

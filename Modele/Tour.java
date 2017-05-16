@@ -91,7 +91,11 @@ public class Tour{
 			if(actions_jouables.isEmpty()){
 				return joueurPerdu;		
 			}else{
-				actionChoisie = joueur.actionIA(estAttaque, pioche, defausse);
+				if(joueur.equals(joueurPremier)){
+					actionChoisie = joueur.actionIA(estAttaque, pioche, defausse,joueurSecond.getMain());
+				}else{
+					actionChoisie = joueur.actionIA(estAttaque, pioche, defausse,joueurPremier.getMain());
+				}
 				System.out.println(actionChoisie.toString());
 			}						
 		}else{
@@ -116,7 +120,11 @@ public class Tour{
 				if(actions_jouables.isEmpty()){
 					return joueurPerdu;		
 				}else{
-					actionChoisie = joueur.actionIA(estAttaque, pioche, defausse);
+					if(joueur.equals(joueurPremier)){
+						actionChoisie = joueur.actionIA(estAttaque, pioche, defausse,joueurSecond.getMain());
+					}else{
+						actionChoisie = joueur.actionIA(estAttaque, pioche, defausse,joueurPremier.getMain());
+					}
 					System.out.println(actionChoisie.toString());
 				}		
 			}else{
