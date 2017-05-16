@@ -11,12 +11,32 @@
     -fx-background-position: center center;
 }
 
+.checkbox {
+	/*-fx-background-image:url("/Ressources/checkbox_fond.png");*/
+	-fx-background-size: cover;
+}
+
+.checkbox .box{
+	-fx-background-image:url("/Ressources/checkbox_box.png");
+	-fx-background-size: cover;
+}
+
+.checkbox:selected .box{
+	-fx-background-image:url("/Ressources/checkbox_selected.png");
+	-fx-background-size: cover;
+}
+
+.checkbox:selected .mark{
+	-fx-background-color:transparent;
+}
+
 .button {
   	-fx-background-color: transparent;
     -fx-background-image:url("/Ressources/bouton_nonPresse.png");
     -fx-background-size: stretch;
     -fx-background-position: center center;    
     -fx-text-fill: white;
+    -fx-cursor-color:red;
 }
 
 .button:hover {

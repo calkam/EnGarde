@@ -2,13 +2,15 @@ package Vue;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.ImageCursor;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class ControleurAlertQuitter {
 
     private Stage dialogStage;
     private boolean okClicked = false;
-
+    private MainApp mainApp;
     /**
      * Initializes the controller class. This method is automatically called
      * after the fxml file has been loaded.
@@ -25,7 +27,11 @@ public class ControleurAlertQuitter {
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
     }
-
+    
+    public void setMainApp(MainApp mainApp) {
+        this.mainApp = mainApp;
+    }
+    
     /**
      * Returns true if the user clicked OK, false otherwise.
      *
