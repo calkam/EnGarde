@@ -76,34 +76,55 @@ public class ControleurJeu {
     	return jeu.getManche().getTourEnCours().possibiliteAction(joueurEnCours, cartes);
 	}
 	
-	private void verifierFinDeManche(boolean peutFaireAction){
+	private void verifierFinDeManche(Joueur joueur, boolean peutFaireAction){
 		int resultat;
-		int joueurVictorieux;
-		
-		if(!peutFaireAction || jeu.getManche().getPioche().estVide()){
-    		try {
-    			if(!peutFaireAction){
-    				resultat = Tour.joueurPremierPerdu;
-    			}else{
-    				resultat = Tour.piocheVide;
-    			}
-				joueurVictorieux = jeu.getManche().finDeManche(resultat);
-				cartes = new ArrayList<Carte>();
-				if(!jeu.gainPartie()){
-					jeu.nouvelleManche();
-					jeu.lancerLaManche();
-				}else{
-					if(joueurVictorieux == Manche.JOUEUR1){
-						jeu.affichageVictoire(jeu.getJoueur1().getNom(), jeu.getJoueur2().getNom());
-					}else{
-						jeu.affichageVictoire(jeu.getJoueur2().getNom(), jeu.getJoueur1().getNom());
-					}
-				}
+		if(!peutFaireAction){
+			if(joueur.equals(jeu.getManche().getTourEnCours().getJoueurPremier())){
+				resultat = Tour.joueurPremierPerdu;
+			}else{
+				resultat = Tour.joueurSecondPerdu;
+			}
+			try {
+				resultat = jeu.getManche().finDeManche(resultat);
+				verifierFinDuJeu(resultat);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-    	}
+		}
+	}
+	
+	private void verifierFinDeLaPioche(){
+		int resultat;
+		if(jeu.getManche().getPioche().estVide()){
+			try {
+				resultat = jeu.getManche().finDeManche(Tour.piocheVide);
+				verifierFinDuJeu(resultat);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	private void verifierFinDuJeu(int resultat){
+		cartes = new ArrayList<Carte>();
+		if(!jeu.gainPartie()){
+			jeu.nouvelleManche();
+			try {
+				jeu.lancerLaManche();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else{
+			
+			if(resultat == Manche.JOUEUR1){
+				jeu.affichageVictoire(jeu.getJoueur1().getNom(), jeu.getJoueur2().getNom());
+			}else{
+				jeu.affichageVictoire(jeu.getJoueur2().getNom(), jeu.getJoueur1().getNom());
+			}
+		}
 	}
 	
 	private void setActionMain(){
@@ -114,7 +135,7 @@ public class ControleurJeu {
         	        case PRIMARY:
         	        	boolean peutFaireAction;
         	        	peutFaireAction = modifierActionPossible(1, event.getX(), event.getY());
-        	        	verifierFinDeManche(peutFaireAction);
+        	        	verifierFinDeManche(jeu.getJoueur1(), peutFaireAction);
         	            break;
         	        default:
         	            break;
@@ -129,7 +150,7 @@ public class ControleurJeu {
         	        case PRIMARY:
         	        	boolean peutFaireAction;
         	        	peutFaireAction = modifierActionPossible(2, event.getX(), event.getY());
-        	        	verifierFinDeManche(peutFaireAction);
+        	        	verifierFinDeManche(jeu.getJoueur2(), peutFaireAction);
         	            break;
         	        default:
         	            break;
@@ -145,9 +166,12 @@ public class ControleurJeu {
             	switch (event.getButton()) {
         	        case PRIMARY:
         	        	if(joueurEnCours != null){
-        	        		if(jeu.getManche().getTourEnCours().executerAction(joueurEnCours, (float)event.getX(), (float)event.getY())){
+        	        		boolean peutFaireAction;
+        	        		peutFaireAction = jeu.getManche().getTourEnCours().executerAction(joueurEnCours, (float)event.getX(), (float)event.getY());
+        	        		if(peutFaireAction){
         	        			cartes = new ArrayList<Carte>();
         	        		}
+        	        		verifierFinDeLaPioche();
         	        	}
         	            break;
         	        default:

@@ -21,8 +21,6 @@ public class JoueurDroit extends Joueur {
 		
 		int position_arrivee = piste.getFigurineDroite().getPosition() ;
 		
-		//C'EST DE LA MERDE EGALEMENT return deplacer_dans_piste(position_arrivee) && position_arrivee >= piste.getFigurineDroite().getPosition() ;
-		
 		return position_arrivee >= piste.getFigurineDroite().getPosition() ;		
 	}
 	

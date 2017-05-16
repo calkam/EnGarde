@@ -120,7 +120,7 @@ public class ControleurChoixPartie {
 		NiveauCombattant2.getSelectionModel().selectedItemProperty().addListener(
 				(ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
 					niveauj2.setText((String)newValue);
-				});		
+				});
 		
 	}
     
