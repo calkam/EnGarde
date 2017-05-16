@@ -30,6 +30,14 @@ public class Defausse extends Tas {
 		nombreCarte[c.getContenu()]++ ;
 	}
 
+	public Carte carteDuDessus(){
+		if(d.size() == 0){
+			return null;
+		}else{
+			return d.lastElement();
+		}
+	}
+	
 	@Override
 	public String toString() {
 		String resultat = "";

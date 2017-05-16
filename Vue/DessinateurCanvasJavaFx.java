@@ -55,8 +55,10 @@ public class DessinateurCanvasJavaFx extends Visiteur {
     
     public boolean visite(Case c){
     	switch(c.getCouleur()){
-    		case 0 : gcTerrain.setStroke(Color.TRANSPARENT); break;
-    		case 1 : gcTerrain.setStroke(Color.RED); break;
+    		case Case.TRANSPARENT : gcTerrain.setStroke(Color.TRANSPARENT); break;
+    		case Case.ROUGE : gcTerrain.setStroke(Color.RED); break;
+    		case Case.VERT : gcTerrain.setStroke(Color.GREEN); break;
+    		case Case.JAUNE : gcTerrain.setStroke(Color.YELLOW); break;
     		default : System.out.println("pas de couleur défini");
     	}
     	gcTerrain.strokeRect(c.getX(), c.getY(), c.getLargeur(), c.getHauteur());
@@ -145,19 +147,19 @@ public class DessinateurCanvasJavaFx extends Visiteur {
     private void dessinerPioche(GraphicsContext gc, Pioche p){
     	Image i = new Image("/Ressources/dosCartePioche.jpg");
     	gc.drawImage(i, 0, 0, p.getLargeur(), p.getHauteur());
-        dessinerCarteHori(gc, 0, 0, p.getLargeur(), p.getHauteur());
+        dessinerCarteHoriVerso(gc, 0, 0, p.getLargeur(), p.getHauteur());
     }
     
     private void dessinerDefausse(GraphicsContext gc, Defausse d){
-    	gc.clearRect(0, 0, d.getLargeur(), d.getHauteur());
-        gc.setFill(Color.BLACK);
-        dessinerCarteHori(gc, 0, 0, d.getLargeur(), d.getHauteur());
+    	if(d.carteDuDessus() != null){
+    		dessinerCarteHoriRecto(gc, 0, 0, d.getLargeur(), d.getHauteur(), d.carteDuDessus().getContenu());
+    	}
     }
     
     private void dessinerJoueurGauche(GraphicsContext gc, FigurineGauche fg){
     	Image i = new Image("/Ressources/joueurRouge.png");
     	gc.drawImage(i, fg.getX(), fg.getY(), fg.getLargeur(), fg.getHauteur());
-    	gc.strokeRect(fg.getX(), fg.getY(), fg.getLargeur(), fg.getHauteur());
+    	gc.strokeRect(fg.getX(),  fg.getY(), fg.getLargeur(), fg.getHauteur());
     }
     
     private void dessinerJoueurDroit(GraphicsContext gc, FigurineDroite fd){
@@ -210,7 +212,15 @@ public class DessinateurCanvasJavaFx extends Visiteur {
     	gc.strokeRect(x, y, l, h);
     }
     
-    private void dessinerCarteHori(GraphicsContext gc, double x, double y, double l, double h){
+    private void dessinerCarteHoriVerso(GraphicsContext gc, double x, double y, double l, double h){
+    	Image i = new Image("/Ressources/dosCartePioche.jpg");
+    	gc.drawImage(i, x, y, l, h);
+    	gc.strokeRect(x, y, l, h);
+    }
+    
+    private void dessinerCarteHoriRecto(GraphicsContext gc, double x, double y, double l, double h, int valeur){
+    	Image i = new Image("/Ressources/N"+ valeur +"_rotate.png");
+    	gc.drawImage(i, x, y, l, h);
     	gc.strokeRect(x, y, l, h);
     }
    

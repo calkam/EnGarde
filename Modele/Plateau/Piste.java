@@ -7,6 +7,8 @@ import Modele.Visitable;
 import Modele.Visiteur;
 import Modele.Composant.ObjetMouvant;
 import Modele.Composant.Rectangle;
+import Modele.Joueur.Joueur;
+import Modele.Joueur.JoueurDroit;
 import Modele.Plateau.Figurine.*;
 
 public class Piste extends Rectangle implements Visitable {
@@ -34,12 +36,23 @@ public class Piste extends Rectangle implements Visitable {
 	
 	public void rafraichit(long t) {
         tempsEcoule = t;
-        //aRafraichir.metAJour();
     }
 	
 	long tempsEcoule() {
         return tempsEcoule;
     }
+	
+	public void setPositionFigurine(Joueur joueur, int position){
+		Figurine figurine;
+		
+		if(joueur instanceof JoueurDroit){
+			figurine = getFigurineDroite();
+		}else{
+			figurine = getFigurineGauche();
+		}
+		figurine.setPosition(position);
+		
+	}
 	
 	public FigurineGauche getFigurineGauche() {
 		return figurineGauche;
@@ -57,18 +70,31 @@ public class Piste extends Rectangle implements Visitable {
 		this.figurineDroite = figurineDroite ;
 	}
 	
+	public void setFigurineDroitePosition(int position){
+		float largeurCase = cases.get(0).getLargeur();
+		this.figurineDroite.setPosition(position);
+		this.figurineDroite.setX(largeurCase * figurineDroite.getPosition());
+	}
+	
+	public void setFigurineGauchePosition(int position){
+		float largeurCase = cases.get(0).getLargeur();
+		this.figurineGauche.setPosition(position);
+		this.figurineGauche.setX(largeurCase * figurineGauche.getPosition());
+	}
+	
 	public boolean estDansPiste(int position) {
-		return position >=1 && position < cases.size() ;
+		return position >=1 && position <= nombreDeCases;
 	}
 	
 	public void initTableauCases(){
-		cases = new ArrayList<Case>();
+		cases = new ArrayList<Case>(nombreDeCases);
 		int proportion = nombreDeCases + 2;
 		for(int i=0; i<nombreDeCases; i++){
 			Case c = new Case(0, 0, 0);
 			c.setLargeur(this.getLargeur() / proportion);
 			c.setHauteur(this.getHauteur());
 			c.setX(((this.getLargeur()*i)/proportion)+c.getLargeur());
+			c.setNumero(i+1);
 			cases.add(c);
 		}
 	}
@@ -130,26 +156,29 @@ public class Piste extends Rectangle implements Visitable {
 		return str;
 	}
 
-	public void getCasesClick(double x, double y) {
+	public void changeColorCaseClicked(int couleur, double x, double y) {
 		// TODO Auto-generated method stub
-		for(int i=0; i<cases.size(); i++){
-			if(cases.get(i).estCollision((float)x, (float)y)){
-				cases.get(i).setCouleur(1);
-			}else{
-				cases.get(i).setCouleur(0);
-			}
+		Case c = getCaseClicked(x, y);
+		if(c.estCollision((float)x, (float)y)){
+			c.setCouleur(couleur);
 		}
 	}
 	
-	public void getCasesHover(double x, double y) {
+	public Case getCaseClicked(double x, double y) {
 		// TODO Auto-generated method stub
-		/*for(int i=0; i<cases.size(); i++){
-			if(cases.get(i).estCollision((float)x, (float)y)){
-				cases.get(i).setCouleur(1);
-			}else{
-				cases.get(i).setCouleur(0);
+		for(Case c : cases){
+			if(c.estCollision((float)x, (float)y)){
+				return c;
 			}
-		}*/
+		}
+		return null;
+	}
+
+	public void reinitialiserCouleurCase() {
+		// TODO Auto-generated method stub
+		for(Case c : cases){
+			c.setCouleur(0);
+		}
 	}
 
 }

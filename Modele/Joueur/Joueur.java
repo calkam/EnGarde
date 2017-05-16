@@ -29,7 +29,6 @@ public abstract class Joueur implements Visitable{
 	protected String nom ;
 	protected Main main ;
 	protected Piste piste ;
-
 	protected Score score ;
 
 	public Joueur(String nom, Main main, Piste piste) {
@@ -184,20 +183,10 @@ public abstract class Joueur implements Visitable{
 		if (getClass() != obj.getClass())
 			return false;
 		Joueur other = (Joueur) obj;
-		if (main == null) {
-			if (other.main != null)
-				return false;
-		} else if (!main.equals(other.main))
-			return false;
 		if (nom == null) {
 			if (other.nom != null)
 				return false;
 		} else if (!nom.equals(other.nom))
-			return false;
-		if (piste == null) {
-			if (other.piste != null)
-				return false;
-		} else if (!piste.equals(other.piste))
 			return false;
 		return true;
 	}

@@ -72,21 +72,21 @@ public class JoueurGauche extends Joueur {
 	@Override
 	public void avancer(int distance) {
 		
-		piste.getFigurineGauche().setPosition(piste.getFigurineGauche().getPosition() + distance) ;
+		piste.setFigurineGauchePosition(piste.getFigurineGauche().getPosition() + distance) ;
 		
 	}
 
 	@Override
 	public void reculer(int distance) {
 		
-		piste.getFigurineGauche().setPosition(piste.getFigurineGauche().getPosition() - distance) ;
+		piste.setFigurineGauchePosition(piste.getFigurineGauche().getPosition() - distance) ;
 		
 	}
 
 	@Override
 	public void executer_attaque_indirecte(int deplacement, int portee, int nombre) {
 		
-		piste.getFigurineGauche().setPosition(piste.getFigurineGauche().getPosition() + deplacement) ;
+		piste.setFigurineGauchePosition(piste.getFigurineGauche().getPosition() + deplacement) ;
 		
 	}
 
@@ -97,7 +97,7 @@ public class JoueurGauche extends Joueur {
 	@Override
 	public void setPositionFigurine(int position) {
 		// TODO Auto-generated method stub
-		this.getPiste().getFigurineGauche().setPosition(position);
+		this.getPiste().setFigurineGauchePosition(position);
 	}
 	
 	@Override

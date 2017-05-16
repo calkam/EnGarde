@@ -52,4 +52,6 @@ public abstract class Tas extends Rectangle implements Visitable {
 	public void setNombreCarteGroupe(int i, int nbCartes){
 		nombreCarte[i] = nbCartes;
 	}
+	
+	
 }

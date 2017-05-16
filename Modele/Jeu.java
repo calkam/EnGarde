@@ -24,18 +24,14 @@ public class Jeu implements Visitable{
 		joueur2 = new FabriqueJoueur (2, "Humain", "Yugi (Joueur 2)", new Main(), piste).nouveauJoueur() ;
 		joueur1.setScore(0);
 		joueur2.setScore(0);
-		initialiserPremiereManche();
 		
 		this.dernierChrono = System.nanoTime();
 	}
 	
 	public void lancerJeu(){
 		try {
+			initialiserPremiereManche();
 			lancerLaManche();
-			/*while(!gainPartie()){
-				nouvelleManche();
-				lancerLaManche();
-			}*/
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -90,8 +86,8 @@ public class Jeu implements Visitable{
 	}
 	
 	public void lancerLaManche() throws Exception{
+		manche.reinitialiserPiste();
 		manche.commencerManche();
-		//manche.reinitialiserPiste();
 	}
 
 	/**

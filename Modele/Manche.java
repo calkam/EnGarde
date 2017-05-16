@@ -9,6 +9,10 @@ import Modele.Tas.Tas;
 
 public class Manche implements Visitable{
 	
+	public final static int JOUEUR1 = 0;
+	public final static int JOUEUR2 = 1;
+	public final static int MATCHNULLE = 2;
+	
 	private int numero;
 	private int nbTourRealise;
 	private Tour tourEnCours;
@@ -17,8 +21,6 @@ public class Manche implements Visitable{
 	
 	private Joueur joueur1;
 	private Joueur joueur2;
-	
-	private int resultat;
 	
 	public Manche(int numero, int nbTourRealise, Joueur j1, Joueur j2, Tour tour) {
 		this.numero = numero;
@@ -70,10 +72,6 @@ public class Manche implements Visitable{
 		return c;
 	}
 	
-	private boolean estPasFini(int resultat){
-		return resultat == Tour.aucunJoueurPerdu;
-	}
-	
 	private void joueurAGagne(Joueur joueur){
 		System.out.println(joueur.getNom() + " a gagné la manche !");
 		joueur.setScore(joueur.getScore()+1);
@@ -93,13 +91,68 @@ public class Manche implements Visitable{
 	}
 	
 	public void commencerManche(){
-		resultat = Tour.aucunJoueurPerdu;
 		try {
+			tourEnCours.getJoueurSecond().getMain().setVisible(false);
 			tourEnCours.jouerTour();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public int finDeManche(int resultat) throws Exception{
+		
+		if(resultat == Tour.joueurPremierPerdu){			
+			joueurAGagne(tourEnCours.getJoueurSecond());
+			if(tourEnCours.getJoueurSecond().equals(joueur1)){
+				return JOUEUR1;
+			}else{
+				return JOUEUR2;
+			}
+		}else if(resultat == Tour.joueurSecondPerdu){
+			joueurAGagne(tourEnCours.getJoueurPremier());
+			if(tourEnCours.getJoueurSecond().equals(joueur1)){
+				return JOUEUR1;
+			}else{
+				return JOUEUR2;
+			}
+		}else if(resultat == Tour.piocheVide){
+			System.out.println("La pioche est vide :");
+			
+			int distanceEntreFigurineJ1EtFigurineJ2 = calculerNormeEntreDeuxPositions(joueur1.getPositionFigurine(), joueur2.getPositionFigurine());
+			
+			if(distanceEntreFigurineJ1EtFigurineJ2 < Tas.carteValeurMax){
+				int nbCartesDistanceJ1 = joueur1.getMain().getNombreCarteGroupe(distanceEntreFigurineJ1EtFigurineJ2);
+				int nbCartesDistanceJ2 = joueur2.getMain().getNombreCarteGroupe(distanceEntreFigurineJ1EtFigurineJ2);
+				
+				if(nbCartesDistanceJ1 > nbCartesDistanceJ2){
+					System.out.println(joueur1.getNom() + " ayant plus de cartes pour attaquer directectement son adversaire...");
+					joueurAGagne(joueur1);
+					return JOUEUR1;
+				}else if(nbCartesDistanceJ1 < nbCartesDistanceJ2){
+					System.out.println(joueur2.getNom() + " ayant plus de cartes pour attaquer directectement son adversaire...");
+					joueurAGagne(joueur2);
+					return JOUEUR2;
+				}
+			}else{
+				int distanceEntreCaseMedianeEtFigurineJ1 = calculerNormeEntreDeuxPositions(12, joueur1.getPositionFigurine());
+				int distanceEntreCaseMedianeEtFigurineJ2 = calculerNormeEntreDeuxPositions(12, joueur2.getPositionFigurine());
+				
+				if(distanceEntreCaseMedianeEtFigurineJ1 > distanceEntreCaseMedianeEtFigurineJ2){
+					System.out.println(joueur2.getNom() + " étant plus proche de la case médiane...");
+					joueurAGagne(joueur2);
+					return JOUEUR1;
+				}else if(distanceEntreCaseMedianeEtFigurineJ1 < distanceEntreCaseMedianeEtFigurineJ2){
+					System.out.println(joueur1.getNom() + " étant plus proche de la case médiane...");
+					joueurAGagne(joueur1);
+					return JOUEUR2;
+				}else{
+					System.out.println("Manche nulle !");
+					return MATCHNULLE;
+				}
+			}
+		}
+		return MATCHNULLE;
 	}
 	
 	/*public void jouerManche() throws Exception{

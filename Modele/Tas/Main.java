@@ -94,9 +94,14 @@ public class Main extends Tas {
 	public void setVisible(boolean visible) {
 		this.visible = visible;
 		for(Carte c : main){
+			/*if(!visible){
+				c.setSelectionne(false);
+			}*/
 			c.setVisible(visible);
 		}
 	}
+	
+	
 
 	public String toString(){
 		String resultat = "";
@@ -126,12 +131,24 @@ public class Main extends Tas {
 					return main.get(i);
 				}else{
 					main.get(i).setSelectionne(false);
-					main.get(i).setY(Reglages.lis("PositionXCarte"));
+					main.get(i).setY(Reglages.lis("PositionYCarte"));
 					return main.get(i);
 				}
 			}
 		}
 		return new Carte();
 	}
+
+	public void repositionnerMain() {
+		// TODO Auto-generated method stub
+		int i=0;
+		for(Carte c : main){
+			c.setX(i*(c.getLargeur()/2));
+			c.setY(Reglages.lis("PositionYCarte"));
+			i++;
+		}
+	}
+	
+	
 			
 }

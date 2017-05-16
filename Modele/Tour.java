@@ -8,6 +8,7 @@ import Modele.Joueur.Action;
 import Modele.Joueur.ActionNeutre;
 import Modele.Joueur.ActionsJouables;
 import Modele.Joueur.Joueur;
+import Modele.Plateau.Case;
 import Modele.Tas.Carte;
 import Modele.Tas.Defausse;
 import Modele.Tas.Pioche;
@@ -35,6 +36,8 @@ public class Tour implements Visitable{
 	// Type de l'attaque, nombre de cartes attaque, valeur de la carte attaque
 	private Triplet<Integer, Integer, Integer> estAttaque;
 	
+	private ActionsJouables actions_jouables;
+	
 	public Tour(){
 		this.estAttaque = new Triplet<>(pasAttaque, 0, 0);
 	}
@@ -58,26 +61,60 @@ public class Tour implements Visitable{
 		return retour;
 	}
 	
-	public void commencerTour(Joueur joueur){
-		joueur.getMain().setVisible(true);
+/*public boolean jouerTourJoueur(Joueur joueur) throws Exception{
+	int choixAction ;	
+	ActionsJouables actions_jouables ;
+	Action actionChoisie;
+	
+	System.out.println("Joueur : " + joueur.getNom() + ", position : " + joueur.getPositionFigurine());
+	System.out.println("Main : " + joueur.getMain().getMain() + "\n");
+	afficherPiste(joueurPremier.getPositionFigurine(), joueurSecond.getPositionFigurine());
+	
+	actions_jouables = joueur.peutFaireAction(estAttaque);
+	choixAction = selectionnerAction(actions_jouables);		
+	actionChoisie = rechercherAction(choixAction, actions_jouables);
+	
+	if(actionChoisie.getTypeAction() == Joueur.ActionImpossible){
+		return joueurPerdu;
+	}else{
+		estAttaque = executerAction(actionChoisie, joueur);			
 	}
 	
-	public void possibiliteAction(Joueur joueur, ArrayList<Carte> cartes){
-		try {
-			Action action;
-			ActionsJouables actions_jouables = joueur.peutFaireAction(joueur.getMain().getCote(), cartes, estAttaque);
-			
-			Enumeration<Action> e = actions_jouables.elements();
-			
-			while(e.hasMoreElements()){
-				action = e.nextElement();
-				System.out.println(action);
-				joueur.getPiste().getCases().get(action.getPositionArrivee()-1).setCouleur(1);
-			}
-			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	if(actionChoisie.getTypeAction() == Joueur.Parade){
+		System.out.println("Joueur : " + joueur.getNom() + ", position : " + joueur.getPositionFigurine());
+		System.out.println("Main : " + joueur.getMain().getMain() + "\n");
+		
+		actions_jouables = joueur.peutFaireAction(estAttaque);
+		choixAction = selectionnerAction(actions_jouables);
+		actionChoisie = rechercherAction(choixAction, actions_jouables);
+		
+		if(actionChoisie.getTypeAction() == Joueur.ActionImpossible){
+			return joueurPerdu;
+		}else{
+			estAttaque = executerAction(actionChoisie, joueur);
+		}
+	}
+	remplirMain(joueur);
+	
+	System.out.println("Joueur : " + joueur.getNom() + ", position : " + joueur.getPositionFigurine());
+	System.out.println("Main : " + joueur.getMain().getMain() + "\n");
+	
+	return joueurPasPerdu;
+}*/
+	
+	public boolean actionNeutre(Action action){
+		return action.getTypeAction() == Joueur.Reculer || action.getTypeAction() == Joueur.Avancer; 
+	}
+	
+	public boolean actionOffensive(Action action){
+		return action.getTypeAction() == Joueur.AttaqueDirecte || action.getTypeAction() == Joueur.AttaqueIndirecte; 
+	}
+	
+	public Joueur joueurAdverse(Joueur joueur){
+		if(joueur.equals(joueurPremier)){
+			return joueurSecond;
+		}else{
+			return joueurPremier;
 		}
 	}
 	
@@ -85,101 +122,93 @@ public class Tour implements Visitable{
 		commencerTour(joueurPremier);
 	}
 	
-	/*public boolean jouerTourJoueur(Joueur joueur) throws Exception{
-		int choixAction ;	
-		ActionsJouables actions_jouables ;
-		Action actionChoisie;
-		
-		System.out.println("Joueur : " + joueur.getNom() + ", position : " + joueur.getPositionFigurine());
-		System.out.println("Main : " + joueur.getMain().getMain() + "\n");
-		afficherPiste(joueurPremier.getPositionFigurine(), joueurSecond.getPositionFigurine());
-		
-		actions_jouables = joueur.peutFaireAction(estAttaque);
-		choixAction = selectionnerAction(actions_jouables);		
-		actionChoisie = rechercherAction(choixAction, actions_jouables);
-		
-		if(actionChoisie.getTypeAction() == Joueur.ActionImpossible){
-			return joueurPerdu;
-		}else{
-			estAttaque = executerAction(actionChoisie, joueur);			
-		}
-		
-		if(actionChoisie.getTypeAction() == Joueur.Parade){
-			System.out.println("Joueur : " + joueur.getNom() + ", position : " + joueur.getPositionFigurine());
-			System.out.println("Main : " + joueur.getMain().getMain() + "\n");
-			
-			actions_jouables = joueur.peutFaireAction(estAttaque);
-			choixAction = selectionnerAction(actions_jouables);
-			actionChoisie = rechercherAction(choixAction, actions_jouables);
-			
-			if(actionChoisie.getTypeAction() == Joueur.ActionImpossible){
-				return joueurPerdu;
-			}else{
-				estAttaque = executerAction(actionChoisie, joueur);
-			}
-		}
-		remplirMain(joueur);
-		
-		System.out.println("Joueur : " + joueur.getNom() + ", position : " + joueur.getPositionFigurine());
-		System.out.println("Main : " + joueur.getMain().getMain() + "\n");
-		
-		return joueurPasPerdu;
-	}*/
-
-	private Action rechercherAction(int choixAction, ActionsJouables actions_jouables) {
-		
-		if(choixAction == Joueur.ActionImpossible){
-			return new ActionNeutre(Joueur.ActionImpossible);
-		}
-		
-		Action actionCherchee = null;		
-		
-		Enumeration<Action> e = actions_jouables.elements();
-		int i = 0;
-		
-		while(e.hasMoreElements() && i != choixAction){
-			e.nextElement();				
-			i++;
-		}
-		
-		if(i == choixAction){
-			actionCherchee = e.nextElement();
-		}
-		
-		return actionCherchee;
+	public void commencerTour(Joueur joueur){
+		joueur.getMain().setVisible(true);
 	}
-
-	public void remplirMain(Joueur j){		
-		int nbCarteMain = j.getMain().getNombreCarte();
-		
-		int i=nbCarteMain;
+	
+	public boolean possibiliteAction(Joueur joueur, ArrayList<Carte> cartes){
+		try {
+			Action action;
+			Enumeration<Action> e;
 			
-		while(!pioche.estVide() && i < nombreCarteMax){
-			Carte c = pioche.piocher();
-			c.setX(i*(c.getLargeur()/2));
-			c.setY(Reglages.lis("PositionXCarte"));
-			j.ajouterCarteDansMain(c);
-			i++;
+			actions_jouables = joueur.peutFaireAction(joueur.getMain().getCote(), cartes, estAttaque);
+			
+			if(joueur.peutFaireAction(joueur.getMain().getCote(), joueur.getCartesDeLaMain(), estAttaque).size() != 0){
+				e = actions_jouables.elements();
+				
+				joueur.getPiste().reinitialiserCouleurCase();
+				
+				while(e.hasMoreElements()){
+					action = e.nextElement();
+					System.out.println(action);
+					if(actionNeutre(action)){
+						joueur.getPiste().getCases().get(action.getPositionArrivee()-1).setCouleur(Case.ROUGE);
+					}else if(actionOffensive(action)){
+						joueur.getPiste().getCases().get(joueurAdverse(joueur).getPositionFigurine()-1).setCouleur(Case.VERT);
+					}else{
+						if(action.getTypeAction() == Joueur.Parade){
+							joueur.getPiste().getCases().get(joueur.getPositionFigurine()-1).setCouleur(Case.JAUNE);
+						}else if(action.getTypeAction() == Joueur.Fuite){
+							joueur.getPiste().getCases().get(action.getPositionArrivee()-1).setCouleur(Case.JAUNE);
+						}
+					}
+				}
+				return joueurPasPerdu;
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return joueurPerdu;
+	}
+	
+	public boolean executerAction(Joueur joueur, float x, float y){
+		Action action = null;
+		Enumeration<Action> e;
+		Case caseClicked;
+		boolean trouve = false;
+		
+		caseClicked = joueur.getPiste().getCaseClicked(x, y);
+		
+		e = actions_jouables.elements();
+		
+		if(actions_jouables.size() != 0){
+			while(e.hasMoreElements() && !trouve){
+				action = e.nextElement();
+				if(caseClicked.getNumero() == action.getPositionArrivee() || (actionOffensive(action) && 
+				   caseClicked.getNumero() == joueurAdverse(joueur).getPositionFigurine())){
+					trouve = true;
+				}
+			}
+			
+			if(trouve){
+				try {
+					estAttaque = jouerAction(action, joueur);
+					if(action.getTypeAction() != Joueur.Parade){
+						remplirMain(joueur);
+						changerJoueur(joueur);
+					}
+					
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			
+				joueur.getPiste().reinitialiserCouleurCase();
+				actions_jouables = null;
+				return joueurPasPerdu;
+			}else{
+				return joueurPasPerdu;
+			}
+		}else{
+			return joueurPerdu;
 		}
 	}
 	
-	private int selectionnerAction(ActionsJouables actions_jouables) throws Exception {
-		int choixAction;
-		
-		@SuppressWarnings("resource")
-		Scanner s = new Scanner(System.in);
-		
-		System.out.println(actions_jouables);
-		
-		if(actions_jouables.size() == 0){
-			return Joueur.ActionImpossible;
-		}
-		
-		System.out.println("Veuillez effectuer votre choix d'action : nombre entre 0 et N (N étant un entier naturel)");
-		
-		choixAction = Integer.parseInt(s.nextLine());
-		
-		return choixAction;
+	public void changerJoueur(Joueur joueur){		
+		joueur.getMain().setVisible(false);
+		joueurAdverse(joueur).getMain().setVisible(true);
 	}
 	
 	private ArrayList<Carte> getAutreCarteDeValeur(int valeur, int nbCartes, Joueur joueur){
@@ -200,7 +229,7 @@ public class Tour implements Visitable{
 		return cartes;
 	}
 	
-	private Triplet<Integer, Integer, Integer> executerAction(Action actionAJouer, Joueur joueur) throws Exception{
+	private Triplet<Integer, Integer, Integer> jouerAction(Action actionAJouer, Joueur joueur) throws Exception{
 		Carte carteDeplacement=null;
 		Carte carteAction=null;
 		
@@ -281,27 +310,22 @@ public class Tour implements Visitable{
 			default: throw new Exception("Erreur lors de l'exécution de l'action");
 		}
 		
-		System.out.println("\nVous avez joué : carte de déplacement : " + carteDeplacement + ", carte d'action : " + carteAction);
-		
 		return new Triplet<>(typeAction, nbCartesAttqJouees, valeurCarteAttqJouee);
 	}
 	
-	public void afficherPiste(int positionF1, int positionF2){
-		String str = "";
+	public void remplirMain(Joueur j){		
+		int nbCarteMain = j.getMain().getNombreCarte();
 		
-		for(int i = 1 ; i < 24; i++){
-			if(i == positionF1){
-				str += "♙ ";
-			}else if(i == positionF2){
-				str += "♟ ";
-			}else{
-				str += "_ ";
-			}	
+		int i=nbCarteMain;
+			
+		while(!pioche.estVide() && i < nombreCarteMax){
+			Carte c = pioche.piocher();
+			c.setVisible(true);
+			j.ajouterCarteDansMain(c);
+			i++;
 		}
 		
-		str += "\n";
-		
-		System.out.println(str);
+		j.getMain().repositionnerMain();
 	}
 	
 	/**
