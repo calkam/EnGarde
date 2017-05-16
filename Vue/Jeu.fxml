@@ -8,18 +8,27 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1600.0" styleClass="background" stylesheets="@Theme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Vue.ControleurJeu">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1600.0" stylesheets="@Theme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Vue.ControleurJeu">
    <children>
-      <ImageView fitHeight="71.0" fitWidth="1607.0" pickOnBounds="true">
+      <ImageView fitHeight="535.0" fitWidth="1608.0" layoutY="70.0" pickOnBounds="true">
          <image>
-            <Image url="@../Ressources/tronc_fond.jpg" />
+            <Image url="@../Ressources/Fin_plan.png" />
+         </image></ImageView>
+      <ImageView fitHeight="320.0" fitWidth="1608.0" layoutY="587.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Ressources/fond_carte.png" />
          </image>
       </ImageView>
-      <Button layoutX="1356.0" layoutY="14.0" mnemonicParsing="false" onAction="#menuPrincipal" prefHeight="40.0" prefWidth="216.0" text="Menu Principal">
+      <ImageView fitHeight="89.0" fitWidth="1615.0" layoutX="-8.0" layoutY="-9.0" pickOnBounds="true">
+         <image>
+            <Image url="@../Ressources/fondTronc.png" />
+         </image>
+      </ImageView>
+      <Button layoutX="1356.0" layoutY="14.0" mnemonicParsing="false" onAction="#menuPrincipal" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefHeight="40.0" prefWidth="216.0" text="Menu Principal">
          <font>
             <Font name="eufm10" size="20.0" />
          </font></Button>
-      <Button layoutX="1151.0" layoutY="14.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="151.0" text="Sauvegarder">
+      <Button layoutX="1151.0" layoutY="14.0" mnemonicParsing="false" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefHeight="37.0" prefWidth="151.0" text="Sauvegarder">
          <font>
             <Font name="eufm10" size="20.0" />
          </font></Button>
@@ -34,16 +43,7 @@
       <Canvas fx:id="mainDroite" height="265.0" layoutX="901.0" layoutY="591.0" width="548.0" />
       <Canvas fx:id="scoreDroit" height="252.0" layoutX="1449.0" layoutY="610.0" width="123.0" />
       <Canvas fx:id="scoreGauche" height="252.0" layoutX="29.0" layoutY="610.0" width="123.0" />
-      <ImageView fitHeight="252.0" fitWidth="196.0" layoutX="706.0" layoutY="642.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../Ressources/chaineJeu.png" />
-         </image>
-      </ImageView>
-      <Button layoutX="725.0" layoutY="768.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="151.0" styleClass="finDeTour" text="Fin de tour">
-         <font>
-            <Font name="eufm10" size="20.0" />
-         </font></Button>
-      <Button layoutX="725.0" layoutY="705.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="151.0" styleClass="finDeTour" text="Annuler Coup">
+      <Button layoutX="725.0" layoutY="705.0" mnemonicParsing="false" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefHeight="40.0" prefWidth="151.0" styleClass="finDeTour" text="Annuler Coup">
          <font>
             <Font name="eufm10" size="20.0" />
          </font>

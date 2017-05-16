@@ -53,12 +53,12 @@
                </font>
             </Text>
             <TextField fx:id="NomCombattant2" layoutX="320.0" layoutY="260.0" prefHeight="26.0" prefWidth="200.0" promptText="entrez un nom..." visible="false" />
-            <Button layoutX="40.0" layoutY="330.0" mnemonicParsing="false" onAction="#menu" prefHeight="40.0" prefWidth="200.0" text="Menu Principal">
+            <Button layoutX="40.0" layoutY="330.0" mnemonicParsing="false" onAction="#menu" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefHeight="40.0" prefWidth="200.0" text="Menu Principal">
                <font>
                   <Font name="eufm10" size="20.0" />
                </font>
             </Button>
-            <Button layoutX="310.0" layoutY="330.0" mnemonicParsing="false" onAction="#lancerPartie" prefHeight="40.0" prefWidth="350.0" text="Commencer le combat !">
+            <Button layoutX="310.0" layoutY="330.0" mnemonicParsing="false" onAction="#lancerPartie" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefHeight="40.0" prefWidth="350.0" text="Commencer le combat !">
                <font>
                   <Font name="eufm10" size="20.0" />
                </font>

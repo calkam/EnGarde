@@ -18,7 +18,7 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <Button layoutY="496.0" mnemonicParsing="false" onMouseClicked="#menu" prefHeight="40.0" prefWidth="275.0" text="Menu Principal" textOverrun="CLIP" AnchorPane.leftAnchor="270.0">
+      <Button layoutY="496.0" mnemonicParsing="false" onMouseClicked="#menu" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefHeight="40.0" prefWidth="275.0" text="Menu Principal" textOverrun="CLIP" AnchorPane.leftAnchor="270.0">
          <font>
             <Font name="eufm10" size="20.0" />
          </font>

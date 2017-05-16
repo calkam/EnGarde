@@ -1,6 +1,7 @@
 package Vue;
 
 import javafx.fxml.FXML;
+import javafx.scene.ImageCursor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -174,5 +175,16 @@ public class ControleurJeu {
 	private void menuPrincipal(){
 		mainApp.acceuil();
 	}
-
+    
+	@FXML
+	private void handleIn(){
+		Image imageC = new Image("/Ressources/SourisEpeePlante.png");
+		mainApp.getPrimaryStage().getScene().setCursor(new ImageCursor(imageC));
+	}
+	
+	@FXML
+	private void handleOut(){
+		Image imageC = new Image("/Ressources/SourisEpee.png");
+		mainApp.getPrimaryStage().getScene().setCursor(new ImageCursor(imageC));
+	}
 }

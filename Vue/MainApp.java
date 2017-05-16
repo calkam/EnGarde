@@ -23,8 +23,8 @@ import javafx.stage.StageStyle;
 public class MainApp extends Application {
 
     private Stage primaryStage;
+    private Stage dialogStage;
     private BorderPane rootLayout;
-    int scene;
     
     @Override
     public void start(Stage primaryStage) {
@@ -33,7 +33,8 @@ public class MainApp extends Application {
         //this.primaryStage.setFullScreen(true);
         this.primaryStage.setWidth(1600);
         this.primaryStage.setHeight(900);
-
+        this.primaryStage.getIcons().add(new Image("Ressources/dosCarte.jpg"));
+        
         initRootLayout();
         
         acceuil();  
@@ -77,7 +78,7 @@ public class MainApp extends Application {
             controller.setMainApp(this);
             
             Image imageC = new Image("/Ressources/SourisEpee.png");
-            primaryStage.getScene().setCursor(new ImageCursor(imageC));
+            primaryStage.getScene().setCursor(new ImageCursor(imageC , 100, 100));
 
             Utils.playSound("MainTheme.mp3");
         } catch (IOException e) {
@@ -96,7 +97,7 @@ public class MainApp extends Application {
            AnchorPane page = (AnchorPane) loader.load(); 
            
            // Create the dialog Stage.
-           Stage dialogStage = new Stage();
+           dialogStage = new Stage();
            dialogStage.initStyle(StageStyle.UNDECORATED);
            dialogStage.setTitle("Alerte");
            dialogStage.initModality(Modality.WINDOW_MODAL);
@@ -193,7 +194,7 @@ public class MainApp extends Application {
     public Stage getPrimaryStage() {
         return primaryStage;
     }
-
+    
     public static void main(String[] args) {
         launch(args);
     }
