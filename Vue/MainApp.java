@@ -27,6 +27,7 @@ public class MainApp extends Application {
 	static Properties prop;
 	
     private Stage primaryStage;
+    private Stage dialogStage;
     private BorderPane rootLayout;
     
     @Override
@@ -36,7 +37,8 @@ public class MainApp extends Application {
         //this.primaryStage.setFullScreen(true);
         this.primaryStage.setWidth(1600);
         this.primaryStage.setHeight(900);
-
+        this.primaryStage.getIcons().add(new Image("Ressources/dosCarte.jpg"));
+        
         initRootLayout();
         
         //acceuil();
@@ -81,7 +83,7 @@ public class MainApp extends Application {
             controller.setMainApp(this);
             
             Image imageC = new Image("/Ressources/SourisEpee.png");
-            primaryStage.getScene().setCursor(new ImageCursor(imageC));
+            primaryStage.getScene().setCursor(new ImageCursor(imageC , 100, 100));
 
             Utils.playSound("MainTheme.mp3");
         } catch (IOException e) {
@@ -100,7 +102,7 @@ public class MainApp extends Application {
            AnchorPane page = (AnchorPane) loader.load(); 
            
            // Create the dialog Stage.
-           Stage dialogStage = new Stage();
+           dialogStage = new Stage();
            dialogStage.initStyle(StageStyle.UNDECORATED);
            dialogStage.setTitle("Alerte");
            dialogStage.initModality(Modality.WINDOW_MODAL);
@@ -152,13 +154,21 @@ public class MainApp extends Application {
             loader.setLocation(MainApp.class.getResource("/Vue/Jeu.fxml"));
             AnchorPane personOverview = (AnchorPane) loader.load();
             
-            Canvas terrain = (Canvas) personOverview.getChildren().get(5);
-            Canvas pioche = (Canvas) personOverview.getChildren().get(6);
-            Canvas defausse = (Canvas) personOverview.getChildren().get(7);
-            Canvas mainGauche = (Canvas) personOverview.getChildren().get(8);
-            Canvas mainDroite = (Canvas) personOverview.getChildren().get(9);
-            Canvas scoreDroit = (Canvas) personOverview.getChildren().get(10);
-            Canvas scoreGauche = (Canvas) personOverview.getChildren().get(11);
+            Canvas terrain = null, pioche = null, defausse = null, mainDroite = null, mainGauche = null, scoreDroit = null, scoreGauche = null;
+            
+            for(int i=0; i<personOverview.getChildren().size(); i++){
+            	if(personOverview.getChildren().get(i).getId() != null){
+            		switch(personOverview.getChildren().get(i).getId()){
+	            		case "terrain" : terrain = (Canvas) personOverview.getChildren().get(i); break;
+	            		case "pioche" : pioche = (Canvas) personOverview.getChildren().get(i); break;
+	            		case "defausse" : defausse = (Canvas) personOverview.getChildren().get(i); break;
+	            		case "mainGauche" : mainGauche = (Canvas) personOverview.getChildren().get(i); break;
+	            		case "mainDroite" : mainDroite = (Canvas) personOverview.getChildren().get(i); break;
+	            		case "scoreDroit" : scoreDroit = (Canvas) personOverview.getChildren().get(i); break;
+	            		case "scoreGauche" : scoreGauche = (Canvas) personOverview.getChildren().get(i); break;
+            		}
+            	}
+            }
             
             // Set person overview into the center of root layout.
             rootLayout.setCenter(personOverview);

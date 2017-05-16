@@ -12,7 +12,7 @@
 }
 
 .checkbox {
-	-fx-background-image:url("/Ressources/checkbox_fond.png");
+	/*-fx-background-image:url("/Ressources/checkbox_fond.png");*/
 	-fx-background-size: cover;
 }
 
@@ -36,6 +36,7 @@
     -fx-background-size: stretch;
     -fx-background-position: center center;    
     -fx-text-fill: white;
+    -fx-cursor-color:red;
 }
 
 .button:hover {

@@ -8,7 +8,6 @@ public class ControleurAlertQuitter {
 
     private Stage dialogStage;
     private boolean okClicked = false;
-
     /**
      * Initializes the controller class. This method is automatically called
      * after the fxml file has been loaded.
@@ -25,7 +24,7 @@ public class ControleurAlertQuitter {
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
     }
-
+    
     /**
      * Returns true if the user clicked OK, false otherwise.
      *
