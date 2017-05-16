@@ -110,8 +110,18 @@ public class DessinateurCanvasJavaFx extends Visiteur {
     	
     	if(c.getTas() == Carte.mainDroite){
     		gc = gcMainDroite;
+    		if(c.isVisible()){
+    			gc.setStroke(Color.BLUE);
+    		}else{
+    			gc.setStroke(Color.TRANSPARENT);
+    		}
     	}else{
-    		gc = gcMainGauche; 
+    		gc = gcMainGauche;
+    		if(c.isVisible()){
+    			gc.setStroke(Color.RED);
+    		}else{
+    			gc.setStroke(Color.TRANSPARENT);
+    		}
     	}
     	
     	if(c.isVisible()){
@@ -159,45 +169,15 @@ public class DessinateurCanvasJavaFx extends Visiteur {
     private void dessinerJoueurGauche(GraphicsContext gc, FigurineGauche fg){
     	Image i = new Image("/Ressources/joueurRouge.png");
     	gc.drawImage(i, fg.getX(), fg.getY(), fg.getLargeur(), fg.getHauteur());
-    	gc.strokeRect(fg.getX(),  fg.getY(), fg.getLargeur(), fg.getHauteur());
     }
     
     private void dessinerJoueurDroit(GraphicsContext gc, FigurineDroite fd){
     	Image i = new Image("/Ressources/joueurBleu.png");
     	gc.drawImage(i, fd.getX(), fd.getY(), fd.getLargeur(), fd.getHauteur());
-    	gc.strokeRect(fd.getX(), fd.getY(), fd.getLargeur(), fd.getHauteur());
-    }
-    
-    //y est le score 1, 2, 3, 4 ou 5 manche(s) gagnée(s)
-    private void dessinerScoreDroit(GraphicsContext gc, double y){
-    	if(y==0){
-    		
-    	}else{
-    		for(int i=0; i<y; i++){
-    			gc.setStroke(Color.BLUE);
-    	        gc.strokeRect(0, 0, scoreDroit.getWidth(), scoreDroit.getHeight());
-    	        gc.strokeOval(1, scoreDroit.getHeight()*i/5, scoreDroit.getWidth()-2, scoreDroit.getHeight()/5);
-    		}
-    	}
-    }
-    
-    //y est le score 1, 2, 3, 4 ou 5 manche(s) gagnée(s)
-    private void dessinerScoreGauche(GraphicsContext gc, double y){
-    	if(y==0){
-    		
-    	}else{
-    		for(int i=0; i<y; i++){
-	    		gc.setStroke(Color.RED);
-	    		gc.strokeRect(0, 0, scoreGauche.getWidth(), scoreGauche.getHeight());
-	            gc.strokeOval(1, scoreGauche.getHeight()*i/5, scoreGauche.getWidth()-2, scoreGauche.getHeight()/5);
-    		}
-    	}
     }
     
     private void dessinerMain(GraphicsContext gc, Main m){
     	gc.clearRect(0, 0, m.getLargeur(), m.getHauteur());
-        gc.setStroke(Color.BLUE);
-        gc.strokeRect(0, 0, m.getLargeur(), m.getHauteur());
     }
     
     private void dessinerCarteVertiRecto(GraphicsContext gc, double x, double y, double l, double h, int valeur){
@@ -224,4 +204,29 @@ public class DessinateurCanvasJavaFx extends Visiteur {
     	gc.strokeRect(x, y, l, h);
     }
    
+    //y est le score 1, 2, 3, 4 ou 5 manche(s) gagnée(s)
+    private void dessinerScoreDroit(GraphicsContext gc, double y){
+    	if(y==0){
+    		
+    	}else{
+    		for(int i=0; i<y; i++){
+    			gc.setStroke(Color.BLUE);
+    	        gc.strokeRect(0, 0, scoreDroit.getWidth(), scoreDroit.getHeight());
+    	        gc.strokeOval(1, scoreDroit.getHeight()*i/5, scoreDroit.getWidth()-2, scoreDroit.getHeight()/5);
+    		}
+    	}
+    }
+    
+    //y est le score 1, 2, 3, 4 ou 5 manche(s) gagnée(s)
+    private void dessinerScoreGauche(GraphicsContext gc, double y){
+    	if(y==0){
+    		
+    	}else{
+    		for(int i=0; i<y; i++){
+	    		gc.setStroke(Color.RED);
+	    		gc.strokeRect(0, 0, scoreGauche.getWidth(), scoreGauche.getHeight());
+	            gc.strokeOval(1, scoreGauche.getHeight()*i/5, scoreGauche.getWidth()-2, scoreGauche.getHeight()/5);
+    		}
+    	}
+    }
 }
