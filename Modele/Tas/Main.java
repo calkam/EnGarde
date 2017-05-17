@@ -65,6 +65,10 @@ public class Main extends Tas {
 		return retour;
 	}
 	
+	public boolean estVide(){
+		return main.isEmpty();
+	}
+	
 	public Carte getCarte(int c){
 		return this.main.get(c);
 	}

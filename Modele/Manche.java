@@ -43,6 +43,8 @@ public class Manche implements Visitable{
 		tourEnCours.setDefausse(defausse);
 		tourEnCours.setJoueurPremier(tmp.getC1());
 		tourEnCours.setJoueurSecond(tmp.getC2());
+		tourEnCours.getJoueurPremier().viderLaMain();
+		tourEnCours.getJoueurSecond().viderLaMain();
 		tourEnCours.remplirMain(tourEnCours.getJoueurPremier());
 		tourEnCours.remplirMain(tourEnCours.getJoueurSecond());
 	}

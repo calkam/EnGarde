@@ -32,6 +32,8 @@ public abstract class Tas extends Rectangle implements Visitable {
 			this.nombreCarte[i] = 0 ; 
 	}
 	
+	public abstract boolean estVide();
+	
 	public void fixeDimensions(float l, float h){
 		this.setLargeur(l);
 		this.setHauteur(h);

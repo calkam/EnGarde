@@ -106,4 +106,10 @@ public class JoueurGauche extends Joueur {
 		this.setPositionFigurine(1);
 	}
 	
+	@Override
+	public void viderLaMain() {
+		// TODO Auto-generated method stub
+		this.main = new Main(Main.gauche); 
+	}
+	
 }

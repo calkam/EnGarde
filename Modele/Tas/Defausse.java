@@ -38,6 +38,10 @@ public class Defausse extends Tas {
 		}
 	}
 	
+	public boolean estVide(){
+		return d.isEmpty();
+	}
+	
 	@Override
 	public String toString() {
 		String resultat = "";

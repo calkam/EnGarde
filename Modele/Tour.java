@@ -58,47 +58,6 @@ public class Tour implements Visitable{
 		return retour;
 	}
 	
-/*public boolean jouerTourJoueur(Joueur joueur) throws Exception{
-	int choixAction ;	
-	ActionsJouables actions_jouables ;
-	Action actionChoisie;
-	
-	System.out.println("Joueur : " + joueur.getNom() + ", position : " + joueur.getPositionFigurine());
-	System.out.println("Main : " + joueur.getMain().getMain() + "\n");
-	afficherPiste(joueurPremier.getPositionFigurine(), joueurSecond.getPositionFigurine());
-	
-	actions_jouables = joueur.peutFaireAction(estAttaque);
-	choixAction = selectionnerAction(actions_jouables);		
-	actionChoisie = rechercherAction(choixAction, actions_jouables);
-	
-	if(actionChoisie.getTypeAction() == Joueur.ActionImpossible){
-		return joueurPerdu;
-	}else{
-		estAttaque = executerAction(actionChoisie, joueur);			
-	}
-	
-	if(actionChoisie.getTypeAction() == Joueur.Parade){
-		System.out.println("Joueur : " + joueur.getNom() + ", position : " + joueur.getPositionFigurine());
-		System.out.println("Main : " + joueur.getMain().getMain() + "\n");
-		
-		actions_jouables = joueur.peutFaireAction(estAttaque);
-		choixAction = selectionnerAction(actions_jouables);
-		actionChoisie = rechercherAction(choixAction, actions_jouables);
-		
-		if(actionChoisie.getTypeAction() == Joueur.ActionImpossible){
-			return joueurPerdu;
-		}else{
-			estAttaque = executerAction(actionChoisie, joueur);
-		}
-	}
-	remplirMain(joueur);
-	
-	System.out.println("Joueur : " + joueur.getNom() + ", position : " + joueur.getPositionFigurine());
-	System.out.println("Main : " + joueur.getMain().getMain() + "\n");
-	
-	return joueurPasPerdu;
-}*/
-	
 	public boolean actionNeutre(Action action){
 		return action.getTypeAction() == Joueur.Reculer || action.getTypeAction() == Joueur.Avancer; 
 	}
@@ -167,9 +126,9 @@ public class Tour implements Visitable{
 		
 		caseClicked = joueur.getPiste().getCaseClicked(x, y);
 		
-		e = actions_jouables.elements();
-		
-		if(actions_jouables.size() != 0){
+		if(actions_jouables != null && actions_jouables.size() != 0){
+			e = actions_jouables.elements();
+			
 			while(e.hasMoreElements() && !trouve){
 				action = e.nextElement();
 				if(caseClicked.getNumero() == action.getPositionArrivee() || (actionOffensive(action) && 
@@ -313,7 +272,7 @@ public class Tour implements Visitable{
 		int nbCarteMain = j.getMain().getNombreCarte();
 		
 		int i=nbCarteMain;
-			
+		
 		while(!pioche.estVide() && i < nombreCarteMax){
 			Carte c = pioche.piocher();
 			c.setVisible(true);

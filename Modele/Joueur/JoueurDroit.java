@@ -102,5 +102,11 @@ public class JoueurDroit extends Joueur {
 		// TODO Auto-generated method stub
 		this.setPositionFigurine(23);
 	}
+
+	@Override
+	public void viderLaMain() {
+		// TODO Auto-generated method stub
+		this.main = new Main(Main.droite); 
+	}
 	
 }

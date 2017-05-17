@@ -155,13 +155,15 @@ public class DessinateurCanvasJavaFx extends Visiteur {
     }
     
     private void dessinerPioche(GraphicsContext gc, Pioche p){
+		gc.clearRect(p.getX(), p.getY(), p.getLargeur(), p.getHauteur());
     	Image i = new Image("/Ressources/dosCartePioche.jpg");
     	gc.drawImage(i, 0, 0, p.getLargeur(), p.getHauteur());
         dessinerCarteHoriVerso(gc, 0, 0, p.getLargeur(), p.getHauteur());
     }
     
     private void dessinerDefausse(GraphicsContext gc, Defausse d){
-    	if(d.carteDuDessus() != null){
+    	gc.clearRect(d.getX(), d.getY(), d.getLargeur(), d.getHauteur());
+    	if(!d.estVide()){
     		dessinerCarteHoriRecto(gc, 0, 0, d.getLargeur(), d.getHauteur(), d.carteDuDessus().getContenu());
     	}
     }
