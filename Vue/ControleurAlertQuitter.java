@@ -57,4 +57,16 @@ public class ControleurAlertQuitter {
     	dialogStage.close();
     	Platform.exit();
     }
+    @FXML
+	private void handleIn(){
+		Image imageC = new Image("/Ressources/SourisEpeePlante.png");
+		dialogStage.getScene().setCursor(new ImageCursor(imageC));
+	}
+	
+	@FXML
+	private void handleOut(){
+		Image imageC = new Image("/Ressources/SourisEpee.png");
+		dialogStage.getScene().setCursor(new ImageCursor(imageC));
+	} 
+    
 }

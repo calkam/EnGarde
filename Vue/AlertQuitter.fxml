@@ -7,17 +7,17 @@
 
 <AnchorPane cache="true" cacheHint="QUALITY" focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="155.0" prefWidth="400.0" styleClass="fondQuitter" stylesheets="@Theme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Vue.ControleurAlertQuitter">
    <children>
-      <Text fill="#f8f8f8" layoutX="14.0" layoutY="52.0" smooth="false" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.5" text="Etes vous sur de vouloir quitter ?" wrappingWidth="367.64208984375">
+      <Text fill="#f8f8f8" layoutX="14.0" layoutY="52.0" smooth="false" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.5" text="Etes vous sur de vouloir quitter ?" textAlignment="CENTER" wrappingWidth="367.64208984375">
          <font>
             <Font name="MathJax_Caligraphic-Regular" size="20.0" />
          </font>
       </Text>
-      <Button layoutX="14.0" layoutY="88.0" mnemonicParsing="false" onAction="#handleAnnuler" prefHeight="40.0" prefWidth="175.0" text="Annuler">
+      <Button layoutX="14.0" layoutY="88.0" mnemonicParsing="false" onAction="#handleAnnuler" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefHeight="40.0" prefWidth="175.0" text="Annuler">
          <font>
             <Font name="MathJax_Caligraphic-Regular" size="18.0" />
          </font>
       </Button>
-      <Button layoutX="211.0" layoutY="88.0" mnemonicParsing="false" onAction="#handleQuitter" prefHeight="40.0" prefWidth="175.0" text="Quitter">
+      <Button layoutX="211.0" layoutY="88.0" mnemonicParsing="false" onAction="#handleQuitter" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefHeight="40.0" prefWidth="175.0" text="Quitter">
          <font>
             <Font name="MathJax_Caligraphic-Regular" size="18.0" />
          </font></Button>

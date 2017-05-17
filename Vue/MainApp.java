@@ -3,16 +3,10 @@ package Vue;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Cursor;
-import javafx.scene.Group;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseDragEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
@@ -73,14 +67,15 @@ public class MainApp extends Application {
             // Set person overview into the center of root layout.
             rootLayout.setCenter(personOverview);
             
+            //Utils.playSound("MainTheme.mp3");
+            
             // Give the controller access to the main app.
             ControleurAcceuil controller = loader.getController();
             controller.setMainApp(this);
             
             Image imageC = new Image("/Ressources/SourisEpee.png");
             primaryStage.getScene().setCursor(new ImageCursor(imageC , 100, 100));
-
-            Utils.playSound("MainTheme.mp3");
+            
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -159,7 +154,7 @@ public class MainApp extends Application {
             
             Image imageC = new Image("/Ressources/SourisEpee.png");
             primaryStage.getScene().setCursor(new ImageCursor(imageC));
-
+            
         } catch (IOException e) {
             e.printStackTrace();
         }
