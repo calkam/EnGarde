@@ -7,24 +7,27 @@ import Modele.Tas.*;
 
 public class Jeu implements Visitable{
 	
-	private final static int VICTOIRE = 5; 
+	public final static int VICTOIRE = 3; 
 	
 	private Joueur joueur1;
 	private Joueur joueur2;
 	private Piste piste;
-	private PlateauScore plateauScore;
+	private PlateauScore plateauScoreJ1;
+	private PlateauScore plateauScoreJ2;
 	private Manche manche;
 	
 	private long dernierChrono;
 
 	public void init() throws Exception {
-		plateauScore = new PlateauScore() ;
+		Score scoreJ1 = new Score();
+		Score scoreJ2 = new Score();
+		plateauScoreJ1 = new PlateauScore(scoreJ2, PlateauScore.gauche) ;
+		plateauScoreJ2 = new PlateauScore(scoreJ1, PlateauScore.droite) ;
 		piste = new Piste(new FigurineGauche(1), new FigurineDroite(23)) ;
-		joueur1 = new FabriqueJoueur (1, "Humain", "Kaiba (Joueur 1)", new Main(), piste).nouveauJoueur() ;
-		joueur2 = new FabriqueJoueur (2, "Humain", "Yugi (Joueur 2)", new Main(), piste).nouveauJoueur() ;
-		joueur1.setScore(0);
-		joueur2.setScore(0);
-		
+		joueur1 = new FabriqueJoueur (1, "Humain", "Kaiba", new Main(), piste).nouveauJoueur() ;
+		joueur2 = new FabriqueJoueur (2, "Humain", "Yugi", new Main(), piste).nouveauJoueur() ;
+		joueur1.setScore(scoreJ1);
+		joueur1.setScore(scoreJ2);
 		this.dernierChrono = System.nanoTime();
 	}
 	
@@ -55,11 +58,11 @@ public class Jeu implements Visitable{
 	public boolean gainPartie(){
 		boolean gagne = false;
 		
-		if(joueur1.getScore() == VICTOIRE){
+		if(joueur1.getNbPoints() == VICTOIRE){
 			gagne = true;
 			affichageVictoire(joueur1.getNom(), joueur2.getNom());
 		}
-		if(joueur2.getScore() == VICTOIRE){			
+		if(joueur2.getNbPoints() == VICTOIRE){			
 			gagne = true;
 			affichageVictoire(joueur2.getNom(), joueur1.getNom());
 		}
@@ -90,6 +93,17 @@ public class Jeu implements Visitable{
 		manche.commencerManche();
 	}
 
+	public void changerScore(Joueur joueur) {
+		// TODO Auto-generated method stub
+		joueur.setNbPoints(joueur.getNbPoints()+1);
+		System.out.println(joueur);
+		if(joueur.equals(joueur1)){
+			plateauScoreJ2.getJetonsNumero(VICTOIRE-joueur.getNbPoints()).setVisible(false);
+		}else{
+			plateauScoreJ1.getJetonsNumero(VICTOIRE-joueur.getNbPoints()).setVisible(false);
+		}
+	}
+	
 	/**
 	 * 
 	 * VISITABLE
@@ -100,6 +114,8 @@ public class Jeu implements Visitable{
 	   if(piste != null){
             piste.accept(d);
             manche.accept(d);
+            plateauScoreJ1.accept(d);
+            plateauScoreJ2.accept(d);
             return false;
         }else{
             return true;
@@ -133,12 +149,20 @@ public class Jeu implements Visitable{
 		this.piste = piste;
 	}
 
-	public PlateauScore getPlateauScore() {
-		return plateauScore;
+	public PlateauScore getPlateauScoreJ1() {
+		return plateauScoreJ1;
 	}
 
-	public void setPlateauScore(PlateauScore plateauScore) {
-		this.plateauScore = plateauScore;
+	public void setPlateauScoreJ1(PlateauScore plateauScore) {
+		this.plateauScoreJ2 = plateauScore;
+	}
+	
+	public PlateauScore getPlateauScoreJ2() {
+		return plateauScoreJ2;
+	}
+
+	public void setPlateauScoreJ2(PlateauScore plateauScore) {
+		this.plateauScoreJ2 = plateauScore;
 	}
 
 	public Manche getManche() {
@@ -148,12 +172,11 @@ public class Jeu implements Visitable{
 	public void setManche(Manche manche) {
 		this.manche = manche;
 	}
-
+	
 	@Override
 	public String toString() {
 		String str = "Jeu" + joueur1;
 		return str;
 	}
-
 
 }

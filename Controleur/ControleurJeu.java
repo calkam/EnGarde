@@ -35,6 +35,12 @@ public class ControleurJeu {
     @FXML
     private Label nbCartePioche;
     
+    @FXML
+    private Label nomJoueur1;
+    
+    @FXML
+    private Label nomJoueur2;
+    
     private ArrayList<Carte> cartes;
     
     private Joueur joueurEnCours = null;
@@ -46,6 +52,8 @@ public class ControleurJeu {
 	public void init(Jeu j){
 		this.setJeu(j);
 		nbCartePioche.setText(Integer.toString(jeu.getManche().getPioche().size()));
+		nomJoueur1.setText(jeu.getJoueur1().getNom());
+		nomJoueur2.setText(jeu.getJoueur2().getNom());
 		setActionTerrain();
 		setActionMain();
 		cartes = new ArrayList<Carte>();
@@ -115,19 +123,18 @@ public class ControleurJeu {
 	private void verifierFinDuJeu(int resultat){
 		cartes = new ArrayList<Carte>();
 		if(!jeu.gainPartie()){
+			if(resultat == Manche.JOUEUR1GAGNE){
+				jeu.changerScore(jeu.getJoueur1());
+			}else if(resultat == Manche.JOUEUR2GAGNE){
+				jeu.changerScore(jeu.getJoueur2());
+			}
 			jeu.nouvelleManche();
+			nbCartePioche.setText(Integer.toString(jeu.getManche().getPioche().size()));
 			try {
 				jeu.lancerLaManche();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
-		}else{
-			
-			if(resultat == Manche.JOUEUR1){
-				jeu.affichageVictoire(jeu.getJoueur1().getNom(), jeu.getJoueur2().getNom());
-			}else{
-				jeu.affichageVictoire(jeu.getJoueur2().getNom(), jeu.getJoueur1().getNom());
 			}
 		}
 	}
@@ -176,9 +183,8 @@ public class ControleurJeu {
         	        		if(peutFaireAction){
         	        			cartes = new ArrayList<Carte>();
         	        		}
-        	        		if(peutFaireAction = jeu.getManche().getTourEnCours().adversaireAPerdu(joueurEnCours)){
-        	        			verifierFinDeManche(jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours), peutFaireAction);
-        	        		}
+        	        		peutFaireAction = jeu.getManche().getTourEnCours().adversairePeutFaireAction(joueurEnCours);
+        	        		verifierFinDeManche(jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours), peutFaireAction);
         	        		verifierFinDeLaPioche();
         	        	}
         	            break;

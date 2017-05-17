@@ -57,5 +57,15 @@
             <Font name="eufm10" size="57.0" />
          </font>
       </Label>
+      <Label fx:id="nomJoueur1" alignment="CENTER" layoutX="60.0" layoutY="95.0" prefHeight="64.0" text="Joueur1" textAlignment="RIGHT">
+         <font>
+            <Font name="eufm10" size="57.0" />
+         </font>
+      </Label>
+      <Label fx:id="nomJoueur2" alignment="CENTER" layoutX="1340.0" layoutY="95.0" prefHeight="64.0" text="Joueur2" textAlignment="RIGHT">
+         <font>
+            <Font name="eufm10" size="57.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

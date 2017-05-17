@@ -147,7 +147,7 @@ public class Main extends Tas {
 		// TODO Auto-generated method stub
 		int i=0;
 		for(Carte c : main){
-			c.setX(i*(c.getLargeur()/2));
+			c.setX((float)(i*c.getLargeur()*0.63));
 			c.setY(Reglages.lis("PositionYCarte"));
 			i++;
 		}

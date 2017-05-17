@@ -161,12 +161,21 @@ public abstract class Joueur implements Visitable{
 	public void setMain(Main main) {
 		this.main = main;
 	}
-	public int getScore() {
+	
+	public Score getScore() {
+		return score;
+	}
+	public void setScore(Score score) {
+		this.score = score;
+	}
+	
+	public int getNbPoints() {
 		return score.getNbPoints();
 	}
-	public void setScore(int nbPoints) {
+	public void setNbPoints(int nbPoints) {
 		this.score.setNbPoints(nbPoints);
 	}
+	
 	public Piste getPiste() {
 		return piste;
 	}

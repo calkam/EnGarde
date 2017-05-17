@@ -2,7 +2,9 @@ package Vue;
 
 import Modele.Visiteur;
 import Modele.Plateau.Case;
+import Modele.Plateau.Jeton;
 import Modele.Plateau.Piste;
+import Modele.Plateau.PlateauScore;
 import Modele.Plateau.Figurine.FigurineDroite;
 import Modele.Plateau.Figurine.FigurineGauche;
 import Modele.Tas.Carte;
@@ -39,10 +41,12 @@ public class DessinateurCanvasJavaFx extends Visiteur {
 		this.mainGauche = mainGauche;
 		
 		gcTerrain = terrain.getGraphicsContext2D();
+		gcPioche = pioche.getGraphicsContext2D();
 		gcMainDroite = mainDroite.getGraphicsContext2D();
 		gcMainGauche = mainGauche.getGraphicsContext2D();
     	gcScoreDroit = scoreDroit.getGraphicsContext2D();
     	gcScoreGauche = scoreGauche.getGraphicsContext2D();
+    	gcDefausse = defausse.getGraphicsContext2D();
 	}
     
     public boolean visite(Piste p){
@@ -92,14 +96,13 @@ public class DessinateurCanvasJavaFx extends Visiteur {
     }
     
     public boolean visite(Pioche p){
-    	gcPioche = pioche.getGraphicsContext2D();
+    	
     	p.fixeDimensions((float)pioche.getWidth(), (float)pioche.getHeight());
     	dessinerPioche(gcPioche, p);
     	return false;
     }
     
     public boolean visite(Defausse d){
-    	gcDefausse = defausse.getGraphicsContext2D();
     	d.fixeDimensions((float)defausse.getWidth(), (float)defausse.getHeight());
     	dessinerDefausse(gcDefausse, d);
     	return false;
@@ -139,6 +142,30 @@ public class DessinateurCanvasJavaFx extends Visiteur {
     
     public boolean visite(FigurineGauche fg){
     	dessinerJoueurGauche(gcTerrain, fg);
+    	return false;
+    }
+    
+    public boolean visite(PlateauScore ps){
+    	GraphicsContext gc;
+    	if(ps.getCote() == PlateauScore.droite){
+    		gc = gcScoreDroit;
+    	}else{
+    		gc = gcScoreGauche;
+    	}
+    	dessinerPlateauScore(gc, ps.getX(), ps.getY(), ps.getLargeur(), ps.getHauteur(), ps.getCote());
+    	return false;
+    }
+    
+    public boolean visite(Jeton j){
+    	GraphicsContext gc;
+    	if(j.getCote() == Jeton.droit){
+    		gc = gcScoreDroit;
+    	}else{
+    		gc = gcScoreGauche;
+    	}
+    	if(j.isVisible()){
+    		dessinerJeton(gc, j.getX(), j.getY(), j.getLargeur(), j.getHauteur());	
+    	}
     	return false;
     }
     
@@ -183,52 +210,46 @@ public class DessinateurCanvasJavaFx extends Visiteur {
     }
     
     private void dessinerCarteVertiRecto(GraphicsContext gc, double x, double y, double l, double h, int valeur){
+    	gc.clearRect(x, y, l, h);
     	Image i = new Image("/Ressources/N"+ valeur +".png");
     	gc.drawImage(i, x, y, l, h);
     	gc.strokeRect(x, y, l, h);
     }
     
     private void dessinerCarteVertiVerso(GraphicsContext gc, double x, double y, double l, double h){
+    	gc.clearRect(x, y, l, h);
     	Image i = new Image("/Ressources/dosCarte.jpg");
     	gc.drawImage(i, x, y, l, h);
     	gc.strokeRect(x, y, l, h);
     }
     
     private void dessinerCarteHoriVerso(GraphicsContext gc, double x, double y, double l, double h){
+    	gc.clearRect(x, y, l, h);
     	Image i = new Image("/Ressources/dosCartePioche.jpg");
     	gc.drawImage(i, x, y, l, h);
     	gc.strokeRect(x, y, l, h);
     }
     
     private void dessinerCarteHoriRecto(GraphicsContext gc, double x, double y, double l, double h, int valeur){
+    	gc.clearRect(x, y, l, h);
     	Image i = new Image("/Ressources/N"+ valeur +"_rotate.png");
     	gc.drawImage(i, x, y, l, h);
-    	gc.strokeRect(x, y, l, h);
     }
    
-    //y est le score 1, 2, 3, 4 ou 5 manche(s) gagnée(s)
-    private void dessinerScoreDroit(GraphicsContext gc, double y){
-    	if(y==0){
-    		
-    	}else{
-    		for(int i=0; i<y; i++){
-    			gc.setStroke(Color.BLUE);
-    	        gc.strokeRect(0, 0, scoreDroit.getWidth(), scoreDroit.getHeight());
-    	        gc.strokeOval(1, scoreDroit.getHeight()*i/5, scoreDroit.getWidth()-2, scoreDroit.getHeight()/5);
-    		}
-    	}
+    private void dessinerPlateauScore(GraphicsContext gc, double x, double y, double l, double h, int cote){
+		Image i;
+		gc.clearRect(x, y, l, h);
+		if(cote == PlateauScore.droite){
+			i = new Image("/Ressources/bareeDeVieBleu.png");
+		}else{
+			i = new Image("/Ressources/bareeDeVieRouge.png");
+		}
+    	gc.drawImage(i, x, y, l, h);
     }
     
-    //y est le score 1, 2, 3, 4 ou 5 manche(s) gagnée(s)
-    private void dessinerScoreGauche(GraphicsContext gc, double y){
-    	if(y==0){
-    		
-    	}else{
-    		for(int i=0; i<y; i++){
-	    		gc.setStroke(Color.RED);
-	    		gc.strokeRect(0, 0, scoreGauche.getWidth(), scoreGauche.getHeight());
-	            gc.strokeOval(1, scoreGauche.getHeight()*i/5, scoreGauche.getWidth()-2, scoreGauche.getHeight()/5);
-    		}
-    	}
+    private void dessinerJeton(GraphicsContext gc, double x, double y, double l, double h){
+		Image i = new Image("/Ressources/coeur.png");
+    	gc.drawImage(i, x, y, l, h);
     }
+
 }
