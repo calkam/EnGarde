@@ -1,4 +1,4 @@
-package Vue;
+package Controleur;
 
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -120,7 +120,7 @@ public class ControleurChoixPartie {
 		NiveauCombattant2.getSelectionModel().selectedItemProperty().addListener(
 				(ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
 					niveauj2.setText((String)newValue);
-				});		
+				});
 		
 	}
     

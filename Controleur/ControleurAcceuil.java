@@ -1,17 +1,16 @@
-package Vue;
+package Controleur;
 
 import javafx.fxml.FXML;
 import javafx.scene.ImageCursor;
 import javafx.scene.image.Image;
-import javafx.stage.Stage;
 import Vue.MainApp;
 
 
-public class ControleurSauvegardes {
+public class ControleurAcceuil {
 		
     private MainApp mainApp;
     
-    public ControleurSauvegardes(){
+    public ControleurAcceuil(){
     }
     
 	public void setMainApp(MainApp mainApp) {
@@ -19,17 +18,19 @@ public class ControleurSauvegardes {
     }
 	
 	@FXML
-	private void charger() {
-	}	
-	
-	@FXML
-    private void sauvegarder(){
-    }
-	
-	@FXML
-	private void menu(){
-		mainApp.acceuil();
+	private void handleNouvellePartie() {
+		mainApp.choixPartie();
 	}
+	
+	@FXML
+	private void handleSauvegarde() {
+		mainApp.sauvegardes();
+	}
+	
+	@FXML
+    private void handleQuitter(){
+		mainApp.alertQuitter();
+    }
 	
 	@FXML
 	private void handleIn(){

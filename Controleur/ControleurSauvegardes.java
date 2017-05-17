@@ -1,42 +1,33 @@
-package Vue;
+package Controleur;
 
 import javafx.fxml.FXML;
 import javafx.scene.ImageCursor;
 import javafx.scene.image.Image;
-import javafx.stage.Stage;
 import Vue.MainApp;
 
-
-public class ControleurAcceuil {
+public class ControleurSauvegardes {
 		
-    private Stage dialogStage;
     private MainApp mainApp;
     
-    public ControleurAcceuil(){
+    public ControleurSauvegardes(){
     }
     
 	public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
     }
 	
-	public void setDialogStage(Stage dialogStage) {
-        this.dialogStage = dialogStage;
+	@FXML
+	private void charger() {
+	}	
+	
+	@FXML
+    private void sauvegarder(){
     }
 	
 	@FXML
-	private void handleNouvellePartie() {
-		mainApp.choixPartie();
+	private void menu(){
+		mainApp.acceuil();
 	}
-	
-	@FXML
-	private void handleSauvegarde() {
-		mainApp.sauvegardes();
-	}
-	
-	@FXML
-    private void handleQuitter(){
-		mainApp.alertQuitter();
-    }
 	
 	@FXML
 	private void handleIn(){
