@@ -137,7 +137,6 @@ public class Tour implements Visitable{
 				
 				while(e.hasMoreElements()){
 					action = e.nextElement();
-					//System.out.println(action);
 					if(actionNeutre(action)){
 						joueur.getPiste().getCases().get(action.getPositionArrivee()-1).setCouleur(Case.ROUGE);
 					}else if(actionOffensive(action)){

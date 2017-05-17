@@ -85,7 +85,7 @@ public class MainApp extends Application {
             Image imageC = new Image("/Ressources/SourisEpee.png");
             primaryStage.getScene().setCursor(new ImageCursor(imageC , 100, 100));
 
-            Utils.playSound("MainTheme.mp3");
+            //Utils.playSound("MainTheme.mp3");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -153,6 +153,8 @@ public class MainApp extends Application {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("/Vue/Jeu.fxml"));
             AnchorPane personOverview = (AnchorPane) loader.load();
+            
+            //Utils.playSound("itsTimeToDuel.mp3");
             
             Canvas terrain = null, pioche = null, defausse = null, mainDroite = null, mainGauche = null, scoreDroit = null, scoreGauche = null;
             

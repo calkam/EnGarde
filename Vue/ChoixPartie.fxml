@@ -12,7 +12,7 @@
    <children>
       <Pane layoutX="449.0" layoutY="242.0" prefHeight="396.0" prefWidth="674.0" styleClass="fondQuitter" AnchorPane.leftAnchor="450.0" AnchorPane.rightAnchor="450.0">
          <children>
-            <!--<Text fill="WHITE" layoutX="20.0" layoutY="55.0" stroke="BLACK" strokeType="OUTSIDE" text="Choix des combattants">
+            <Text fill="WHITE" layoutX="20.0" layoutY="55.0" stroke="BLACK" strokeType="OUTSIDE" text="Choix des combattants">
                <font>
                   <Font name="eufm10" size="40.0" />
                </font>
@@ -62,7 +62,7 @@
                <font>
                   <Font name="eufm10" size="20.0" />
                </font>
-            </Button>-->
+            </Button>
          </children></Pane>
    </children>
 </AnchorPane>
