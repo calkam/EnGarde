@@ -83,6 +83,10 @@ public class Main extends Tas {
 		}
 	}
 	
+	public int size(){
+		return main.size();
+	}
+	
 	public int getCote() {
 		return cote;
 	}

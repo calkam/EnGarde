@@ -193,13 +193,6 @@ public class ControleurJeu {
             	}
             }
         });
-        
-		terrain.setOnMouseMoved(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-            	//jeu.getPiste().getCasesHover(event.getX(), event.getY());
-            }
-        });
 	}
 
 	@FXML
