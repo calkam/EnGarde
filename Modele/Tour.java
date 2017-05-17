@@ -89,7 +89,7 @@ public class Tour implements Visitable{
 			
 			actions_jouables = joueur.peutFaireActionAvecCarteSelectionne(joueur.getMain().getCote(), cartes, estAttaque);
 			
-			if(joueur.peutFaireAction(joueur.getMain().getCote(), joueur.getCartesDeLaMain(), estAttaque).size() != 0){
+			if(joueur.peutFaireAction(estAttaque).size() != 0){
 				e = actions_jouables.elements();
 				
 				joueur.getPiste().reinitialiserCouleurCase();
@@ -167,7 +167,7 @@ public class Tour implements Visitable{
 		ActionsJouables testAction;
 		
 		try {
-			testAction = joueur.peutFaireAction(joueurAdverse(joueur).getMain().getCote(), joueurAdverse(joueur).getCartesDeLaMain(), estAttaque);
+			testAction = joueur.peutFaireAction(estAttaque);
 			if(testAction == null || testAction.size() == 0){
 				return false;
 			}

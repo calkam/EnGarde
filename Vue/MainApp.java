@@ -41,8 +41,8 @@ public class MainApp extends Application {
         
         initRootLayout();
         
-        acceuil();
-        //jeu();
+        //acceuil();
+        jeu();
     }
     
     /**

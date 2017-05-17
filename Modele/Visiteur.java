@@ -4,6 +4,7 @@ import Modele.Composant.Composant;
 import Modele.Composant.ObjetMouvant;
 import Modele.Plateau.Case;
 import Modele.Plateau.Jeton;
+import Modele.Plateau.MessageBox;
 import Modele.Plateau.Piste;
 import Modele.Plateau.PlateauScore;
 import Modele.Plateau.Figurine.Figurine;
@@ -58,6 +59,10 @@ public abstract class Visiteur {
 	
 	public boolean visite(Jeton j) {
 		return visite((Composant) j);
+	}
+	
+	public boolean visite(MessageBox m){
+		return visite((Composant) m);
 	}
 	
 	public boolean visite(Figurine f) {
