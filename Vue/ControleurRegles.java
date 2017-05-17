@@ -5,24 +5,15 @@ import javafx.scene.ImageCursor;
 import javafx.scene.image.Image;
 import Vue.MainApp;
 
+public class ControleurRegles {
 
-public class ControleurSauvegardes {
-		
-    private MainApp mainApp;
+	private MainApp mainApp;
     
-    public ControleurSauvegardes(){
+    public ControleurRegles(){
     }
     
 	public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
-    }
-	
-	@FXML
-	private void charger() {
-	}	
-	
-	@FXML
-    private void sauvegarder(){
     }
 	
 	@FXML
@@ -41,4 +32,5 @@ public class ControleurSauvegardes {
 		Image imageC = new Image("/Ressources/SourisEpee.png");
 		mainApp.getPrimaryStage().getScene().setCursor(new ImageCursor(imageC));
 	}
+	
 }

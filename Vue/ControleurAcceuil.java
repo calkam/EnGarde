@@ -29,6 +29,11 @@ public class ControleurAcceuil {
 	}
 	
 	@FXML
+	private void handleRegles() {
+		mainApp.regles();
+	}
+	
+	@FXML
 	private void handleSauvegarde() {
 		mainApp.sauvegardes();
 	}
