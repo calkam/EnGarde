@@ -37,7 +37,7 @@
                 <RowConstraints fillHeight="false" minHeight="50.0" valignment="TOP" vgrow="ALWAYS" />
               </rowConstraints>
                <children>
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleNouvellePartie" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefWidth="340.0" text="Nouvelle Partie" textOverrun="CLIP" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleNouvellePartie" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefHeight="40.0" prefWidth="340.0" text="Nouvelle Partie" textOverrun="CLIP" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
                      <font>
                         <Font name="MathJax_Caligraphic-Regular" size="18.0" />
                      </font>
@@ -45,17 +45,17 @@
                         <Insets />
                      </GridPane.margin>
                   </Button>
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleRegles" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefWidth="340.0" stylesheets="@Theme.css" text="Règles du jeu" textOverrun="CLIP" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleRegles" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefHeight="40.0" prefWidth="340.0" stylesheets="@Theme.css" text="Règles Du Jeu" textOverrun="CLIP" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
                      <font>
                         <Font name="MathJax_Caligraphic-Regular" size="18.0" />
                      </font>
                   </Button>
-                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleSauvegarde" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefWidth="340.0" stylesheets="@Theme.css" text="Charger/Sauvegarder Partie" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleSauvegarde" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefHeight="40.0" prefWidth="340.0" stylesheets="@Theme.css" text="Charger/Sauvegarder Partie" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
                      <font>
                         <Font name="MathJax_Caligraphic-Regular" size="17.0" />
                      </font>
                   </Button>
-                  <Button alignment="CENTER" focusTraversable="false" mnemonicParsing="false" onAction="#handleQuitter" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefWidth="340.0" stylesheets="@Theme.css" text="Quitter" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
+                  <Button alignment="CENTER" focusTraversable="false" mnemonicParsing="false" onAction="#handleQuitter" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefHeight="40.0" prefWidth="340.0" stylesheets="@Theme.css" text="Quitter" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
                      <font>
                         <Font name="MathJax_Caligraphic-Regular" size="18.0" />
                      </font>

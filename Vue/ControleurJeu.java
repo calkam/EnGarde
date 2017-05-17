@@ -150,7 +150,7 @@ public class ControleurJeu {
     
     private void dessinerMainGauche(double nbCarte){
     	for(int i=0; i<nbCarte; i++){
-    		dessinerCarteVerti(mainDroite, i*90, 60);
+    		dessinerCarteVerti(mainGauche, i*90, 60);
     	}
     }
     
@@ -186,5 +186,10 @@ public class ControleurJeu {
 	private void handleOut(){
 		Image imageC = new Image("/Ressources/SourisEpee.png");
 		mainApp.getPrimaryStage().getScene().setCursor(new ImageCursor(imageC));
+	}
+	
+	@FXML
+	private void handleNouvellePartie(){
+		mainApp.jeu();
 	}
 }
