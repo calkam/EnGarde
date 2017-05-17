@@ -78,17 +78,13 @@ public class ControleurChoixPartie {
 				(ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
 					modej1.setText((String)newValue);
 					if(modej1.getText().equals("Joueur")){
-						TexteNiveau1.setVisible(false);
 						NiveauCombattant1.setVisible(false);
 						
-						TexteNom1.setVisible(true);
 						NomCombattant1.setVisible(true);			
 					}
-					else if(modej1.getText().equals("IA")){					
-						TexteNom1.setVisible(false);
+					else if(modej1.getText().equals("IA")){		
 						NomCombattant1.setVisible(false);
 						
-						TexteNiveau1.setVisible(true);
 						NiveauCombattant1.setVisible(true);
 					}
 				});
@@ -97,17 +93,13 @@ public class ControleurChoixPartie {
 				(ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
 					modej2.setText((String)newValue);
 					if(modej2.getText().equals("Joueur")){
-						TexteNiveau2.setVisible(false);
 						NiveauCombattant2.setVisible(false);
 						
-						TexteNom2.setVisible(true);
 						NomCombattant2.setVisible(true);			
 					}
-					else if(modej2.getText().equals("IA")){					
-						TexteNom2.setVisible(false);
+					else if(modej2.getText().equals("IA")){	
 						NomCombattant2.setVisible(false);
 						
-						TexteNiveau2.setVisible(true);
 						NiveauCombattant2.setVisible(true);
 					}
 				});

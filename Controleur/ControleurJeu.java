@@ -207,6 +207,11 @@ public class ControleurJeu {
 		mainApp.acceuil();
 	}
 	
+	@FXML
+	private void nouvellePartie(){
+		mainApp.jeu();
+	}
+	
 	public Jeu getJeu() {
 		return jeu;
 	}
