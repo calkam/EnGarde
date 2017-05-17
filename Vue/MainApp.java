@@ -41,8 +41,8 @@ public class MainApp extends Application {
         
         initRootLayout();
         
-        //acceuil();
-        jeu();
+        acceuil();
+        //jeu();
     }
     
     /**
@@ -153,6 +153,8 @@ public class MainApp extends Application {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("/Vue/Jeu.fxml"));
             AnchorPane personOverview = (AnchorPane) loader.load();
+            
+            Utils.playSound("itsTimeToDuel.mp3");
             
             Canvas terrain = null, pioche = null, defausse = null, mainDroite = null, mainGauche = null, scoreDroit = null, scoreGauche = null;
             
