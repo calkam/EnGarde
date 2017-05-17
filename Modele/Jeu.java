@@ -1,5 +1,7 @@
 package Modele;
 
+import Controleur.ControleurChoixPartie;
+
 import Modele.Joueur.*;
 import Modele.Plateau.*;
 import Modele.Plateau.Figurine.*;
@@ -18,14 +20,14 @@ public class Jeu implements Visitable{
 	
 	private long dernierChrono;
 
-	public void init() throws Exception {
+	public void init(String j1, String j2) throws Exception {
 		Score scoreJ1 = new Score();
 		Score scoreJ2 = new Score();
 		plateauScoreJ1 = new PlateauScore(scoreJ2, PlateauScore.gauche) ;
 		plateauScoreJ2 = new PlateauScore(scoreJ1, PlateauScore.droite) ;
 		piste = new Piste(new FigurineGauche(1), new FigurineDroite(23)) ;
-		joueur1 = new FabriqueJoueur (1, "Humain", "Kaiba", new Main(), piste).nouveauJoueur() ;
-		joueur2 = new FabriqueJoueur (2, "Humain", "Yugi", new Main(), piste).nouveauJoueur() ;
+		joueur1 = new FabriqueJoueur (1, "Humain", j1, new Main(), piste).nouveauJoueur() ;
+		joueur2 = new FabriqueJoueur (2, "Humain", j2, new Main(), piste).nouveauJoueur() ;
 		joueur1.setScore(scoreJ1);
 		joueur1.setScore(scoreJ2);
 		this.dernierChrono = System.nanoTime();

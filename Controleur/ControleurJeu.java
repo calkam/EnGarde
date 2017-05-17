@@ -202,7 +202,7 @@ public class ControleurJeu {
 	
 	@FXML
 	private void nouvellePartie(){
-		mainApp.jeu();
+		mainApp.jeu(jeu.getJoueur1().getNom(), jeu.getJoueur2().getNom());
 	}
 	
 	public Jeu getJeu() {
