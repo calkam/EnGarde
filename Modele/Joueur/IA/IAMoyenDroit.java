@@ -248,7 +248,7 @@ public Action actionIA (Triplet<Integer, Integer, Integer> attaque, Pioche pioch
 				
 				}
 			}else{
-				if( peut_avancer_ou_attaquer_directement(c.getContenu()).getC1() ){ //Test si on peut avancer avec la carte c
+				if( peut_avancer_ou_attaquer_directement(c.getContenu()).getC2()!=ActionImpossible && peut_avancer_ou_attaquer_directement(c.getContenu()).getC1() ){ //Test si on peut avancer avec la carte c
 					
 					if( distance == 2*c.getContenu() ){ //Attention, ne pas compter la carte avec laquelle on attaque si elle est égale a la distance après coup !
 						surplus = 1;

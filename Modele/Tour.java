@@ -382,5 +382,13 @@ public class Tour{
 	public void setDefausse(Defausse defausse) {
 		this.defausse = defausse;
 	}
+
+	public Triplet<Integer, Integer, Integer> getEstAttaque() {
+		return estAttaque;
+	}
+
+	public void setEstAttaque(Triplet<Integer, Integer, Integer> estAttaque) {
+		this.estAttaque = estAttaque;
+	}
 	
 }

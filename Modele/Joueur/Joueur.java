@@ -91,10 +91,10 @@ public abstract class Joueur {
 							if(i!=j){
 								carteOpt = main.getCarte(j);
 						
-								if (((position = test_avancer_ou_attaquer.getC2()) != ActionImpossible) && main.getCarte(i).getID() != carteOpt.getID() &&
+								if (((position = test_avancer_ou_attaquer.getC2()) != ActionImpossible) &&
 								    (peut_attaquer_indirectement(position, carteOpt.getContenu()) != ActionImpossible)){
 							
-									for(int k=1; k<=main.getNombreCarteGroupe(carteOpt.getContenu()); k++){
+									for(int k=1; k<=main.getNombreCarteGroupe(carteOpt.getContenu() - (main.getCarte(i).getContenu() == carteOpt.getContenu() ? 1 : 0)); k++){
 										actions_jouables.ajouterActionOffensive(carte.getID(), AttaqueIndirecte, test_avancer_ou_attaquer.getC2(), carte, carteOpt, k) ;
 									}								
 								}

@@ -2,41 +2,33 @@ package Modele;
 
 import java.util.ArrayList;
 
-import Modele.Joueur.Action;
-
 public class Historique {
 	
-	private int nbTourRealiseJoueur ;
-	
 	ArrayList <Tour> tours ;
-	ArrayList <ArrayList <Action>> liste_actions ;
 	
 	public Historique () {
 		
-		this.nbTourRealiseJoueur = 0 ;
 		this.tours = new ArrayList <> () ;
-		this.liste_actions = new ArrayList <> () ;
 		
 	}
 	
 	public void ajouterTour (Tour t) {
 		
 		tours.add(t.clone()) ;
-		nbTourRealiseJoueur++ ;
 		
 	}
 	
 	public void annulerTour (Tour t) {
 		
-		if (nbTourRealiseJoueur > 0) {
+		if (tours.size() > 0) {
 			
-			Tour dernier_tour = tours.remove(nbTourRealiseJoueur-1) ;
-			nbTourRealiseJoueur-- ;
+			Tour dernier_tour = tours.remove(tours.size()-1) ;
 			
 			t.setJoueurPremier(dernier_tour.getJoueurPremier());
 			t.setJoueurSecond(dernier_tour.getJoueurSecond());
 			t.setPioche(dernier_tour.getPioche());
 			t.setDefausse(dernier_tour.getDefausse());
+			t.setEstAttaque(dernier_tour.getEstAttaque());
 			
 		}
 		
@@ -47,8 +39,9 @@ public class Historique {
 	@Override
 	public String toString() {
 		
-		/*String str = "";
-		str += "Historique [\n";
+		String str = "";
+		
+		/*str += "Historique [\n";
 		
 		for (Tour t : tours) {
 			
@@ -62,7 +55,20 @@ public class Historique {
 		str += "]\n";
 		return str;*/
 		
-		return "nbTourRealiseJoueur : " + nbTourRealiseJoueur + "\n";
+		str += "Historique Dernier Tour [\n";
+		
+		str += "JoueurPremier : " + tours.get(tours.size()-1).getJoueurPremier() ;
+		str += "JoueurSecond : " + tours.get(tours.size()-1).getJoueurSecond() ;
+		str += "Pioche : " + tours.get(tours.size()-1).getPioche() ;
+		str += "Defausse : " + tours.get(tours.size()-1).getDefausse() ;
+		
+		str += "]\n";
+		
+		return str;
+		
+		
+		
+		//return "nbTourRealiseJoueur : " + nbTourRealiseJoueur + "\n";
 	}
 	
 }
