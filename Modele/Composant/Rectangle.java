@@ -36,7 +36,7 @@ public class Rectangle extends ComposantGraphique {
 	}
 	
 	@Override
-	ComposantGraphique copieVers(float x, float y) {
+	protected ComposantGraphique copieVers(float x, float y) {
 		// TODO Auto-generated method stub
 		return null;
 	}

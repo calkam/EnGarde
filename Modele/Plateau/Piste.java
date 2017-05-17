@@ -4,38 +4,55 @@ import java.util.ArrayList;
 import Modele.Composant.ObjetMouvant;
 import Modele.Composant.Rectangle;
 import Modele.Composant.Visiteur;
-import Modele.Plateau.Figurine.*;
+import Modele.Joueur.Joueur;
 
 public class Piste extends Rectangle {
+	
+	// ATTRIBUTS
 
-	private FigurineGauche figurineGauche;
-	private FigurineDroite figurineDroite;
+	private Figurine figurineGauche;
+	private Figurine figurineDroite;
 	private ArrayList<Case> cases;
 	
-	public Piste(FigurineGauche figurineGauche, FigurineDroite figurineDroite) {
+	// CONSTRUCTEUR
+	
+	public Piste(Figurine figurineGauche, Figurine figurineDroite) {
 		super(0, 0, 800, 600);
 		this.figurineGauche = figurineGauche ;
 		this.figurineDroite = figurineDroite ;
 		this.initTableauCases();
 	}
 	
-	public Piste() {
-		// TODO Auto-generated constructor stub
+	/**
+	 * GETTER/SETTER
+	 * @throws Exception 
+	 **/
+	
+	public Figurine getFigurine(int direction) throws Exception {
+		
+		switch (direction) {
+		
+		case Joueur.DROITE : return getFigurineGauche() ;
+		case Joueur.GAUCHE : return getFigurineDroite() ;
+		default : throw new Exception ("Modele.Plateau.Piste.getFigurine : direction inconnue") ;
+		
+		}
+	
 	}
 
-	public FigurineGauche getFigurineGauche() {
+	public Figurine getFigurineGauche() {
 		return figurineGauche;
 	}
 
-	public void setFigurineGauche(FigurineGauche figurineGauche) {
+	public void setFigurineGauche(Figurine figurineGauche) {
 		this.figurineGauche = figurineGauche ;
 	}
 
-	public FigurineDroite getFigurineDroite() {
+	public Figurine getFigurineDroite() {
 		return figurineDroite;
 	}
 
-	public void setFigurineDroite(FigurineDroite figurineDroite) {
+	public void setFigurineDroite(Figurine figurineDroite) {
 		this.figurineDroite = figurineDroite ;
 	}
 	
@@ -68,6 +85,8 @@ public class Piste extends Rectangle {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	// TO STRING
 
 	@Override
 	public String toString() {
@@ -84,14 +103,16 @@ public class Piste extends Rectangle {
 		return str;
 	}
 	
+	// CLONE
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public Piste clone () {
 		
 		Piste piste = new Piste (
 			
-			new FigurineGauche(this.getFigurineGauche().posX(), this.getFigurineGauche().posY(), this.getFigurineGauche().getPosition()),
-			new FigurineDroite(this.getFigurineDroite().posX(), this.getFigurineDroite().posY(), this.getFigurineDroite().getPosition())
+			new Figurine(this.getFigurineGauche().getDirection(), this.getFigurineGauche().posX(), this.getFigurineGauche().posY(), this.getFigurineGauche().getPosition()),
+			new Figurine(this.getFigurineDroite().getDirection(), this.getFigurineDroite().posX(), this.getFigurineDroite().posY(), this.getFigurineDroite().getPosition())
 			
 			) ;
 		

@@ -28,7 +28,7 @@ public class Case extends Rectangle implements Visitable {
 		this.couleur = couleur;
 	}
 
-	ComposantGraphique copieVers(float x, float y) {
+	protected ComposantGraphique copieVers(float x, float y) {
         return new Case(couleur, x, y);
     }
 

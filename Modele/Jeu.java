@@ -1,15 +1,18 @@
 package Modele;
 
 import Modele.Joueur.*;
-import Modele.Joueur.Humain.HumainDroit;
-import Modele.Joueur.Humain.HumainGauche;
+import Modele.Joueur.Humain.Humain;
 import Modele.Plateau.*;
-import Modele.Plateau.Figurine.*;
 import Modele.Tas.*;
 
 public class Jeu {
 	
 	private final static int VICTOIRE = 5; 
+	
+	// CONSTANTES POSITION JOUEUR/FIGURINE
+	
+	private final static int PositionGauche = Joueur.DROITE ;
+	private final static int PositionDroite = Joueur.GAUCHE ;
 	
 	private Joueur joueur1;
 	private Joueur joueur2;
@@ -19,9 +22,9 @@ public class Jeu {
 
 	public void init() throws Exception {
 		plateauScore = new PlateauScore() ;
-		piste = new Piste(new FigurineGauche(0,0,1), new FigurineDroite(0,0,23)) ;
-		joueur1 = new FabriqueJoueur (1, "Humain", "Kaiba (Joueur 1)", new Main(), piste).nouveauJoueur() ;
-		joueur2 = new FabriqueJoueur (2, "IA", "Moyen", new Main(), piste).nouveauJoueur() ;
+		piste = new Piste(new Figurine(PositionGauche, 0,0,1), new Figurine(PositionDroite, 0,0,23)) ;
+		joueur1 = new FabriqueJoueur (PositionGauche, "Humain", "Kaiba (Joueur 1)", new Main(), piste).nouveauJoueur() ;
+		joueur2 = new FabriqueJoueur (PositionDroite, "IA", "Moyen", new Main(), piste).nouveauJoueur() ;
 		joueur1.setScore(0);
 		joueur2.setScore(0);
 	}
@@ -72,7 +75,7 @@ public class Jeu {
 		
 		Historique histo = null ;
 		
-		if ((joueur1 instanceof HumainGauche && !(joueur2 instanceof HumainDroit)) || (!(joueur1 instanceof HumainGauche) && joueur2 instanceof HumainDroit)) {
+		if ((joueur1 instanceof Humain && !(joueur2 instanceof Humain)) || (!(joueur1 instanceof Humain) && joueur2 instanceof Humain)) {
 			
 			histo = new Historique () ;
 			
@@ -85,7 +88,7 @@ public class Jeu {
 		
 		Historique histo = null ;
 		
-		if ((joueur1 instanceof HumainGauche && !(joueur2 instanceof HumainDroit)) || (!(joueur1 instanceof HumainGauche) && joueur2 instanceof HumainDroit)) {
+		if ((joueur1 instanceof Humain && !(joueur2 instanceof Humain)) || (!(joueur1 instanceof Humain) && joueur2 instanceof Humain)) {
 			
 			histo = new Historique () ;
 			

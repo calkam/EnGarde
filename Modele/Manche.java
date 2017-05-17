@@ -67,7 +67,7 @@ public class Manche {
 		return Math.abs(position1 - position2);
 	}
 	
-	public void reinitialiserPiste(){
+	public void reinitialiserPiste() throws Exception{
 		joueur1.reinitialiserPositionFigurine();
 		joueur2.reinitialiserPositionFigurine();
 	}
@@ -94,7 +94,7 @@ public class Manche {
 		}while(estPasFini(resultat));
 		
 		System.out.println("/*************************************************************************************************************/");
-		tourEnCours.afficherPiste(tourEnCours.getJoueurPremier().getPositionFigurine(), tourEnCours.getJoueurSecond().getPositionFigurine());	
+		tourEnCours.afficherPiste(tourEnCours.getJoueurPremier().getPositionDeMaFigurine(), tourEnCours.getJoueurSecond().getPositionDeMaFigurine());	
 		
 		if(resultat == Tour.joueurPremierPerdu){
 			joueurAGagne(tourEnCours.getJoueurSecond());
@@ -103,7 +103,7 @@ public class Manche {
 		}else if(resultat == Tour.piocheVide){
 			System.out.println("La pioche est vide :");
 			
-			int distanceEntreFigurineJ1EtFigurineJ2 = calculerNormeEntreDeuxPositions(joueur1.getPositionFigurine(), joueur2.getPositionFigurine());
+			int distanceEntreFigurineJ1EtFigurineJ2 = calculerNormeEntreDeuxPositions(joueur1.getPositionDeMaFigurine(), joueur2.getPositionDeMaFigurine());
 			
 			if(distanceEntreFigurineJ1EtFigurineJ2 < Tas.nombreMaxCarte){
 				int nbCartesDistanceJ1 = joueur1.getMain().getNombreCarteGroupe(distanceEntreFigurineJ1EtFigurineJ2);
@@ -117,8 +117,8 @@ public class Manche {
 					joueurAGagne(joueur2);
 				}
 			}else{
-				int distanceEntreCaseMedianeEtFigurineJ1 = calculerNormeEntreDeuxPositions(12, joueur1.getPositionFigurine());
-				int distanceEntreCaseMedianeEtFigurineJ2 = calculerNormeEntreDeuxPositions(12, joueur2.getPositionFigurine());
+				int distanceEntreCaseMedianeEtFigurineJ1 = calculerNormeEntreDeuxPositions(12, joueur1.getPositionDeMaFigurine());
+				int distanceEntreCaseMedianeEtFigurineJ2 = calculerNormeEntreDeuxPositions(12, joueur2.getPositionDeMaFigurine());
 				
 				if(distanceEntreCaseMedianeEtFigurineJ1 > distanceEntreCaseMedianeEtFigurineJ2){
 					System.out.println(joueur2.getNom() + " étant plus proche de la case médiane...");

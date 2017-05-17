@@ -3,7 +3,9 @@ package Modele.Joueur;
 import Modele.Tas.Main;
 import Modele.Plateau.Piste;
 import Modele.Joueur.Humain.*;
-import Modele.Joueur.IA.*;
+import Modele.Joueur.IA.IADifficile;
+import Modele.Joueur.IA.IAFacile;
+import Modele.Joueur.IA.IAMoyen;
 
 public class FabriqueJoueur {
 	
@@ -27,50 +29,15 @@ public class FabriqueJoueur {
 		
 		switch (type) {
 		
-		case "Humain" : 
-			
-			switch (position) {
-			
-			case 1 : return new HumainGauche(nom, main, piste) ;
-			case 2 : return new HumainDroit(nom, main, piste) ;
-			default : throw new Exception("Modele.Joueur.FabriqueJoueur.nouveauJoueur.nouveauJoueurHumain : position du joueur inconnue") ;
-			
-		}
+		case "Humain" : return new Humain(position, nom, main, piste) ;
 		
 		case "IA" :
 			
 			switch (nom) {
 			
-			case "Facile" :
-				
-				switch (position) {
-				
-				case 1 : return new IAFacileGauche("IA1 " + nom, main, piste) ;
-				case 2 : return new IAFacileDroit("IA2 " + nom, main, piste) ;
-				default : throw new Exception("Modele.Joueur.FabriqueJoueur.nouveauJoueur.nouvelleIAFacile : position du joueur inconnue") ;
-				
-				}
-			
-			case "Moyen" :
-			
-				switch (position) {
-			
-				case 1 : return new IAMoyenGauche("IA1 " + nom, main, piste) ;
-				case 2 : return new IAMoyenDroit("IA2 " + nom, main, piste) ;
-				default : throw new Exception("Modele.Joueur.FabriqueJoueur.nouveauJoueur.nouvelleIAMoyen : position du joueur inconnue") ;
-				
-				}
-					
-			case "Difficile" : 
-				
-				switch (position) {
-				
-				case 1 : return new IADifficileGauche("IA1 " + nom, main, piste) ;
-				case 2 : return new IADifficileDroit("IA2 " + nom, main, piste) ;
-				default : throw new Exception("Modele.Joueur.FabriqueJoueur.nouveauJoueur.nouvelleIADifficile : position du joueur inconnue") ;
-				
-				}
-			
+			case "Facile"    : return new IAFacile(position, "IA " + nom, main, piste) ;
+			case "Moyen"     : return new IAMoyen(position, "IA " + nom, main, piste) ;
+			case "Difficile" : return new IADifficile(position, "IA " + nom, main, piste) ;
 			default : throw new Exception("Modele.Joueur.FabriqueJoueur.nouveauJoueur : difficulté inconnue") ;
 			
 			}
