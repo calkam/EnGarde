@@ -98,9 +98,9 @@ public class Main extends Tas {
 	public void setVisible(boolean visible) {
 		this.visible = visible;
 		for(Carte c : main){
-			/*if(!visible){
+			if(!visible){
 				c.setSelectionne(false);
-			}*/
+			}
 			c.setVisible(visible);
 		}
 	}
@@ -140,7 +140,7 @@ public class Main extends Tas {
 				}
 			}
 		}
-		return new Carte();
+		return null;
 	}
 
 	public void repositionnerMain() {

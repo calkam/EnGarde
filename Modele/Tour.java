@@ -161,6 +161,21 @@ public class Tour implements Visitable{
 		}
 	}
 	
+	public boolean adversaireAPerdu(Joueur joueur){
+		ActionsJouables testAction;
+		
+		try {
+			testAction = joueur.peutFaireAction(joueurAdverse(joueur).getMain().getCote(), joueurAdverse(joueur).getCartesDeLaMain(), estAttaque);
+			if(testAction == null || testAction.size() == 0){
+				return true;
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
 	public void changerJoueur(Joueur joueur){		
 		joueur.getMain().setVisible(false);
 		joueurAdverse(joueur).getMain().setVisible(true);

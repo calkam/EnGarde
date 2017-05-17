@@ -4,6 +4,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.ImageCursor;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 
@@ -31,6 +32,9 @@ public class ControleurJeu {
     @FXML
     private Canvas mainDroite;
     
+    @FXML
+    private Label nbCartePioche;
+    
     private ArrayList<Carte> cartes;
     
     private Joueur joueurEnCours = null;
@@ -41,7 +45,7 @@ public class ControleurJeu {
 
 	public void init(Jeu j){
 		this.setJeu(j);
-		
+		nbCartePioche.setText(Integer.toString(jeu.getManche().getPioche().size()));
 		setActionTerrain();
 		setActionMain();
 		cartes = new ArrayList<Carte>();
@@ -66,13 +70,13 @@ public class ControleurJeu {
 		}else{
 			joueurEnCours = jeu.getJoueur2();
 		}
-		carteAction = joueurEnCours.getMain().getCarteClick(x, y);
-    	if(!cartes.contains(carteAction)){
-    		cartes.add(carteAction);
-    	}else{
-    		cartes.remove(carteAction);
-    	}
-    	
+		if((carteAction = joueurEnCours.getMain().getCarteClick(x, y)) != null){
+	    	if(!cartes.contains(carteAction)){
+	    		cartes.add(carteAction);
+	    	}else{
+	    		cartes.remove(carteAction);
+	    	}
+		}
     	return jeu.getManche().getTourEnCours().possibiliteAction(joueurEnCours, cartes);
 	}
 	
@@ -96,6 +100,7 @@ public class ControleurJeu {
 	
 	private void verifierFinDeLaPioche(){
 		int resultat;
+		nbCartePioche.setText(Integer.toString(jeu.getManche().getPioche().size()));
 		if(jeu.getManche().getPioche().estVide()){
 			try {
 				resultat = jeu.getManche().finDeManche(Tour.piocheVide);
@@ -149,8 +154,8 @@ public class ControleurJeu {
             	switch (event.getButton()) {
         	        case PRIMARY:
         	        	boolean peutFaireAction;
-        	        	peutFaireAction = modifierActionPossible(2, event.getX(), event.getY());
-        	        	verifierFinDeManche(jeu.getJoueur2(), peutFaireAction);
+    	        		peutFaireAction = modifierActionPossible(2, event.getX(), event.getY());
+    	        		verifierFinDeManche(jeu.getJoueur2(), peutFaireAction);
         	            break;
         	        default:
         	            break;
@@ -170,6 +175,9 @@ public class ControleurJeu {
         	        		peutFaireAction = jeu.getManche().getTourEnCours().executerAction(joueurEnCours, (float)event.getX(), (float)event.getY());
         	        		if(peutFaireAction){
         	        			cartes = new ArrayList<Carte>();
+        	        		}
+        	        		if(peutFaireAction = jeu.getManche().getTourEnCours().adversaireAPerdu(joueurEnCours)){
+        	        			verifierFinDeManche(jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours), peutFaireAction);
         	        		}
         	        		verifierFinDeLaPioche();
         	        	}
