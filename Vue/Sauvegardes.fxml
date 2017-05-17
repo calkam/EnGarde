@@ -20,17 +20,17 @@
       </TableView>
       <Button layoutY="496.0" mnemonicParsing="false" onMouseClicked="#menu" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefHeight="40.0" prefWidth="275.0" text="Menu Principal" textOverrun="CLIP" AnchorPane.leftAnchor="270.0">
          <font>
-            <Font name="eufm10" size="20.0" />
+            <Font name="MathJax_Caligraphic-Regular" size="18.0" />
          </font>
       </Button>
     <Button disable="true" layoutX="1055.0" layoutY="496.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="275.0" text="Charger" textOverrun="CLIP">
          <font>
-            <Font name="eufm10" size="20.0" />
+            <Font name="MathJax_Caligraphic-Regular" size="18.0" />
          </font>
       </Button>
       <Button disable="true" layoutX="754.0" layoutY="496.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="275.0" text="Supprimer" textOverrun="CLIP">
          <font>
-            <Font name="eufm10" size="20.0" />
+            <Font name="MathJax_Caligraphic-Regular" size="18.0" />
          </font>
       </Button>
    </children>

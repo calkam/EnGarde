@@ -2,6 +2,7 @@
 
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -25,11 +26,11 @@
       </ImageView>
       <Button layoutX="1356.0" layoutY="14.0" mnemonicParsing="false" onAction="#menuPrincipal" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefHeight="40.0" prefWidth="216.0" text="Menu Principal">
          <font>
-            <Font name="eufm10" size="20.0" />
+            <Font name="MathJax_Caligraphic-Regular" size="18.0" />
          </font></Button>
       <Button layoutX="1151.0" layoutY="14.0" mnemonicParsing="false" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefHeight="37.0" prefWidth="151.0" text="Sauvegarder">
          <font>
-            <Font name="eufm10" size="20.0" />
+            <Font name="MathJax_Caligraphic-Regular" size="18.0" />
          </font></Button>
       <Canvas fx:id="terrain" height="334.0" layoutX="29.0" layoutY="253.0" width="1548.0" />
       <Canvas fx:id="pioche" height="170.0" layoutX="525.0" layoutY="90.0" width="275.0" />
@@ -40,13 +41,18 @@
       <Canvas fx:id="scoreGauche" height="252.0" layoutX="29.0" layoutY="610.0" width="123.0" />
       <Button layoutX="725.0" layoutY="705.0" mnemonicParsing="false" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefHeight="40.0" prefWidth="151.0" styleClass="finDeTour" text="Annuler Coup">
          <font>
-            <Font name="eufm10" size="20.0" />
+            <Font name="MathJax_Caligraphic-Regular" size="18.0" />
          </font>
       </Button>
       <Button layoutX="724.0" layoutY="783.0" mnemonicParsing="false" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefHeight="64.0" prefWidth="151.0" styleClass="finDeTour" text="Fin de Tour">
          <font>
-            <Font name="eufm10" size="20.0" />
+            <Font name="MathJax_Caligraphic-Regular" size="18.0" />
          </font>
       </Button>
+      <Label fx:id="nbCartePioche" alignment="CENTER" layoutX="429.0" layoutY="111.0" prefHeight="64.0" prefWidth="96.0" text="12" textAlignment="RIGHT">
+         <font>
+            <Font name="eufm10" size="57.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

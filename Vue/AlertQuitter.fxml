@@ -9,17 +9,17 @@
    <children>
       <Text fill="#f8f8f8" layoutX="14.0" layoutY="52.0" smooth="false" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.5" text="Etes vous sur de vouloir quitter ?" wrappingWidth="367.64208984375">
          <font>
-            <Font name="eufm10" size="26.0" />
+            <Font name="MathJax_Caligraphic-Regular" size="20.0" />
          </font>
       </Text>
       <Button layoutX="14.0" layoutY="88.0" mnemonicParsing="false" onAction="#handleAnnuler" prefHeight="40.0" prefWidth="175.0" text="Annuler">
          <font>
-            <Font name="eufm10" size="20.0" />
+            <Font name="MathJax_Caligraphic-Regular" size="18.0" />
          </font>
       </Button>
       <Button layoutX="211.0" layoutY="88.0" mnemonicParsing="false" onAction="#handleQuitter" prefHeight="40.0" prefWidth="175.0" text="Quitter">
          <font>
-            <Font name="eufm10" size="20.0" />
+            <Font name="MathJax_Caligraphic-Regular" size="18.0" />
          </font></Button>
    </children>
 </AnchorPane>
