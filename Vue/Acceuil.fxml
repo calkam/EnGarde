@@ -52,7 +52,7 @@
                   </Button>
                   <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleSauvegarde" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefWidth="340.0" stylesheets="@Theme.css" text="Charger/Sauvegarder Partie" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
                      <font>
-                        <Font name="MathJax_Caligraphic-Regular" size="18.0" />
+                        <Font name="MathJax_Caligraphic-Regular" size="17.0" />
                      </font>
                   </Button>
                   <Button alignment="CENTER" focusTraversable="false" mnemonicParsing="false" onAction="#handleQuitter" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefWidth="340.0" stylesheets="@Theme.css" text="Quitter" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
