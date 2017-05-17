@@ -40,18 +40,11 @@ public class DessinateurCanvasJavaFx extends Visiteur {
 		this.scoreGauche = scoreGauche;
 		this.mainGauche = mainGauche;
 		
-		gcTerrain = terrain.getGraphicsContext2D();
-		gcPioche = pioche.getGraphicsContext2D();
-		gcMainDroite = mainDroite.getGraphicsContext2D();
-		gcMainGauche = mainGauche.getGraphicsContext2D();
-    	gcScoreDroit = scoreDroit.getGraphicsContext2D();
-    	gcScoreGauche = scoreGauche.getGraphicsContext2D();
-    	gcDefausse = defausse.getGraphicsContext2D();
 	}
     
     public boolean visite(Piste p){
+    	gcTerrain = terrain.getGraphicsContext2D();
     	piste = p;
-    	p.fixeDimensions((float)terrain.getWidth(), (float)terrain.getHeight());
     	gcTerrain.clearRect(0, 0, terrain.getWidth(), terrain.getHeight());
     	dessinerTerrain(gcTerrain);
 		return false;
@@ -86,8 +79,10 @@ public class DessinateurCanvasJavaFx extends Visiteur {
     	}
 
     	if(m.getCote() == Main.droite){
+    		gcMainDroite = mainDroite.getGraphicsContext2D();
     		gc = gcMainDroite; 
     	}else{
+    		gcMainGauche = mainGauche.getGraphicsContext2D();
         	gc = gcMainGauche;
     	}
     	m.fixeDimensions((float)mainDroite.getWidth(), (float)mainDroite.getHeight());
@@ -96,13 +91,14 @@ public class DessinateurCanvasJavaFx extends Visiteur {
     }
     
     public boolean visite(Pioche p){
-    	
+    	gcPioche = pioche.getGraphicsContext2D();
     	p.fixeDimensions((float)pioche.getWidth(), (float)pioche.getHeight());
     	dessinerPioche(gcPioche, p);
     	return false;
     }
     
     public boolean visite(Defausse d){
+    	gcDefausse = defausse.getGraphicsContext2D();
     	d.fixeDimensions((float)defausse.getWidth(), (float)defausse.getHeight());
     	dessinerDefausse(gcDefausse, d);
     	return false;
@@ -148,8 +144,10 @@ public class DessinateurCanvasJavaFx extends Visiteur {
     public boolean visite(PlateauScore ps){
     	GraphicsContext gc;
     	if(ps.getCote() == PlateauScore.droite){
+    		gcScoreDroit = scoreDroit.getGraphicsContext2D();
     		gc = gcScoreDroit;
     	}else{
+    		gcScoreGauche = scoreGauche.getGraphicsContext2D();
     		gc = gcScoreGauche;
     	}
     	dessinerPlateauScore(gc, ps.getX(), ps.getY(), ps.getLargeur(), ps.getHauteur(), ps.getCote());
