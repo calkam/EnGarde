@@ -19,9 +19,9 @@ public class JoueurDroit extends Joueur {
 
 	private boolean avancer_dans_piste (int distance) {
 		
-		int position_arrivee = piste.getFigurineDroite().getPosition() ;
+		int position_arrivee = piste.getFigurineDroite().getPosition() - distance;
 		
-		return position_arrivee >= piste.getFigurineDroite().getPosition() ;		
+		return position_arrivee >= piste.getFigurineGauche().getPosition() ;		
 	}
 	
 	@Override
