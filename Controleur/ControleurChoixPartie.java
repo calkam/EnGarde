@@ -58,14 +58,16 @@ public class ControleurChoixPartie {
     private TextField NomCombattant2;
     
     @FXML
+    private Text nomJ1;
+    
+    @FXML
 	private void initialize(){
     	Label modej1 = new Label();
         Label modej2 = new Label();
         Label niveauj1 = new Label();
         Label niveauj2 = new Label();
-
-    	
-		ChoixCombattant1.setValue("Joueur");
+	
+		ChoixCombattant1.setValue("Joueur1");
     	ChoixCombattant1.setItems(ChoixCombattantList);
     	ChoixCombattant2.setValue("IA");
     	ChoixCombattant2.setItems(ChoixCombattantList);
@@ -112,8 +114,7 @@ public class ControleurChoixPartie {
 		NiveauCombattant2.getSelectionModel().selectedItemProperty().addListener(
 				(ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
 					niveauj2.setText((String)newValue);
-				});
-		
+				});		
 	}
     
     public ControleurChoixPartie(){
@@ -125,7 +126,7 @@ public class ControleurChoixPartie {
 	
 	@FXML
     private void lancerPartie(){
-		mainApp.jeu();
+		mainApp.jeu(NomCombattant1.getText(), NomCombattant2.getText());
     }
 	
 	@FXML

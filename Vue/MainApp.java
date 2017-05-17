@@ -148,7 +148,7 @@ public class MainApp extends Application {
         }
 	}
    	
-   	public void jeu() {
+   	public void jeu(String j1, String j2) {
    		try {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
@@ -181,7 +181,7 @@ public class MainApp extends Application {
             terrain.toFront();
             
             try {
-				jeu.init();
+				jeu.init(j1, j2);
 				jeu.lancerJeu();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
