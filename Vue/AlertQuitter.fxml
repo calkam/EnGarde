@@ -5,7 +5,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane cache="true" cacheHint="QUALITY" focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="155.0" prefWidth="400.0" styleClass="fondQuitter" stylesheets="@Theme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Modele.ControleurAlertQuitter">
+<AnchorPane cache="true" cacheHint="QUALITY" focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="155.0" prefWidth="400.0" styleClass="fondQuitter" stylesheets="@Theme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controleur.ControleurAlertQuitter">
    <children>
       <Text fill="#f8f8f8" layoutX="14.0" layoutY="52.0" smooth="false" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.5" text="Etes vous sur de vouloir quitter ?" wrappingWidth="367.64208984375">
          <font>

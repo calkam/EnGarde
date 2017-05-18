@@ -14,6 +14,8 @@ import Modele.Jeu;
 import Modele.Manche;
 import Modele.Tour;
 import Modele.Joueur.Joueur;
+import Modele.Joueur.Humain.HumainDroit;
+import Modele.Joueur.Humain.HumainGauche;
 import Modele.Tas.Carte;
 import Vue.MainApp;
 
@@ -202,7 +204,9 @@ public class ControleurJeu {
 	
 	@FXML
 	private void nouvellePartie(){
-		mainApp.jeu(jeu.getJoueur1().getNom(), jeu.getJoueur2().getNom());
+		String type1 = jeu.getJoueur1() instanceof HumainGauche || jeu.getJoueur1() instanceof HumainDroit ? "Humain" : "IA" ;
+		String type2 = jeu.getJoueur2() instanceof HumainGauche || jeu.getJoueur2() instanceof HumainDroit ? "Humain" : "IA" ;
+		mainApp.jeu(jeu.getJoueur1().getNom(), jeu.getJoueur2().getNom(), type1, type2);
 	}
 	
 	public Jeu getJeu() {
