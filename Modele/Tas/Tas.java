@@ -1,6 +1,5 @@
 package Modele.Tas;
 
-import Modele.Visitable;
 import Modele.Composant.Rectangle;
 
 public abstract class Tas extends Rectangle implements Visitable {
