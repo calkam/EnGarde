@@ -1,7 +1,5 @@
 package Modele;
 
-import Controleur.ControleurChoixPartie;
-
 import Modele.Joueur.*;
 import Modele.Plateau.*;
 import Modele.Plateau.Figurine.*;
@@ -9,7 +7,7 @@ import Modele.Tas.*;
 
 public class Jeu implements Visitable{
 	
-	public final static int VICTOIRE = 3; 
+	public final static int VICTOIRE = 1; 
 	
 	private Joueur joueur1;
 	private Joueur joueur2;
@@ -73,7 +71,10 @@ public class Jeu implements Visitable{
 	}
 	
 	public void affichageVictoire(String nomJoueurVictorieux, String nomJoueurPerdant){
-		System.out.println(nomJoueurVictorieux + " a triomphé de son adversaire !");
+		
+		piste.setMessageInMessageBox(nomJoueurVictorieux + " a triomphé de son adversaire ! Gloire à " + nomJoueurVictorieux +"! "+ nomJoueurPerdant + " est une victime");
+		
+		//System.out.println(nomJoueurVictorieux + " a triomphé de son adversaire !");
 		System.out.println("Gloire à " + nomJoueurVictorieux);
 		System.out.println(nomJoueurPerdant + " est une victime");
 	}
@@ -83,11 +84,11 @@ public class Jeu implements Visitable{
 	 */
 	
 	public void initialiserPremiereManche(){
-		manche = new Manche(0, joueur1, joueur2);
+		manche = new Manche(0, joueur1, joueur2, piste.getMessageBox());
 	}
 	
 	public void nouvelleManche(){
-		manche = new Manche(manche.getNumero()+1, joueur1, joueur2);
+		manche = new Manche(manche.getNumero()+1, joueur1, joueur2, piste.getMessageBox());
 	}
 	
 	public void lancerLaManche() throws Exception{
@@ -98,7 +99,6 @@ public class Jeu implements Visitable{
 	public void changerScore(Joueur joueur) {
 		// TODO Auto-generated method stub
 		joueur.setNbPoints(joueur.getNbPoints()+1);
-		System.out.println(joueur);
 		if(joueur.equals(joueur1)){
 			plateauScoreJ2.getJetonsNumero(VICTOIRE-joueur.getNbPoints()).setVisible(false);
 		}else{

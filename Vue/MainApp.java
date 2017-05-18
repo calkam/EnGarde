@@ -26,6 +26,8 @@ public class MainApp extends Application {
 	static Jeu jeu;
 	static Properties prop;
 	
+	private RafraichissementJavaFX r;
+	
     private Stage primaryStage;
     private Stage dialogStage;
     private BorderPane rootLayout;
@@ -193,7 +195,11 @@ public class MainApp extends Application {
             controller.setMainApp(this);        
             controller.init(jeu);
             
-            RafraichissementJavaFX r = new RafraichissementJavaFX(jeu, terrain, pioche, defausse, scoreDroit, mainDroite, scoreGauche, mainGauche);
+            if(r != null){
+            	r.stop();
+            }
+            
+            r = new RafraichissementJavaFX(jeu, terrain, pioche, defausse, scoreDroit, mainDroite, scoreGauche, mainGauche);
     		r.start();
             
             Image imageC = new Image("/Ressources/SourisEpee.png");

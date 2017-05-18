@@ -19,8 +19,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 public class DessinateurCanvasJavaFx extends Visiteur {
-
-	private Piste piste;
+	
+	public static boolean visibilityActivated = false;
 	
     private Canvas terrain;
     private Canvas pioche;
@@ -29,8 +29,6 @@ public class DessinateurCanvasJavaFx extends Visiteur {
     private Canvas mainDroite;
     private Canvas scoreGauche;
     private Canvas mainGauche;
-    
-    public static boolean visibilityActivated = true;
     
     public GraphicsContext gcTerrain, gcPioche, gcDefausse, gcScoreDroit, gcMainDroite, gcScoreGauche, gcMainGauche;
 	
@@ -48,7 +46,6 @@ public class DessinateurCanvasJavaFx extends Visiteur {
     
     public boolean visite(Piste p){
     	gcTerrain = terrain.getGraphicsContext2D();
-    	piste = p;
     	gcTerrain.clearRect(0, 0, terrain.getWidth(), terrain.getHeight());
     	dessinerTerrain(gcTerrain);
 		return false;
@@ -260,13 +257,11 @@ public class DessinateurCanvasJavaFx extends Visiteur {
     	gc.drawImage(i, x, y, l, h);
     }
     
-    //3 -> 15, 50 -> 25, 25 -> 6
-    
     private void ecrireTexte(GraphicsContext gc, float x, float y, String s, int length){
     	float policeSize = (float) 22.5;
     	float recule = (float) (length*(policeSize/4.10));
     	Font f = new Font("Courier", policeSize);
-
+    	Font f2 = new Font();
     	gc.setFill(Color.BROWN);
 		gc.fillRect(x-recule, 32, recule*2+7 , 30);
     	gc.setFill(Color.WHITE);
