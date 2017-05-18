@@ -1,24 +1,34 @@
 package Modele;
 
+import Controleur.ControleurChoixPartie;
+
 import Modele.Joueur.*;
 import Modele.Plateau.*;
 import Modele.Tas.*;
 
-public class Jeu {
+public class Jeu implements Visitable{
 	
+<<<<<<< HEAD
 	private final static int VICTOIRE = 3; 
 	
 	// CONSTANTES POSITION JOUEUR/FIGURINE
 	
 	private final static int PositionGauche = Joueur.DROITE ;
 	private final static int PositionDroite = Joueur.GAUCHE ;
+=======
+	public final static int VICTOIRE = 3; 
+>>>>>>> 7ebb790a0de02c0ff1c5d06bfe4ad5d4bbc5c34a
 	
 	private Joueur joueur1;
 	private Joueur joueur2;
 	private Piste piste;
-	private PlateauScore plateauScore;
+	private PlateauScore plateauScoreJ1;
+	private PlateauScore plateauScoreJ2;
 	private Manche manche;
+	
+	private long dernierChrono;
 
+<<<<<<< HEAD
 	public void init() throws Exception {
 		plateauScore = new PlateauScore() ;
 		piste = new Piste(new Figurine(PositionGauche, 0,0,1), new Figurine(PositionDroite, 0,0,23)) ;
@@ -26,17 +36,25 @@ public class Jeu {
 		joueur2 = new FabriqueJoueur (PositionDroite, "IA", "Moyen", new Main(), piste).nouveauJoueur() ;
 		joueur1.setScore(0);
 		joueur2.setScore(0);
+=======
+	public void init(String j1, String j2, String type1, String type2) throws Exception {
+		Score scoreJ1 = new Score();
+		Score scoreJ2 = new Score();
+		plateauScoreJ1 = new PlateauScore(scoreJ2, PlateauScore.gauche) ;
+		plateauScoreJ2 = new PlateauScore(scoreJ1, PlateauScore.droite) ;
+		piste = new Piste(new FigurineGauche(1), new FigurineDroite(23)) ;
+		joueur1 = new FabriqueJoueur (1, type1, j1, new Main(), piste).nouveauJoueur() ;
+		joueur2 = new FabriqueJoueur (2, type2, j2, new Main(), piste).nouveauJoueur() ;
+		joueur1.setScore(scoreJ1);
+		joueur2.setScore(scoreJ2);
+		this.dernierChrono = System.nanoTime();
+>>>>>>> 7ebb790a0de02c0ff1c5d06bfe4ad5d4bbc5c34a
 	}
 	
 	public void lancerJeu(){
 		try {
 			initialiserPremiereManche();
 			lancerLaManche();
-			while(!gainPartie()){
-				System.out.println("\n/*************************************************************************************************************/");
-				nouvelleManche();
-				lancerLaManche();
-			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -47,16 +65,28 @@ public class Jeu {
 	}
 	
 	/**
+	 * RAFFRAICHISSEMENT
+	 */
+	
+	public boolean rafraichit(long nouveau) {
+        final long temps = nouveau - dernierChrono;
+        dernierChrono = nouveau;
+        
+        piste.rafraichit(temps);
+        return false;
+    }
+	
+	/**
 	 * FIN DE PARTIE
 	 */	
 	public boolean gainPartie(){
 		boolean gagne = false;
 		
-		if(joueur1.getScore() == VICTOIRE){
+		if(joueur1.getNbPoints() == VICTOIRE){
 			gagne = true;
 			affichageVictoire(joueur1.getNom(), joueur2.getNom());
 		}
-		if(joueur2.getScore() == VICTOIRE){			
+		if(joueur2.getNbPoints() == VICTOIRE){			
 			gagne = true;
 			affichageVictoire(joueur2.getNom(), joueur1.getNom());
 		}
@@ -88,6 +118,7 @@ public class Jeu {
 	}
 	
 	public void nouvelleManche(){
+<<<<<<< HEAD
 		
 		Historique histo = null ;
 		
@@ -100,13 +131,45 @@ public class Jeu {
 		joueur1.viderMain();
 		joueur2.viderMain();
 		manche = new Manche(manche.getNumero()+1, joueur1, joueur2, piste, histo);
+=======
+		manche = new Manche(manche.getNumero()+1, joueur1, joueur2);
+>>>>>>> 7ebb790a0de02c0ff1c5d06bfe4ad5d4bbc5c34a
 	}
 	
 	public void lancerLaManche() throws Exception{
-		manche.jouerManche();
 		manche.reinitialiserPiste();
+		manche.commencerManche();
 	}
 
+	public void changerScore(Joueur joueur) {
+		// TODO Auto-generated method stub
+		joueur.setNbPoints(joueur.getNbPoints()+1);
+		System.out.println(joueur);
+		if(joueur.equals(joueur1)){
+			plateauScoreJ2.getJetonsNumero(VICTOIRE-joueur.getNbPoints()).setVisible(false);
+		}else{
+			plateauScoreJ1.getJetonsNumero(VICTOIRE-joueur.getNbPoints()).setVisible(false);
+		}
+	}
+	
+	/**
+	 * 
+	 * VISITABLE
+	 */
+	
+	@Override
+	public boolean accept(Visiteur d) {
+	   if(piste != null){
+            piste.accept(d);
+            manche.accept(d);
+            plateauScoreJ1.accept(d);
+            plateauScoreJ2.accept(d);
+            return false;
+        }else{
+            return true;
+        }
+	}
+	
 	/**
 	 * GETTER / SETTER / TOSTRING
 	 */
@@ -134,12 +197,20 @@ public class Jeu {
 		this.piste = piste;
 	}
 
-	public PlateauScore getPlateauScore() {
-		return plateauScore;
+	public PlateauScore getPlateauScoreJ1() {
+		return plateauScoreJ1;
 	}
 
-	public void setPlateauScore(PlateauScore plateauScore) {
-		this.plateauScore = plateauScore;
+	public void setPlateauScoreJ1(PlateauScore plateauScore) {
+		this.plateauScoreJ2 = plateauScore;
+	}
+	
+	public PlateauScore getPlateauScoreJ2() {
+		return plateauScoreJ2;
+	}
+
+	public void setPlateauScoreJ2(PlateauScore plateauScore) {
+		this.plateauScoreJ2 = plateauScore;
 	}
 
 	public Manche getManche() {
@@ -149,10 +220,11 @@ public class Jeu {
 	public void setManche(Manche manche) {
 		this.manche = manche;
 	}
-
+	
 	@Override
 	public String toString() {
-		String str = "Jeu";
+		String str = "Jeu" + joueur1;
 		return str;
 	}
+
 }

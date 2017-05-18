@@ -1,15 +1,24 @@
 package Modele;
 
+<<<<<<< HEAD
+=======
+import java.util.ArrayList;
+import java.util.Enumeration;
+>>>>>>> 7ebb790a0de02c0ff1c5d06bfe4ad5d4bbc5c34a
 import Modele.Joueur.Action;
 import Modele.Joueur.ActionsJouables;
 import Modele.Joueur.Humain;
 import Modele.Joueur.Joueur;
+<<<<<<< HEAD
 import Modele.Plateau.Piste;
+=======
+import Modele.Plateau.Case;
+>>>>>>> 7ebb790a0de02c0ff1c5d06bfe4ad5d4bbc5c34a
 import Modele.Tas.Carte;
 import Modele.Tas.Defausse;
 import Modele.Tas.Pioche;
 
-public class Tour{
+public class Tour implements Visitable{
 	
 	private final static boolean joueurPerdu = false;
 	private final static boolean joueurPasPerdu = true;
@@ -32,18 +41,24 @@ public class Tour{
 	// Type de l'attaque, nombre de cartes attaque, valeur de la carte attaque
 	private Triplet<Integer, Integer, Integer> estAttaque;
 	
+<<<<<<< HEAD
 	public Tour(Piste piste, Historique histo){
 		
 		this.piste = piste ;
 		this.histo = histo ;
 		this.estAttaque = new Triplet<>(PasAttaque, 0, 0);
+=======
+	private ActionsJouables actions_jouables;
+	
+	public Tour(){
+		this.estAttaque = new Triplet<>(pasAttaque, 0, 0);
+>>>>>>> 7ebb790a0de02c0ff1c5d06bfe4ad5d4bbc5c34a
 	}
 	
 	public Tour(Joueur m_joueurPremier, Joueur m_joueurSecond){
-		this.joueurPremier = m_joueurPremier;
-		this.joueurSecond = m_joueurSecond;
 		this.pioche = new Pioche();
 		this.defausse = new Defausse();
+<<<<<<< HEAD
 		this.estAttaque = new Triplet<>(PasAttaque, 0, 0);
 	}
 	
@@ -60,18 +75,87 @@ public class Tour{
 				if(pioche.estVide()){
 					if(estAttaque.getC1() == PasAttaque){
 						return piocheVide;
-					}
-				}
-				
-				return aucunJoueurPerdu;
-			}else{
-				return joueurSecondPerdu;
-			}
+=======
+		this.joueurPremier = m_joueurPremier;
+		this.joueurSecond = m_joueurSecond;
+		this.estAttaque = new Triplet<>(pasAttaque, 0, 0);
+	}
+	
+	@Override
+	public boolean accept(Visiteur v) {
+		// TODO Auto-generated method stub
+		boolean retour = false;
+		retour = retour || pioche.accept(v);
+		retour = retour || defausse.accept(v);
+		retour = retour || joueurPremier.accept(v);
+		retour = retour || joueurSecond.accept(v);
+		return retour;
+	}
+	
+	public boolean actionNeutre(Action action){
+		return action.getTypeAction() == Joueur.Reculer || action.getTypeAction() == Joueur.Avancer; 
+	}
+	
+	public boolean actionOffensive(Action action){
+		return action.getTypeAction() == Joueur.AttaqueDirecte || action.getTypeAction() == Joueur.AttaqueIndirecte; 
+	}
+	
+	public Joueur joueurAdverse(Joueur joueur){
+		if(joueur.equals(joueurPremier)){
+			return joueurSecond;
 		}else{
-			return joueurPremierPerdu;
+			return joueurPremier;
 		}
 	}
 	
+	public void jouerTour() throws Exception{
+		commencerTour(joueurPremier);
+	}
+	
+	public void commencerTour(Joueur joueur){
+		joueur.getMain().setVisible(true);
+	}
+	
+	public boolean possibiliteAction(Joueur joueur, ArrayList<Carte> cartes){
+		try {
+			Action action;
+			Enumeration<Action> e;
+			
+			actions_jouables = joueur.peutFaireActionAvecCarteSelectionne(joueur.getMain().getCote(), cartes, estAttaque);
+			
+			if(joueur.peutFaireAction(estAttaque).size() != 0){
+				e = actions_jouables.elements();
+				
+				joueur.getPiste().reinitialiserCouleurCase();
+				
+				while(e.hasMoreElements()){
+					action = e.nextElement();
+					System.out.println(action);
+					if(actionNeutre(action)){
+						joueur.getPiste().getCases().get(action.getPositionArrivee()-1).setCouleur(Case.ROUGE);
+					}else if(actionOffensive(action)){
+						joueur.getPiste().getCases().get(joueurAdverse(joueur).getPositionFigurine()-1).setCouleur(Case.VERT);
+					}else{
+						if(action.getTypeAction() == Joueur.Parade){
+							joueur.getPiste().getCases().get(joueur.getPositionFigurine()-1).setCouleur(Case.JAUNE);
+						}else if(action.getTypeAction() == Joueur.Fuite){
+							joueur.getPiste().getCases().get(action.getPositionArrivee()-1).setCouleur(Case.JAUNE);
+						}
+>>>>>>> 7ebb790a0de02c0ff1c5d06bfe4ad5d4bbc5c34a
+					}
+				}
+				System.out.println("");
+				return joueurPasPerdu;
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return joueurPerdu;
+	}
+	
+<<<<<<< HEAD
 	private Triplet <Boolean, Action, ActionsJouables> jouerActionJoueur (Joueur joueur, Triplet <Boolean, Action, ActionsJouables> config) throws Exception {
 		
 		System.out.println("Joueur : " + joueur.getNom() + ", position : " + joueur.getPositionDeMaFigurine());
@@ -128,6 +212,69 @@ public class Tour{
 		}
 		return new Triplet <> (PasAttaque,0,0) ;
 		
+=======
+	public boolean executerAction(Joueur joueur, float x, float y){
+		Action action = null;
+		Enumeration<Action> e;
+		Case caseClicked;
+		boolean trouve = false;
+		
+		caseClicked = joueur.getPiste().getCaseClicked(x, y);
+		
+		if(actions_jouables != null && actions_jouables.size() != 0){
+			e = actions_jouables.elements();
+			
+			while(e.hasMoreElements() && !trouve){
+				action = e.nextElement();
+				if(caseClicked.getNumero() == action.getPositionArrivee() || (actionOffensive(action) && 
+				   caseClicked.getNumero() == joueurAdverse(joueur).getPositionFigurine())){
+					trouve = true;
+				}
+			}
+			
+			if(trouve){
+				try {
+					estAttaque = jouerAction(action, joueur);
+					if(action.getTypeAction() != Joueur.Parade){
+						remplirMain(joueur);
+						changerJoueur(joueur);
+					}
+					
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			
+				joueur.getPiste().reinitialiserCouleurCase();
+				actions_jouables = null;
+				return joueurPasPerdu;
+			}else{
+				return joueurPasPerdu;
+			}
+		}else{
+			return joueurPerdu;
+		}
+	}
+	
+	public boolean adversairePeutFaireAction(Joueur joueur){
+		ActionsJouables testAction;
+		
+		try {
+			testAction = joueur.peutFaireAction(estAttaque);
+			if(testAction == null || testAction.size() == 0){
+				return false;
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return true;
+	}
+	
+	public void changerJoueur(Joueur joueur){		
+		joueur.getMain().setVisible(false);
+		joueurAdverse(joueur).getMain().setVisible(true);
+>>>>>>> 7ebb790a0de02c0ff1c5d06bfe4ad5d4bbc5c34a
 	}
 	
 	private Triplet<Integer, Integer, Integer> attaquer_directement_parer (Action actionAJouer, Joueur joueur) throws Exception {
@@ -138,7 +285,17 @@ public class Tour{
 		
 	}
 	
+<<<<<<< HEAD
 	private Triplet<Integer, Integer, Integer> executerAction(Action actionAJouer, Joueur joueur) throws Exception{
+=======
+	private Triplet<Integer, Integer, Integer> jouerAction(Action actionAJouer, Joueur joueur) throws Exception{
+		Carte carteDeplacement=null;
+		Carte carteAction=null;
+		
+		int typeAction;
+		int nbCartesAttqJouees;
+		int valeurCarteAttqJouee;
+>>>>>>> 7ebb790a0de02c0ff1c5d06bfe4ad5d4bbc5c34a
 		
 		Triplet<Integer, Integer, Integer> config ;
 		
@@ -155,6 +312,7 @@ public class Tour{
 		default : throw new Exception("Modele.Tour.executerAction : typeAction inconnu") ;
 		}
 		
+<<<<<<< HEAD
 		return config ;
 		
 	}
@@ -170,6 +328,24 @@ public class Tour{
 		
 		return tour ;
 		
+=======
+		return new Triplet<>(typeAction, nbCartesAttqJouees, valeurCarteAttqJouee);
+	}
+	
+	public void remplirMain(Joueur j){		
+		int nbCarteMain = j.getMain().getNombreCarte();
+		
+		int i=nbCarteMain;
+		
+		while(!pioche.estVide() && i < nombreCarteMax){
+			Carte c = pioche.piocher();
+			c.setVisible(true);
+			j.ajouterCarteDansMain(c);
+			i++;
+		}
+		
+		j.getMain().repositionnerMain();
+>>>>>>> 7ebb790a0de02c0ff1c5d06bfe4ad5d4bbc5c34a
 	}
 	
 	/**

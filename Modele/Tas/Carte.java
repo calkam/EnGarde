@@ -1,6 +1,16 @@
 package Modele.Tas;
 
-public class Carte {
+import Modele.Reglages;
+import Modele.Visitable;
+import Modele.Visiteur;
+import Modele.Composant.Rectangle;
+
+public class Carte extends Rectangle implements Visitable {
+	
+	public final static int mainDroite = 0;
+	public final static int mainGauche = 1;
+	public final static int pioche = 2;
+	public final static int defausse = 3;
 	
 	public final static int UN = 1;
 	public final static int DEUX = 2;
@@ -10,22 +20,71 @@ public class Carte {
 	
 	private int id;
 	private int contenu;
+	private int tas;
+	private boolean selectionne;
+	private boolean visible;
 	
-	Carte(int id, int contenu){
+	Carte(int id, int contenu, int tas, float x, float y, float largeur, float hauteur, boolean select){
+		super(x, y, Reglages.lis("CarteLargeur"), Reglages.lis("CarteHauteur"));
 		this.id = id;
+		this.tas = tas;
 		this.contenu = contenu ;
+		this.selectionne = select;
+		this.visible = false;
 	}
 	
-	public Carte(int contenu){
+	Carte(int id, int contenu, float x, float y, float largeur, float hauteur){
+		this(id, contenu, Carte.pioche, x, y, Reglages.lis("CarteLargeur"), Reglages.lis("CarteHauteur"), false);
+	}
+	
+	Carte(int id, int contenu){
+		this(id, contenu, 0, 0, Reglages.lis("CarteLargeur"), Reglages.lis("CarteHauteur"));
+	}
+	
+	Carte(int contenu){
 		this(0, contenu);
 	}
 	
+	Carte(){
+		super(0, 0, 0, 0);
+	}
+
 	public int getID() {
 		return id;
 	}
 	
 	public int getContenu() {
 		return contenu;
+	}
+	
+	public int getTas() {
+		return tas;
+	}
+
+	public void setTas(int tas) {
+		this.tas = tas;
+	}	
+	
+	public boolean isSelectionne() {
+		return selectionne;
+	}
+
+	public void setSelectionne(boolean selectionne) {
+		this.selectionne = selectionne;
+	}
+
+	public boolean isVisible() {
+		return visible;
+	}
+
+	public void setVisible(boolean visible) {
+		this.visible = visible;
+	}
+
+	@Override
+	public boolean accept(Visiteur v) {
+		// TODO Auto-generated method stub
+		return v.visite(this);
 	}
 	
 	@Override
@@ -65,5 +124,5 @@ public class Carte {
 		}
 		return str;
 	}
-	
+
 }

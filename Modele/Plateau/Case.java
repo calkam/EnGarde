@@ -1,23 +1,33 @@
 package Modele.Plateau;
 
-import Modele.Composant.ComposantGraphique;
+import Modele.Reglages;
+import Modele.Visitable;
+import Modele.Visiteur;
 import Modele.Composant.Rectangle;
-import Modele.Composant.Visitable;
-import Modele.Composant.Visiteur;
 
 public class Case extends Rectangle implements Visitable {
 
+	public final static int TRANSPARENT = 0;
+	public final static int ROUGE = 1;
+	public final static int VERT = 2; 
+	public final static int JAUNE = 3; 
+	
     private int couleur;
-    final static float largeur = 30;
-    final static float hauteur = 30;
+    private int numero;
 
-    private void initialise(int c) {
-        couleur = c;
+    Case(int c, int numero, float x, float y) {
+    	super(x, y, Reglages.lis("CaseLargeur"), Reglages.lis("CaseHauteur"));
+        initialise(c, numero);
     }
-
+    
     Case(int c, float x, float y) {
-    	super(x, y, largeur, hauteur);
-        initialise(c);
+    	super(x, y, Reglages.lis("CaseLargeur"), Reglages.lis("CaseHauteur"));
+        initialise(c, -1);
+    }
+    
+    private void initialise(int c, int numero) {
+        this.couleur = c;
+        this.numero = numero;
     }
 
     public int getCouleur() {
@@ -28,13 +38,23 @@ public class Case extends Rectangle implements Visitable {
 		this.couleur = couleur;
 	}
 
+<<<<<<< HEAD
 	protected ComposantGraphique copieVers(float x, float y) {
         return new Case(couleur, x, y);
     }
+=======
+	public int getNumero() {
+		return numero;
+	}
+>>>>>>> 7ebb790a0de02c0ff1c5d06bfe4ad5d4bbc5c34a
 
-    @Override
+	public void setNumero(int numero) {
+		this.numero = numero;
+	}
+
+	@Override
     public String toString() {
-        return "[" + posX() + ", " + posY() + "]," + " couleur " + couleur + "";
+        return "[" + getX() + ", " + getY() + "]," + " [couleur " + couleur + ", numero " + numero + "]";
     }
 
 	@Override

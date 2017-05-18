@@ -1,89 +1,65 @@
 package Modele.Plateau;
 
 import java.util.ArrayList;
+
+import Modele.Reglages;
+import Modele.Visitable;
+import Modele.Visiteur;
 import Modele.Composant.ObjetMouvant;
 import Modele.Composant.Rectangle;
-import Modele.Composant.Visiteur;
-import Modele.Joueur.Joueur;
 
-public class Piste extends Rectangle {
+public class Piste extends Rectangle implements Visitable {
+	
+	// CONSTANTES
+
+	private final static int nombreDeCases = 23;
+	private final float LargeurCase ;
 	
 	// ATTRIBUTS
-
+	
 	private Figurine figurineGauche;
 	private Figurine figurineDroite;
 	private ArrayList<Case> cases;
+	private MessageBox messageBox;
+    private long tempsEcoule;
 	
+
 	// CONSTRUCTEUR
-	
+
 	public Piste(Figurine figurineGauche, Figurine figurineDroite) {
-		super(0, 0, 800, 600);
+		
+		super(0, 0, Reglages.lis("PisteLargeur"), Reglages.lis("PisteHauteur"));
 		this.figurineGauche = figurineGauche ;
 		this.figurineDroite = figurineDroite ;
 		this.initTableauCases();
-	}
-	
-	/**
-	 * GETTER/SETTER
-	 * @throws Exception 
-	 **/
-	
-	public Figurine getFigurine(int direction) throws Exception {
-		
-		switch (direction) {
-		
-		case Joueur.DROITE : return getFigurineGauche() ;
-		case Joueur.GAUCHE : return getFigurineDroite() ;
-		default : throw new Exception ("Modele.Plateau.Piste.getFigurine : direction inconnue") ;
-		
-		}
+		this.LargeurCase = cases.get(0).getLargeur();
+		this.figurineGauche.setY(Reglages.lis("PisteHauteur")-figurineGauche.getHauteur()-25);
+		this.figurineDroite.setY(Reglages.lis("PisteHauteur")-figurineDroite.getHauteur()-25);
+		this.figurineGauche.setX(LargeurCase * figurineGauche.getPosition());
+		this.figurineDroite.setX(LargeurCase * figurineDroite.getPosition());
+		this.messageBox = new MessageBox("machine a fait une attaque indirect en utilisant 2 cartes de valeur 2");
+		messageBox.setX(this.getLargeur()/2-messageBox.getLargeur()/2);
+		messageBox.setY(0);
 	
 	}
-
-	public Figurine getFigurineGauche() {
-		return figurineGauche;
-	}
-
-	public void setFigurineGauche(Figurine figurineGauche) {
-		this.figurineGauche = figurineGauche ;
-	}
-
-	public Figurine getFigurineDroite() {
-		return figurineDroite;
-	}
-
-	public void setFigurineDroite(Figurine figurineDroite) {
-		this.figurineDroite = figurineDroite ;
-	}
 	
-	public boolean estdansPiste(int position) {
-		return position >=1 && position < cases.size() ;
-	}
-	
-	public void initTableauCases(){
-		cases = new ArrayList<Case>();
-		for(int i=0; i<24; i++){
-			Case c = new Case(0, i*Case.largeur, 0);
+	private void initTableauCases(){
+		cases = new ArrayList<Case>(nombreDeCases);
+		int proportion = nombreDeCases + 2;
+		for(int i=0; i<nombreDeCases; i++){
+			Case c = new Case(0, 0, 0);
+			c.setLargeur(this.getLargeur() / proportion);
+			c.setHauteur(this.getHauteur());
+			c.setX(((this.getLargeur()*i)/proportion)+c.getLargeur());
+			c.setNumero(i+1);
 			cases.add(c);
 		}
 	}
 	
-	public ArrayList<Case> getCases() {
-		return cases;
-	}
+	// METHODES MOTEUR FIGURINE
 	
-	public void setCases(ArrayList<Case> cases) {
-		this.cases = cases;
-	}
-	
-	public boolean accepte(Visiteur visiteur) {
-		return false;
-		
-	}
-
-	public void ajouteObservateur(ObjetMouvant objetMouvant) {
-		// TODO Auto-generated method stub
-		
+	public boolean estDansPiste(int position) {
+		return position >=1 && position <= nombreDeCases;
 	}
 	
 	public void afficherPiste(){
@@ -137,14 +113,132 @@ public class Piste extends Rectangle {
 		
 		Piste piste = new Piste (
 			
-			new Figurine(this.getFigurineGauche().getDirection(), this.getFigurineGauche().posX(), this.getFigurineGauche().posY(), this.getFigurineGauche().getPosition()),
-			new Figurine(this.getFigurineDroite().getDirection(), this.getFigurineDroite().posX(), this.getFigurineDroite().posY(), this.getFigurineDroite().getPosition())
+			new Figurine(this.getFigurineGauche().getDirection(), this.getFigurineGauche().getX(), this.getFigurineGauche().getY(), this.getFigurineGauche().getPosition()),
+			new Figurine(this.getFigurineDroite().getDirection(), this.getFigurineDroite().getX(), this.getFigurineDroite().getY(), this.getFigurineDroite().getPosition())
 			
 			) ;
 		
 		piste.cases = (ArrayList<Case>) this.cases.clone() ;
 		return piste ;
 		
+	}
+	
+	/**
+	 * GETTER/SETTER
+	 * @throws Exception 
+	 **/
+	
+	public Figurine getFigurine(int direction) throws Exception {
+		
+		switch (direction) {
+		
+		case Figurine.GAUCHE : return getFigurineGauche() ;
+		case Figurine.DROITE : return getFigurineDroite() ;
+		default : throw new Exception ("Modele.Plateau.Piste.getFigurine : direction inconnue") ;
+		
+		}
+	
+	}
+	
+	public Figurine getFigurineGauche() {
+		return figurineGauche;
+	}
+
+	public void setFigurineGauche(Figurine figurineGauche) {
+		this.figurineGauche = figurineGauche ;
+	}
+
+	public Figurine getFigurineDroite() {
+		return figurineDroite;
+	}
+
+	public void setFigurineDroite(Figurine figurineDroite) {
+		this.figurineDroite = figurineDroite ;
+	}
+	
+	public void setFigurinePosition(int direction, int position) throws Exception {
+		
+		Figurine figurine = getFigurine(direction) ;
+		figurine.setPosition(position) ;
+		figurine.setX(LargeurCase * figurine.getPosition());
+		
+	}
+	
+	public ArrayList<Case> getCases() {
+		return cases;
+	}
+	
+	public void setCases(ArrayList<Case> cases) {
+		this.cases = cases;
+	}
+	
+	public void rafraichit(long t) {
+	    tempsEcoule = t;
+	}
+
+	long tempsEcoule() {
+		return tempsEcoule;
+	}
+	
+	// METHODES VUE FIGURINE
+	
+	@Override
+	public boolean accept(Visiteur v) {
+		boolean retour = v.visite(this);
+        for (Case c : cases) {
+            retour = retour || c.accept(v);
+        }
+        retour = retour || figurineDroite.accept(v);
+		retour = retour || figurineGauche.accept(v);
+		retour = retour || messageBox.accept(v);
+        return retour;
+	}
+
+	public void fixeDimensions(float l, float h){
+		this.setLargeur(l);
+		this.setHauteur(h);
+		setProportion();
+	}
+	
+	private void setProportion(){
+		int proportion = nombreDeCases + 2;
+		
+		for(int i=0; i<nombreDeCases; i++){
+			cases.get(i).setLargeur(this.getLargeur() / proportion);
+			cases.get(i).setHauteur(this.getHauteur());
+			cases.get(i).setX(((this.getLargeur()*i)/proportion)+cases.get(i).getLargeur());
+			cases.add(cases.get(i));
+		}
+	}
+	
+	public void ajouteObservateur(ObjetMouvant objetMouvant) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void changeColorCaseClicked(int couleur, double x, double y) {
+		// TODO Auto-generated method stub
+		Case c = getCaseClicked(x, y);
+		if(c.estCollision((float)x, (float)y)){
+			c.setCouleur(couleur);
+		}
+	}
+	
+	public Case getCaseClicked(double x, double y) {
+		// TODO Auto-generated method stub
+		for(Case c : cases){
+			if(c.estCollision((float)x, (float)y)){
+				return c;
+			}
+		}
+		return null;
+	}
+
+	public void reinitialiserCouleurCase() {
+		// TODO Auto-generated method stub
+		for(Case c : cases){
+			c.setCouleur(0);
+		}
 	}
 
 }

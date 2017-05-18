@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="900.0" prefWidth="1600.0" styleClass="background" stylesheets="@Theme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controleur.ControleurChoixPartie">
+   <children>
+      <Pane layoutX="449.0" layoutY="242.0" prefHeight="396.0" prefWidth="674.0" styleClass="fondQuitter" AnchorPane.leftAnchor="450.0" AnchorPane.rightAnchor="450.0">
+         <children>
+            <ChoiceBox fx:id="ChoixCombattant1" layoutX="50.0" layoutY="140.0" prefHeight="26.0" prefWidth="200.0" />
+            <ChoiceBox fx:id="NiveauCombattant1" layoutX="320.0" layoutY="140.0" prefHeight="26.0" prefWidth="200.0" visible="false" />
+            <TextField fx:id="NomCombattant1" layoutX="320.0" layoutY="140.0" prefHeight="26.0" prefWidth="200.0" promptText="entrez un nom..." />
+            <ChoiceBox fx:id="ChoixCombattant2" layoutX="50.0" layoutY="260.0" prefHeight="26.0" prefWidth="200.0" />
+            <ChoiceBox fx:id="NiveauCombattant2" layoutX="320.0" layoutY="260.0" prefHeight="26.0" prefWidth="200.0" />
+            <TextField fx:id="NomCombattant2" layoutX="320.0" layoutY="260.0" prefHeight="26.0" prefWidth="200.0" promptText="entrez un nom..." visible="false" />
+            <Button layoutX="40.0" layoutY="330.0" mnemonicParsing="false" onAction="#menu" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefHeight="40.0" prefWidth="200.0" text="Menu Principal">
+               <font>
+                  <Font name="MathJax_Caligraphic-Regular" size="18.0" />
+               </font>
+            </Button>
+            <Button layoutX="310.0" layoutY="330.0" mnemonicParsing="false" onAction="#lancerPartie" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefHeight="40.0" prefWidth="350.0" text="Commencer le combat !">
+               <font>
+                  <Font name="MathJax_Caligraphic-Regular" size="18.0" />
+               </font>
+            </Button>
+            <Label layoutX="58.0" layoutY="95.0" text="Combattant 1" textFill="WHITE">
+               <font>
+                  <Font name="MathJax_Caligraphic-Regular" size="25.0" />
+               </font>
+            </Label>
+            <Label layoutX="58.0" layoutY="217.0" text="Combattant 2" textFill="WHITE">
+               <font>
+                  <Font name="MathJax_Caligraphic-Regular" size="25.0" />
+               </font>
+            </Label>
+         </children></Pane>
+   </children>
+</AnchorPane>

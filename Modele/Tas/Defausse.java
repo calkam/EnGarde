@@ -2,12 +2,21 @@ package Modele.Tas;
 
 import java.util.Stack;
 
+import Modele.Reglages;
+import Modele.Visiteur;
+
 public class Defausse extends Tas {
 	private Stack<Carte> d;
-
+	
 	public Defausse(){
-		super();
+		super(0, Reglages.lis("DefausseLargeur"), Reglages.lis("DefausseHauteur"));
 		d = new Stack<Carte>();
+	}
+	
+	@Override
+	public boolean accept(Visiteur v) {
+		// TODO Auto-generated method stub
+		return v.visite(this);
 	}
 	
 	public Defausse(int nombre){
@@ -16,11 +25,23 @@ public class Defausse extends Tas {
 	}
 	
 	public void ajouter(Carte c){
+		c.setTas(Carte.defausse);
 		d.push(c);
 		nombreCarte[c.getContenu()]++ ;
-		nombreCarte[0]++ ;
 	}
 
+	public Carte carteDuDessus(){
+		if(d.size() == 0){
+			return null;
+		}else{
+			return d.lastElement();
+		}
+	}
+	
+	public boolean estVide(){
+		return d.isEmpty();
+	}
+	
 	@Override
 	public String toString() {
 		String resultat = "";
@@ -29,13 +50,6 @@ public class Defausse extends Tas {
 		resultat += "  defausse= " + d.toString() + "\n";
 		resultat += "]\n";
 		return resultat;
-	}
-	
-	public Stack<Carte> getD() {
-		return d;
-	}
-	public void setD(Stack<Carte> d) {
-		this.d = d;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -47,6 +61,13 @@ public class Defausse extends Tas {
 		defausse.d = (Stack<Carte>) this.d.clone() ;
 		return defausse ;
 		
+	}
+	
+	public Stack<Carte> getD() {
+		return d;
+	}
+	public void setD(Stack<Carte> d) {
+		this.d = d;
 	}
 	
 }

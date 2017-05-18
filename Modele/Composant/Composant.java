@@ -1,5 +1,7 @@
 package Modele.Composant;
 
+import Modele.Visiteur;
+
 public abstract class Composant {
 
     public Composant() {

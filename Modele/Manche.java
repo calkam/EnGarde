@@ -8,7 +8,11 @@ import Modele.Tas.Defausse;
 import Modele.Tas.Pioche;
 import Modele.Tas.Tas;
 
-public class Manche {
+public class Manche implements Visitable{
+	
+	public final static int JOUEUR1GAGNE = 0;
+	public final static int JOUEUR2GAGNE = 1;
+	public final static int MATCHNULLE = 2;
 	
 	private int numero;
 	private int nbTourRealise;
@@ -20,20 +24,50 @@ public class Manche {
 	private Joueur joueur1;
 	private Joueur joueur2;
 	
+<<<<<<< HEAD
 	public Manche(int numero, int nbTourRealise, Piste piste, Tour tour) {
+=======
+	public Manche(int numero, int nbTourRealise, Joueur j1, Joueur j2, Tour tour) {
+>>>>>>> 7ebb790a0de02c0ff1c5d06bfe4ad5d4bbc5c34a
 		this.numero = numero;
 		this.nbTourRealise = nbTourRealise;
 		this.piste = piste ;
 		defausse = new Defausse();
 		pioche = new Pioche();
+		initialiserJoueur(j1, j2);
 		tourEnCours = tour;
+		initialiserTour();
 	}
 	
+<<<<<<< HEAD
 	public Manche(int numero, Joueur joueur1, Joueur joueur2, Piste piste, Historique histo){
 		this(numero, 0, piste, new Tour(piste, histo));
 		initialiserJoueur(joueur1, joueur2);
+=======
+	public Manche(int numero, Joueur joueur1, Joueur joueur2){
+		this(numero, 0, joueur1, joueur2, new Tour());
+>>>>>>> 7ebb790a0de02c0ff1c5d06bfe4ad5d4bbc5c34a
 	}
 
+	public void initialiserTour(){
+		Couple<Joueur, Joueur> tmp;
+		tmp = choisirPremier();
+		tourEnCours.setPioche(pioche);
+		tourEnCours.setDefausse(defausse);
+		tourEnCours.setJoueurPremier(tmp.getC1());
+		tourEnCours.setJoueurSecond(tmp.getC2());
+		tourEnCours.getJoueurPremier().viderLaMain();
+		tourEnCours.getJoueurSecond().viderLaMain();
+		tourEnCours.remplirMain(tourEnCours.getJoueurPremier());
+		tourEnCours.remplirMain(tourEnCours.getJoueurSecond());
+	}
+	
+	@Override
+	public boolean accept(Visiteur v) {
+		// TODO Auto-generated method stub
+		return tourEnCours.accept(v);
+	}
+	
 	public void initialiserJoueur(Joueur j1, Joueur j2){
 		joueur1 = j1;
 		joueur2 = j2;
@@ -53,17 +87,12 @@ public class Manche {
 		return c;
 	}
 	
-	private boolean estPasFini(int resultat){
-		return resultat == Tour.aucunJoueurPerdu;
-	}
-	
 	private void joueurAGagne(Joueur joueur){
 		System.out.println(joueur.getNom() + " a gagné la manche !");
-		joueur.setScore(joueur.getScore()+1);
 	}
 	
 	public void afficherScore(){
-		System.out.println("\nScore : " + joueur1.getNom() + " " + joueur1.getScore() + " - " + joueur2.getScore() + " " + joueur2.getNom());
+		System.out.println("\nScore : " + joueur1.getNom() + " " + joueur1.getNbPoints() + " - " + joueur2.getNbPoints() + " " + joueur2.getNom());
 	}
 	
 	private int calculerNormeEntreDeuxPositions(int position1, int position2){
@@ -75,6 +104,7 @@ public class Manche {
 		joueur2.reinitialiserPositionFigurine();
 	}
 	
+<<<<<<< HEAD
 	public void jouerManche() throws Exception{
 		int resultat;
 		Couple<Joueur, Joueur> tmp;
@@ -98,26 +128,69 @@ public class Manche {
 		
 		System.out.println("/*************************************************************************************************************/");
 		piste.afficherPiste();	
+=======
+	public void commencerManche(){
+		try {
+			tourEnCours.getJoueurSecond().getMain().setVisible(false);
+			tourEnCours.jouerTour();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public int testVictoirePiocheVideDistanceCaseMediane(){
+		int distanceEntreCaseMedianeEtFigurineJ1 = calculerNormeEntreDeuxPositions(12, joueur1.getPositionFigurine());
+		int distanceEntreCaseMedianeEtFigurineJ2 = calculerNormeEntreDeuxPositions(12, joueur2.getPositionFigurine());
 		
-		if(resultat == Tour.joueurPremierPerdu){
+		if(distanceEntreCaseMedianeEtFigurineJ1 > distanceEntreCaseMedianeEtFigurineJ2){
+			System.out.println(joueur2.getNom() + " étant plus proche de la case médiane...");
+			joueurAGagne(joueur2);
+			return JOUEUR1GAGNE;
+		}else if(distanceEntreCaseMedianeEtFigurineJ1 < distanceEntreCaseMedianeEtFigurineJ2){
+			System.out.println(joueur1.getNom() + " étant plus proche de la case médiane...");
+			joueurAGagne(joueur1);
+			return JOUEUR2GAGNE;
+		}else{
+			System.out.println("Manche nulle !");
+			return MATCHNULLE;
+		}
+	}
+	
+	public int finDeManche(int resultat) throws Exception{
+>>>>>>> 7ebb790a0de02c0ff1c5d06bfe4ad5d4bbc5c34a
+		
+		if(resultat == Tour.joueurPremierPerdu){			
 			joueurAGagne(tourEnCours.getJoueurSecond());
+			if(tourEnCours.getJoueurSecond().equals(joueur1)){
+				return JOUEUR1GAGNE;
+			}else{
+				return JOUEUR2GAGNE;
+			}
 		}else if(resultat == Tour.joueurSecondPerdu){
 			joueurAGagne(tourEnCours.getJoueurPremier());
+			if(tourEnCours.getJoueurPremier().equals(joueur1)){
+				return JOUEUR1GAGNE;
+			}else{
+				return JOUEUR2GAGNE;
+			}
 		}else if(resultat == Tour.piocheVide){
 			System.out.println("La pioche est vide :");
 			
 			int distanceEntreFigurineJ1EtFigurineJ2 = calculerNormeEntreDeuxPositions(joueur1.getPositionDeMaFigurine(), joueur2.getPositionDeMaFigurine());
 			
-			if(distanceEntreFigurineJ1EtFigurineJ2 < Tas.nombreMaxCarte){
+			if(distanceEntreFigurineJ1EtFigurineJ2 < Tas.carteValeurMax){
 				int nbCartesDistanceJ1 = joueur1.getMain().getNombreCarteGroupe(distanceEntreFigurineJ1EtFigurineJ2);
 				int nbCartesDistanceJ2 = joueur2.getMain().getNombreCarteGroupe(distanceEntreFigurineJ1EtFigurineJ2);
 				
 				if(nbCartesDistanceJ1 > nbCartesDistanceJ2){
 					System.out.println(joueur1.getNom() + " ayant plus de cartes pour attaquer directectement son adversaire...");
 					joueurAGagne(joueur1);
+					return JOUEUR1GAGNE;
 				}else if(nbCartesDistanceJ1 < nbCartesDistanceJ2){
 					System.out.println(joueur2.getNom() + " ayant plus de cartes pour attaquer directectement son adversaire...");
 					joueurAGagne(joueur2);
+<<<<<<< HEAD
 				}
 			}else{
 				int distanceEntreCaseMedianeEtFigurineJ1 = calculerNormeEntreDeuxPositions(12, joueur1.getPositionDeMaFigurine());
@@ -129,13 +202,18 @@ public class Manche {
 				}else if(distanceEntreCaseMedianeEtFigurineJ1 < distanceEntreCaseMedianeEtFigurineJ2){
 					System.out.println(joueur1.getNom() + " étant plus proche de la case médiane...");
 					joueurAGagne(joueur1);
+=======
+					return JOUEUR2GAGNE;
+>>>>>>> 7ebb790a0de02c0ff1c5d06bfe4ad5d4bbc5c34a
 				}else{
-					System.out.println("Manche nulle !");
-				}
+					return testVictoirePiocheVideDistanceCaseMediane();
+				}				
+				
+			}else{
+				return testVictoirePiocheVideDistanceCaseMediane();
 			}
 		}
-		
-		afficherScore();
+		return MATCHNULLE;
 	}
 	
 	/**
@@ -197,8 +275,6 @@ public class Manche {
 
 	public void setJoueur2(Joueur joueur2) {
 		this.joueur2 = joueur2;
-	}
-	
-	
+	}	
 	
 }

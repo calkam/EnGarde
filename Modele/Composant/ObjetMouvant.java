@@ -1,25 +1,21 @@
 package Modele.Composant;
 
+import Modele.Visiteur;
 import Modele.Plateau.Piste;
 
-public abstract class ObjetMouvant extends ComposantGraphique implements Observateur {
+public abstract class ObjetMouvant extends ComposantGraphique {
 
-    ComposantGraphique delegue;
+	ComposantGraphique delegue;
     Piste piste;
 
-    ObjetMouvant(ComposantGraphique d, Point v) {
+    public ObjetMouvant(ComposantGraphique d, Point v) {
         super(v.x(), v.y());
-        delegue = d;
+        this.delegue = d;
     }
     
     void observe(Piste p) {
         piste = p;
         piste.ajouteObservateur(this);
-    }
-    
-    @Override
-    public void miseAJour(Observable o, Object arg) {
-        
     }
 
     @Override
@@ -43,12 +39,6 @@ public abstract class ObjetMouvant extends ComposantGraphique implements Observa
     float vitY() {
         return this.getCoord().y();
     }
-
-    @Override
-    ComposantGraphique copieVers(float x, float y) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
     @Override
     public float getLargeur() {
         return delegue.getLargeur();
@@ -56,17 +46,27 @@ public abstract class ObjetMouvant extends ComposantGraphique implements Observa
 
     @Override
     public float getHauteur() {
-        return delegue.getHauteur();
+    	return delegue.getHauteur();
     }
 
     @Override
-    public float posX() {
-        return delegue.posX();
+    public float getX() {
+        return delegue.getX();
     }
 
     @Override
-    public float posY() {
-        return delegue.posY();
+    public float getY() {
+    	return delegue.getY();
+    }
+    
+    @Override
+    public void setX(float x) {
+        delegue.setX(x);
+    }
+
+    @Override
+    public void setY(float y) {
+    	delegue.setY(y);
     }
 
     @Override
@@ -75,7 +75,7 @@ public abstract class ObjetMouvant extends ComposantGraphique implements Observa
     }
 
     void fixePosition(float x, float y) {
-        delegue.deplacePosition(x - delegue.posX(), y - delegue.posY());
+        delegue.deplacePosition(x - delegue.getX(), y - delegue.getY());
     }
    
 }

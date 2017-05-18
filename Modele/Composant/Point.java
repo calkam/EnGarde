@@ -1,10 +1,10 @@
 package Modele.Composant;
 
-class Point {
+public class Point {
 
     private float x, y;
 
-    Point(float x, float y) {
+    public Point(float x, float y) {
         this.x = x;
         this.y = y;
     }
@@ -15,6 +15,14 @@ class Point {
     
     float y() {
         return y;
+    }
+    
+    void setX(float x){
+    	this.x = x;
+    }
+    
+    void setY(float y){
+    	this.y = y;
     }
     
     Point fixe(float x, float y) {

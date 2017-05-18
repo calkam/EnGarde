@@ -1,21 +1,24 @@
 package Modele.Joueur;
 
 import java.util.ArrayList;
+
 import Modele.Couple;
 import Modele.Tour;
 import Modele.Triplet;
+import Modele.Visitable;
+import Modele.Visiteur;
 import Modele.Plateau.Piste;
 import Modele.Plateau.Score;
 import Modele.Tas.Carte;
-import Modele.Tas.Defausse;
 import Modele.Tas.Main;
-import Modele.Tas.Pioche;
 
 /**
  * @author gourdeaf
  *
  */
-public abstract class Joueur {
+public abstract class Joueur implements Visitable{
+	
+	// CONSTANTES
 	
 	// TYPES ACTION
 	
@@ -28,11 +31,11 @@ public abstract class Joueur {
 	public final static int Fuite = 5 ;
 	
 	// TYPE JOUEUR
-	// Le Joueur GAUCHE a pour direction la direction DROITE (1)
-	// Le Joueur DROIT a pour direction la direction GAUCHE (-1)
+	// Le Joueur1 a pour direction la DirectionDroite (1)
+	// Le Joueur2 a pour direction la DirectionGauche (-1)
 	
-	public final static int DROITE = 1 ;
-	public final static int GAUCHE = -1 ;
+	public final static int DirectionDroite = 1 ;
+	public final static int DirectionGauche = -1 ;
 	
 	// FIGURINE JOUEUR
 	// La Figurine du Joueur va dans la même direction que lui
@@ -44,6 +47,8 @@ public abstract class Joueur {
 	// ATTRIBUTS
 	
 	protected int direction ;
+=======
+>>>>>>> 7ebb790a0de02c0ff1c5d06bfe4ad5d4bbc5c34a
 	protected String nom ;
 	protected Main main ;
 	protected Piste piste ;
@@ -62,6 +67,7 @@ public abstract class Joueur {
 		this.score = new Score();
 	}
 	
+<<<<<<< HEAD
 	// RACCOURCIS GETTER/SETTER POSITION
 	
 	public int getPositionFigurine(int direction) throws Exception{
@@ -91,11 +97,22 @@ public abstract class Joueur {
 	// retourne true si le déplacement est possible, false sinon
 	
 	private boolean estlibre (int position) throws Exception {
+=======
+	@Override
+	public boolean accept(Visiteur v) {
+		// TODO Auto-generated method stub
+        return main.accept(v);
+	}
+	
+	public boolean peut_executer_parade(int valeurCarteMain, int nombreDeCartes, int valeurCarteAttaque) throws Exception {
+		boolean b = false;
+>>>>>>> 7ebb790a0de02c0ff1c5d06bfe4ad5d4bbc5c34a
 		
 		return position != piste.getFigurine(FigurineAdverse).getPosition() ;
 		
 	}
 	
+<<<<<<< HEAD
 	// vérifie si un déplacement vers l'avant est possible
 	// retourne true si le déplacement est possible, false sinon
 
@@ -179,6 +196,19 @@ public abstract class Joueur {
 	public boolean peut_executer_parade(int valeurCarteMain, int nombreDeCartes, int valeurCarteAttaque) throws Exception {
 		return valeurCarteMain == valeurCarteAttaque && main.getNombreCarteGroupe(valeurCarteMain) >= nombreDeCartes ;
 	}
+=======
+	abstract public int peut_reculer (int distance)  ;
+	abstract public Couple<Boolean, Integer> peut_avancer_ou_attaquer_directement (int distance)  ;
+	abstract public int peut_attaquer_indirectement (int deplacement, int portee)  ;
+	abstract public void avancer (int distance)  ;
+	abstract public void reculer (int distance)  ;
+	abstract public void executer_attaque_indirecte (int deplacement, int portee, int nombre)  ;
+	
+	abstract public int getPositionFigurine() ;
+	abstract public void setPositionFigurine(int position) ;
+	abstract public void reinitialiserPositionFigurine() ;
+	abstract public void viderLaMain(); 
+>>>>>>> 7ebb790a0de02c0ff1c5d06bfe4ad5d4bbc5c34a
 	
 	public ActionsJouables peutFaireAction(Triplet<Integer, Integer, Integer> est_attaque) throws Exception {
 		
@@ -226,9 +256,16 @@ public abstract class Joueur {
 				}
 			}else{
 				
+<<<<<<< HEAD
 				// On a oublié de tester que la valeur de la carte utilisée pour parer est la même que celle du joueur adverse utilisée pour son attaque 				
 				if(peut_executer_parade(carte.getContenu(), est_attaque.getC2(), est_attaque.getC3())){
 					actions_jouables.ajouterActionDefensive(carte.getID(), Parade, getPositionFigurine(MaFigurine), null, carte, est_attaque.getC2());
+=======
+				if(main.getNombreCarteGroupe(carte.getContenu()) == est_attaque.getC2()){
+					if(peut_executer_parade(carte.getContenu(), est_attaque.getC2(), est_attaque.getC3())){
+						actions_jouables.ajouterActionDefensive(carte.getID(), Parade, getPositionFigurine(), null, carte, est_attaque.getC2());
+					}
+>>>>>>> 7ebb790a0de02c0ff1c5d06bfe4ad5d4bbc5c34a
 				}
 				
 				if(est_attaque.getC1() == Tour.AttaqueIndirecte){
@@ -244,8 +281,108 @@ public abstract class Joueur {
 			
 	}
 	
-	public void viderMain(){		
-		main = new Main();
+	public ActionsJouables peutFaireActionAvecCarteSelectionne(int cote, ArrayList<Carte> cartes, Triplet<Integer, Integer, Integer> est_attaque) throws Exception {
+		
+		int position ;
+		ActionsJouables actions_jouables = new ActionsJouables () ;
+		Couple <Boolean, Integer> test_avancer_ou_attaquer ;
+		Carte carte;
+		Carte carteOpt;
+		
+		Main main = new Main();
+		main.setCote(cote);
+		main.setMain(cartes);
+		
+		if(main.size() > 0){
+			carte = main.getCarte(0);
+			
+			if(est_attaque.getC1() == Tour.pasAttaque){
+				
+				if(main.size() > 1){
+					if(main.getNombreCarteGroupe(carte.getContenu()) == main.size()){
+						
+						if ((test_avancer_ou_attaquer = peut_avancer_ou_attaquer_directement(carte.getContenu())).getC2() != ActionImpossible) {
+							if (!test_avancer_ou_attaquer.getC1()) {
+								actions_jouables.ajouterActionOffensive(carte.getID(), AttaqueDirecte, getPositionFigurine(), null, carte, main.getNombreCarteGroupe(carte.getContenu()));
+							}else{
+								
+								carteOpt = main.getCarte(1);
+								
+								if(main.getNombreCarteGroupe(carteOpt.getContenu())-1 == main.size()-1){
+									
+									if (((position = test_avancer_ou_attaquer.getC2()) != ActionImpossible) && 
+										    (peut_attaquer_indirectement(position, carteOpt.getContenu()) != ActionImpossible)){
+									
+										actions_jouables.ajouterActionOffensive(carte.getID(), AttaqueIndirecte, test_avancer_ou_attaquer.getC2(), carte, carteOpt, main.getNombreCarteGroupe(carteOpt.getContenu())-1) ;
+										
+									}
+									
+								}
+								
+							}
+						}
+							
+					}else{
+						
+						if ((test_avancer_ou_attaquer = peut_avancer_ou_attaquer_directement(carte.getContenu())).getC2() != ActionImpossible) {
+							if (test_avancer_ou_attaquer.getC1()) {
+								
+								carteOpt = main.getCarte(1);
+								
+								if(main.getNombreCarteGroupe(carteOpt.getContenu()) == main.size()-1){
+									
+									if (((position = test_avancer_ou_attaquer.getC2()) != ActionImpossible) && 
+										    (peut_attaquer_indirectement(position, carteOpt.getContenu()) != ActionImpossible)){
+									
+										actions_jouables.ajouterActionOffensive(carte.getID(), AttaqueIndirecte, test_avancer_ou_attaquer.getC2(), carte, carteOpt, main.getNombreCarteGroupe(carteOpt.getContenu())) ;
+									
+									}
+									
+								}
+								
+							}
+						}
+						
+					}
+				}else{
+					if((position = peut_reculer(carte.getContenu())) != ActionImpossible){
+						actions_jouables.ajouterActionNeutre(carte.getID(), Reculer, position, carte) ;
+					}
+					
+					if ((test_avancer_ou_attaquer = peut_avancer_ou_attaquer_directement(carte.getContenu())).getC2() != ActionImpossible) {
+						
+						if (test_avancer_ou_attaquer.getC1()) {
+							
+							actions_jouables.ajouterActionNeutre(carte.getID(), Avancer, test_avancer_ou_attaquer.getC2(), carte) ;
+								
+						}else{
+							
+							actions_jouables.ajouterActionOffensive(carte.getID(), AttaqueDirecte, getPositionFigurine(), null, carte, 1);
+							
+						}
+					}
+				}
+				
+			}else{
+				
+				if(main.getNombreCarteGroupe(carte.getContenu()) == est_attaque.getC2()){
+					if(peut_executer_parade(carte.getContenu(), est_attaque.getC2(), est_attaque.getC3())){
+						actions_jouables.ajouterActionDefensive(carte.getID(), Parade, getPositionFigurine(), null, carte, est_attaque.getC2());
+					}
+				}
+					
+				if(main.size() == 1){
+					if(est_attaque.getC1() == Tour.attaqueIndirect){
+						if((position = peut_reculer(carte.getContenu())) != ActionImpossible){
+							actions_jouables.ajouterActionDefensive(carte.getID(), Fuite, position, carte, null, 0);
+						}
+					}
+				}
+
+			}
+		}
+		
+		return actions_jouables;
 	}
 	
 	public void ajouterCarteDansMain(Carte c){
@@ -304,12 +441,21 @@ public abstract class Joueur {
 	public void setMain(Main main) {
 		this.main = main;
 	}
-	public int getScore() {
+	
+	public Score getScore() {
+		return score;
+	}
+	public void setScore(Score score) {
+		this.score = score;
+	}
+	
+	public int getNbPoints() {
 		return score.getNbPoints();
 	}
-	public void setScore(int nbPoints) {
+	public void setNbPoints(int nbPoints) {
 		this.score.setNbPoints(nbPoints);
 	}
+	
 	public Piste getPiste() {
 		return piste;
 	}
@@ -327,20 +473,10 @@ public abstract class Joueur {
 		if (getClass() != obj.getClass())
 			return false;
 		Joueur other = (Joueur) obj;
-		if (main == null) {
-			if (other.main != null)
-				return false;
-		} else if (!main.equals(other.main))
-			return false;
 		if (nom == null) {
 			if (other.nom != null)
 				return false;
 		} else if (!nom.equals(other.nom))
-			return false;
-		if (piste == null) {
-			if (other.piste != null)
-				return false;
-		} else if (!piste.equals(other.piste))
 			return false;
 		return true;
 	}
@@ -355,6 +491,7 @@ public abstract class Joueur {
 		str += "]\n";
 		return str;
 	}
+<<<<<<< HEAD
 	
 	abstract public Action selectionnerAction(ActionsJouables actions_jouables, Tour tour) throws Exception ;
 	
@@ -362,4 +499,6 @@ public abstract class Joueur {
 	
 	@Override
 	abstract public Joueur clone () ;
+=======
+>>>>>>> 7ebb790a0de02c0ff1c5d06bfe4ad5d4bbc5c34a
 }
