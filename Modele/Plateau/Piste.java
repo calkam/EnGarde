@@ -34,7 +34,7 @@ public class Piste extends Rectangle implements Visitable {
 		this.figurineGauche.setX(largeurCase * figurineGauche.getPosition());
 		this.figurineDroite.setX(largeurCase * figurineDroite.getPosition());
 		
-		this.messageBox = new MessageBox("machine a fait une attaque indirect en utilisant 2 cartes de valeur 2");
+		this.messageBox = new MessageBox("");
 		messageBox.setX(this.getLargeur()/2-messageBox.getLargeur()/2);
 		messageBox.setY(0);
 	}
@@ -86,7 +86,19 @@ public class Piste extends Rectangle implements Visitable {
 		this.figurineGauche.setPosition(position);
 		this.figurineGauche.setX(largeurCase * figurineGauche.getPosition());
 	}
+
+	public MessageBox getMessageBox() {
+		return messageBox;
+	}
+
+	public void setMessageBox(MessageBox messageBox) {
+		this.messageBox = messageBox;
+	}
 	
+	public void setMessageInMessageBox(String texte) {
+		this.messageBox.setTexte(texte);
+	}
+
 	public boolean estDansPiste(int position) {
 		return position >=1 && position <= nombreDeCases;
 	}

@@ -18,7 +18,7 @@ public class MessageBox extends Rectangle implements Visitable{
     	this(t, x, y, Reglages.lis("MessageBoxLargeur"), Reglages.lis("MessageBoxHauteur"));
     }
     
-    MessageBox(String t){
+    public MessageBox(String t){
     	this(t, 0, 0, Reglages.lis("MessageBoxLargeur"), Reglages.lis("MessageBoxHauteur"));
     }
 

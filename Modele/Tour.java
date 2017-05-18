@@ -6,6 +6,7 @@ import Modele.Joueur.Action;
 import Modele.Joueur.ActionsJouables;
 import Modele.Joueur.Joueur;
 import Modele.Plateau.Case;
+import Modele.Plateau.MessageBox;
 import Modele.Tas.Carte;
 import Modele.Tas.Defausse;
 import Modele.Tas.Pioche;
@@ -30,9 +31,10 @@ public class Tour implements Visitable{
 	private Joueur joueurSecond;
 	private Pioche pioche;
 	private Defausse defausse;
+	private MessageBox messageBox;
+	
 	// Type de l'attaque, nombre de cartes attaque, valeur de la carte attaque
 	private Triplet<Integer, Integer, Integer> estAttaque;
-	
 	private ActionsJouables actions_jouables;
 	
 	public Tour(){
@@ -76,6 +78,7 @@ public class Tour implements Visitable{
 	
 	public void jouerTour() throws Exception{
 		commencerTour(joueurPremier);
+		messageBox.setTexte(joueurPremier.getNom() + " commence");
 	}
 	
 	public void commencerTour(Joueur joueur){
@@ -151,13 +154,14 @@ public class Tour implements Visitable{
 				}
 			
 				joueur.getPiste().reinitialiserCouleurCase();
+				
 				actions_jouables = null;
-				return joueurPasPerdu;
+				return trouve;
 			}else{
-				return joueurPasPerdu;
+				return trouve;
 			}
 		}else{
-			return joueurPerdu;
+			return trouve;
 		}
 	}
 	
@@ -331,6 +335,14 @@ public class Tour implements Visitable{
 	
 	public void setDefausse(Defausse defausse) {
 		this.defausse = defausse;
+	}
+
+	public MessageBox getMessageBox() {
+		return messageBox;
+	}
+
+	public void setMessageBox(MessageBox messageBox) {
+		this.messageBox = messageBox;
 	}
 	
 }

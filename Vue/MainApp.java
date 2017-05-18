@@ -43,8 +43,8 @@ public class MainApp extends Application {
         
         initRootLayout();
         
-        //acceuil();
-        jeu("Kaiba", "Yugi", "Humain", "Humain");
+        acceuil();
+        //jeu();
     }
     
     /**

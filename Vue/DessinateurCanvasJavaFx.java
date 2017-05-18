@@ -20,6 +20,8 @@ import javafx.scene.text.Font;
 
 public class DessinateurCanvasJavaFx extends Visiteur {
 	
+	public static boolean visibilityActivated = false;
+	
     private Canvas terrain;
     private Canvas pioche;
     private Canvas defausse;
@@ -27,9 +29,7 @@ public class DessinateurCanvasJavaFx extends Visiteur {
     private Canvas mainDroite;
     private Canvas scoreGauche;
     private Canvas mainGauche;
-    
-    public static boolean visibilityActivated = false;
-    
+
     public GraphicsContext gcTerrain, gcPioche, gcDefausse, gcScoreDroit, gcMainDroite, gcScoreGauche, gcMainGauche;
 	
     public DessinateurCanvasJavaFx(Canvas terrain, Canvas pioche, Canvas defausse, Canvas scoreDroit, Canvas mainDroite, Canvas scoreGauche, Canvas mainGauche) {
@@ -170,7 +170,6 @@ public class DessinateurCanvasJavaFx extends Visiteur {
     
     public boolean visite(MessageBox m){
     	GraphicsContext gc = gcTerrain;
-    	//dessinerMessageBox(gc, m.getX(), m.getY(), m.getLargeur(), m.getHauteur());
     	ecrireTexte(gc, (m.getX()+m.getLargeur()/2), m.getHauteur()/2, m.getTexte(), m.getTexte().length());
     	return false;
     }
@@ -257,19 +256,14 @@ public class DessinateurCanvasJavaFx extends Visiteur {
 		Image i = new Image("/Ressources/coeur.png");
     	gc.drawImage(i, x, y, l, h);
     }
-
-    /*private void dessinerMessageBox(GraphicsContext gc, float x, float y, float l, float h) {
-		// TODO Auto-generated method stub
-    	gc.setFill(Color.BROWN);
-		gc.fillRect(x, y, l, h);
-	}*/
     
     private void ecrireTexte(GraphicsContext gc, float x, float y, String s, int length){
     	float policeSize = (float) 22.5;
     	float recule = (float) (length*(policeSize/4.10));
     	Font f = new Font("Courier", policeSize);
+    	gc.setFill(Color.BROWN);
+		gc.fillRect(x-recule, 32, recule*2+7 , 30);
     	gc.setFill(Color.WHITE);
-    	gc.setStroke(Color.BLACK);
     	gc.setFont(f);
     	gc.fillText(s, x-recule, y+15);
     	gc.strokeText(s, x-recule, y+15);

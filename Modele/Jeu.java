@@ -71,7 +71,10 @@ public class Jeu implements Visitable{
 	}
 	
 	public void affichageVictoire(String nomJoueurVictorieux, String nomJoueurPerdant){
-		System.out.println(nomJoueurVictorieux + " a triomphé de son adversaire !");
+		
+		piste.setMessageInMessageBox(nomJoueurVictorieux + " a triomphé de son adversaire ! Gloire à " + nomJoueurVictorieux +"! "+ nomJoueurPerdant + " est une victime");
+		
+		//System.out.println(nomJoueurVictorieux + " a triomphé de son adversaire !");
 		System.out.println("Gloire à " + nomJoueurVictorieux);
 		System.out.println(nomJoueurPerdant + " est une victime");
 	}
@@ -81,11 +84,11 @@ public class Jeu implements Visitable{
 	 */
 	
 	public void initialiserPremiereManche(){
-		manche = new Manche(0, joueur1, joueur2);
+		manche = new Manche(0, joueur1, joueur2, piste.getMessageBox());
 	}
 	
 	public void nouvelleManche(){
-		manche = new Manche(manche.getNumero()+1, joueur1, joueur2);
+		manche = new Manche(manche.getNumero()+1, joueur1, joueur2, piste.getMessageBox());
 	}
 	
 	public void lancerLaManche() throws Exception{
