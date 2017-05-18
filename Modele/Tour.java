@@ -1,36 +1,39 @@
 package Modele;
 
-<<<<<<< HEAD
-=======
 import java.util.ArrayList;
 import java.util.Enumeration;
->>>>>>> 7ebb790a0de02c0ff1c5d06bfe4ad5d4bbc5c34a
 import Modele.Joueur.Action;
 import Modele.Joueur.ActionsJouables;
 import Modele.Joueur.Humain;
 import Modele.Joueur.Joueur;
-<<<<<<< HEAD
 import Modele.Plateau.Piste;
-=======
 import Modele.Plateau.Case;
->>>>>>> 7ebb790a0de02c0ff1c5d06bfe4ad5d4bbc5c34a
 import Modele.Tas.Carte;
 import Modele.Tas.Defausse;
 import Modele.Tas.Pioche;
 
 public class Tour implements Visitable{
 	
+	// CONSTANTES
+	// STATUT JOUEUR
+	
 	private final static boolean joueurPerdu = false;
 	private final static boolean joueurPasPerdu = true;
+	
+	// STATUT TOUR
 	
 	public final static int joueurPremierPerdu = 0;
 	public final static int joueurSecondPerdu = 1;
 	public final static int aucunJoueurPerdu = 2;
 	public final static int piocheVide = 3;
 	
+	// STATUT ATTAQUE
+	
 	public final static int PasAttaque = 0;
 	public final static int AttaqueDirecte = 1;
 	public final static int AttaqueIndirecte = 2;
+	
+	// ATTRIBUTS
 	
 	private Joueur joueurPremier;
 	private Joueur joueurSecond;
@@ -38,58 +41,16 @@ public class Tour implements Visitable{
 	private Defausse defausse;
 	private Piste piste ;
 	private Historique histo ;
+	private ActionsJouables actions_jouables ;
 	// Type de l'attaque, nombre de cartes attaque, valeur de la carte attaque
 	private Triplet<Integer, Integer, Integer> estAttaque;
 	
-<<<<<<< HEAD
 	public Tour(Piste piste, Historique histo){
 		
 		this.piste = piste ;
 		this.histo = histo ;
 		this.estAttaque = new Triplet<>(PasAttaque, 0, 0);
-=======
-	private ActionsJouables actions_jouables;
 	
-	public Tour(){
-		this.estAttaque = new Triplet<>(pasAttaque, 0, 0);
->>>>>>> 7ebb790a0de02c0ff1c5d06bfe4ad5d4bbc5c34a
-	}
-	
-	public Tour(Joueur m_joueurPremier, Joueur m_joueurSecond){
-		this.pioche = new Pioche();
-		this.defausse = new Defausse();
-<<<<<<< HEAD
-		this.estAttaque = new Triplet<>(PasAttaque, 0, 0);
-	}
-	
-	public int jouerTour() throws Exception{
-		
-		if(jouerTourJoueur(joueurPremier)){
-			if(pioche.estVide()){
-				if(estAttaque.getC1() == PasAttaque){
-					return piocheVide;
-				}
-			}
-			
-			if(jouerTourJoueur(joueurSecond)){
-				if(pioche.estVide()){
-					if(estAttaque.getC1() == PasAttaque){
-						return piocheVide;
-=======
-		this.joueurPremier = m_joueurPremier;
-		this.joueurSecond = m_joueurSecond;
-		this.estAttaque = new Triplet<>(pasAttaque, 0, 0);
-	}
-	
-	@Override
-	public boolean accept(Visiteur v) {
-		// TODO Auto-generated method stub
-		boolean retour = false;
-		retour = retour || pioche.accept(v);
-		retour = retour || defausse.accept(v);
-		retour = retour || joueurPremier.accept(v);
-		retour = retour || joueurSecond.accept(v);
-		return retour;
 	}
 	
 	public boolean actionNeutre(Action action){
@@ -141,7 +102,6 @@ public class Tour implements Visitable{
 						}else if(action.getTypeAction() == Joueur.Fuite){
 							joueur.getPiste().getCases().get(action.getPositionArrivee()-1).setCouleur(Case.JAUNE);
 						}
->>>>>>> 7ebb790a0de02c0ff1c5d06bfe4ad5d4bbc5c34a
 					}
 				}
 				System.out.println("");
@@ -155,7 +115,6 @@ public class Tour implements Visitable{
 		return joueurPerdu;
 	}
 	
-<<<<<<< HEAD
 	private Triplet <Boolean, Action, ActionsJouables> jouerActionJoueur (Joueur joueur, Triplet <Boolean, Action, ActionsJouables> config) throws Exception {
 		
 		System.out.println("Joueur : " + joueur.getNom() + ", position : " + joueur.getPositionDeMaFigurine());
@@ -212,7 +171,9 @@ public class Tour implements Visitable{
 		}
 		return new Triplet <> (PasAttaque,0,0) ;
 		
-=======
+	}
+		
+
 	public boolean executerAction(Joueur joueur, float x, float y){
 		Action action = null;
 		Enumeration<Action> e;
@@ -274,7 +235,6 @@ public class Tour implements Visitable{
 	public void changerJoueur(Joueur joueur){		
 		joueur.getMain().setVisible(false);
 		joueurAdverse(joueur).getMain().setVisible(true);
->>>>>>> 7ebb790a0de02c0ff1c5d06bfe4ad5d4bbc5c34a
 	}
 	
 	private Triplet<Integer, Integer, Integer> attaquer_directement_parer (Action actionAJouer, Joueur joueur) throws Exception {
@@ -285,17 +245,7 @@ public class Tour implements Visitable{
 		
 	}
 	
-<<<<<<< HEAD
-	private Triplet<Integer, Integer, Integer> executerAction(Action actionAJouer, Joueur joueur) throws Exception{
-=======
 	private Triplet<Integer, Integer, Integer> jouerAction(Action actionAJouer, Joueur joueur) throws Exception{
-		Carte carteDeplacement=null;
-		Carte carteAction=null;
-		
-		int typeAction;
-		int nbCartesAttqJouees;
-		int valeurCarteAttqJouee;
->>>>>>> 7ebb790a0de02c0ff1c5d06bfe4ad5d4bbc5c34a
 		
 		Triplet<Integer, Integer, Integer> config ;
 		
@@ -312,7 +262,6 @@ public class Tour implements Visitable{
 		default : throw new Exception("Modele.Tour.executerAction : typeAction inconnu") ;
 		}
 		
-<<<<<<< HEAD
 		return config ;
 		
 	}
@@ -327,25 +276,6 @@ public class Tour implements Visitable{
 		tour.defausse = this.defausse.clone() ;
 		
 		return tour ;
-		
-=======
-		return new Triplet<>(typeAction, nbCartesAttqJouees, valeurCarteAttqJouee);
-	}
-	
-	public void remplirMain(Joueur j){		
-		int nbCarteMain = j.getMain().getNombreCarte();
-		
-		int i=nbCarteMain;
-		
-		while(!pioche.estVide() && i < nombreCarteMax){
-			Carte c = pioche.piocher();
-			c.setVisible(true);
-			j.ajouterCarteDansMain(c);
-			i++;
-		}
-		
-		j.getMain().repositionnerMain();
->>>>>>> 7ebb790a0de02c0ff1c5d06bfe4ad5d4bbc5c34a
 	}
 	
 	/**
@@ -389,6 +319,17 @@ public class Tour implements Visitable{
 
 	public void setEstAttaque(Triplet<Integer, Integer, Integer> estAttaque) {
 		this.estAttaque = estAttaque;
+	}
+	
+	@Override
+	public boolean accept(Visiteur v) {
+		// TODO Auto-generated method stub
+		boolean retour = false;
+		retour = retour || pioche.accept(v);
+		retour = retour || defausse.accept(v);
+		retour = retour || joueurPremier.accept(v);
+		retour = retour || joueurSecond.accept(v);
+		return retour;
 	}
 	
 }

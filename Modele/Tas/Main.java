@@ -8,13 +8,19 @@ import Modele.Visiteur;
 
 public class Main extends Tas {
 	
+	// CONSTANTES
+	
 	public final static int nombreCarteMax = 5;
 	public final static int droite = 0;
 	public final static int gauche = 1;
 	
+	// ATTRIBUTS
+	
 	private ArrayList<Carte> main;
 	private int cote;
 	private boolean visible;
+	
+	// CONSTRUCTEURS
 	
 	public Main(int cote, float x, float y, float largeur, float hauteur){
 		super(0, x, y, largeur, hauteur);
@@ -31,53 +37,34 @@ public class Main extends Tas {
 		this(0);
 	}
 	
-	public void ajouter(Carte c){
-		main.add(c);
-		if(cote == droite){
-			c.setTas(Carte.mainDroite);
-		}else{
-			c.setTas(Carte.mainGauche);
-		}
-		nombreCarte[c.getContenu()]++ ;
-		nombreCarte[0]++ ;
+	// TO STRING
+
+	public String toString(){
+		String resultat = "";
+		resultat += "Main [\n";
+		resultat += "    size= " + main.size() + "\n";
+		resultat += "    main= " + main.toString() + "\n";
+		resultat += "    visible= " + visible + "\n";
+		resultat += "  ]\n";
+		return resultat;
 	}
 	
-	public void supprimer(Carte c, int nbCartes, Defausse defausse) throws Exception{
-		
-		ListIterator <Carte> li = main.listIterator() ;
-		int cpt = 0 ;
-		
-		while(li.hasNext()){
-		
-			Carte ci = li.next() ;
-			
-			if (ci.getContenu() == c.getContenu()) {
-				
-				System.out.println(ci) ;
-				defausse.ajouter(ci) ;
-				li.remove();
-				nombreCarte[c.getContenu()]-- ;
-				nombreCarte[0]-- ;
-				cpt++ ;
-				if (cpt == nbCartes) break ;
-				
-			}
-			
-		}
-			
-		if (cpt < nbCartes) throw new Exception ("Modele.Tas.Main.supprimer : rien a supprimer");
-		
-	}
+	// CLONE
 	
+	@SuppressWarnings("unchecked")
 	@Override
-	public boolean accept(Visiteur v) {
-		// TODO Auto-generated method stub
-		boolean retour = v.visite(this);
-        for (Carte c : this.getMain()) {
-            retour = retour || c.accept(v);
-        }
-		return retour;
+	public Main clone () {
+		
+		Main main = new Main() ;
+		main.nombreCarte = this.nombreCarte.clone() ;
+		main.setMain((ArrayList<Carte>) this.getMain().clone()) ;
+		return main ;
+		
 	}
+	
+	/**
+	 * GETTER/SETTER
+	 **/
 	
 	public boolean estVide(){
 		return main.isEmpty();
@@ -123,32 +110,62 @@ public class Main extends Tas {
 		}
 	}
 	
+	/**
+	 * MOTEUR
+	 */
 	
-
-	public String toString(){
-		String resultat = "";
-		resultat += "Main [\n";
-		resultat += "    size= " + main.size() + "\n";
-		resultat += "    main= " + main.toString() + "\n";
-		resultat += "    visible= " + visible + "\n";
-		resultat += "  ]\n";
-		return resultat;
+	public void ajouter(Carte c){
+		main.add(c);
+		if(cote == droite){
+			c.setTas(Carte.mainDroite);
+		}else{
+			c.setTas(Carte.mainGauche);
+		}
+		nombreCarte[c.getContenu()]++ ;
+		nombreCarte[0]++ ;
 	}
 	
-	@SuppressWarnings("unchecked")
-	@Override
-	public Main clone () {
+	public void supprimer(Carte c, int nbCartes, Defausse defausse) throws Exception{
 		
-		Main main = new Main() ;
-		main.nombreCarte = this.nombreCarte.clone() ;
-		main.setMain((ArrayList<Carte>) this.getMain().clone()) ;
-		return main ;
+		ListIterator <Carte> li = main.listIterator() ;
+		int cpt = 0 ;
+		
+		while(li.hasNext()){
+		
+			Carte ci = li.next() ;
+			
+			if (ci.getContenu() == c.getContenu()) {
+				
+				System.out.println(ci) ;
+				defausse.ajouter(ci) ;
+				li.remove();
+				nombreCarte[c.getContenu()]-- ;
+				nombreCarte[0]-- ;
+				cpt++ ;
+				if (cpt == nbCartes) break ;
+				
+			}
+			
+		}
+			
+		if (cpt < nbCartes) throw new Exception ("Modele.Tas.Main.supprimer : rien a supprimer");
 		
 	}
 
 	/**
-	 * ACTION SUR MAIN
+	 * VUE
 	 */
+	
+	@Override
+	public boolean accept(Visiteur v) {
+		// TODO Auto-generated method stub
+		boolean retour = v.visite(this);
+        for (Carte c : this.getMain()) {
+            retour = retour || c.accept(v);
+        }
+		return retour;
+	}
+	
 	public boolean estCollisionCarte(int i, float x, float y){
 		return main.get(i).estCollision(x, y) && i+1<main.size() && !main.get(i+1).estCollision(x, y) || 
 			   main.get(i).estCollision(x, y) && i==main.size()-1;

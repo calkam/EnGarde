@@ -8,7 +8,12 @@ import Modele.Reglages;
 import Modele.Visiteur;
 
 public class Pioche extends Tas {
+	
+	// ATTRIBUT
+	
 	private Stack<Carte> p;
+	
+	// CONSTRUCTEUR
 	
 	public Pioche(){
 		super(25, Reglages.lis("PiocheLargeur"), Reglages.lis("PiocheHauteur"));
@@ -16,11 +21,34 @@ public class Pioche extends Tas {
 		this.melanger();
 	}
 	
-	@Override
-	public boolean accept(Visiteur v) {
-		// TODO Auto-generated method stub
-		return v.visite(this);
+	// TO STRING
+	
+	public String toString(){
+		String resultat = "";
+		resultat += "Pioche [\n";
+		resultat += "  size= " + p.size() + "\n";
+		resultat += "  pioche= " + p.toString() + "\n";
+		resultat += "]\n";
+		return resultat;
+		
 	}
+	
+	// CLONE
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public Pioche clone () {
+		
+		Pioche pioche = new Pioche() ;
+		pioche.nombreCarte = this.nombreCarte.clone() ;
+		pioche.p = (Stack<Carte>) this.p.clone() ;
+		return pioche ;
+		
+	}
+	
+	/**
+	 * MOTEUR
+	 **/
 	
 	// On mélange les cartes de la pioche selon l'algo suivant :
 	// On crée 5 tas de 5 cartes de valeurs identiques de 1 à 5
@@ -79,25 +107,15 @@ public class Pioche extends Tas {
 		nombreCarte[c.getContenu()]--;
 		return c ;
 	}
-		
-	public String toString(){
-		String resultat = "";
-		resultat += "Pioche [\n";
-		resultat += "  size= " + p.size() + "\n";
-		resultat += "  pioche= " + p.toString() + "\n";
-		resultat += "]\n";
-		return resultat;
-		
-	}
 	
-	@SuppressWarnings("unchecked")
+
+	/**
+	 * VUE
+	 **/
+	
 	@Override
-	public Pioche clone () {
-		
-		Pioche pioche = new Pioche() ;
-		pioche.nombreCarte = this.nombreCarte.clone() ;
-		pioche.p = (Stack<Carte>) this.p.clone() ;
-		return pioche ;
-		
+	public boolean accept(Visiteur v) {
+		// TODO Auto-generated method stub
+		return v.visite(this);
 	}
 }

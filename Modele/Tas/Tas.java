@@ -1,15 +1,23 @@
 package Modele.Tas;
 
+import Modele.Visitable;
 import Modele.Composant.Rectangle;
 
 public abstract class Tas extends Rectangle implements Visitable {
 	
+	// CONSTANTE
+	
 	// nombreCarte est un tableau de 6 entiers
 	// La case d'indice i > 0 contient le nombre de cartes de valeur i du Tas
 	// La case d'indice 0 contient le nombre de cartes totales du Tas
+	
 	public final static int carteValeurMax = 6;
 	
+	// ATTRIBUT
+	
 	protected int [] nombreCarte ;
+	
+	// CONSTRUCTEURS
 	
 	public Tas(){
 		this(0);
@@ -30,6 +38,10 @@ public abstract class Tas extends Rectangle implements Visitable {
 		for (int i = 1 ; i < carteValeurMax; i++)
 			this.nombreCarte[i] = 0 ; 
 	}
+	
+	/**
+	 * GETTER/SETTER
+	 **/
 	
 	public abstract boolean estVide();
 	

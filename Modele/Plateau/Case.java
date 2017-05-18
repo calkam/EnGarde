@@ -3,17 +3,25 @@ package Modele.Plateau;
 import Modele.Reglages;
 import Modele.Visitable;
 import Modele.Visiteur;
+import Modele.Composant.ComposantGraphique;
 import Modele.Composant.Rectangle;
 
 public class Case extends Rectangle implements Visitable {
+	
+	// CONSTANTES
+	// COULEURS
 
 	public final static int TRANSPARENT = 0;
 	public final static int ROUGE = 1;
 	public final static int VERT = 2; 
 	public final static int JAUNE = 3; 
 	
+	// ATTRIBUTS
+	
     private int couleur;
     private int numero;
+    
+    // CONSTRUCTEURS
 
     Case(int c, int numero, float x, float y) {
     	super(x, y, Reglages.lis("CaseLargeur"), Reglages.lis("CaseHauteur"));
@@ -29,6 +37,17 @@ public class Case extends Rectangle implements Visitable {
         this.couleur = c;
         this.numero = numero;
     }
+    
+    // TO STRING
+    
+    @Override
+    public String toString() {
+        return "[" + getX() + ", " + getY() + "]," + " [couleur " + couleur + ", numero " + numero + "]";
+    }
+    
+    /**
+	 * GETTER/SETTER
+	 **/
 
     public int getCouleur() {
 		return couleur;
@@ -38,24 +57,21 @@ public class Case extends Rectangle implements Visitable {
 		this.couleur = couleur;
 	}
 
-<<<<<<< HEAD
 	protected ComposantGraphique copieVers(float x, float y) {
         return new Case(couleur, x, y);
     }
-=======
+
 	public int getNumero() {
 		return numero;
 	}
->>>>>>> 7ebb790a0de02c0ff1c5d06bfe4ad5d4bbc5c34a
 
 	public void setNumero(int numero) {
 		this.numero = numero;
 	}
-
-	@Override
-    public String toString() {
-        return "[" + getX() + ", " + getY() + "]," + " [couleur " + couleur + ", numero " + numero + "]";
-    }
+	
+	/**
+	 * VUE
+	 **/
 
 	@Override
 	public boolean accept(Visiteur v) {

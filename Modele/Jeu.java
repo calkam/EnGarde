@@ -7,15 +7,20 @@ import Modele.Plateau.*;
 import Modele.Tas.*;
 
 public class Jeu implements Visitable{
+<<<<<<< HEAD
 	
 <<<<<<< HEAD
-	private final static int VICTOIRE = 3; 
+	public final static int VICTOIRE = 3; 
 	
 	// CONSTANTES POSITION JOUEUR/FIGURINE
 	
 	private final static int PositionGauche = Joueur.DROITE ;
 	private final static int PositionDroite = Joueur.GAUCHE ;
 =======
+	public final static int VICTOIRE = 3; 
+>>>>>>> 7ebb790a0de02c0ff1c5d06bfe4ad5d4bbc5c34a
+=======
+	
 	public final static int VICTOIRE = 3; 
 >>>>>>> 7ebb790a0de02c0ff1c5d06bfe4ad5d4bbc5c34a
 	
@@ -29,6 +34,7 @@ public class Jeu implements Visitable{
 	private long dernierChrono;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	public void init() throws Exception {
 		plateauScore = new PlateauScore() ;
 		piste = new Piste(new Figurine(PositionGauche, 0,0,1), new Figurine(PositionDroite, 0,0,23)) ;
@@ -37,6 +43,8 @@ public class Jeu implements Visitable{
 		joueur1.setScore(0);
 		joueur2.setScore(0);
 =======
+=======
+>>>>>>> 7ebb790a0de02c0ff1c5d06bfe4ad5d4bbc5c34a
 	public void init(String j1, String j2, String type1, String type2) throws Exception {
 		Score scoreJ1 = new Score();
 		Score scoreJ2 = new Score();
@@ -48,6 +56,9 @@ public class Jeu implements Visitable{
 		joueur1.setScore(scoreJ1);
 		joueur2.setScore(scoreJ2);
 		this.dernierChrono = System.nanoTime();
+<<<<<<< HEAD
+>>>>>>> 7ebb790a0de02c0ff1c5d06bfe4ad5d4bbc5c34a
+=======
 >>>>>>> 7ebb790a0de02c0ff1c5d06bfe4ad5d4bbc5c34a
 	}
 	
@@ -119,6 +130,7 @@ public class Jeu implements Visitable{
 	
 	public void nouvelleManche(){
 <<<<<<< HEAD
+<<<<<<< HEAD
 		
 		Historique histo = null ;
 		
@@ -132,6 +144,8 @@ public class Jeu implements Visitable{
 		joueur2.viderMain();
 		manche = new Manche(manche.getNumero()+1, joueur1, joueur2, piste, histo);
 =======
+=======
+>>>>>>> 7ebb790a0de02c0ff1c5d06bfe4ad5d4bbc5c34a
 		manche = new Manche(manche.getNumero()+1, joueur1, joueur2);
 >>>>>>> 7ebb790a0de02c0ff1c5d06bfe4ad5d4bbc5c34a
 	}
@@ -199,6 +213,7 @@ public class Jeu implements Visitable{
 
 	public PlateauScore getPlateauScoreJ1() {
 		return plateauScoreJ1;
+<<<<<<< HEAD
 	}
 
 	public void setPlateauScoreJ1(PlateauScore plateauScore) {
@@ -209,6 +224,18 @@ public class Jeu implements Visitable{
 		return plateauScoreJ2;
 	}
 
+=======
+	}
+
+	public void setPlateauScoreJ1(PlateauScore plateauScore) {
+		this.plateauScoreJ2 = plateauScore;
+	}
+	
+	public PlateauScore getPlateauScoreJ2() {
+		return plateauScoreJ2;
+	}
+
+>>>>>>> 7ebb790a0de02c0ff1c5d06bfe4ad5d4bbc5c34a
 	public void setPlateauScoreJ2(PlateauScore plateauScore) {
 		this.plateauScoreJ2 = plateauScore;
 	}

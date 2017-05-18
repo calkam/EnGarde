@@ -2,8 +2,12 @@ package Modele.Plateau;
 
 import java.util.ArrayList;
 
+import Modele.Reglages;
+import Modele.Visitable;
+import Modele.Visiteur;
 import Modele.Composant.ObjetMouvant;
 import Modele.Composant.Rectangle;
+
 
 public class Piste extends Rectangle implements Visitable {
 	
@@ -51,38 +55,6 @@ public class Piste extends Rectangle implements Visitable {
 			c.setNumero(i+1);
 			cases.add(c);
 		}
-	}
-	
-	// METHODES MOTEUR FIGURINE
-	
-	public boolean estDansPiste(int position) {
-		return position >=1 && position <= nombreDeCases;
-	}
-	
-	public void afficherPiste(){
-		String str = "";
-		String strPosition = "";
-		
-		for(int i = 1 ; i < 24; i++){
-			if(i == figurineGauche.getPosition()){
-				str += "♙   ";
-			}else if(i == figurineDroite.getPosition()){
-				str += "♟   ";
-			}else{
-				str += "_   ";
-			}
-			
-			if(i < 10){
-				strPosition += i + "   ";		
-			}else{
-				strPosition += i + "  ";
-			}
-		}
-		
-		strPosition += "\n";
-		
-		System.out.println(str);
-		System.out.println(strPosition);
 	}
 	
 	// TO STRING
@@ -169,15 +141,51 @@ public class Piste extends Rectangle implements Visitable {
 		this.cases = cases;
 	}
 	
-	public void rafraichit(long t) {
-	    tempsEcoule = t;
-	}
-
-	long tempsEcoule() {
+	public long getTempsEcoule() {
 		return tempsEcoule;
 	}
+
+	public void setTempsEcoule(long tempsEcoule) {
+		this.tempsEcoule = tempsEcoule;
+	}
+
+	/**
+	 * MOTEUR
+	 */
 	
-	// METHODES VUE FIGURINE
+	public boolean estDansPiste(int position) {
+		return position >=1 && position <= nombreDeCases;
+	}
+	
+	public void afficherPiste(){
+		String str = "";
+		String strPosition = "";
+		
+		for(int i = 1 ; i < 24; i++){
+			if(i == figurineGauche.getPosition()){
+				str += "♙   ";
+			}else if(i == figurineDroite.getPosition()){
+				str += "♟   ";
+			}else{
+				str += "_   ";
+			}
+			
+			if(i < 10){
+				strPosition += i + "   ";		
+			}else{
+				strPosition += i + "  ";
+			}
+		}
+		
+		strPosition += "\n";
+		
+		System.out.println(str);
+		System.out.println(strPosition);
+	}
+	
+	/**
+	 * VUE
+	 */
 	
 	@Override
 	public boolean accept(Visiteur v) {
@@ -190,6 +198,7 @@ public class Piste extends Rectangle implements Visitable {
 		retour = retour || messageBox.accept(v);
         return retour;
 	}
+
 
 	public void fixeDimensions(float l, float h){
 		this.setLargeur(l);

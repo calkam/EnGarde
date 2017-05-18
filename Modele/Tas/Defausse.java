@@ -6,23 +6,51 @@ import Modele.Reglages;
 import Modele.Visiteur;
 
 public class Defausse extends Tas {
+	
+	// ATTRIBUT
+	
 	private Stack<Carte> d;
+	
+	// CONSTRUCTEURS
 	
 	public Defausse(){
 		super(0, Reglages.lis("DefausseLargeur"), Reglages.lis("DefausseHauteur"));
 		d = new Stack<Carte>();
 	}
 	
-	@Override
-	public boolean accept(Visiteur v) {
-		// TODO Auto-generated method stub
-		return v.visite(this);
-	}
-	
 	public Defausse(int nombre){
 		super(nombre);
 		d = new Stack<Carte>();
 	}
+	
+	// TO STRING
+	
+	@Override
+	public String toString() {
+		String resultat = "";
+		resultat += "Defausse [\n";
+		resultat += "  size= " + d.size() + "\n";
+		resultat += "  defausse= " + d.toString() + "\n";
+		resultat += "]\n";
+		return resultat;
+	}
+	
+	// CLONE
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public Defausse clone () {
+		
+		Defausse defausse = new Defausse() ;
+		defausse.nombreCarte = this.nombreCarte.clone() ;
+		defausse.d = (Stack<Carte>) this.d.clone() ;
+		return defausse ;
+		
+	}
+	
+	/**
+	 * MOTEUR
+	 */
 	
 	public void ajouter(Carte c){
 		c.setTas(Carte.defausse);
@@ -42,26 +70,9 @@ public class Defausse extends Tas {
 		return d.isEmpty();
 	}
 	
-	@Override
-	public String toString() {
-		String resultat = "";
-		resultat += "Defausse [\n";
-		resultat += "  size= " + d.size() + "\n";
-		resultat += "  defausse= " + d.toString() + "\n";
-		resultat += "]\n";
-		return resultat;
-	}
-	
-	@SuppressWarnings("unchecked")
-	@Override
-	public Defausse clone () {
-		
-		Defausse defausse = new Defausse() ;
-		defausse.nombreCarte = this.nombreCarte.clone() ;
-		defausse.d = (Stack<Carte>) this.d.clone() ;
-		return defausse ;
-		
-	}
+	/**
+	 * GETTER/SETTER
+	 **/
 	
 	public Stack<Carte> getD() {
 		return d;
@@ -70,4 +81,13 @@ public class Defausse extends Tas {
 		this.d = d;
 	}
 	
+	/**
+	 * VUE
+	 **/
+
+	@Override
+	public boolean accept(Visiteur v) {
+		// TODO Auto-generated method stub
+		return v.visite(this);
+	}
 }

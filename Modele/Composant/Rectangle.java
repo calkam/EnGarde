@@ -30,11 +30,6 @@ public class Rectangle extends ComposantGraphique {
             return false;
         }
 	}
-	
-	protected ComposantGraphique copieVers(float x, float y) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public float getLargeur() {

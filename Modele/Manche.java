@@ -24,29 +24,22 @@ public class Manche implements Visitable{
 	private Joueur joueur1;
 	private Joueur joueur2;
 	
-<<<<<<< HEAD
 	public Manche(int numero, int nbTourRealise, Piste piste, Tour tour) {
-=======
-	public Manche(int numero, int nbTourRealise, Joueur j1, Joueur j2, Tour tour) {
->>>>>>> 7ebb790a0de02c0ff1c5d06bfe4ad5d4bbc5c34a
+
 		this.numero = numero;
 		this.nbTourRealise = nbTourRealise;
 		this.piste = piste ;
 		defausse = new Defausse();
 		pioche = new Pioche();
-		initialiserJoueur(j1, j2);
 		tourEnCours = tour;
 		initialiserTour();
 	}
 	
-<<<<<<< HEAD
 	public Manche(int numero, Joueur joueur1, Joueur joueur2, Piste piste, Historique histo){
 		this(numero, 0, piste, new Tour(piste, histo));
 		initialiserJoueur(joueur1, joueur2);
-=======
-	public Manche(int numero, Joueur joueur1, Joueur joueur2){
-		this(numero, 0, joueur1, joueur2, new Tour());
->>>>>>> 7ebb790a0de02c0ff1c5d06bfe4ad5d4bbc5c34a
+		
+		
 	}
 
 	public void initialiserTour(){
@@ -104,7 +97,6 @@ public class Manche implements Visitable{
 		joueur2.reinitialiserPositionFigurine();
 	}
 	
-<<<<<<< HEAD
 	public void jouerManche() throws Exception{
 		int resultat;
 		Couple<Joueur, Joueur> tmp;
@@ -128,7 +120,9 @@ public class Manche implements Visitable{
 		
 		System.out.println("/*************************************************************************************************************/");
 		piste.afficherPiste();	
-=======
+		
+	}
+
 	public void commencerManche(){
 		try {
 			tourEnCours.getJoueurSecond().getMain().setVisible(false);
@@ -158,7 +152,6 @@ public class Manche implements Visitable{
 	}
 	
 	public int finDeManche(int resultat) throws Exception{
->>>>>>> 7ebb790a0de02c0ff1c5d06bfe4ad5d4bbc5c34a
 		
 		if(resultat == Tour.joueurPremierPerdu){			
 			joueurAGagne(tourEnCours.getJoueurSecond());
@@ -190,7 +183,7 @@ public class Manche implements Visitable{
 				}else if(nbCartesDistanceJ1 < nbCartesDistanceJ2){
 					System.out.println(joueur2.getNom() + " ayant plus de cartes pour attaquer directectement son adversaire...");
 					joueurAGagne(joueur2);
-<<<<<<< HEAD
+
 				}
 			}else{
 				int distanceEntreCaseMedianeEtFigurineJ1 = calculerNormeEntreDeuxPositions(12, joueur1.getPositionDeMaFigurine());
@@ -202,9 +195,7 @@ public class Manche implements Visitable{
 				}else if(distanceEntreCaseMedianeEtFigurineJ1 < distanceEntreCaseMedianeEtFigurineJ2){
 					System.out.println(joueur1.getNom() + " étant plus proche de la case médiane...");
 					joueurAGagne(joueur1);
-=======
 					return JOUEUR2GAGNE;
->>>>>>> 7ebb790a0de02c0ff1c5d06bfe4ad5d4bbc5c34a
 				}else{
 					return testVictoirePiocheVideDistanceCaseMediane();
 				}				
