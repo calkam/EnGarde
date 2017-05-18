@@ -83,6 +83,10 @@ public class Main extends Tas {
 		}
 	}
 	
+	public int size(){
+		return main.size();
+	}
+	
 	public int getCote() {
 		return cote;
 	}
@@ -98,9 +102,9 @@ public class Main extends Tas {
 	public void setVisible(boolean visible) {
 		this.visible = visible;
 		for(Carte c : main){
-			/*if(!visible){
+			if(!visible){
 				c.setSelectionne(false);
-			}*/
+			}
 			c.setVisible(visible);
 		}
 	}
@@ -140,14 +144,14 @@ public class Main extends Tas {
 				}
 			}
 		}
-		return new Carte();
+		return null;
 	}
 
 	public void repositionnerMain() {
 		// TODO Auto-generated method stub
 		int i=0;
 		for(Carte c : main){
-			c.setX(i*(c.getLargeur()/2));
+			c.setX((float)(i*c.getLargeur()*0.63));
 			c.setY(Reglages.lis("PositionYCarte"));
 			i++;
 		}

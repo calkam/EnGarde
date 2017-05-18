@@ -42,7 +42,7 @@ public class MainApp extends Application {
         initRootLayout();
         
         //acceuil();
-        jeu();
+        jeu("Kaiba", "Yugi", "Humain", "Humain");
     }
     
     /**
@@ -86,6 +86,7 @@ public class MainApp extends Application {
             primaryStage.getScene().setCursor(new ImageCursor(imageC , 100, 100));
 
             //Utils.playSound("MainTheme.mp3");
+            Utils.playSound("itsTimeToDuel.mp3");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -147,7 +148,7 @@ public class MainApp extends Application {
         }
 	}
    	
-   	public void jeu() {
+   	public void jeu(String j1, String j2, String type1, String type2) {
    		try {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
@@ -180,7 +181,7 @@ public class MainApp extends Application {
             terrain.toFront();
             
             try {
-				jeu.init();
+				jeu.init(j1, j2, type1, type2);
 				jeu.lancerJeu();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block

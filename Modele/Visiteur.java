@@ -3,7 +3,10 @@ package Modele;
 import Modele.Composant.Composant;
 import Modele.Composant.ObjetMouvant;
 import Modele.Plateau.Case;
+import Modele.Plateau.Jeton;
+import Modele.Plateau.MessageBox;
 import Modele.Plateau.Piste;
+import Modele.Plateau.PlateauScore;
 import Modele.Plateau.Figurine.Figurine;
 import Modele.Plateau.Figurine.FigurineDroite;
 import Modele.Plateau.Figurine.FigurineGauche;
@@ -50,6 +53,18 @@ public abstract class Visiteur {
 		return visite((Composant) m);
 	}
 	
+	public boolean visite(PlateauScore ps) {
+		return visite((Composant) ps);
+	}
+	
+	public boolean visite(Jeton j) {
+		return visite((Composant) j);
+	}
+	
+	public boolean visite(MessageBox m){
+		return visite((Composant) m);
+	}
+	
 	public boolean visite(Figurine f) {
 		return visite((ObjetMouvant) f);
 	}
@@ -61,4 +76,5 @@ public abstract class Visiteur {
 	public boolean visite(FigurineGauche fg) {
 		return visite((Figurine) fg);
 	}
+
 }

@@ -69,6 +69,10 @@ public class Pioche extends Tas {
 		return (p.size() == 0);
 	}
 	
+	public int size(){
+		return p.size();
+	}
+	
 	public Carte piocher(){
 		nombreCarte[0]--;
 		Carte c = p.pop();

@@ -87,15 +87,16 @@ public class Tour implements Visitable{
 			Action action;
 			Enumeration<Action> e;
 			
-			actions_jouables = joueur.peutFaireAction(joueur.getMain().getCote(), cartes, estAttaque);
+			actions_jouables = joueur.peutFaireActionAvecCarteSelectionne(joueur.getMain().getCote(), cartes, estAttaque);
 			
-			if(joueur.peutFaireAction(joueur.getMain().getCote(), joueur.getCartesDeLaMain(), estAttaque).size() != 0){
+			if(joueur.peutFaireAction(estAttaque).size() != 0){
 				e = actions_jouables.elements();
 				
 				joueur.getPiste().reinitialiserCouleurCase();
 				
 				while(e.hasMoreElements()){
 					action = e.nextElement();
+					System.out.println(action);
 					if(actionNeutre(action)){
 						joueur.getPiste().getCases().get(action.getPositionArrivee()-1).setCouleur(Case.ROUGE);
 					}else if(actionOffensive(action)){
@@ -108,6 +109,7 @@ public class Tour implements Visitable{
 						}
 					}
 				}
+				System.out.println("");
 				return joueurPasPerdu;
 			}
 			
@@ -159,6 +161,21 @@ public class Tour implements Visitable{
 		}else{
 			return joueurPerdu;
 		}
+	}
+	
+	public boolean adversairePeutFaireAction(Joueur joueur){
+		ActionsJouables testAction;
+		
+		try {
+			testAction = joueur.peutFaireAction(estAttaque);
+			if(testAction == null || testAction.size() == 0){
+				return false;
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return true;
 	}
 	
 	public void changerJoueur(Joueur joueur){		

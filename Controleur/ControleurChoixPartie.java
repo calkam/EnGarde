@@ -17,7 +17,7 @@ public class ControleurChoixPartie {
 		
     private MainApp mainApp;
     
-    ObservableList<String> ChoixCombattantList = FXCollections.observableArrayList("Joueur","IA");
+    ObservableList<String> ChoixCombattantList = FXCollections.observableArrayList("Humain","IA");
     ObservableList<String> ChoixNiveauList = FXCollections.observableArrayList("Facile","Moyen","Difficile","Légendaire");
 
     
@@ -58,14 +58,16 @@ public class ControleurChoixPartie {
     private TextField NomCombattant2;
     
     @FXML
+    private Text nomJ1;
+    
+    @FXML
 	private void initialize(){
     	Label modej1 = new Label();
         Label modej2 = new Label();
         Label niveauj1 = new Label();
         Label niveauj2 = new Label();
-
-    	
-		ChoixCombattant1.setValue("Joueur");
+	
+		ChoixCombattant1.setValue("Humain");
     	ChoixCombattant1.setItems(ChoixCombattantList);
     	ChoixCombattant2.setValue("IA");
     	ChoixCombattant2.setItems(ChoixCombattantList);
@@ -77,18 +79,14 @@ public class ControleurChoixPartie {
 		ChoixCombattant1.getSelectionModel().selectedItemProperty().addListener(
 				(ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
 					modej1.setText((String)newValue);
-					if(modej1.getText().equals("Joueur")){
-						TexteNiveau1.setVisible(false);
+					if(modej1.getText().equals("Humain")){
 						NiveauCombattant1.setVisible(false);
 						
-						TexteNom1.setVisible(true);
 						NomCombattant1.setVisible(true);			
 					}
-					else if(modej1.getText().equals("IA")){					
-						TexteNom1.setVisible(false);
+					else if(modej1.getText().equals("IA")){		
 						NomCombattant1.setVisible(false);
 						
-						TexteNiveau1.setVisible(true);
 						NiveauCombattant1.setVisible(true);
 					}
 				});
@@ -96,18 +94,14 @@ public class ControleurChoixPartie {
 		ChoixCombattant2.getSelectionModel().selectedItemProperty().addListener(
 				(ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
 					modej2.setText((String)newValue);
-					if(modej2.getText().equals("Joueur")){
-						TexteNiveau2.setVisible(false);
+					if(modej2.getText().equals("Humain")){
 						NiveauCombattant2.setVisible(false);
 						
-						TexteNom2.setVisible(true);
 						NomCombattant2.setVisible(true);			
 					}
-					else if(modej2.getText().equals("IA")){					
-						TexteNom2.setVisible(false);
+					else if(modej2.getText().equals("IA")){	
 						NomCombattant2.setVisible(false);
 						
-						TexteNiveau2.setVisible(true);
 						NiveauCombattant2.setVisible(true);
 					}
 				});
@@ -120,8 +114,7 @@ public class ControleurChoixPartie {
 		NiveauCombattant2.getSelectionModel().selectedItemProperty().addListener(
 				(ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
 					niveauj2.setText((String)newValue);
-				});
-		
+				});		
 	}
     
     public ControleurChoixPartie(){
@@ -133,7 +126,7 @@ public class ControleurChoixPartie {
 	
 	@FXML
     private void lancerPartie(){
-		mainApp.jeu();
+		mainApp.jeu(NomCombattant1.getText(), NomCombattant2.getText(), ChoixCombattant1.getValue(), ChoixCombattant2.getValue());
     }
 	
 	@FXML

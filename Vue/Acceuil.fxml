@@ -37,27 +37,27 @@
                 <RowConstraints fillHeight="false" minHeight="50.0" valignment="TOP" vgrow="ALWAYS" />
               </rowConstraints>
                <children>
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleNouvellePartie" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefWidth="340.0" text="Nouvelle Partie" textOverrun="CLIP" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleNouvellePartie" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefHeight="40.0" prefWidth="340.0" text="Nouvelle Partie" textOverrun="CLIP" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
                      <font>
-                        <Font name="eufm10" size="20.0" />
+                        <Font name="MathJax_Caligraphic-Regular" size="18.0" />
                      </font>
                      <GridPane.margin>
                         <Insets />
                      </GridPane.margin>
                   </Button>
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefWidth="340.0" stylesheets="@Theme.css" text="Tutoriel" textOverrun="CLIP" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefHeight="40.0" prefWidth="340.0" stylesheets="@Theme.css" text="Tutoriel" textOverrun="CLIP" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
                      <font>
-                        <Font name="eufm10" size="20.0" />
+                        <Font name="MathJax_Caligraphic-Regular" size="18.0" />
                      </font>
                   </Button>
-                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleSauvegarde" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefWidth="340.0" stylesheets="@Theme.css" text="Charger/Sauvegarder Partie" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleSauvegarde" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefHeight="40.0" prefWidth="340.0" stylesheets="@Theme.css" text="Charger/Sauvegarder Partie" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
                      <font>
-                        <Font name="eufm10" size="20.0" />
+                        <Font name="MathJax_Caligraphic-Regular" size="18.0" />
                      </font>
                   </Button>
-                  <Button alignment="CENTER" focusTraversable="false" mnemonicParsing="false" onAction="#handleQuitter" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefWidth="340.0" stylesheets="@Theme.css" text="Quitter" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
+                  <Button alignment="CENTER" focusTraversable="false" mnemonicParsing="false" onAction="#handleQuitter" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefHeight="40.0" prefWidth="340.0" stylesheets="@Theme.css" text="Quitter" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
                      <font>
-                        <Font name="eufm10" size="20.0" />
+                        <Font name="MathJax_Caligraphic-Regular" size="18.0" />
                      </font>
                   </Button>
                </children>
@@ -72,7 +72,7 @@
             </ImageView>
             <Text boundsType="LOGICAL_VERTICAL_CENTER" nodeOrientation="LEFT_TO_RIGHT" smooth="false" stroke="WHITE" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="3.0" styleClass="text" text="En Garde" textAlignment="CENTER" textOrigin="TOP" wrappingWidth="448.48681640625" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                <font>
-                  <Font name="eufm10" size="96.0" />
+                  <Font name="MathJax_Caligraphic-Regular" size="96.0" />
                </font>
                <GridPane.margin>
                   <Insets />

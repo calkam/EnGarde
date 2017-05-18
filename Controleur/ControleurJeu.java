@@ -4,6 +4,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.ImageCursor;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 
@@ -13,6 +14,8 @@ import Modele.Jeu;
 import Modele.Manche;
 import Modele.Tour;
 import Modele.Joueur.Joueur;
+import Modele.Joueur.Humain.HumainDroit;
+import Modele.Joueur.Humain.HumainGauche;
 import Modele.Tas.Carte;
 import Vue.MainApp;
 
@@ -31,6 +34,15 @@ public class ControleurJeu {
     @FXML
     private Canvas mainDroite;
     
+    @FXML
+    private Label nbCartePioche;
+    
+    @FXML
+    private Label nomJoueur1;
+    
+    @FXML
+    private Label nomJoueur2;
+    
     private ArrayList<Carte> cartes;
     
     private Joueur joueurEnCours = null;
@@ -41,7 +53,9 @@ public class ControleurJeu {
 
 	public void init(Jeu j){
 		this.setJeu(j);
-		
+		nbCartePioche.setText(Integer.toString(jeu.getManche().getPioche().size()));
+		nomJoueur1.setText(jeu.getJoueur1().getNom());
+		nomJoueur2.setText(jeu.getJoueur2().getNom());
 		setActionTerrain();
 		setActionMain();
 		cartes = new ArrayList<Carte>();
@@ -66,13 +80,13 @@ public class ControleurJeu {
 		}else{
 			joueurEnCours = jeu.getJoueur2();
 		}
-		carteAction = joueurEnCours.getMain().getCarteClick(x, y);
-    	if(!cartes.contains(carteAction)){
-    		cartes.add(carteAction);
-    	}else{
-    		cartes.remove(carteAction);
-    	}
-    	
+		if((carteAction = joueurEnCours.getMain().getCarteClick(x, y)) != null){
+	    	if(!cartes.contains(carteAction)){
+	    		cartes.add(carteAction);
+	    	}else{
+	    		cartes.remove(carteAction);
+	    	}
+		}
     	return jeu.getManche().getTourEnCours().possibiliteAction(joueurEnCours, cartes);
 	}
 	
@@ -96,6 +110,7 @@ public class ControleurJeu {
 	
 	private void verifierFinDeLaPioche(){
 		int resultat;
+		nbCartePioche.setText(Integer.toString(jeu.getManche().getPioche().size()));
 		if(jeu.getManche().getPioche().estVide()){
 			try {
 				resultat = jeu.getManche().finDeManche(Tour.piocheVide);
@@ -110,19 +125,18 @@ public class ControleurJeu {
 	private void verifierFinDuJeu(int resultat){
 		cartes = new ArrayList<Carte>();
 		if(!jeu.gainPartie()){
+			if(resultat == Manche.JOUEUR1GAGNE){
+				jeu.changerScore(jeu.getJoueur1());
+			}else if(resultat == Manche.JOUEUR2GAGNE){
+				jeu.changerScore(jeu.getJoueur2());
+			}
 			jeu.nouvelleManche();
+			nbCartePioche.setText(Integer.toString(jeu.getManche().getPioche().size()));
 			try {
 				jeu.lancerLaManche();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
-		}else{
-			
-			if(resultat == Manche.JOUEUR1){
-				jeu.affichageVictoire(jeu.getJoueur1().getNom(), jeu.getJoueur2().getNom());
-			}else{
-				jeu.affichageVictoire(jeu.getJoueur2().getNom(), jeu.getJoueur1().getNom());
 			}
 		}
 	}
@@ -149,8 +163,8 @@ public class ControleurJeu {
             	switch (event.getButton()) {
         	        case PRIMARY:
         	        	boolean peutFaireAction;
-        	        	peutFaireAction = modifierActionPossible(2, event.getX(), event.getY());
-        	        	verifierFinDeManche(jeu.getJoueur2(), peutFaireAction);
+    	        		peutFaireAction = modifierActionPossible(2, event.getX(), event.getY());
+    	        		verifierFinDeManche(jeu.getJoueur2(), peutFaireAction);
         	            break;
         	        default:
         	            break;
@@ -171,6 +185,8 @@ public class ControleurJeu {
         	        		if(peutFaireAction){
         	        			cartes = new ArrayList<Carte>();
         	        		}
+        	        		peutFaireAction = jeu.getManche().getTourEnCours().adversairePeutFaireAction(joueurEnCours);
+        	        		verifierFinDeManche(jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours), peutFaireAction);
         	        		verifierFinDeLaPioche();
         	        	}
         	            break;
@@ -179,18 +195,18 @@ public class ControleurJeu {
             	}
             }
         });
-        
-		terrain.setOnMouseMoved(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-            	//jeu.getPiste().getCasesHover(event.getX(), event.getY());
-            }
-        });
 	}
 
 	@FXML
 	private void menuPrincipal(){
 		mainApp.acceuil();
+	}
+	
+	@FXML
+	private void nouvellePartie(){
+		String type1 = jeu.getJoueur1() instanceof HumainGauche || jeu.getJoueur1() instanceof HumainDroit ? "Humain" : "IA" ;
+		String type2 = jeu.getJoueur2() instanceof HumainGauche || jeu.getJoueur2() instanceof HumainDroit ? "Humain" : "IA" ;
+		mainApp.jeu(jeu.getJoueur1().getNom(), jeu.getJoueur2().getNom(), type1, type2);
 	}
 	
 	public Jeu getJeu() {
