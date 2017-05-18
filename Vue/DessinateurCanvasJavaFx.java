@@ -28,7 +28,7 @@ public class DessinateurCanvasJavaFx extends Visiteur {
     private Canvas scoreGauche;
     private Canvas mainGauche;
     
-    public static boolean visibilityActivated = true;
+    public static boolean visibilityActivated = false;
     
     public GraphicsContext gcTerrain, gcPioche, gcDefausse, gcScoreDroit, gcMainDroite, gcScoreGauche, gcMainGauche;
 	

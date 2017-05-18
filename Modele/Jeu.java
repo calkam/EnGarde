@@ -7,7 +7,7 @@ import Modele.Tas.*;
 
 public class Jeu implements Visitable{
 	
-	public final static int VICTOIRE = 1; 
+	public final static int VICTOIRE = 5; 
 	
 	private Joueur joueur1;
 	private Joueur joueur2;
