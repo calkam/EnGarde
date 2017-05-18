@@ -124,12 +124,12 @@ public class ControleurJeu {
 	
 	private void verifierFinDuJeu(int resultat){
 		cartes = new ArrayList<Carte>();
+		if(resultat == Manche.JOUEUR1GAGNE){
+			jeu.changerScore(jeu.getJoueur1());
+		}else if(resultat == Manche.JOUEUR2GAGNE){
+			jeu.changerScore(jeu.getJoueur2());
+		}
 		if(!jeu.gainPartie()){
-			if(resultat == Manche.JOUEUR1GAGNE){
-				jeu.changerScore(jeu.getJoueur1());
-			}else if(resultat == Manche.JOUEUR2GAGNE){
-				jeu.changerScore(jeu.getJoueur2());
-			}
 			jeu.nouvelleManche();
 			nbCartePioche.setText(Integer.toString(jeu.getManche().getPioche().size()));
 			try {

@@ -96,7 +96,6 @@ public class Tour implements Visitable{
 				
 				while(e.hasMoreElements()){
 					action = e.nextElement();
-					System.out.println(action);
 					if(actionNeutre(action)){
 						joueur.getPiste().getCases().get(action.getPositionArrivee()-1).setCouleur(Case.ROUGE);
 					}else if(actionOffensive(action)){
@@ -109,7 +108,6 @@ public class Tour implements Visitable{
 						}
 					}
 				}
-				System.out.println("");
 				return joueurPasPerdu;
 			}
 			
@@ -167,8 +165,8 @@ public class Tour implements Visitable{
 		ActionsJouables testAction;
 		
 		try {
-			testAction = joueur.peutFaireAction(estAttaque);
-			if(testAction == null || testAction.size() == 0){
+			testAction = joueurAdverse(joueur).peutFaireAction(estAttaque);
+			if(testAction.size() == 0){
 				return false;
 			}
 		} catch (Exception e) {

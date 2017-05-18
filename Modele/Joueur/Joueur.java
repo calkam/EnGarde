@@ -72,7 +72,7 @@ public abstract class Joueur implements Visitable{
 		ActionsJouables actions_jouables = new ActionsJouables () ;
 		Carte carte;
 		Carte carteOpt;
-		
+
 		for(int i=0; i<main.getNombreCarte(); i++){
 			
 			carte = main.getCarte(i);
@@ -113,11 +113,8 @@ public abstract class Joueur implements Visitable{
 					}
 				}
 			}else{
-				
-				if(main.getNombreCarteGroupe(carte.getContenu()) == est_attaque.getC2()){
-					if(peut_executer_parade(carte.getContenu(), est_attaque.getC2(), est_attaque.getC3())){
-						actions_jouables.ajouterActionDefensive(carte.getID(), Parade, getPositionFigurine(), null, carte, est_attaque.getC2());
-					}
+				if(peut_executer_parade(carte.getContenu(), est_attaque.getC2(), est_attaque.getC3())){
+					actions_jouables.ajouterActionDefensive(carte.getID(), Parade, getPositionFigurine(), null, carte, est_attaque.getC2());
 				}
 				
 				if(est_attaque.getC1() == Tour.attaqueIndirect){
@@ -128,7 +125,7 @@ public abstract class Joueur implements Visitable{
 				
 			}
 		}
-			
+		
 		return actions_jouables ;
 			
 	}
@@ -217,10 +214,8 @@ public abstract class Joueur implements Visitable{
 				
 			}else{
 				
-				if(main.getNombreCarteGroupe(carte.getContenu()) == est_attaque.getC2()){
-					if(peut_executer_parade(carte.getContenu(), est_attaque.getC2(), est_attaque.getC3())){
-						actions_jouables.ajouterActionDefensive(carte.getID(), Parade, getPositionFigurine(), null, carte, est_attaque.getC2());
-					}
+				if(peut_executer_parade(carte.getContenu(), est_attaque.getC2(), est_attaque.getC3())){
+					actions_jouables.ajouterActionDefensive(carte.getID(), Parade, getPositionFigurine(), null, carte, est_attaque.getC2());
 				}
 					
 				if(main.size() == 1){

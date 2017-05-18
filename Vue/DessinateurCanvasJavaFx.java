@@ -19,8 +19,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 public class DessinateurCanvasJavaFx extends Visiteur {
-
-	private Piste piste;
 	
     private Canvas terrain;
     private Canvas pioche;
@@ -48,7 +46,6 @@ public class DessinateurCanvasJavaFx extends Visiteur {
     
     public boolean visite(Piste p){
     	gcTerrain = terrain.getGraphicsContext2D();
-    	piste = p;
     	gcTerrain.clearRect(0, 0, terrain.getWidth(), terrain.getHeight());
     	dessinerTerrain(gcTerrain);
 		return false;
@@ -261,13 +258,11 @@ public class DessinateurCanvasJavaFx extends Visiteur {
     	gc.drawImage(i, x, y, l, h);
     }
 
-    private void dessinerMessageBox(GraphicsContext gc, float x, float y, float l, float h) {
+    /*private void dessinerMessageBox(GraphicsContext gc, float x, float y, float l, float h) {
 		// TODO Auto-generated method stub
     	gc.setFill(Color.BROWN);
 		gc.fillRect(x, y, l, h);
-	}
-    
-    //3 -> 15, 50 -> 25, 25 -> 6
+	}*/
     
     private void ecrireTexte(GraphicsContext gc, float x, float y, String s, int length){
     	float policeSize = (float) 22.5;
