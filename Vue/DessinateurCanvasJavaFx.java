@@ -17,6 +17,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 public class DessinateurCanvasJavaFx extends Visiteur {
 	
@@ -260,10 +261,7 @@ public class DessinateurCanvasJavaFx extends Visiteur {
     private void ecrireTexte(GraphicsContext gc, float x, float y, String s, int length){
     	float policeSize = (float) 22.5;
     	float recule = (float) (length*(policeSize/4.10));
-    	Font f = new Font("Courier", policeSize);
-    	Font f2 = new Font();
-    	gc.setFill(Color.BROWN);
-		gc.fillRect(x-recule, 32, recule*2+7 , 30);
+    	Font f = Font.font("Courier", FontWeight.EXTRA_BOLD, policeSize);
     	gc.setFill(Color.WHITE);
     	gc.setFont(f);
     	gc.fillText(s, x-recule, y+15);
