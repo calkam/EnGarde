@@ -3,6 +3,7 @@ package Modele;
 import java.util.Random;
 
 import Modele.Joueur.Joueur;
+import Modele.Plateau.MessageBox;
 import Modele.Tas.Defausse;
 import Modele.Tas.Pioche;
 import Modele.Tas.Tas;
@@ -102,7 +103,7 @@ public class Manche implements Visitable{
 	}
 	
 	public int finDeManche(int resultat) throws Exception{
-		
+	
 		if(resultat == Tour.joueurPremierPerdu){			
 			joueurAGagne(tourEnCours.getJoueurSecond());
 			if(tourEnCours.getJoueurSecond().equals(joueur1)){
@@ -112,7 +113,7 @@ public class Manche implements Visitable{
 			}
 		}else if(resultat == Tour.joueurSecondPerdu){
 			joueurAGagne(tourEnCours.getJoueurPremier());
-			if(tourEnCours.getJoueurSecond().equals(joueur1)){
+			if(tourEnCours.getJoueurPremier().equals(joueur1)){
 				return JOUEUR1GAGNE;
 			}else{
 				return JOUEUR2GAGNE;
@@ -142,11 +143,11 @@ public class Manche implements Visitable{
 				if(distanceEntreCaseMedianeEtFigurineJ1 > distanceEntreCaseMedianeEtFigurineJ2){
 					System.out.println(joueur2.getNom() + " étant plus proche de la case médiane...");
 					joueurAGagne(joueur2);
-					return JOUEUR1GAGNE;
+					return JOUEUR2GAGNE;
 				}else if(distanceEntreCaseMedianeEtFigurineJ1 < distanceEntreCaseMedianeEtFigurineJ2){
 					System.out.println(joueur1.getNom() + " étant plus proche de la case médiane...");
 					joueurAGagne(joueur1);
-					return JOUEUR2GAGNE;
+					return JOUEUR1GAGNE;
 				}else{
 					System.out.println("Manche nulle !");
 					return MATCHNULLE;
@@ -155,53 +156,6 @@ public class Manche implements Visitable{
 		}
 		return MATCHNULLE;
 	}
-	
-	/*public void jouerManche() throws Exception{
-		int resultat;
-		
-		do{
-			resultat = tourEnCours.jouerTour();
-			nbTourRealise++;
-		}while(estPasFini(resultat));
-		
-		if(resultat == Tour.joueurPremierPerdu){			
-			joueurAGagne(tourEnCours.getJoueurSecond());
-		}else if(resultat == Tour.joueurSecondPerdu){
-			joueurAGagne(tourEnCours.getJoueurPremier());
-		}else if(resultat == Tour.piocheVide){
-			System.out.println("La pioche est vide :");
-			
-			int distanceEntreFigurineJ1EtFigurineJ2 = calculerNormeEntreDeuxPositions(joueur1.getPositionFigurine(), joueur2.getPositionFigurine());
-			
-			if(distanceEntreFigurineJ1EtFigurineJ2 < Tas.carteValeurMax){
-				int nbCartesDistanceJ1 = joueur1.getMain().getNombreCarteGroupe(distanceEntreFigurineJ1EtFigurineJ2);
-				int nbCartesDistanceJ2 = joueur2.getMain().getNombreCarteGroupe(distanceEntreFigurineJ1EtFigurineJ2);
-				
-				if(nbCartesDistanceJ1 > nbCartesDistanceJ2){
-					System.out.println(joueur1.getNom() + " ayant plus de cartes pour attaquer directectement son adversaire...");
-					joueurAGagne(joueur1);
-				}else if(nbCartesDistanceJ1 < nbCartesDistanceJ2){
-					System.out.println(joueur2.getNom() + " ayant plus de cartes pour attaquer directectement son adversaire...");
-					joueurAGagne(joueur2);
-				}
-			}else{
-				int distanceEntreCaseMedianeEtFigurineJ1 = calculerNormeEntreDeuxPositions(12, joueur1.getPositionFigurine());
-				int distanceEntreCaseMedianeEtFigurineJ2 = calculerNormeEntreDeuxPositions(12, joueur2.getPositionFigurine());
-				
-				if(distanceEntreCaseMedianeEtFigurineJ1 > distanceEntreCaseMedianeEtFigurineJ2){
-					System.out.println(joueur2.getNom() + " étant plus proche de la case médiane...");
-					joueurAGagne(joueur2);
-				}else if(distanceEntreCaseMedianeEtFigurineJ1 < distanceEntreCaseMedianeEtFigurineJ2){
-					System.out.println(joueur1.getNom() + " étant plus proche de la case médiane...");
-					joueurAGagne(joueur1);
-				}else{
-					System.out.println("Manche nulle !");
-				}
-			}
-		}
-		
-		afficherScore();
-	}*/
 	
 	/**
 	 * 

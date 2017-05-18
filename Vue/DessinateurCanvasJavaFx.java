@@ -173,7 +173,6 @@ public class DessinateurCanvasJavaFx extends Visiteur {
     
     public boolean visite(MessageBox m){
     	GraphicsContext gc = gcTerrain;
-    	//dessinerMessageBox(gc, m.getX(), m.getY(), m.getLargeur(), m.getHauteur());
     	ecrireTexte(gc, (m.getX()+m.getLargeur()/2), m.getHauteur()/2, m.getTexte(), m.getTexte().length());
     	return false;
     }
@@ -260,12 +259,6 @@ public class DessinateurCanvasJavaFx extends Visiteur {
 		Image i = new Image("/Ressources/coeur.png");
     	gc.drawImage(i, x, y, l, h);
     }
-
-    private void dessinerMessageBox(GraphicsContext gc, float x, float y, float l, float h) {
-		// TODO Auto-generated method stub
-    	gc.setFill(Color.BROWN);
-		gc.fillRect(x, y, l, h);
-	}
     
     //3 -> 15, 50 -> 25, 25 -> 6
     
@@ -273,8 +266,10 @@ public class DessinateurCanvasJavaFx extends Visiteur {
     	float policeSize = (float) 22.5;
     	float recule = (float) (length*(policeSize/4.10));
     	Font f = new Font("Courier", policeSize);
+
+    	gc.setFill(Color.BROWN);
+		gc.fillRect(x-recule, 32, recule*2+7 , 30);
     	gc.setFill(Color.WHITE);
-    	gc.setStroke(Color.BLACK);
     	gc.setFont(f);
     	gc.fillText(s, x-recule, y+15);
     	gc.strokeText(s, x-recule, y+15);
