@@ -66,16 +66,12 @@ public abstract class Joueur implements Visitable{
 	abstract public void reinitialiserPositionFigurine() ;
 	abstract public void viderLaMain(); 
 	
-	public ActionsJouables peutFaireAction(int cote, ArrayList<Carte> cartes, Triplet<Integer, Integer, Integer> est_attaque) throws Exception {
+	public ActionsJouables peutFaireAction(Triplet<Integer, Integer, Integer> est_attaque) throws Exception {
 		
 		int position ;
 		ActionsJouables actions_jouables = new ActionsJouables () ;
 		Carte carte;
 		Carte carteOpt;
-		
-		Main main = new Main();
-		main.setCote(cote);
-		main.setMain(cartes);
 		
 		for(int i=0; i<main.getNombreCarte(); i++){
 			
@@ -166,7 +162,12 @@ public abstract class Joueur implements Visitable{
 								
 								if(main.getNombreCarteGroupe(carteOpt.getContenu())-1 == main.size()-1){
 									
-									actions_jouables.ajouterActionOffensive(carte.getID(), AttaqueIndirecte, test_avancer_ou_attaquer.getC2(), carte, carteOpt, main.getNombreCarteGroupe(carteOpt.getContenu())-1) ;
+									if (((position = test_avancer_ou_attaquer.getC2()) != ActionImpossible) && 
+										    (peut_attaquer_indirectement(position, carteOpt.getContenu()) != ActionImpossible)){
+									
+										actions_jouables.ajouterActionOffensive(carte.getID(), AttaqueIndirecte, test_avancer_ou_attaquer.getC2(), carte, carteOpt, main.getNombreCarteGroupe(carteOpt.getContenu())-1) ;
+										
+									}
 									
 								}
 								
@@ -182,7 +183,12 @@ public abstract class Joueur implements Visitable{
 								
 								if(main.getNombreCarteGroupe(carteOpt.getContenu()) == main.size()-1){
 									
-									actions_jouables.ajouterActionOffensive(carte.getID(), AttaqueIndirecte, test_avancer_ou_attaquer.getC2(), carte, carteOpt, main.getNombreCarteGroupe(carteOpt.getContenu())) ;
+									if (((position = test_avancer_ou_attaquer.getC2()) != ActionImpossible) && 
+										    (peut_attaquer_indirectement(position, carteOpt.getContenu()) != ActionImpossible)){
+									
+										actions_jouables.ajouterActionOffensive(carte.getID(), AttaqueIndirecte, test_avancer_ou_attaquer.getC2(), carte, carteOpt, main.getNombreCarteGroupe(carteOpt.getContenu())) ;
+									
+									}
 									
 								}
 								
@@ -217,9 +223,11 @@ public abstract class Joueur implements Visitable{
 					}
 				}
 					
-				if(est_attaque.getC1() == Tour.attaqueIndirect){
-					if((position = peut_reculer(carte.getContenu())) != ActionImpossible){
-						actions_jouables.ajouterActionDefensive(carte.getID(), Fuite, position, carte, null, 0);
+				if(main.size() == 1){
+					if(est_attaque.getC1() == Tour.attaqueIndirect){
+						if((position = peut_reculer(carte.getContenu())) != ActionImpossible){
+							actions_jouables.ajouterActionDefensive(carte.getID(), Fuite, position, carte, null, 0);
+						}
 					}
 				}
 

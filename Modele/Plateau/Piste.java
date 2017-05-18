@@ -18,6 +18,7 @@ public class Piste extends Rectangle implements Visitable {
 	private FigurineGauche figurineGauche;
 	private FigurineDroite figurineDroite;
 	private ArrayList<Case> cases;
+	private MessageBox messageBox;
 	
     private long tempsEcoule;
 	
@@ -28,10 +29,14 @@ public class Piste extends Rectangle implements Visitable {
 		this.initTableauCases();
 		float largeurCase = cases.get(0).getLargeur();
 		
-		figurineGauche.setY(Reglages.lis("PisteHauteur")-figurineGauche.getHauteur()-25);
-		figurineDroite.setY(Reglages.lis("PisteHauteur")-figurineDroite.getHauteur()-25);
-		figurineGauche.setX(largeurCase * figurineGauche.getPosition());
-		figurineDroite.setX(largeurCase * figurineDroite.getPosition());
+		this.figurineGauche.setY(Reglages.lis("PisteHauteur")-figurineGauche.getHauteur()-25);
+		this.figurineDroite.setY(Reglages.lis("PisteHauteur")-figurineDroite.getHauteur()-25);
+		this.figurineGauche.setX(largeurCase * figurineGauche.getPosition());
+		this.figurineDroite.setX(largeurCase * figurineDroite.getPosition());
+		
+		this.messageBox = new MessageBox("machine a fait une attaque indirect en utilisant 2 cartes de valeur 2");
+		messageBox.setX(this.getLargeur()/2-messageBox.getLargeur()/2);
+		messageBox.setY(0);
 	}
 	
 	public void rafraichit(long t) {
@@ -127,6 +132,7 @@ public class Piste extends Rectangle implements Visitable {
         }
         retour = retour || figurineDroite.accept(v);
 		retour = retour || figurineGauche.accept(v);
+		retour = retour || messageBox.accept(v);
         return retour;
 	}
 
