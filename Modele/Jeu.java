@@ -1,13 +1,12 @@
 package Modele;
 
 import Modele.Joueur.*;
-import Modele.Joueur.Humain.Humain;
 import Modele.Plateau.*;
 import Modele.Tas.*;
 
 public class Jeu {
 	
-	private final static int VICTOIRE = 5; 
+	private final static int VICTOIRE = 3; 
 	
 	// CONSTANTES POSITION JOUEUR/FIGURINE
 	
@@ -41,6 +40,10 @@ public class Jeu {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		if (joueur1 instanceof Humain) ((Humain) joueur1).scanner.close();
+		if (joueur2 instanceof Humain) ((Humain) joueur2).scanner.close();
+		
 	}
 	
 	/**
@@ -81,7 +84,7 @@ public class Jeu {
 			
 		}
 		
-		manche = new Manche(0, joueur1, joueur2, histo);
+		manche = new Manche(0, joueur1, joueur2, piste, histo);
 	}
 	
 	public void nouvelleManche(){
@@ -94,7 +97,9 @@ public class Jeu {
 			
 		}
 		
-		manche = new Manche(manche.getNumero()+1, joueur1, joueur2, histo);
+		joueur1.viderMain();
+		joueur2.viderMain();
+		manche = new Manche(manche.getNumero()+1, joueur1, joueur2, piste, histo);
 	}
 	
 	public void lancerLaManche() throws Exception{

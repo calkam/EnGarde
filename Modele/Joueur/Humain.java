@@ -1,4 +1,4 @@
-package Modele.Joueur.Humain;
+package Modele.Joueur ;
 
 import java.util.Enumeration;
 import java.util.Scanner;
@@ -12,18 +12,17 @@ import Modele.Tas.Main;
 import Modele.Plateau.Piste;
 
 public class Humain extends Joueur {
+	
+	public Scanner scanner ;
 
-	public Humain(int direction, String nom, Main main, Piste piste) {
+	public Humain(int direction, String nom, Main main, Piste piste, Scanner scanner) {
 		super(direction, nom, main, piste);
+		this.scanner = scanner ;
 	}
 
-	@Override
-	public Action selectionnerAction(ActionsJouables actions_jouables, Tour tour) throws Exception {
+	public Action actionHumain(ActionsJouables actions_jouables, Tour tour) throws Exception {
 
 		int choixAction;
-		
-		@SuppressWarnings("resource")
-		Scanner s = new Scanner(System.in);
 		
 		System.out.println(actions_jouables);
 		
@@ -33,7 +32,7 @@ public class Humain extends Joueur {
 		
 		System.out.println("Veuillez effectuer votre choix d'action : nombre entre 0 et N (N étant un entier naturel)");
 		
-		choixAction = Integer.parseInt(s.nextLine());
+		choixAction = Integer.parseInt(scanner.nextLine());
 		
 		Action actionCherchee = null;		
 		
@@ -55,10 +54,16 @@ public class Humain extends Joueur {
 	@Override
 	public Joueur clone () {
 		
-		Humain joueur = new Humain(this.direction, this.nom, this.main.clone(), this.piste.clone()) ;
+		Humain joueur = new Humain(this.direction, this.nom, this.main.clone(), this.piste.clone(), new Scanner(System.in)) ;
 		joueur.setScore(this.getScore());
 		return joueur ;
 		
+	}
+
+	@Override
+	public Action selectionnerAction(ActionsJouables actions_jouables, Tour tour) throws Exception {
+		
+		return actionHumain(actions_jouables, tour) ;
 	}
 
 }

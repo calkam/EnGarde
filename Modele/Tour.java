@@ -2,15 +2,14 @@ package Modele;
 
 import Modele.Joueur.Action;
 import Modele.Joueur.ActionsJouables;
+import Modele.Joueur.Humain;
 import Modele.Joueur.Joueur;
-import Modele.Joueur.Humain.Humain;
+import Modele.Plateau.Piste;
 import Modele.Tas.Carte;
 import Modele.Tas.Defausse;
 import Modele.Tas.Pioche;
 
 public class Tour{
-	
-	private final static int nombreCarteMax = 5;
 	
 	private final static boolean joueurPerdu = false;
 	private final static boolean joueurPasPerdu = true;
@@ -28,12 +27,14 @@ public class Tour{
 	private Joueur joueurSecond;
 	private Pioche pioche;
 	private Defausse defausse;
+	private Piste piste ;
 	private Historique histo ;
 	// Type de l'attaque, nombre de cartes attaque, valeur de la carte attaque
 	private Triplet<Integer, Integer, Integer> estAttaque;
 	
-	public Tour(Historique histo){
+	public Tour(Piste piste, Historique histo){
 		
+		this.piste = piste ;
 		this.histo = histo ;
 		this.estAttaque = new Triplet<>(PasAttaque, 0, 0);
 	}
@@ -71,98 +72,55 @@ public class Tour{
 		}
 	}
 	
-	public boolean jouerTourJoueur(Joueur joueur) throws Exception{
+	private Triplet <Boolean, Action, ActionsJouables> jouerActionJoueur (Joueur joueur, Triplet <Boolean, Action, ActionsJouables> config) throws Exception {
 		
-		Action choixAction ;	
-		ActionsJouables actions_jouables ;
-		
-		System.out.println("/*************************************************************************************************************/");
 		System.out.println("Joueur : " + joueur.getNom() + ", position : " + joueur.getPositionDeMaFigurine());
 		System.out.println("Main : " + joueur.getMain().getMain());
 		System.out.println("Nb cartes pioche : " + pioche.getNombreCarte() + "\n");
-		afficherPiste(joueurPremier.getPositionDeMaFigurine(), joueurSecond.getPositionDeMaFigurine());
+		piste.afficherPiste();
 		
 		if(histo != null && (joueur instanceof Humain)) {
-			
 			histo.ajouterTour(this);
 			System.out.println(histo) ;
-			
 		}
 		
-		actions_jouables = joueur.peutFaireAction(estAttaque);
+		config.setC3(joueur.peutFaireAction(estAttaque));
 			
-		if(actions_jouables.isEmpty()) {
-			return joueurPerdu;
+		if(config.getC3().isEmpty()) {
+			config.setC1(joueurPerdu);
+			return config ;
 		}
 		
-		actions_jouables = joueur.peutFaireAction(estAttaque);
-		choixAction = joueur.selectionnerAction(actions_jouables, this);		
-		System.out.println(choixAction);	
+		config.setC3(joueur.peutFaireAction(estAttaque));
+		config.setC2(joueur.selectionnerAction(config.getC3(), this));		
+		System.out.println(joueur.getNom() + " a joué :\n"+ config.getC2());	
+		estAttaque = executerAction(config.getC2(), joueur) ;
+		config.setC1(joueurPasPerdu);
+		return config ;
 		
-		estAttaque = executerAction(choixAction, joueur) ;
-		
-		if(choixAction.getTypeAction() == Joueur.Parade && !pioche.estVide()){
-			
-			System.out.println("Joueur : " + joueur.getNom() + ", position : " + joueur.getPositionDeMaFigurine());
-			System.out.println("Main : " + joueur.getMain().getMain() + "\n");
-			
-			actions_jouables = joueur.peutFaireAction(estAttaque);
-			
-			if(actions_jouables.isEmpty()) {
-				return joueurPerdu;
-			}
-			
-			actions_jouables = joueur.peutFaireAction(estAttaque);
-			choixAction = joueur.selectionnerAction(actions_jouables, this);		
-			System.out.println(choixAction);			
-			
-			estAttaque = executerAction(choixAction, joueur);
-		
-		}
-		
-		remplirMain(joueur);
-		
-		System.out.println("Joueur : " + joueur.getNom() + ", position : " + joueur.getPositionDeMaFigurine());
-		System.out.println("Main : " + joueur.getMain().getMain() + "\n");
-		System.out.println("Nb cartes pioche : " + pioche.getNombreCarte() + "\n");
-		
-		return joueurPasPerdu;
-	}
-
-	public void remplirMain(Joueur j){		
-		int nbCarteMain = j.getMain().getNombreCarte();
-		
-		int i=nbCarteMain;
-			
-		while(!pioche.estVide() && i < nombreCarteMax){
-			j.ajouterCarteDansMain(pioche.piocher());
-			i++;
-		}
 	}
 	
-	private void DefausserCartes(int valeur, int nbCartes, Joueur joueur, Defausse defausse) throws Exception{
+	
+	public boolean jouerTourJoueur(Joueur joueur) throws Exception{
 		
-		int i=1; //On commence à 1 car une carte a déjà été défaussée dans executerAction()
+		Triplet <Boolean, Action, ActionsJouables> config = new Triplet <> (null, null, null) ;
 		
-		for(Carte c : joueur.getCartesDeLaMain()){
-				
-			if(c.getContenu() == valeur){
-				defausse.ajouter(c);
-				joueur.defausserUneCarte(c);
-				i++;
-			}
-			
-			if(i>=nbCartes){
-				break;
-			}
-		}	
+		for (int i = 0 ; i < 3 ; i++) System.out.println("/*************************************************************************************************************/");
+		System.out.println();
+		
+		if ((config = jouerActionJoueur(joueur, config)).getC1() == joueurPerdu) return config.getC1() ;
+		
+		if(config.getC2().getTypeAction() == Joueur.Parade && !pioche.estVide())
+			if ((config = jouerActionJoueur(joueur, config)).getC1() == joueurPerdu) return config.getC1() ;
+		
+		joueur.remplirMain(pioche);
+		return config.getC1() ;
 	}
 	
 	private Triplet<Integer, Integer, Integer> avancer_reculer_fuire (Action actionAJouer, Joueur joueur, int typeAction) throws Exception {
 		
 		Carte carteDeplacement = actionAJouer.getCarteDeplacement() ;
-		defausse.ajouter(carteDeplacement) ;
-		joueur.defausserUneCarte(carteDeplacement) ;
+		joueur.defausserCartes(carteDeplacement, 1, defausse) ;
 		switch(typeAction) {
 		case Joueur.Avancer : joueur.avancer(carteDeplacement.getContenu()) ; break ;
 		case Joueur.Reculer : joueur.reculer(carteDeplacement.getContenu()) ; break ;
@@ -175,13 +133,7 @@ public class Tour{
 	private Triplet<Integer, Integer, Integer> attaquer_directement_parer (Action actionAJouer, Joueur joueur) throws Exception {
 		
 		Carte carteAction = actionAJouer.getCarteAction();
-		defausse.ajouter(carteAction);
-		joueur.defausserUneCarte(carteAction);
-		
-		if(actionAJouer.getNbCartes() > 1) {
-			DefausserCartes (carteAction.getContenu(), actionAJouer.getNbCartes(), joueur, defausse) ;
-		}
-		
+		joueur.defausserCartes(carteAction, actionAJouer.getNbCartes(), defausse) ;
 		return new Triplet <> (null, actionAJouer.getNbCartes(), carteAction.getContenu()) ;
 		
 	}
@@ -192,142 +144,25 @@ public class Tour{
 		
 		switch(actionAJouer.getTypeAction()) {
 		case Joueur.Avancer : return avancer_reculer_fuire(actionAJouer, joueur, Joueur.Avancer) ;
-		case Joueur.Reculer : return avancer_reculer_fuire(actionAJouer, joueur, Joueur.Reculer) ;
-		case Joueur.Fuite   : return avancer_reculer_fuire(actionAJouer, joueur, Joueur.Reculer) ;
+		case Joueur.Reculer : case Joueur.Fuite : return avancer_reculer_fuire(actionAJouer, joueur, Joueur.Reculer) ;
 		default :
 		}
-		
-		System.out.println(actionAJouer) ;
-		
 		config = attaquer_directement_parer(actionAJouer, joueur) ;
 		switch(actionAJouer.getTypeAction()) {
 		case Joueur.AttaqueDirecte : config.setC1(AttaqueDirecte); break ;
 		case Joueur.AttaqueIndirecte : avancer_reculer_fuire(actionAJouer, joueur, Joueur.Avancer) ; config.setC1(AttaqueIndirecte) ; break ;
 		case Joueur.Parade : config.setC1(PasAttaque) ; break ;
 		default : throw new Exception("Modele.Tour.executerAction : typeAction inconnu") ;
-		
 		}
 		
 		return config ;
 		
 	}
 	
-	/*private Triplet<Integer, Integer, Integer> executerAction(Action actionAJouer, Joueur joueur) throws Exception{
-		Carte carteDeplacement=null;
-		Carte carteAction=null;
-		
-		int typeAction;
-		int nbCartesAttqJouees;
-		int valeurCarteAttqJouee;
-		
-		ArrayList<Carte> cartesDeMemeValeur;
-		
-		switch(actionAJouer.getTypeAction()){
-			case Joueur.Reculer :
-				carteDeplacement = actionAJouer.getCarteDeplacement();
-				joueur.reculer(carteDeplacement.getContenu());
-				defausse.ajouter(carteDeplacement);
-				joueur.defausserUneCarte(carteDeplacement);
-				typeAction = PasAttaque; nbCartesAttqJouees = 0; valeurCarteAttqJouee = 0;
-				break;
-			case Joueur.Avancer :
-				carteDeplacement = actionAJouer.getCarteDeplacement();
-				joueur.avancer(carteDeplacement.getContenu());
-				defausse.ajouter(carteDeplacement);
-				joueur.defausserUneCarte(carteDeplacement);
-				typeAction = PasAttaque; nbCartesAttqJouees = 0; valeurCarteAttqJouee = 0;
-				break;
-			case Joueur.AttaqueDirecte : 
-				carteAction = actionAJouer.getCarteAction();
-				defausse.ajouter(carteAction);
-				joueur.defausserUneCarte(carteAction);
-				if(actionAJouer.getNbCartes() > 1){
-					cartesDeMemeValeur = getAutreCarteDeValeur(carteAction.getContenu(), actionAJouer.getNbCartes(), joueur);
-					for(Carte c : cartesDeMemeValeur){
-						defausse.ajouter(c);
-						joueur.defausserUneCarte(c);
-					}
-				}
-				typeAction = attaqueDirect; nbCartesAttqJouees = actionAJouer.getNbCartes(); valeurCarteAttqJouee = carteAction.getContenu();
-				break;
-			case Joueur.AttaqueIndirecte :
-				// On avance dans un premier temps
-				carteDeplacement = actionAJouer.getCarteDeplacement();
-				joueur.avancer(carteDeplacement.getContenu());
-				defausse.ajouter(carteDeplacement);
-				joueur.defausserUneCarte(carteDeplacement);
-				
-				// On attaque dans un second temps	
-				carteAction = actionAJouer.getCarteAction();
-				defausse.ajouter(carteAction);
-				joueur.defausserUneCarte(carteAction);
-				if(actionAJouer.getNbCartes() > 1){
-					cartesDeMemeValeur = getAutreCarteDeValeur(carteAction.getContenu(), actionAJouer.getNbCartes(), joueur);
-					for(Carte c : cartesDeMemeValeur){
-						defausse.ajouter(c);
-						joueur.defausserUneCarte(c);
-					}
-				}
-				typeAction = attaqueIndirect; nbCartesAttqJouees = actionAJouer.getNbCartes(); valeurCarteAttqJouee = carteAction.getContenu();
-				break;
-			case Joueur.Parade :
-				carteAction = actionAJouer.getCarteAction();
-				defausse.ajouter(carteAction);
-				joueur.defausserUneCarte(carteAction);
-				if(actionAJouer.getNbCartes() > 1){
-					cartesDeMemeValeur = getAutreCarteDeValeur(carteAction.getContenu(), actionAJouer.getNbCartes(), joueur);
-					for(Carte c : cartesDeMemeValeur){
-						defausse.ajouter(c);
-						joueur.defausserUneCarte(c);
-					}
-				}				
-				typeAction = pasAttaque; nbCartesAttqJouees = 0; valeurCarteAttqJouee = 0;
-				break;
-			case Joueur.Fuite :
-				carteDeplacement = actionAJouer.getCarteDeplacement();
-				joueur.reculer(carteDeplacement.getContenu());
-				defausse.ajouter(carteDeplacement);
-				joueur.defausserUneCarte(carteDeplacement);
-				typeAction = pasAttaque; nbCartesAttqJouees = 0; valeurCarteAttqJouee = 0;
-				break;
-			default: throw new Exception("Erreur lors de l'exécution de l'action");
-		}
-		
-		System.out.println("\nVous avez joué : carte de déplacement : " + carteDeplacement + ", carte d'action : " + carteAction);
-		
-		return new Triplet<>(typeAction, nbCartesAttqJouees, valeurCarteAttqJouee);
-	}*/
-	
-	public void afficherPiste(int positionF1, int positionF2){
-		String str = "";
-		String strPosition = "";
-		
-		for(int i = 1 ; i < 24; i++){
-			if(i == positionF1){
-				str += "♟   ";
-			}else if(i == positionF2){
-				str += "♙   ";
-			}else{
-				str += "_   ";
-			}
-			
-			if(i < 10){
-				strPosition += i + "   ";		
-			}else{
-				strPosition += i + "  ";
-			}
-		}
-		
-		strPosition += "\n";
-		
-		System.out.println(str);
-		System.out.println(strPosition);
-	}
-	
 	@Override
 	public Tour clone () {
 		
-		Tour tour = new Tour (this.histo) ;
+		Tour tour = new Tour (this.piste, this.histo) ;
 		tour.joueurPremier = this.joueurPremier.clone() ;
 		tour.joueurSecond = this.joueurSecond.clone() ;
 		tour.pioche = this.pioche.clone() ;

@@ -86,6 +86,32 @@ public class Piste extends Rectangle {
 		
 	}
 	
+	public void afficherPiste(){
+		String str = "";
+		String strPosition = "";
+		
+		for(int i = 1 ; i < 24; i++){
+			if(i == figurineGauche.getPosition()){
+				str += "♙   ";
+			}else if(i == figurineDroite.getPosition()){
+				str += "♟   ";
+			}else{
+				str += "_   ";
+			}
+			
+			if(i < 10){
+				strPosition += i + "   ";		
+			}else{
+				strPosition += i + "  ";
+			}
+		}
+		
+		strPosition += "\n";
+		
+		System.out.println(str);
+		System.out.println(strPosition);
+	}
+	
 	// TO STRING
 
 	@Override

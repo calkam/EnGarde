@@ -1,14 +1,15 @@
 package Modele.Joueur;
 
 import java.util.ArrayList;
-
 import Modele.Couple;
 import Modele.Tour;
 import Modele.Triplet;
 import Modele.Plateau.Piste;
 import Modele.Plateau.Score;
 import Modele.Tas.Carte;
+import Modele.Tas.Defausse;
 import Modele.Tas.Main;
+import Modele.Tas.Pioche;
 
 /**
  * @author gourdeaf
@@ -210,19 +211,17 @@ public abstract class Joueur {
 						actions_jouables.ajouterActionNeutre(carte.getID(), Avancer, test_avancer_ou_attaquer.getC2(), carte) ;
 					
 						for (int j=0; j<main.getNombreCarte(); j++) {
-							if(i!=j){
-								carteOpt = main.getCarte(j);
-						
-								if (((position = test_avancer_ou_attaquer.getC2()) != ActionImpossible) &&
-								    (peut_attaquer_indirectement(position, carteOpt.getContenu()) != ActionImpossible)){
 							
-									for(int k=1; k<=main.getNombreCarteGroupe(carteOpt.getContenu()) - (main.getCarte(i).getContenu() == carteOpt.getContenu() ? 1 : 0); k++){
-										actions_jouables.ajouterActionOffensive(carte.getID(), AttaqueIndirecte, test_avancer_ou_attaquer.getC2(), carte, carteOpt, k) ;
-									}								
-								}
+							carteOpt = main.getCarte(j);
+					
+							if (((position = test_avancer_ou_attaquer.getC2()) != ActionImpossible) &&
+							    (peut_attaquer_indirectement(position, carteOpt.getContenu()) != ActionImpossible)){
+						
+								for(int k=1; k<=main.getNombreCarteGroupe(carteOpt.getContenu()) - (main.getCarte(i).getContenu() == carteOpt.getContenu() ? 1 : 0); k++){
+									actions_jouables.ajouterActionOffensive(carte.getID(), AttaqueIndirecte, test_avancer_ou_attaquer.getC2(), carte, carteOpt, k) ;
+								}								
 							}
 						}
-						
 					}
 				}
 			}else{
@@ -245,12 +244,27 @@ public abstract class Joueur {
 			
 	}
 	
+	public void viderMain(){		
+		main = new Main();
+	}
+	
 	public void ajouterCarteDansMain(Carte c){
 		main.ajouter(c);
 	}
 	
-	public void defausserUneCarte(Carte c) throws Exception{
-		main.supprimer(c);
+	public void defausserCartes(Carte c, int nbCartes, Defausse defausse) throws Exception{
+		main.supprimer(c, nbCartes, defausse);
+	}
+	
+	public void remplirMain(Pioche pioche){		
+		int nbCarteMain = getMain().getNombreCarte();
+		
+		int i=nbCarteMain;
+			
+		while(!pioche.estVide() && i < Main.nombreCarteMax){
+			ajouterCarteDansMain(pioche.piocher());
+			i++;
+		}
 	}
 	
 	/**

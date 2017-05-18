@@ -3,6 +3,7 @@ package Modele;
 import java.util.Random;
 
 import Modele.Joueur.Joueur;
+import Modele.Plateau.Piste;
 import Modele.Tas.Defausse;
 import Modele.Tas.Pioche;
 import Modele.Tas.Tas;
@@ -11,6 +12,7 @@ public class Manche {
 	
 	private int numero;
 	private int nbTourRealise;
+	private Piste piste ;
 	private Tour tourEnCours;
 	private Pioche pioche;
 	private Defausse defausse;
@@ -18,16 +20,17 @@ public class Manche {
 	private Joueur joueur1;
 	private Joueur joueur2;
 	
-	public Manche(int numero, int nbTourRealise, Tour tour) {
+	public Manche(int numero, int nbTourRealise, Piste piste, Tour tour) {
 		this.numero = numero;
 		this.nbTourRealise = nbTourRealise;
+		this.piste = piste ;
 		defausse = new Defausse();
 		pioche = new Pioche();
 		tourEnCours = tour;
 	}
 	
-	public Manche(int numero, Joueur joueur1, Joueur joueur2, Historique histo){
-		this(numero, 0, new Tour(histo));
+	public Manche(int numero, Joueur joueur1, Joueur joueur2, Piste piste, Historique histo){
+		this(numero, 0, piste, new Tour(piste, histo));
 		initialiserJoueur(joueur1, joueur2);
 	}
 
@@ -80,8 +83,8 @@ public class Manche {
 		tourEnCours.setDefausse(defausse);
 		tourEnCours.setJoueurPremier(tmp.getC1());
 		tourEnCours.setJoueurSecond(tmp.getC2());
-		tourEnCours.remplirMain(tourEnCours.getJoueurPremier());
-		tourEnCours.remplirMain(tourEnCours.getJoueurSecond());
+		tourEnCours.getJoueurPremier().remplirMain(pioche);
+		tourEnCours.getJoueurSecond().remplirMain(pioche);
 		
 		System.out.println(joueur1.toString());
 		System.out.println(joueur2.toString());
@@ -94,7 +97,7 @@ public class Manche {
 		}while(estPasFini(resultat));
 		
 		System.out.println("/*************************************************************************************************************/");
-		tourEnCours.afficherPiste(tourEnCours.getJoueurPremier().getPositionDeMaFigurine(), tourEnCours.getJoueurSecond().getPositionDeMaFigurine());	
+		piste.afficherPiste();	
 		
 		if(resultat == Tour.joueurPremierPerdu){
 			joueurAGagne(tourEnCours.getJoueurSecond());

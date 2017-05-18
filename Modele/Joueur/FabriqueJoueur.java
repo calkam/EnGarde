@@ -2,7 +2,9 @@ package Modele.Joueur;
 
 import Modele.Tas.Main;
 import Modele.Plateau.Piste;
-import Modele.Joueur.Humain.*;
+
+import java.util.Scanner;
+
 import Modele.Joueur.IA.IADifficile;
 import Modele.Joueur.IA.IAFacile;
 import Modele.Joueur.IA.IAMoyen;
@@ -29,7 +31,7 @@ public class FabriqueJoueur {
 		
 		switch (type) {
 		
-		case "Humain" : return new Humain(position, nom, main, piste) ;
+		case "Humain" : return new Humain(position, nom, main, piste, new Scanner(System.in)) ;
 		
 		case "IA" :
 			

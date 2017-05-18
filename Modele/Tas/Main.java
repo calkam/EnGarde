@@ -1,8 +1,13 @@
 package Modele.Tas;
 
 import java.util.ArrayList;
+import java.util.ListIterator;
 
 public class Main extends Tas {
+	
+	
+	public final static int nombreCarteMax = 5;
+	
 	private ArrayList<Carte> main;
 	
 	public Main(){
@@ -16,19 +21,31 @@ public class Main extends Tas {
 		nombreCarte[0]++ ;
 	}
 	
-	public void supprimer(Carte c) throws Exception{
+	public void supprimer(Carte c, int nbCartes, Defausse defausse) throws Exception{
 		
-		int i = 0;
-		while(i < main.size() && (!main.get(i).equals(c))){
-			i++;
+		ListIterator <Carte> li = main.listIterator() ;
+		int cpt = 0 ;
+		
+		while(li.hasNext()){
+		
+			Carte ci = li.next() ;
+			
+			if (ci.getContenu() == c.getContenu()) {
+				
+				System.out.println(ci) ;
+				defausse.ajouter(ci) ;
+				li.remove();
+				nombreCarte[c.getContenu()]-- ;
+				nombreCarte[0]-- ;
+				cpt++ ;
+				if (cpt == nbCartes) break ;
+				
+			}
+			
 		}
-		if(i < main.size()){
-			main.remove(i);
-			nombreCarte[c.getContenu()]-- ;
-			nombreCarte[0]-- ;
-		}else {
-			throw new Exception ("Modele.Tas.Main.supprimer : rien a supprimer");
-		}		
+			
+		if (cpt < nbCartes) throw new Exception ("Modele.Tas.Main.supprimer : rien a supprimer");
+		
 	}
 	
 	public Carte getCarte(int c){
