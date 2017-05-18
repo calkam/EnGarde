@@ -55,9 +55,9 @@ public class Main extends Tas {
 	@Override
 	public Main clone () {
 		
-		Main main = new Main() ;
+		Main main = new Main(getCote(), getX(), getY(), getLargeur(), getHauteur()) ;
 		main.nombreCarte = this.nombreCarte.clone() ;
-		main.setMain((ArrayList<Carte>) this.getMain().clone()) ;
+		main.setMain((ArrayList<Carte>) getMain().clone()) ;
 		return main ;
 		
 	}

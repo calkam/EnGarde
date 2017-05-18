@@ -127,6 +127,7 @@ abstract public class Joueur implements Visitable{
 	private boolean avancer_dans_piste (int distance) throws Exception {
 		
 		int position_arrivee = piste.getFigurine(MaFigurine).getPosition() + distance * direction ; 
+		
 		return direction * (piste.getFigurine(FigurineAdverse).getPosition() - position_arrivee) >= 0 ;
 	}
 	
@@ -185,23 +186,23 @@ abstract public class Joueur implements Visitable{
 	// met à jour la position de la figurine après un déplacement vers l'avant
 
 	public void avancer(int distance) throws Exception {
+		
 		piste.getFigurine(MaFigurine).setPosition(piste.getFigurine(MaFigurine).getPosition() + distance * direction) ;
+		
 	}
 
 	// met à jour la position de la figurine après un déplacement vers l'arrière
 
 	public void reculer(int distance) throws Exception {
+		
 		piste.getFigurine(MaFigurine).setPosition(piste.getFigurine(MaFigurine).getPosition() - distance * direction) ;
+		
 	}
 	
 	// retourne true si le joueur peut parer l'attaque, false sinon
 	
 	public boolean peut_executer_parade(int valeurCarteMain, int nombreDeCartes, int valeurCarteAttaque) throws Exception {
 		return valeurCarteMain == valeurCarteAttaque && main.getNombreCarteGroupe(valeurCarteMain) >= nombreDeCartes ;
-	}
-	
-	public void viderLaMain() {
-		this.main = new Main(); 
 	}
 	
 	public ActionsJouables peutFaireAction(Triplet<Integer, Integer, Integer> est_attaque) throws Exception {
@@ -248,7 +249,6 @@ abstract public class Joueur implements Visitable{
 						}
 					}
 				}
-			
 			}else{
 				
 				// On a oublié de tester que la valeur de la carte utilisée pour parer est la même que celle du joueur adverse utilisée pour son attaque 				
@@ -266,6 +266,10 @@ abstract public class Joueur implements Visitable{
 			
 		return actions_jouables ;
 			
+	}
+	
+	public void viderMain(){		
+		main = new Main();
 	}
 	
 	public void ajouterCarteDansMain(Carte c){
