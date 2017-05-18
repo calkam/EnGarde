@@ -102,6 +102,24 @@ public class Manche implements Visitable{
 		}
 	}
 	
+	public int testVictoirePiocheVideDistanceCaseMediane(){
+		int distanceEntreCaseMedianeEtFigurineJ1 = calculerNormeEntreDeuxPositions(12, joueur1.getPositionFigurine());
+		int distanceEntreCaseMedianeEtFigurineJ2 = calculerNormeEntreDeuxPositions(12, joueur2.getPositionFigurine());
+		
+		if(distanceEntreCaseMedianeEtFigurineJ1 > distanceEntreCaseMedianeEtFigurineJ2){
+			System.out.println(joueur2.getNom() + " étant plus proche de la case médiane...");
+			joueurAGagne(joueur2);
+			return JOUEUR1;
+		}else if(distanceEntreCaseMedianeEtFigurineJ1 < distanceEntreCaseMedianeEtFigurineJ2){
+			System.out.println(joueur1.getNom() + " étant plus proche de la case médiane...");
+			joueurAGagne(joueur1);
+			return JOUEUR2;
+		}else{
+			System.out.println("Manche nulle !");
+			return MATCHNULLE;
+		}
+	}
+	
 	public int finDeManche(int resultat) throws Exception{
 		
 		if(resultat == Tour.joueurPremierPerdu){			
@@ -135,23 +153,11 @@ public class Manche implements Visitable{
 					System.out.println(joueur2.getNom() + " ayant plus de cartes pour attaquer directectement son adversaire...");
 					joueurAGagne(joueur2);
 					return JOUEUR2;
+				}else{
+					return testVictoirePiocheVideDistanceCaseMediane();
 				}
 			}else{
-				int distanceEntreCaseMedianeEtFigurineJ1 = calculerNormeEntreDeuxPositions(12, joueur1.getPositionFigurine());
-				int distanceEntreCaseMedianeEtFigurineJ2 = calculerNormeEntreDeuxPositions(12, joueur2.getPositionFigurine());
-				
-				if(distanceEntreCaseMedianeEtFigurineJ1 > distanceEntreCaseMedianeEtFigurineJ2){
-					System.out.println(joueur2.getNom() + " étant plus proche de la case médiane...");
-					joueurAGagne(joueur2);
-					return JOUEUR1;
-				}else if(distanceEntreCaseMedianeEtFigurineJ1 < distanceEntreCaseMedianeEtFigurineJ2){
-					System.out.println(joueur1.getNom() + " étant plus proche de la case médiane...");
-					joueurAGagne(joueur1);
-					return JOUEUR2;
-				}else{
-					System.out.println("Manche nulle !");
-					return MATCHNULLE;
-				}
+				return testVictoirePiocheVideDistanceCaseMediane();
 			}
 		}
 		return MATCHNULLE;
