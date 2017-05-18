@@ -17,7 +17,6 @@ import Modele.Tour;
 import Modele.Joueur.Joueur;
 import Modele.Joueur.Humain.HumainDroit;
 import Modele.Joueur.Humain.HumainGauche;
-import Modele.Plateau.Case;
 import Modele.Tas.Carte;
 import Vue.DessinateurCanvasJavaFx;
 import Vue.MainApp;

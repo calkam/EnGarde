@@ -59,6 +59,7 @@ public class DessinateurCanvasJavaFx extends Visiteur {
     		case Case.JAUNE : gcTerrain.setStroke(Color.YELLOW); break;
     		default : System.out.println("pas de couleur défini");
     	}
+    	gcTerrain.setLineWidth(3.0);
     	gcTerrain.strokeRect(c.getX(), c.getY(), c.getLargeur(), c.getHauteur());
 		return false;
 	}
