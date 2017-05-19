@@ -30,7 +30,6 @@
 .checkbox {
 	-fx-font-family:'MORPHEUS';
 	-fx-font-size:20;
-	/*-fx-background-image:url("/Ressources/checkbox_fond.png");*/
 	-fx-background-size: cover;
 }
 
@@ -63,13 +62,12 @@
 }
 
 .button:pressed, .button:default:hover:pressed {
-  -fx-background-image:url("/Ressources/bouton_presse.png");
-  -fx-text-fill: #999999;
+	-fx-background-image:url("/Ressources/bouton_presse.png");
+	-fx-text-fill: #999999;
 }
 
 .button:disabled, .button:default:disabled {
-      -fx-background-image:url("/Ressources/bouton_disable.png");
-
+	-fx-background-image:url("/Ressources/bouton_disable.png");
 }
 
 .button:default {
@@ -95,4 +93,10 @@
 .fondTheatre{
 	-fx-background-color:black;
 	-fx-opacity: 0.7;
+}
+
+.textTheatre{
+	-fx-background-image:url("/Ressources/quitter.png");
+    -fx-background-size: stretch;
+    -fx-background-position: center center;
 }
