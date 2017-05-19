@@ -5,17 +5,18 @@ import Modele.Visiteur;
 import Modele.Composant.ObjetMouvant;
 import Modele.Composant.Point;
 import Modele.Composant.Rectangle;
+import Modele.Joueur.Joueur;
 
 public class Figurine extends ObjetMouvant implements Visitable {
 		
 	// CONSTANTES
 	
 	// TYPE FIGURINE
-	// La Figurine GAUCHE a pour direction la DIRECTIONDROITE (1)
-	// La Figurine DROITE a pour direction la DIRECTIONGAUCHE (-1)
+	// La Figurine GAUCHE a pour direction la DirectionDroite (1)
+	// La Figurine DROITE a pour direction la DirectionGauche (-1)
 	
-	public final static int GAUCHE = 1 ;
-	public final static int DROITE = -1 ;
+	public final static int GAUCHE = Joueur.DirectionDroite ;
+	public final static int DROITE = Joueur.DirectionGauche ;
 	
 	// ATTRIBUTS
 	
@@ -30,10 +31,13 @@ public class Figurine extends ObjetMouvant implements Visitable {
 		this.position = position;
 	}
 	
+	public Figurine(int direction, int position){
+		this(direction, 0, 0, position);
+	}
+	
 	@Override
-	public boolean accept(Visiteur v) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean accept(Visiteur v) throws Exception {
+		return v.visite(this);
 	}
 	
 	/**

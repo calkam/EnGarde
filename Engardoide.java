@@ -1,7 +1,4 @@
 import java.util.Properties;
-
-import javax.security.auth.login.Configuration;
-
 import Modele.Jeu;
 import Modele.Reglages;
 import Vue.MainApp;

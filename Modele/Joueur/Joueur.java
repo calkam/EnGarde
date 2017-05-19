@@ -60,6 +60,7 @@ abstract public class Joueur implements Visitable{
 		this.main = main;
 		this.piste = piste;
 		this.score = new Score();
+		this.main.setCote(getDirection());
 	}
 	
 	// EQUALS
@@ -102,13 +103,7 @@ abstract public class Joueur implements Visitable{
 	
 	public void reinitialiserPositionFigurine() throws Exception {
 		
-		switch (direction) {
-		
-		case DirectionDroite : setPositionFigurine(DirectionDroite, 1) ; break ;
-		case DirectionGauche : setPositionFigurine(DirectionGauche, 23); break ;
-		default : throw new Exception ("Modele.Joueur.Joueur.reinitialiserPositionFigurine : direction inconnue") ;
-		
-		}
+		piste.setFigurinePosition(MaFigurine, MaFigurine == DirectionDroite ? 1 : 23) ;
 		
 	}
 	
@@ -187,7 +182,7 @@ abstract public class Joueur implements Visitable{
 
 	public void avancer(int distance) throws Exception {
 		
-		piste.getFigurine(MaFigurine).setPosition(piste.getFigurine(MaFigurine).getPosition() + distance * direction) ;
+		piste.setFigurinePosition(MaFigurine, getPositionDeMaFigurine() + distance * direction) ;
 		
 	}
 
@@ -195,7 +190,7 @@ abstract public class Joueur implements Visitable{
 
 	public void reculer(int distance) throws Exception {
 		
-		piste.getFigurine(MaFigurine).setPosition(piste.getFigurine(MaFigurine).getPosition() - distance * direction) ;
+		piste.setFigurinePosition(MaFigurine, getPositionDeMaFigurine() - distance * direction) ;
 		
 	}
 	
@@ -268,8 +263,110 @@ abstract public class Joueur implements Visitable{
 			
 	}
 	
-	public void viderMain(){		
-		main = new Main();
+	public ActionsJouables peutFaireActionAvecCarteSelectionne(int cote, ArrayList<Carte> cartes, Triplet<Integer, Integer, Integer> est_attaque) throws Exception {
+		
+		int position ;
+		ActionsJouables actions_jouables = new ActionsJouables () ;
+		Couple <Boolean, Integer> test_avancer_ou_attaquer ;
+		Carte carte;
+		Carte carteOpt;
+		
+		Main main = new Main();
+		main.setCote(cote);
+		main.setMain(cartes);
+		
+		if(main.size() > 0){
+			carte = main.getCarte(0);
+			
+			if(est_attaque.getC1() == Tour.PasAttaque){
+				
+				if(main.size() > 1){
+					if(main.getNombreCarteGroupe(carte.getContenu()) == main.size()){
+						
+						if ((test_avancer_ou_attaquer = peut_avancer_ou_attaquer_directement(carte.getContenu())).getC2() != ActionImpossible) {
+							if (!test_avancer_ou_attaquer.getC1()) {
+								actions_jouables.ajouterActionOffensive(carte.getID(), AttaqueDirecte, getPositionDeMaFigurine(), null, carte, main.getNombreCarteGroupe(carte.getContenu()));
+							}else{
+								
+								carteOpt = main.getCarte(1);
+								
+								if(main.getNombreCarteGroupe(carteOpt.getContenu())-1 == main.size()-1){
+									
+									if (((position = test_avancer_ou_attaquer.getC2()) != ActionImpossible) && 
+										    (peut_attaquer_indirectement(position, carteOpt.getContenu()) != ActionImpossible)){
+									
+										actions_jouables.ajouterActionOffensive(carte.getID(), AttaqueIndirecte, test_avancer_ou_attaquer.getC2(), carte, carteOpt, main.getNombreCarteGroupe(carteOpt.getContenu())-1) ;
+										
+									}
+									
+								}
+								
+							}
+						}
+							
+					}else{
+						
+						if ((test_avancer_ou_attaquer = peut_avancer_ou_attaquer_directement(carte.getContenu())).getC2() != ActionImpossible) {
+							if (test_avancer_ou_attaquer.getC1()) {
+								
+								carteOpt = main.getCarte(1);
+								
+								if(main.getNombreCarteGroupe(carteOpt.getContenu()) == main.size()-1){
+									
+									if (((position = test_avancer_ou_attaquer.getC2()) != ActionImpossible) && 
+										    (peut_attaquer_indirectement(position, carteOpt.getContenu()) != ActionImpossible)){
+									
+										actions_jouables.ajouterActionOffensive(carte.getID(), AttaqueIndirecte, test_avancer_ou_attaquer.getC2(), carte, carteOpt, main.getNombreCarteGroupe(carteOpt.getContenu())) ;
+									
+									}
+									
+								}
+								
+							}
+						}
+						
+					}
+				}else{
+					if((position = peut_reculer(carte.getContenu())) != ActionImpossible){
+						actions_jouables.ajouterActionNeutre(carte.getID(), Reculer, position, carte) ;
+					}
+					
+					if ((test_avancer_ou_attaquer = peut_avancer_ou_attaquer_directement(carte.getContenu())).getC2() != ActionImpossible) {
+						
+						if (test_avancer_ou_attaquer.getC1()) {
+							
+							actions_jouables.ajouterActionNeutre(carte.getID(), Avancer, test_avancer_ou_attaquer.getC2(), carte) ;
+								
+						}else{
+							
+							actions_jouables.ajouterActionOffensive(carte.getID(), AttaqueDirecte, getPositionDeMaFigurine(), null, carte, 1);
+							
+						}
+					}
+				}
+				
+			}else{
+				
+				if(peut_executer_parade(carte.getContenu(), est_attaque.getC2(), est_attaque.getC3())){
+					actions_jouables.ajouterActionDefensive(carte.getID(), Parade, getPositionDeMaFigurine(), null, carte, est_attaque.getC2());
+				}
+					
+				if(main.size() == 1){
+					if(est_attaque.getC1() == Tour.AttaqueIndirecte){
+						if((position = peut_reculer(carte.getContenu())) != ActionImpossible){
+							actions_jouables.ajouterActionDefensive(carte.getID(), Fuite, position, carte, null, 0);
+						}
+					}
+				}
+
+			}
+		}
+		
+		return actions_jouables;
+	}
+	
+	public void viderMain(){
+		main = new Main(getDirection());
 	}
 	
 	public void ajouterCarteDansMain(Carte c){
@@ -286,9 +383,14 @@ abstract public class Joueur implements Visitable{
 		int i=nbCarteMain;
 			
 		while(!pioche.estVide() && i < Main.nombreCarteMax){
-			ajouterCarteDansMain(pioche.piocher());
+			Carte c = pioche.piocher();
+			c.setVisible(true);
+			ajouterCarteDansMain(c);
 			i++;
 		}
+		
+		getMain().repositionnerMain() ;
+		
 	}
 	
 	/**
@@ -307,7 +409,7 @@ abstract public class Joueur implements Visitable{
 	}
 	
 	public int getPositionDeMaFigurine() throws Exception {
-		return piste.getFigurine(MaFigurine).getPosition() ;	
+		return getPiste().getFigurine(MaFigurine).getPosition() ;	
 	}
 	
 	public int getDirection() {
@@ -364,7 +466,7 @@ abstract public class Joueur implements Visitable{
 	// CLONE
 	
 	@Override
-	abstract public Object clone () ;
+	abstract public Joueur clone () ;
 
 	@Override
 	public boolean accept(Visiteur v) {

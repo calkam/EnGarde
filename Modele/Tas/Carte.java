@@ -10,8 +10,8 @@ public class Carte extends Rectangle implements Visitable {
 	// CONSTANTES
 	// IDENTIFICATEURS DES TAS DE CARTES
 	
-	public final static int mainDroite = 0;
-	public final static int mainGauche = 1;
+	public final static int mainDroite = Main.droite;
+	public final static int mainGauche = Main.gauche;
 	public final static int pioche = 2;
 	public final static int defausse = 3;
 	

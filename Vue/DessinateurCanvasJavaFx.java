@@ -2,12 +2,11 @@ package Vue;
 
 import Modele.Visiteur;
 import Modele.Plateau.Case;
+import Modele.Plateau.Figurine;
 import Modele.Plateau.Jeton;
 import Modele.Plateau.MessageBox;
 import Modele.Plateau.Piste;
 import Modele.Plateau.PlateauScore;
-import Modele.Plateau.Figurine.FigurineDroite;
-import Modele.Plateau.Figurine.FigurineGauche;
 import Modele.Tas.Carte;
 import Modele.Tas.Defausse;
 import Modele.Tas.Main;
@@ -28,7 +27,7 @@ public class DessinateurCanvasJavaFx extends Visiteur {
     private Canvas scoreGauche;
     private Canvas mainGauche;
     
-    public static boolean visibilityActivated = true;
+    public static boolean visibilityActivated = false;
     
     public GraphicsContext gcTerrain, gcPioche, gcDefausse, gcScoreDroit, gcMainDroite, gcScoreGauche, gcMainGauche;
 	
@@ -124,6 +123,8 @@ public class DessinateurCanvasJavaFx extends Visiteur {
     		}
     	}
     	
+    	//System.out.println("visite Main Coté : Tas : " + c.getTas() + " ID : " + c.getID()) ;
+    	
     	if(c.isVisible() || visibilityActivated){
     		dessinerCarteVertiRecto(gc, c.getX(), c.getY(), c.getLargeur(), c.getHauteur(), c.getContenu());
     	}else{
@@ -132,14 +133,19 @@ public class DessinateurCanvasJavaFx extends Visiteur {
     	return false;
     }
     
-    public boolean visite(FigurineDroite fd){
-    	dessinerJoueurDroit(gcTerrain, fd);
-    	return false;
-    }
-    
-    public boolean visite(FigurineGauche fg){
-    	dessinerJoueurGauche(gcTerrain, fg);
-    	return false;
+    public boolean visite(Figurine fig) throws Exception{
+    	
+    	//System.out.println("Figurine : " + fig.getDirection()) ;
+    	
+    	switch(fig.getDirection()) {
+    	
+    	case Figurine.GAUCHE : dessinerJoueurGauche(gcTerrain, fig); break ;
+    	case Figurine.DROITE : dessinerJoueurDroit(gcTerrain, fig); break ;
+    	default : throw new Exception("Vue.DessinateurCanvasJavaFx.visite(Figurine) : position figurine inconnue") ;
+    	}
+    	
+    	return false ;
+    	
     }
     
     public boolean visite(PlateauScore ps){
@@ -201,12 +207,12 @@ public class DessinateurCanvasJavaFx extends Visiteur {
     	}
     }
     
-    private void dessinerJoueurGauche(GraphicsContext gc, FigurineGauche fg){
+    private void dessinerJoueurGauche(GraphicsContext gc, Figurine fg){
     	Image i = new Image("/Ressources/joueurRouge.png");
     	gc.drawImage(i, fg.getX(), fg.getY(), fg.getLargeur(), fg.getHauteur());
     }
     
-    private void dessinerJoueurDroit(GraphicsContext gc, FigurineDroite fd){
+    private void dessinerJoueurDroit(GraphicsContext gc, Figurine fd){
     	Image i = new Image("/Ressources/joueurBleu.png");
     	gc.drawImage(i, fd.getX(), fd.getY(), fd.getLargeur(), fd.getHauteur());
     }

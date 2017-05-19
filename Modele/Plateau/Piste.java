@@ -141,12 +141,24 @@ public class Piste extends Rectangle implements Visitable {
 		this.cases = cases;
 	}
 	
-	public long getTempsEcoule() {
-		return tempsEcoule;
+	public void rafraichit(long t) {
+        tempsEcoule = t;
+    }
+	
+	long tempsEcoule() {
+        return tempsEcoule;
+    }
+	
+	public MessageBox getMessageBox() {
+		return messageBox;
 	}
 
-	public void setTempsEcoule(long tempsEcoule) {
-		this.tempsEcoule = tempsEcoule;
+	public void setMessageBox(MessageBox messageBox) {
+		this.messageBox = messageBox;
+	}
+	
+	public void setMessageInMessageBox(String texte) {
+		this.messageBox.setTexte(texte);
 	}
 
 	/**
@@ -185,10 +197,11 @@ public class Piste extends Rectangle implements Visitable {
 	
 	/**
 	 * VUE
+	 * @throws Exception 
 	 */
 	
 	@Override
-	public boolean accept(Visiteur v) {
+	public boolean accept(Visiteur v) throws Exception {
 		boolean retour = v.visite(this);
         for (Case c : cases) {
             retour = retour || c.accept(v);

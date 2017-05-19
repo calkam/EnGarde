@@ -43,8 +43,13 @@ public class RafraichissementJavaFX extends AnimationTimer {
     @Override
     public void handle(long now) {
         jeu.rafraichit(now);
-        if (jeu.accept(dessinateurs[courant])) {
-            Platform.exit();
-        }
+        try {
+			if (jeu.accept(dessinateurs[courant])) {
+			    Platform.exit();
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 }

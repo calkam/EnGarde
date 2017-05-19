@@ -5,14 +5,15 @@ import java.util.ListIterator;
 
 import Modele.Reglages;
 import Modele.Visiteur;
+import Modele.Plateau.Figurine;
 
 public class Main extends Tas {
 	
 	// CONSTANTES
 	
 	public final static int nombreCarteMax = 5;
-	public final static int droite = 0;
-	public final static int gauche = 1;
+	public final static int droite = Figurine.DROITE ;
+	public final static int gauche = Figurine.GAUCHE ;
 	
 	// ATTRIBUTS
 	
@@ -56,6 +57,7 @@ public class Main extends Tas {
 	public Main clone () {
 		
 		Main main = new Main(getCote(), getX(), getY(), getLargeur(), getHauteur()) ;
+		main.setVisible(this.visible);
 		main.nombreCarte = this.nombreCarte.clone() ;
 		main.setMain((ArrayList<Carte>) getMain().clone()) ;
 		return main ;
@@ -116,6 +118,7 @@ public class Main extends Tas {
 	
 	public void ajouter(Carte c){
 		main.add(c);
+		
 		if(cote == droite){
 			c.setTas(Carte.mainDroite);
 		}else{

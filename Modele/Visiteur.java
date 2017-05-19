@@ -63,7 +63,7 @@ public abstract class Visiteur {
 		return visite((Composant) m);
 	}
 	
-	public boolean visite(Figurine f) {
+	public boolean visite(Figurine f) throws Exception {
 		return visite((ObjetMouvant) f);
 	}
 
