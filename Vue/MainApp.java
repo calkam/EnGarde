@@ -84,6 +84,10 @@ public class MainApp extends Application {
             ControleurAcceuil controller = loader.getController();
             controller.setMainApp(this);
             
+            if(r != null){
+            	r.stop();
+            }
+            
             Image imageC = new Image("/Ressources/SourisEpee.png");
             primaryStage.getScene().setCursor(new ImageCursor(imageC , 100, 100));
 
