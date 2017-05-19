@@ -51,7 +51,7 @@
       <Canvas fx:id="scoreGauche" height="252.0" layoutX="29.0" layoutY="610.0" width="123.0" />
       <Button layoutX="732.0" layoutY="716.0" mnemonicParsing="false" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefHeight="40.0" prefWidth="145.0" styleClass="finDeTour" text="Annuler Coup">
          <font>
-            <Font size="18.0" />
+            <Font name="MathJax_Caligraphic-Regular" size="18.0" />
          </font>
       </Button>
       <Label fx:id="nbCartePioche" alignment="CENTER" layoutX="429.0" layoutY="90.0" prefHeight="64.0" prefWidth="96.0" text="" textAlignment="RIGHT">

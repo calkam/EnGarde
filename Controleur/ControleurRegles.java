@@ -5,12 +5,11 @@ import javafx.scene.ImageCursor;
 import javafx.scene.image.Image;
 import Vue.MainApp;
 
+public class ControleurRegles {
 
-public class ControleurAcceuil {
-		
-    private MainApp mainApp;
+	private MainApp mainApp;
     
-    public ControleurAcceuil(){
+    public ControleurRegles(){
     }
     
 	public void setMainApp(MainApp mainApp) {
@@ -18,25 +17,9 @@ public class ControleurAcceuil {
     }
 	
 	@FXML
-	private void handleNouvellePartie() {
-		mainApp.choixPartie();
+	private void menu(){
+		mainApp.acceuil();
 	}
-	
-	@FXML
-	private void handleSauvegarde() {
-		mainApp.sauvegardes();
-	}
-	
-	@FXML
-    private void handleQuitter(){
-		mainApp.alertQuitter();
-    }
-	
-	
-	@FXML
-    private void handleRegles(){
-		mainApp.regles();
-    }
 	
 	@FXML
 	private void handleIn(){
@@ -49,4 +32,5 @@ public class ControleurAcceuil {
 		Image imageC = new Image("/Ressources/SourisEpee.png");
 		mainApp.getPrimaryStage().getScene().setCursor(new ImageCursor(imageC));
 	}
+	
 }
