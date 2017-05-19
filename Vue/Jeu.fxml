@@ -47,7 +47,7 @@
       <Canvas fx:id="mainDroite" height="265.0" layoutX="901.0" layoutY="591.0" width="548.0" />
       <Canvas fx:id="scoreDroit" height="252.0" layoutX="1449.0" layoutY="610.0" width="123.0" />
       <Canvas fx:id="scoreGauche" height="252.0" layoutX="29.0" layoutY="610.0" width="123.0" />
-      <Button layoutX="717.0" layoutY="704.0" mnemonicParsing="false" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefHeight="40.0" prefWidth="172.0" styleClass="finDeTour" text="Annuler Coup">
+      <Button layoutX="732.0" layoutY="716.0" mnemonicParsing="false" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefHeight="40.0" prefWidth="145.0" styleClass="finDeTour" text="Annuler Coup">
          <font>
             <Font name="MathJax_Caligraphic-Regular" size="18.0" />
          </font>
@@ -72,5 +72,18 @@
             <Font name="MathJax_Caligraphic-Bold" size="40.0" />
          </font>
       </Label>
+      <Button layoutX="740.0" layoutY="782.0" mnemonicParsing="false" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefHeight="40.0" prefWidth="129.0" styleClass="finDeTour" text="Fin De Tour" textAlignment="CENTER">
+         <font>
+            <Font name="MathJax_Caligraphic-Regular" size="18.0" />
+         </font>
+      </Button>
+      <AnchorPane layoutY="70.0" prefHeight="835.0" prefWidth="1608.0" styleClass="fondTheatre" stylesheets="@Theme.css">
+         <children>
+            <Label alignment="CENTER" layoutX="752.0" layoutY="418.0" text="Test Micro" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font size="20.0" />
+               </font></Label>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>
