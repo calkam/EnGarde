@@ -26,7 +26,8 @@ public class Tour implements Visitable{
 	public final static int pasAttaque = 0;
 	public final static int attaqueDirect = 1;
 	public final static int attaqueIndirect = 2;
-	public final static int defense = 3;
+	public final static int parade = 4;
+	public final static int fuite = 5;
 	
 	private Joueur joueurPremier;
 	private Joueur joueurSecond;
@@ -101,7 +102,7 @@ public class Tour implements Visitable{
 				while(e.hasMoreElements()){
 					action = e.nextElement();
 					if(actionNeutre(action)){
-						joueur.getPiste().getCases().get(action.getPositionArrivee()-1).setCouleur(Case.BLACK);
+						joueur.getPiste().getCases().get(action.getPositionArrivee()-1).setCouleur(Case.WHITE);
 					}else if(actionOffensive(action)){
 						joueur.getPiste().getCases().get(joueurAdverse(joueur).getPositionFigurine()-1).setCouleur(Case.VERT);
 					}else{
@@ -150,7 +151,7 @@ public class Tour implements Visitable{
 					estAttaque = jouerAction(action, joueur);
 					if(action.getTypeAction() != Joueur.Parade){
 						remplirMain(joueur);
-						changerJoueur(joueur);
+						//changerJoueur(joueur);
 					}else{
 						joueur.getMain().deselectionneeToutesLesCartes();
 					}
@@ -279,14 +280,14 @@ public class Tour implements Visitable{
 						joueur.defausserUneCarte(c);
 					}
 				}				
-				typeAction = defense; nbCartesAttqJouees = 0; valeurCarteAttqJouee = 0;
+				typeAction = parade; nbCartesAttqJouees = 0; valeurCarteAttqJouee = 0;
 				break;
 			case Joueur.Fuite :
 				carteDeplacement = actionAJouer.getCarteDeplacement();
 				joueur.reculer(carteDeplacement.getContenu());
 				defausse.ajouter(carteDeplacement);
 				joueur.defausserUneCarte(carteDeplacement);
-				typeAction = defense; nbCartesAttqJouees = 0; valeurCarteAttqJouee = 0;
+				typeAction = fuite; nbCartesAttqJouees = 0; valeurCarteAttqJouee = 0;
 				break;
 			default: throw new Exception("Erreur lors de l'exécution de l'action");
 		}

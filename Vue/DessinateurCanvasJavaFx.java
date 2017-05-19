@@ -182,10 +182,22 @@ public class DessinateurCanvasJavaFx extends Visiteur {
     
     private void dessinerCase(GraphicsContext gc, double x, double y, double l, double h, int c){
     	switch(c){
-			case Case.TRANSPARENT : gcTerrain.setStroke(Color.TRANSPARENT); break;
-			case Case.BLACK : gcTerrain.setStroke(Color.WHITE); break;
-			case Case.VERT : gcTerrain.setStroke(Color.GREEN); break;
-			case Case.JAUNE : gcTerrain.setStroke(Color.YELLOW); break;
+			case Case.TRANSPARENT : 
+				gcTerrain.setStroke(Color.TRANSPARENT);
+				gcTerrain.setFill(Color.TRANSPARENT);
+				break;
+			case Case.WHITE : 
+				gcTerrain.setStroke(Color.WHITE);
+				gcTerrain.setFill(Color.WHITE);
+				break;
+			case Case.VERT : 
+				gcTerrain.setStroke(Color.GREEN);
+				gcTerrain.setFill(Color.GREEN);
+				break;
+			case Case.JAUNE : 
+				gcTerrain.setStroke(Color.YELLOW);
+				gcTerrain.setFill(Color.YELLOW);
+				break;
 			default : System.out.println("pas de couleur défini");
 		}
     	if(c != Case.TRANSPARENT){

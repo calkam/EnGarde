@@ -8,7 +8,7 @@ import Modele.Composant.Rectangle;
 public class Case extends Rectangle implements Visitable {
 
 	public final static int TRANSPARENT = 0;
-	public final static int BLACK = 1;
+	public final static int WHITE = 1;
 	public final static int VERT = 2; 
 	public final static int JAUNE = 3; 
 	
