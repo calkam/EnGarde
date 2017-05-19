@@ -7,9 +7,12 @@
 	-fx-font-family:'MORPHEUS';
 }
 
+.text{
+	-fx-font-family:'MORPHEUS';
+}
+
 .background {
 	-fx-font-family:'MORPHEUS';
-	-fx-font-size:20;
     -fx-background-image:url(/Ressources/fond.gif);
     -fx-background-repeat: stretch;   
     -fx-background-size: cover;
