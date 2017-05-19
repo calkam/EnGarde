@@ -4,6 +4,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.ImageCursor;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -16,6 +17,7 @@ import Modele.Tour;
 import Modele.Joueur.Joueur;
 import Modele.Joueur.Humain;
 import Modele.Tas.Carte;
+import Vue.DessinateurCanvasJavaFx;
 import Vue.MainApp;
 
 public class ControleurJeu {
@@ -41,6 +43,9 @@ public class ControleurJeu {
     
     @FXML
     private Label nomJoueur2;
+    
+    @FXML
+    private CheckBox mainVisible;
     
     private ArrayList<Carte> cartes;
     
@@ -70,6 +75,15 @@ public class ControleurJeu {
 	private void handleOut(){
 		Image imageC = new Image("/Ressources/SourisEpee.png");
 		mainApp.getPrimaryStage().getScene().setCursor(new ImageCursor(imageC));
+	}
+	
+	@FXML
+	private void handleIsSelected(){
+		if(mainVisible.isSelected()){
+			DessinateurCanvasJavaFx.visibilityActivated = true;
+		}else{
+			DessinateurCanvasJavaFx.visibilityActivated = false;
+		}
 	}
 	
 	private boolean modifierActionPossible(int numJoueur, double x, double y){
@@ -177,24 +191,31 @@ public class ControleurJeu {
             @Override
             public void handle(MouseEvent event) {
             	
-            	boolean peutFaireAction = false;
+            	boolean caseFound = false ;
             	
             	switch (event.getButton()) {
         	        case PRIMARY:
         	        	if(joueurEnCours != null){
+
         	        		
+        	        		int etatAttaque;
         	        		try {
-								peutFaireAction = jeu.getManche().getTourEnCours().executerAction(joueurEnCours, (float)event.getX(), (float)event.getY());
+								caseFound = jeu.getManche().getTourEnCours().executerAction(joueurEnCours, (float)event.getX(), (float)event.getY());
 							} catch (Exception e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
-        	        		if(peutFaireAction){
+        	        		if(caseFound){
         	        			cartes = new ArrayList<Carte>();
+        	        			boolean peutFaireAction = jeu.getManche().getTourEnCours().adversairePeutFaireAction(joueurEnCours);
+            	        		verifierFinDeManche(jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours), peutFaireAction);
+            	        		System.out.println(jeu.getManche().getTourEnCours().getEstAttaque().getC1());
+            	        		etatAttaque = jeu.getManche().getTourEnCours().getEstAttaque().getC1();
+            	        		if(etatAttaque == Tour.PasAttaque || !peutFaireAction){
+            	        			verifierFinDeLaPioche();
+            	        		}
+            	        		jeu.getPiste().getMessageBox().setTexte("Au tour de " + jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours).getNom());
         	        		}
-        	        		peutFaireAction = jeu.getManche().getTourEnCours().adversairePeutFaireAction(joueurEnCours);
-        	        		verifierFinDeManche(jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours), peutFaireAction);
-        	        		verifierFinDeLaPioche();
         	        	}
         	            break;
         	        default:

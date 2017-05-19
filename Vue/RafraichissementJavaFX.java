@@ -52,4 +52,5 @@ public class RafraichissementJavaFX extends AnimationTimer {
 			e.printStackTrace();
 		}
     }
+    
 }

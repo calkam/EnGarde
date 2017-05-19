@@ -61,6 +61,9 @@ public class ControleurChoixPartie {
     private Text nomJ1;
     
     @FXML
+    private Label erreurCombattant;
+    
+    @FXML
 	private void initialize(){
     	Label modej1 = new Label();
         Label modej2 = new Label();
@@ -126,7 +129,25 @@ public class ControleurChoixPartie {
 	
 	@FXML
     private void lancerPartie(){
-		mainApp.jeu(NomCombattant1.getText(), NomCombattant2.getText(), ChoixCombattant1.getValue(), ChoixCombattant2.getValue());
+		int nbCaractereMax = 8;
+		String nomCombattant1 = NomCombattant1.getText();
+		String nomCombattant2 = NomCombattant2.getText();
+		if(nomCombattant1.length() == 0){
+			nomCombattant1 = "Joueur1";
+		}
+		if(nomCombattant2.length() == 0){
+			nomCombattant2 = "Joueur2";
+		}
+		
+		if(nomCombattant1.length() < nbCaractereMax){
+			if(nomCombattant2.length() < nbCaractereMax){
+				mainApp.jeu(nomCombattant1, nomCombattant2, ChoixCombattant1.getValue(), ChoixCombattant2.getValue());
+			}else{
+				erreurCombattant.setText("Nom Combattant 2 trop long (<8)");
+			}
+		}else{
+			erreurCombattant.setText("Nom Combattant 1 trop long (<8)");
+		}
     }
 	
 	@FXML

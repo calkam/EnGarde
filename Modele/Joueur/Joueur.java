@@ -211,7 +211,8 @@ abstract public class Joueur implements Visitable{
 			
 			carte = main.getCarte(i);
 			
-			if(est_attaque.getC1() == Tour.PasAttaque){
+			if(est_attaque.getC1() != Tour.AttaqueDirecte && est_attaque.getC1() != Tour.AttaqueIndirecte){
+
 				Couple <Boolean, Integer> test_avancer_ou_attaquer ;
 				
 				if((position = peut_reculer(carte.getContenu())) != ActionImpossible){
@@ -278,7 +279,7 @@ abstract public class Joueur implements Visitable{
 		if(main.size() > 0){
 			carte = main.getCarte(0);
 			
-			if(est_attaque.getC1() == Tour.PasAttaque){
+			if(est_attaque.getC1() != Tour.AttaqueDirecte && est_attaque.getC1() != Tour.AttaqueIndirecte){
 				
 				if(main.size() > 1){
 					if(main.getNombreCarteGroupe(carte.getContenu()) == main.size()){
@@ -347,8 +348,10 @@ abstract public class Joueur implements Visitable{
 				
 			}else{
 				
-				if(peut_executer_parade(carte.getContenu(), est_attaque.getC2(), est_attaque.getC3())){
-					actions_jouables.ajouterActionDefensive(carte.getID(), Parade, getPositionDeMaFigurine(), null, carte, est_attaque.getC2());
+				if(main.getNombreCarteGroupe(carte.getContenu()) == est_attaque.getC2()){
+					if(peut_executer_parade(carte.getContenu(), est_attaque.getC2(), est_attaque.getC3())){
+						actions_jouables.ajouterActionDefensive(carte.getID(), Parade, getPositionDeMaFigurine(), null, carte, est_attaque.getC2());
+					}
 				}
 					
 				if(main.size() == 1){

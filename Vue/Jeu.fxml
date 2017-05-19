@@ -2,6 +2,7 @@
 
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -56,14 +57,19 @@
             <Font name="eufm10" size="57.0" />
          </font>
       </Label>
-      <Label fx:id="nomJoueur1" alignment="CENTER" layoutX="60.0" layoutY="95.0" prefHeight="64.0" text="Joueur1" textAlignment="RIGHT">
+      <Label fx:id="nomJoueur1" alignment="CENTER" layoutX="14.0" layoutY="90.0" prefHeight="42.0" prefWidth="207.0" stylesheets="@Theme.css" text="Joueurr" textAlignment="RIGHT">
          <font>
-            <Font name="MathJax_Caligraphic-Regular" size="57.0" />
+            <Font name="MathJax_Caligraphic-Bold" size="40.0" />
          </font>
       </Label>
-      <Label fx:id="nomJoueur2" alignment="CENTER" layoutX="1340.0" layoutY="95.0" prefHeight="64.0" text="Joueur2" textAlignment="RIGHT">
+      <CheckBox fx:id="mainVisible" layoutX="1438.0" layoutY="24.0" mnemonicParsing="false" onAction="#handleIsSelected" styleClass="checkbox" text="Main Visible" textFill="WHITE">
          <font>
-            <Font name="MathJax_Caligraphic-Regular" size="57.0" />
+            <Font name="MathJax_Caligraphic-Regular" size="18.0" />
+         </font>
+      </CheckBox>
+      <Label fx:id="nomJoueur2" alignment="CENTER" layoutX="1370.0" layoutY="90.0" prefHeight="42.0" prefWidth="207.0" text="Joueurr" textAlignment="RIGHT">
+         <font>
+            <Font name="MathJax_Caligraphic-Bold" size="40.0" />
          </font>
       </Label>
    </children>

@@ -1,4 +1,18 @@
+@font-face {
+    font-family:MORPHEUS;
+    src: url('/Ressources/MORPHEUS.TTF');
+}
+
+.label{
+	-fx-font-family:'MORPHEUS';
+}
+
+.text{
+	-fx-font-family:'MORPHEUS';
+}
+
 .background {
+	-fx-font-family:'MORPHEUS';
     -fx-background-image:url(/Ressources/fond.gif);
     -fx-background-repeat: stretch;   
     -fx-background-size: cover;
@@ -6,12 +20,16 @@
 }
 
 .fondQuitter{
+	-fx-font-family:'MORPHEUS';
+	-fx-font-size:20;
 	-fx-background-image:url("/Ressources/quitter.png");  
     -fx-background-size: stretch;
     -fx-background-position: center center;
 }
 
 .checkbox {
+	-fx-font-family:'MORPHEUS';
+	-fx-font-size:20;
 	/*-fx-background-image:url("/Ressources/checkbox_fond.png");*/
 	-fx-background-size: cover;
 }
@@ -31,12 +49,13 @@
 }
 
 .button {
+	-fx-font-family:'MORPHEUS';
+	-fx-font-size:20;
   	-fx-background-color: transparent;
     -fx-background-image:url("/Ressources/bouton_nonPresse.png");
     -fx-background-size: stretch;
     -fx-background-position: center center;    
     -fx-text-fill: white;
-    -fx-cursor-color:red;
 }
 
 .button:hover {
@@ -54,7 +73,6 @@
 }
 
 .button:default {
-    -fx-background-color: -fx-focus-color;
     -fx-text-fill: #ffffff;
 }
 
@@ -68,6 +86,8 @@
 }
 
 .finDeTour{
+	-fx-font-family:'MORPHEUS';
+	-fx-font-size:20;
 	-fx-background-image:url("/Ressources/finDeTour.png");
 	-fx-text-fill: #ffffff;
 }

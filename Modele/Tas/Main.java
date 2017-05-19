@@ -126,6 +126,13 @@ public class Main extends Tas {
 		}
 		nombreCarte[c.getContenu()]++ ;
 		nombreCarte[0]++ ;
+		
+	}
+		
+	public void deselectionneeToutesLesCartes(){
+		for(Carte c : main){
+			c.setSelectionne(false);
+		}
 	}
 	
 	public void supprimer(Carte c, int nbCartes, Defausse defausse) throws Exception{

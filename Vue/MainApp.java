@@ -43,8 +43,8 @@ public class MainApp extends Application {
         
         initRootLayout();
         
-        //acceuil();
-        jeu("Kaiba", "Yugi", "Humain", "Humain");
+        acceuil();
+        //jeu();
     }
     
     /**
@@ -84,11 +84,15 @@ public class MainApp extends Application {
             ControleurAcceuil controller = loader.getController();
             controller.setMainApp(this);
             
+            if(r != null){
+            	r.stop();
+            }
+            
             Image imageC = new Image("/Ressources/SourisEpee.png");
             primaryStage.getScene().setCursor(new ImageCursor(imageC , 100, 100));
 
             //Utils.playSound("MainTheme.mp3");
-            Utils.playSound("itsTimeToDuel.mp3");
+            //Utils.playSound("itsTimeToDuel.mp3");
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -33,6 +33,7 @@ public class Tour implements Visitable{
 	public final static int PasAttaque = 0;
 	public final static int AttaqueDirecte = 1;
 	public final static int AttaqueIndirecte = 2;
+	public final static int Defense = 3;
 	
 	// ATTRIBUTS
 	
@@ -181,7 +182,7 @@ public class Tour implements Visitable{
 				while(e.hasMoreElements()){
 					action = e.nextElement();
 					if(actionNeutre(action)){
-						joueur.getPiste().getCases().get(action.getPositionArrivee()-1).setCouleur(Case.ROUGE);
+						joueur.getPiste().getCases().get(action.getPositionArrivee()-1).setCouleur(Case.BLACK);
 					}else if(actionOffensive(action)){
 						joueur.getPiste().getCases().get(joueurAdverse(joueur).getPositionDeMaFigurine()-1).setCouleur(Case.VERT);
 					}else{
@@ -210,6 +211,10 @@ public class Tour implements Visitable{
 		
 		caseClicked = joueur.getPiste().getCaseClicked(x, y);
 		
+		if(caseClicked == null){
+			return false;
+		}
+		
 		if(actions_jouables != null && actions_jouables.size() != 0){
 			e = actions_jouables.elements();
 			
@@ -227,6 +232,8 @@ public class Tour implements Visitable{
 					if(action.getTypeAction() != Joueur.Parade){
 						joueur.remplirMain(pioche);
 						changerJoueur(joueur);
+					}else{
+						joueur.getMain().deselectionneeToutesLesCartes();
 					}
 					
 				} catch (Exception e1) {
@@ -266,67 +273,6 @@ public class Tour implements Visitable{
 		joueurAdverse(joueur).getMain().setVisible(true);
 	}
 	
-	/*private Triplet<Integer, Integer, Integer> jouerAction(Action actionAJouer, Joueur joueur) throws Exception{
-		Carte carteDeplacement=null;
-		Carte carteAction=null;
-		
-		int typeAction;
-		int nbCartesAttqJouees;
-		int valeurCarteAttqJouee;
-		
-		switch(actionAJouer.getTypeAction()){
-			case Joueur.Reculer :
-				carteDeplacement = actionAJouer.getCarteDeplacement();
-				joueur.reculer(carteDeplacement.getContenu());
-				defausse.ajouter(carteDeplacement);
-				joueur.defausserCartes(carteDeplacement, 1, defausse);
-				typeAction = PasAttaque; nbCartesAttqJouees = 0; valeurCarteAttqJouee = 0;
-				break;
-			case Joueur.Avancer :
-				carteDeplacement = actionAJouer.getCarteDeplacement();
-				joueur.avancer(carteDeplacement.getContenu());
-				defausse.ajouter(carteDeplacement);
-				joueur.defausserCartes(carteDeplacement, 1, defausse);
-				typeAction = PasAttaque; nbCartesAttqJouees = 0; valeurCarteAttqJouee = 0;
-				break;
-			case Joueur.AttaqueDirecte : 
-				carteAction = actionAJouer.getCarteAction();
-				defausse.ajouter(carteAction);
-				joueur.defausserCartes(carteAction, actionAJouer.getNbCartes(), defausse);
-				typeAction = AttaqueDirecte; nbCartesAttqJouees = actionAJouer.getNbCartes(); valeurCarteAttqJouee = carteAction.getContenu();
-				break;
-			case Joueur.AttaqueIndirecte :
-				// On avance dans un premier temps
-				carteDeplacement = actionAJouer.getCarteDeplacement();
-				joueur.avancer(carteDeplacement.getContenu());
-				defausse.ajouter(carteDeplacement);
-				joueur.defausserCartes(carteDeplacement, 1, defausse);
-				
-				// On attaque dans un second temps	
-				carteAction = actionAJouer.getCarteAction();
-				defausse.ajouter(carteAction);
-				joueur.defausserCartes(carteAction, actionAJouer.getNbCartes(), defausse);
-				typeAction = AttaqueIndirecte; nbCartesAttqJouees = actionAJouer.getNbCartes(); valeurCarteAttqJouee = carteAction.getContenu();
-				break;
-			case Joueur.Parade :
-				carteAction = actionAJouer.getCarteAction();
-				defausse.ajouter(carteAction);
-				joueur.defausserCartes(carteAction, actionAJouer.getNbCartes(), defausse);
-				typeAction = PasAttaque; nbCartesAttqJouees = 0; valeurCarteAttqJouee = 0;
-				break;
-			case Joueur.Fuite :
-				carteDeplacement = actionAJouer.getCarteDeplacement();
-				joueur.reculer(carteDeplacement.getContenu());
-				defausse.ajouter(carteDeplacement);
-				joueur.defausserCartes(carteDeplacement, 1, defausse);
-				typeAction = PasAttaque; nbCartesAttqJouees = 0; valeurCarteAttqJouee = 0;
-				break;
-			default: throw new Exception("Erreur lors de l'exécution de l'action");
-		}
-		
-		return new Triplet<>(typeAction, nbCartesAttqJouees, valeurCarteAttqJouee);
-	}*/
-	
 	/**
 	 * GETTER/SETTER
 	 */
@@ -361,7 +307,7 @@ public class Tour implements Visitable{
 	public void setDefausse(Defausse defausse) {
 		this.defausse = defausse;
 	}
-	
+
 	public Triplet<Integer, Integer, Integer> getEstAttaque() {
 		return estAttaque;
 	}

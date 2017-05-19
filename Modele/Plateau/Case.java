@@ -12,7 +12,7 @@ public class Case extends Rectangle implements Visitable {
 	// COULEURS
 
 	public final static int TRANSPARENT = 0;
-	public final static int ROUGE = 1;
+	public final static int BLACK = 1;
 	public final static int VERT = 2; 
 	public final static int JAUNE = 3; 
 	

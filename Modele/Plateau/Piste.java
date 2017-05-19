@@ -38,7 +38,7 @@ public class Piste extends Rectangle implements Visitable {
 		this.figurineDroite.setY(Reglages.lis("PisteHauteur")-figurineDroite.getHauteur()-25);
 		this.figurineGauche.setX(LargeurCase * figurineGauche.getPosition());
 		this.figurineDroite.setX(LargeurCase * figurineDroite.getPosition());
-		this.messageBox = new MessageBox("machine a fait une attaque indirect en utilisant 2 cartes de valeur 2");
+		this.messageBox = new MessageBox("");
 		messageBox.setX(this.getLargeur()/2-messageBox.getLargeur()/2);
 		messageBox.setY(0);
 	
@@ -136,6 +136,18 @@ public class Piste extends Rectangle implements Visitable {
 	public ArrayList<Case> getCases() {
 		return cases;
 	}
+
+	public MessageBox getMessageBox() {
+		return messageBox;
+	}
+
+	public void setMessageBox(MessageBox messageBox) {
+		this.messageBox = messageBox;
+	}
+	
+	public void setMessageInMessageBox(String texte) {
+		this.messageBox.setTexte(texte);
+	}
 	
 	public void setCases(ArrayList<Case> cases) {
 		this.cases = cases;
@@ -148,18 +160,6 @@ public class Piste extends Rectangle implements Visitable {
 	long tempsEcoule() {
         return tempsEcoule;
     }
-	
-	public MessageBox getMessageBox() {
-		return messageBox;
-	}
-
-	public void setMessageBox(MessageBox messageBox) {
-		this.messageBox = messageBox;
-	}
-	
-	public void setMessageInMessageBox(String texte) {
-		this.messageBox.setTexte(texte);
-	}
 
 	/**
 	 * MOTEUR

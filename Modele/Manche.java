@@ -160,8 +160,7 @@ public class Manche implements Visitable{
 					return JOUEUR2GAGNE;
 				}else{
 					return testVictoirePiocheVideDistanceCaseMediane();
-				}				
-				
+				}
 			}else{
 				return testVictoirePiocheVideDistanceCaseMediane();
 			}
