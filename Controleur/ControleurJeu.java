@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.ImageCursor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -13,6 +14,7 @@ import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
 
+import Modele.Couple;
 import Modele.Jeu;
 import Modele.Manche;
 import Modele.Tour;
@@ -60,8 +62,19 @@ public class ControleurJeu {
     @FXML
     private Button buttonFinDeTour;
 
+    @FXML
+    private ButtonBar buttonBarFinPartie;
+    
+    @FXML
+    private ButtonBar buttonBarFinManche;
+    
+    @FXML
+    private Label textTableauFin;
     
     //ATTRIBUT
+    private final static int FINPARTIE=0;
+    private final static int FINMANCHE=1;
+    
     private ArrayList<Carte> cartes;
     
     private Joueur joueurEnCours = null;
@@ -82,13 +95,14 @@ public class ControleurJeu {
 	}
 	
 	public void initialiserWidget(){
+		changeAbleMain(jeu.getManche().getTourEnCours().getJoueurSecond(), true);
 		fondTheatre.setVisible(false);
 		tableauFin.setVisible(false);
-		fondTheatre.toFront();
-		tableauFin.toFront();
         mainDroite.toFront();
         mainGauche.toFront();
         terrain.toFront();
+        fondTheatre.toFront();
+		tableauFin.toFront();
         buttonFinDeTour.setDisable(true);
 	}
 	
@@ -139,8 +153,7 @@ public class ControleurJeu {
 				resultat = Tour.joueurSecondPerdu;
 			}
 			try {
-				resultat = jeu.getManche().finDeManche(resultat);
-				verifierFinDuJeu(resultat);
+				verifierFinDuJeu(jeu.getManche().finDeManche(resultat));
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -149,12 +162,10 @@ public class ControleurJeu {
 	}
 	
 	private void verifierFinDeLaPioche(){
-		int resultat;
 		nbCartePioche.setText(Integer.toString(jeu.getManche().getPioche().size()));
 		if(jeu.getManche().getPioche().estVide()){
 			try {
-				resultat = jeu.getManche().finDeManche(Tour.piocheVide);
-				verifierFinDuJeu(resultat);
+				verifierFinDuJeu(jeu.getManche().finDeManche(Tour.piocheVide));
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -162,31 +173,62 @@ public class ControleurJeu {
 		}
 	}
 	
-	private void verifierFinDuJeu(int resultat){
+	private void verifierFinDuJeu(Couple<Integer, Integer> resultat){
 		cartes = new ArrayList<Carte>();
-		if(resultat == Manche.JOUEUR1GAGNE){
+		if(resultat.getC1() == Manche.JOUEUR1GAGNE){
 			jeu.changerScore(jeu.getJoueur1());
-		}else if(resultat == Manche.JOUEUR2GAGNE){
+		}else if(resultat.getC1() == Manche.JOUEUR2GAGNE){
 			jeu.changerScore(jeu.getJoueur2());
 		}
 		if(!jeu.gainPartie()){
-			modifierWidgetFin();
-			jeu.nouvelleManche();
+			afficherWidgetFin(FINMANCHE, resultat);
 			nbCartePioche.setText(Integer.toString(jeu.getManche().getPioche().size()));
-			try {
-				jeu.lancerLaManche();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}else{
-			modifierWidgetFin();
+			afficherWidgetFin(FINPARTIE, resultat);
 		}
 	}
 	
-	public void modifierWidgetFin(){
+	public void cacherWidgetFin(){
+		fondTheatre.setVisible(false);
+		tableauFin.setVisible(false);
+	}
+	
+	public void afficherWidgetFin(int typeFin, Couple<Integer, Integer> resultat){
+		String joueurVictorieux = "";
+		String joueurPerdant = "";
 		fondTheatre.setVisible(true);
 		tableauFin.setVisible(true);
+		if(typeFin == FINPARTIE){
+			buttonBarFinPartie.setVisible(true);
+			buttonBarFinManche.setVisible(false);
+		}else if(typeFin == FINMANCHE){
+			buttonBarFinPartie.setVisible(false);
+			buttonBarFinManche.setVisible(true);
+			
+			if(resultat.getC1() == Manche.JOUEUR1GAGNE){
+				joueurVictorieux = jeu.getJoueur1().getNom();
+				joueurPerdant = jeu.getJoueur2().getNom();
+			}else if(resultat.getC1() == Manche.JOUEUR2GAGNE){
+				joueurVictorieux = jeu.getJoueur2().getNom();
+				joueurPerdant = jeu.getJoueur1().getNom();
+			}
+			
+			if(resultat.getC1() == Manche.MATCHNULLE){
+				
+			}else{
+				switch(resultat.getC2()){
+					case Manche.VICTOIRESIMPLE :
+						textTableauFin.setText(joueurVictorieux + " a gagné la manche !\n" + joueurPerdant + " c'est fait victimisé");
+						break;
+					case Manche.PLUSCARTEATTAQUEDIRECT :
+						textTableauFin.setText(joueurVictorieux + " a plus de cartes pour attaquer directectement son adversaire.\n" + joueurVictorieux + " a gagné la manche !");
+						break;
+					case Manche.PLUSCARTEMEDIANE :
+						textTableauFin.setText(joueurVictorieux + " étant plus proche de la case médiane....\n" + joueurVictorieux + " a gagné la manche !");
+						break;
+				}
+			}
+		}
 	}
 	
 	//GESTION DES ACTIONS
@@ -229,8 +271,10 @@ public class ControleurJeu {
         	        		caseFound = jeu.getManche().getTourEnCours().executerAction(joueurEnCours, (float)event.getX(), (float)event.getY());
         	        		if(caseFound){
         	        			cartes = new ArrayList<Carte>();
-        	        			buttonFinDeTour.setDisable(false);
-        	        			changeAbleMain(joueurEnCours, true);
+        	        			if(jeu.getManche().getTourEnCours().getEstAttaque().getC1() != Tour.parade){
+	        	        			buttonFinDeTour.setDisable(false);
+	        	        			changeAbleMain(joueurEnCours, true);
+        	        			}
         	        		}
         	        	}
         	            break;
@@ -270,6 +314,18 @@ public class ControleurJeu {
 		}else{
 			mainGauche.setDisable(disable);
 		}
+	}
+	
+	@FXML
+	private void mancheSuivante(){
+		jeu.nouvelleManche();
+		try {
+			jeu.lancerLaManche();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		cacherWidgetFin();
 	}
 	
 	@FXML
