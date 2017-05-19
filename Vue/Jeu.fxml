@@ -82,12 +82,12 @@
       <Pane fx:id="fondTheatre" layoutY="70.0" prefHeight="836.0" prefWidth="1608.0" styleClass="fondTheatre" />
       <Pane fx:id="tableauFin" layoutX="420.0" layoutY="167.0" prefHeight="422.0" prefWidth="770.0" styleClass="textTheatre">
          <children>
-            <Label fx:id="testMicro" alignment="CENTER" prefHeight="271.0" prefWidth="782.0" text="Test Micro" textAlignment="CENTER" textFill="WHITE">
+            <Label fx:id="textTableauFin" alignment="CENTER" prefHeight="271.0" prefWidth="782.0" text="" textAlignment="CENTER" textFill="WHITE">
                <font>
-                  <Font size="20.0" />
+                  <Font size="45.0" />
                </font>
             </Label>
-            <ButtonBar layoutX="152.0" layoutY="330.0" prefHeight="40.0" prefWidth="467.0">
+            <ButtonBar fx:id="buttonBarFinPartie" layoutX="152.0" layoutY="330.0" prefHeight="40.0" prefWidth="467.0">
                <buttons>
                   <Button mnemonicParsing="false" onAction="#menuPrincipal" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefHeight="40.0" prefWidth="216.0" text="Menu Principal">
                      <font>
@@ -101,9 +101,9 @@
                   </Button>
                </buttons>
             </ButtonBar>
-            <ButtonBar layoutX="262.0" layoutY="330.0" prefHeight="40.0" prefWidth="229.0">
+            <ButtonBar fx:id="buttonBarFinManche" layoutX="262.0" layoutY="330.0" prefHeight="40.0" prefWidth="229.0">
                <buttons>
-                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="216.0" text="Manche Suivante">
+                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="216.0" onMouseClicked="#mancheSuivante" text="Manche Suivante">
                      <font>
                         <Font size="18.0" />
                      </font>
