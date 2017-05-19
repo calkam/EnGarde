@@ -14,7 +14,7 @@
          <children>
             <ChoiceBox fx:id="ChoixCombattant1" layoutX="50.0" layoutY="140.0" prefHeight="26.0" prefWidth="200.0" />
             <ChoiceBox fx:id="NiveauCombattant1" layoutX="320.0" layoutY="140.0" prefHeight="26.0" prefWidth="200.0" visible="false" />
-            <TextField fx:id="NomCombattant1" layoutX="320.0" layoutY="140.0" prefHeight="26.0" prefWidth="200.0" promptText="Entrez Un Nom..." />
+            <TextField fx:id="NomCombattant1" layoutX="320.0" layoutY="140.0" prefHeight="26.0" prefWidth="200.0"  promptText="Entrez Un Nom..." />
             <ChoiceBox fx:id="ChoixCombattant2" layoutX="50.0" layoutY="230.0" prefHeight="26.0" prefWidth="200.0" />
             <ChoiceBox fx:id="NiveauCombattant2" layoutX="320.0" layoutY="230.0" prefHeight="26.0" prefWidth="200.0" />
             <TextField fx:id="NomCombattant2" layoutX="320.0" layoutY="230.0" prefHeight="26.0" prefWidth="200.0" promptText="Entrez Un Nom..." visible="false" />

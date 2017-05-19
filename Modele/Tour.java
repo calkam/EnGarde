@@ -130,6 +130,10 @@ public class Tour implements Visitable{
 		
 		caseClicked = joueur.getPiste().getCaseClicked(x, y);
 		
+		if(caseClicked == null){
+			return false;
+		}
+		
 		if(actions_jouables != null && actions_jouables.size() != 0){
 			e = actions_jouables.elements();
 			
