@@ -79,19 +79,12 @@
             <Font name="MathJax_Caligraphic-Regular" size="18.0" />
          </font>
       </Button>
-<<<<<<< HEAD
-      <Pane layoutY="70.0" prefHeight="836.0" prefWidth="1608.0" styleClass="fondTheatre" />
-      <Pane layoutX="420.0" layoutY="167.0" prefHeight="422.0" prefWidth="770.0" styleClass="textTheatre">
-=======
-      <AnchorPane fx:id="fondTheatre" layoutY="70.0" prefHeight="835.0" prefWidth="1608.0" styleClass="fondTheatre" stylesheets="@Theme.css">
->>>>>>> fe864611d67b1a0d8aee39dfc170b2e026543509
          <children>
             <Label fx:id="testMicro" alignment="CENTER" prefHeight="271.0" prefWidth="782.0" text="Test Micro" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-<<<<<<< HEAD
             <ButtonBar layoutX="152.0" layoutY="330.0" prefHeight="40.0" prefWidth="467.0">
                <buttons>
                   <Button mnemonicParsing="false" onAction="#menuPrincipal" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefHeight="40.0" prefWidth="216.0" text="Menu Principal">
@@ -115,8 +108,6 @@
                   </Button>
                </buttons>
             </ButtonBar>
-=======
->>>>>>> fe864611d67b1a0d8aee39dfc170b2e026543509
          </children>
       </Pane>
    </children>
