@@ -57,7 +57,7 @@
             <Font name="eufm10" size="57.0" />
          </font>
       </Label>
-      <Label fx:id="nomJoueur1" alignment="CENTER" layoutX="14.0" layoutY="90.0" prefHeight="42.0" prefWidth="207.0" text="Joueurr" textAlignment="RIGHT">
+      <Label fx:id="nomJoueur1" alignment="CENTER" layoutX="14.0" layoutY="90.0" prefHeight="42.0" prefWidth="207.0" stylesheets="@Theme.css" text="Joueurr" textAlignment="RIGHT">
          <font>
             <Font name="MathJax_Caligraphic-Bold" size="40.0" />
          </font>
