@@ -273,7 +273,7 @@ public class ControleurJeu {
         	        		boolean caseFound;
         	        		caseFound = jeu.getManche().getTourEnCours().executerAction(joueurEnCours, (float)event.getX(), (float)event.getY());
         	        		if(caseFound){
-        	        			buttonGestionTour.setStyle("-fx-background-image:url(/Ressources/bouton_nonPresse.png);");
+        	        			buttonGestionTour.setStyle("-fx-background-image:url(/Ressources/finDeTourC.png);");
         	        			cartes = new ArrayList<Carte>();
         	        			if(jeu.getManche().getTourEnCours().getEstAttaque().getC1() != Tour.parade){
         	        				buttonGestionTour.setDisable(false);
