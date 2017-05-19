@@ -59,19 +59,6 @@ public class DessinateurCanvasJavaFx extends Visiteur {
 
     public boolean visite(Main m){
     	GraphicsContext gc;
-    	if(!m.isVisible()){
-    		if(m.getCote() == Main.droite){
-    			mainDroite.setDisable(true);
-    		}else if(m.getCote() == Main.gauche){
-    			mainGauche.setDisable(true);
-    		}
-    	}else{
-    		if(m.getCote() == Main.droite){
-    			mainDroite.setDisable(false);
-    		}else if(m.getCote() == Main.gauche){
-    			mainGauche.setDisable(false);
-    		}
-    	}
 
     	if(m.getCote() == Main.droite){
     		gcMainDroite = mainDroite.getGraphicsContext2D();

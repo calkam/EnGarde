@@ -151,7 +151,6 @@ public class Tour implements Visitable{
 					estAttaque = jouerAction(action, joueur);
 					if(action.getTypeAction() != Joueur.Parade){
 						remplirMain(joueur);
-						//changerJoueur(joueur);
 					}else{
 						joueur.getMain().deselectionneeToutesLesCartes();
 					}
