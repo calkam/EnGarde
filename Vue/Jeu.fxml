@@ -29,17 +29,17 @@
       </ImageView>
       <Button layoutX="29.0" layoutY="16.0" mnemonicParsing="false" onAction="#menuPrincipal" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefHeight="40.0" prefWidth="216.0" text="Menu Principal">
          <font>
-            <Font name="MathJax_Caligraphic-Regular" size="18.0" />
+            <Font size="18.0" />
          </font>
       </Button>
       <Button layoutX="289.0" layoutY="16.0" mnemonicParsing="false" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefHeight="40.0" prefWidth="216.0" text="Sauvegarder">
          <font>
-            <Font name="MathJax_Caligraphic-Regular" size="18.0" />
+            <Font size="18.0" />
          </font>
       </Button>
       <Button layoutX="549.0" layoutY="16.0" mnemonicParsing="false" onAction="#nouvellePartie" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefHeight="40.0" prefWidth="216.0" text="Nouvelle Partie">
          <font>
-            <Font name="MathJax_Caligraphic-Regular" size="18.0" />
+            <Font size="18.0" />
          </font>
       </Button>
       <Canvas fx:id="terrain" StyleClass="terrain" height="334.0" layoutX="29.0" layoutY="253.0" width="1548.0" />
@@ -56,27 +56,27 @@
       </Button>
       <Label fx:id="nbCartePioche" alignment="CENTER" layoutX="429.0" layoutY="90.0" prefHeight="64.0" prefWidth="96.0" text="" textAlignment="RIGHT">
          <font>
-            <Font name="eufm10" size="57.0" />
+            <Font size="57.0" />
          </font>
       </Label>
       <Label fx:id="nomJoueur1" alignment="CENTER" layoutX="14.0" layoutY="90.0" prefHeight="42.0" prefWidth="207.0" stylesheets="@Theme.css" text="" textAlignment="RIGHT">
          <font>
-            <Font name="MathJax_Caligraphic-Bold" size="40.0" />
+            <Font size="40.0" />
          </font>
       </Label>
       <CheckBox fx:id="mainVisible" layoutX="1438.0" layoutY="24.0" mnemonicParsing="false" onAction="#handleIsSelected" styleClass="checkbox" text="Main Visible" textFill="WHITE">
          <font>
-            <Font name="MathJax_Caligraphic-Regular" size="18.0" />
+            <Font size="18.0" />
          </font>
       </CheckBox>
       <Label fx:id="nomJoueur2" alignment="CENTER" layoutX="1370.0" layoutY="90.0" prefHeight="42.0" prefWidth="207.0" text="" textAlignment="RIGHT">
          <font>
-            <Font name="MathJax_Caligraphic-Bold" size="40.0" />
+            <Font size="40.0" />
          </font>
       </Label>
       <Button fx:id="buttonFinDeTour" layoutX="740.0" layoutY="782.0" mnemonicParsing="false" onMouseClicked="#finDeTour" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefHeight="40.0" prefWidth="129.0" styleClass="finDeTour" text="Fin De Tour" textAlignment="CENTER">
          <font>
-            <Font name="MathJax_Caligraphic-Regular" size="18.0" />
+            <Font size="18.0" />
          </font>
       </Button>
       <Pane fx:id="fondTheatre" layoutY="70.0" prefHeight="836.0" prefWidth="1608.0" styleClass="fondTheatre" />
