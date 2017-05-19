@@ -26,6 +26,7 @@ public class Tour implements Visitable{
 	public final static int pasAttaque = 0;
 	public final static int attaqueDirect = 1;
 	public final static int attaqueIndirect = 2;
+	public final static int defense = 3;
 	
 	private Joueur joueurPremier;
 	private Joueur joueurSecond;
@@ -100,7 +101,7 @@ public class Tour implements Visitable{
 				while(e.hasMoreElements()){
 					action = e.nextElement();
 					if(actionNeutre(action)){
-						joueur.getPiste().getCases().get(action.getPositionArrivee()-1).setCouleur(Case.ROUGE);
+						joueur.getPiste().getCases().get(action.getPositionArrivee()-1).setCouleur(Case.BLACK);
 					}else if(actionOffensive(action)){
 						joueur.getPiste().getCases().get(joueurAdverse(joueur).getPositionFigurine()-1).setCouleur(Case.VERT);
 					}else{
@@ -146,6 +147,8 @@ public class Tour implements Visitable{
 					if(action.getTypeAction() != Joueur.Parade){
 						remplirMain(joueur);
 						changerJoueur(joueur);
+					}else{
+						joueur.getMain().deselectionneeToutesLesCartes();
 					}
 					
 				} catch (Exception e1) {
@@ -272,14 +275,14 @@ public class Tour implements Visitable{
 						joueur.defausserUneCarte(c);
 					}
 				}				
-				typeAction = pasAttaque; nbCartesAttqJouees = 0; valeurCarteAttqJouee = 0;
+				typeAction = defense; nbCartesAttqJouees = 0; valeurCarteAttqJouee = 0;
 				break;
 			case Joueur.Fuite :
 				carteDeplacement = actionAJouer.getCarteDeplacement();
 				joueur.reculer(carteDeplacement.getContenu());
 				defausse.ajouter(carteDeplacement);
 				joueur.defausserUneCarte(carteDeplacement);
-				typeAction = pasAttaque; nbCartesAttqJouees = 0; valeurCarteAttqJouee = 0;
+				typeAction = defense; nbCartesAttqJouees = 0; valeurCarteAttqJouee = 0;
 				break;
 			default: throw new Exception("Erreur lors de l'exécution de l'action");
 		}
@@ -335,6 +338,14 @@ public class Tour implements Visitable{
 	
 	public void setDefausse(Defausse defausse) {
 		this.defausse = defausse;
+	}
+
+	public Triplet<Integer, Integer, Integer> getEstAttaque() {
+		return estAttaque;
+	}
+
+	public void setEstAttaque(Triplet<Integer, Integer, Integer> estAttaque) {
+		this.estAttaque = estAttaque;
 	}
 
 	public MessageBox getMessageBox() {

@@ -196,12 +196,17 @@ public class ControleurJeu {
         	        	if(joueurEnCours != null){
         	        		boolean peutFaireAction;
         	        		boolean caseFound;
+        	        		int etatAttaque;
         	        		caseFound = jeu.getManche().getTourEnCours().executerAction(joueurEnCours, (float)event.getX(), (float)event.getY());
         	        		if(caseFound){
         	        			cartes = new ArrayList<Carte>();
         	        			peutFaireAction = jeu.getManche().getTourEnCours().adversairePeutFaireAction(joueurEnCours);
             	        		verifierFinDeManche(jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours), peutFaireAction);
-            	        		verifierFinDeLaPioche();
+            	        		System.out.println(jeu.getManche().getTourEnCours().getEstAttaque().getC1());
+            	        		etatAttaque = jeu.getManche().getTourEnCours().getEstAttaque().getC1();
+            	        		if(etatAttaque == Tour.pasAttaque || !peutFaireAction){
+            	        			verifierFinDeLaPioche();
+            	        		}
             	        		jeu.getPiste().getMessageBox().setTexte("Au tour de " + jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours).getNom());
         	        		}
         	        	}

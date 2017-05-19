@@ -55,12 +55,12 @@ public class DessinateurCanvasJavaFx extends Visiteur {
     public boolean visite(Case c){
     	switch(c.getCouleur()){
     		case Case.TRANSPARENT : gcTerrain.setStroke(Color.TRANSPARENT); break;
-    		case Case.ROUGE : gcTerrain.setStroke(Color.RED); break;
+    		case Case.BLACK : gcTerrain.setStroke(Color.BLACK); break;
     		case Case.VERT : gcTerrain.setStroke(Color.GREEN); break;
     		case Case.JAUNE : gcTerrain.setStroke(Color.YELLOW); break;
     		default : System.out.println("pas de couleur défini");
     	}
-    	gcTerrain.setLineWidth(3.0);
+    	gcTerrain.setLineWidth(6.0);
     	gcTerrain.strokeRect(c.getX(), c.getY(), c.getLargeur(), c.getHauteur());
 		return false;
 	}
@@ -262,7 +262,7 @@ public class DessinateurCanvasJavaFx extends Visiteur {
     private void ecrireTexte(GraphicsContext gc, float x, float y, String s, int length){
     	float policeSize = (float) 22.5;
     	float recule = (float) (length*(policeSize/4.10));
-    	Font f = Font.font("Courier", FontWeight.EXTRA_BOLD, policeSize);
+    	Font f = Font.font("MathJax_Caligraphic-Regular", FontWeight.EXTRA_BOLD, policeSize);
     	gc.setFill(Color.WHITE);
     	gc.setFont(f);
     	gc.fillText(s, x-recule, y+15);

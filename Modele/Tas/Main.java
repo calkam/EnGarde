@@ -109,7 +109,11 @@ public class Main extends Tas {
 		}
 	}
 	
-	
+	public void deselectionneeToutesLesCartes(){
+		for(Carte c : main){
+			c.setSelectionne(false);
+		}
+	}
 
 	public String toString(){
 		String resultat = "";
