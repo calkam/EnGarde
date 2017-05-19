@@ -88,7 +88,7 @@ public class MainApp extends Application {
             primaryStage.getScene().setCursor(new ImageCursor(imageC , 100, 100));
 
             //Utils.playSound("MainTheme.mp3");
-            Utils.playSound("itsTimeToDuel.mp3");
+            //Utils.playSound("itsTimeToDuel.mp3");
         } catch (IOException e) {
             e.printStackTrace();
         }
