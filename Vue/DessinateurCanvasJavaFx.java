@@ -53,15 +53,7 @@ public class DessinateurCanvasJavaFx extends Visiteur {
     }
     
     public boolean visite(Case c){
-    	switch(c.getCouleur()){
-    		case Case.TRANSPARENT : gcTerrain.setStroke(Color.TRANSPARENT); break;
-    		case Case.BLACK : gcTerrain.setStroke(Color.BLACK); break;
-    		case Case.VERT : gcTerrain.setStroke(Color.GREEN); break;
-    		case Case.JAUNE : gcTerrain.setStroke(Color.YELLOW); break;
-    		default : System.out.println("pas de couleur défini");
-    	}
-    	gcTerrain.setLineWidth(6.0);
-    	gcTerrain.strokeRect(c.getX(), c.getY(), c.getLargeur(), c.getHauteur());
+    	dessinerCase(gcTerrain, c.getX(), c.getY(), c.getLargeur(), c.getHauteur(), c.getCouleur());
 		return false;
 	}
 
@@ -186,6 +178,35 @@ public class DessinateurCanvasJavaFx extends Visiteur {
         gc.clearRect(0, 0, terrain.getWidth(), terrain.getHeight());
         Image a = new Image("/Ressources/arriere_plan.png");
         gc.drawImage(a, 0, 0);
+    }
+    
+    private void dessinerCase(GraphicsContext gc, double x, double y, double l, double h, int c){
+    	switch(c){
+			case Case.TRANSPARENT : 
+				gcTerrain.setStroke(Color.TRANSPARENT);
+				gcTerrain.setFill(Color.TRANSPARENT);
+				break;
+			case Case.WHITE : 
+				gcTerrain.setStroke(Color.WHITE);
+				gcTerrain.setFill(Color.WHITE);
+				break;
+			case Case.VERT : 
+				gcTerrain.setStroke(Color.GREEN);
+				gcTerrain.setFill(Color.GREEN);
+				break;
+			case Case.JAUNE : 
+				gcTerrain.setStroke(Color.YELLOW);
+				gcTerrain.setFill(Color.YELLOW);
+				break;
+			default : System.out.println("pas de couleur défini");
+		}
+    	if(c != Case.TRANSPARENT){
+			gc.setGlobalAlpha(0.5);
+			gc.fillRect(x, y, l, h);
+			gc.setGlobalAlpha(1.0);
+		}
+		gc.setLineWidth(1.0);
+		gc.strokeRect(x, y, l, h);
     }
     
     private void dessinerPioche(GraphicsContext gc, Pioche p){
