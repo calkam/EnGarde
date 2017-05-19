@@ -74,7 +74,7 @@
             <Font name="MathJax_Caligraphic-Bold" size="40.0" />
          </font>
       </Label>
-      <Button fx:id="buttonFinDeTour" layoutX="740.0" layoutY="782.0" mnemonicParsing="false" onMouseClicked="#finDeTour" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefHeight="40.0" prefWidth="129.0" styleClass="finDeTour" text="Fin De Tour" textAlignment="CENTER">
+      <Button fx:id="buttonGestionTour" layoutX="729.0" layoutY="782.0" mnemonicParsing="false" onMouseClicked="#gestionTour" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefHeight="40.0" prefWidth="150.0" styleClass="finDeTour" text="Fin De Tour" textAlignment="CENTER">
          <font>
             <Font name="MathJax_Caligraphic-Regular" size="18.0" />
          </font>

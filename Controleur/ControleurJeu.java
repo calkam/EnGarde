@@ -60,7 +60,7 @@ public class ControleurJeu {
     private Pane tableauFin;
     
     @FXML
-    private Button buttonFinDeTour;
+    private Button buttonGestionTour;
 
     @FXML
     private ButtonBar buttonBarFinPartie;
@@ -75,9 +75,14 @@ public class ControleurJeu {
     private final static int FINPARTIE=0;
     private final static int FINMANCHE=1;
     
+    private final static int FINDETOUR=0;
+    private final static int PRETAJOUER=1;
+    
     private ArrayList<Carte> cartes;
     
     private Joueur joueurEnCours = null;
+    
+    private int gestionTour = FINDETOUR;
     
 	public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
@@ -95,7 +100,7 @@ public class ControleurJeu {
 	}
 	
 	public void initialiserWidget(){
-		changeAbleMain(jeu.getManche().getTourEnCours().getJoueurSecond(), true);
+		changeDisableMain(jeu.getManche().getTourEnCours().getJoueurSecond(), true);
 		fondTheatre.setVisible(false);
 		tableauFin.setVisible(false);
         mainDroite.toFront();
@@ -103,7 +108,7 @@ public class ControleurJeu {
         terrain.toFront();
         fondTheatre.toFront();
 		tableauFin.toFront();
-        buttonFinDeTour.setDisable(true);
+        buttonGestionTour.setDisable(true);
 	}
 	
 	@FXML
@@ -272,8 +277,8 @@ public class ControleurJeu {
         	        		if(caseFound){
         	        			cartes = new ArrayList<Carte>();
         	        			if(jeu.getManche().getTourEnCours().getEstAttaque().getC1() != Tour.parade){
-	        	        			buttonFinDeTour.setDisable(false);
-	        	        			changeAbleMain(joueurEnCours, true);
+        	        				buttonGestionTour.setDisable(false);
+        	        				changeDisableMain(joueurEnCours, true);
         	        			}
         	        		}
         	        	}
@@ -286,18 +291,36 @@ public class ControleurJeu {
 	}
 
 	@FXML
+	private void gestionTour(){
+		if(gestionTour == FINDETOUR){
+			finDeTour();
+		}else if(gestionTour == PRETAJOUER){
+			pretAJouer();
+		}
+	}
+	
+	private void pretAJouer(){
+		Tour tour = jeu.getManche().getTourEnCours();
+		tour.changerJoueur(joueurEnCours);
+		buttonGestionTour.setText("Fin De Tour");
+		buttonGestionTour.setDisable(true);
+		changeDisableMain(tour.joueurAdverse(joueurEnCours), false);
+		gestionTour=FINDETOUR;
+	}
+	
 	private void finDeTour(){
 		boolean peutFaireAction;
 		int etatAttaque;
 		Tour tour = jeu.getManche().getTourEnCours();
 		if(tour.getEstAttaque().getC1() != Tour.parade){
-			changeAbleMain(tour.joueurAdverse(joueurEnCours), false);
-			tour.changerJoueur(joueurEnCours);
-		}else{
-			changeAbleMain(joueurEnCours, false);
+			changeDisableMain(tour.joueurAdverse(joueurEnCours), true);
+			changeDisableMain(joueurEnCours, true);
 		}
 		
-		buttonFinDeTour.setDisable(true);
+		buttonGestionTour.setText("Prêt A Jouer");
+		joueurEnCours.getMain().setVisible(false);
+		gestionTour=PRETAJOUER;
+		
 		peutFaireAction = jeu.getManche().getTourEnCours().adversairePeutFaireAction(joueurEnCours);
 		verifierFinDeManche(jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours), peutFaireAction);
 		
@@ -308,7 +331,7 @@ public class ControleurJeu {
 		jeu.getPiste().getMessageBox().setTexte("Au tour de " + jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours).getNom());
 	}
 	
-	public void changeAbleMain(Joueur joueur, boolean disable){
+	public void changeDisableMain(Joueur joueur, boolean disable){
 		if(joueur.getMain().getCote() == Main.droite){
 			mainDroite.setDisable(disable);
 		}else{
