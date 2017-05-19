@@ -90,6 +90,13 @@
 	-fx-text-fill: #ffffff;
 }
 
+.finDeTour:disabled{
+	-fx-font-family:'MORPHEUS';
+	-fx-font-size:20;
+	-fx-background-image:url("/Ressources/finDeTour.png");
+	-fx-background-opacity:0.7;
+}
+
 .fondTheatre{
 	-fx-background-color:black;
 	-fx-opacity: 0.7;

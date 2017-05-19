@@ -11,9 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-
 import java.util.ArrayList;
-
 import Modele.Couple;
 import Modele.Jeu;
 import Modele.Manche;
@@ -275,6 +273,7 @@ public class ControleurJeu {
         	        		boolean caseFound;
         	        		caseFound = jeu.getManche().getTourEnCours().executerAction(joueurEnCours, (float)event.getX(), (float)event.getY());
         	        		if(caseFound){
+        	        			buttonGestionTour.setStyle("-fx-background-image:url(/Ressources/bouton_nonPresse.png);");
         	        			cartes = new ArrayList<Carte>();
         	        			if(jeu.getManche().getTourEnCours().getEstAttaque().getC1() != Tour.parade){
         	        				buttonGestionTour.setDisable(false);
@@ -320,7 +319,7 @@ public class ControleurJeu {
 		buttonGestionTour.setText("Prêt A Jouer");
 		joueurEnCours.getMain().setVisible(false);
 		gestionTour=PRETAJOUER;
-		
+		buttonGestionTour.setStyle("-fx-background-image:url(/Ressources/finDeTour.png);");
 		peutFaireAction = jeu.getManche().getTourEnCours().adversairePeutFaireAction(joueurEnCours);
 		verifierFinDeManche(jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours), peutFaireAction);
 		
