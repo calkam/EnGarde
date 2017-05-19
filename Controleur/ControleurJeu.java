@@ -202,7 +202,7 @@ public class ControleurJeu {
         	        			cartes = new ArrayList<Carte>();
         	        			peutFaireAction = jeu.getManche().getTourEnCours().adversairePeutFaireAction(joueurEnCours);
             	        		verifierFinDeManche(jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours), peutFaireAction);
-            	        		System.out.println(jeu.getManche().getTourEnCours().getEstAttaque().getC1());
+            	        		
             	        		etatAttaque = jeu.getManche().getTourEnCours().getEstAttaque().getC1();
             	        		if(etatAttaque == Tour.pasAttaque || !peutFaireAction){
             	        			verifierFinDeLaPioche();
