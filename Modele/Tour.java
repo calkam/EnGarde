@@ -28,12 +28,13 @@ public class Tour implements Visitable{
 	public final static int aucunJoueurPerdu = 2;
 	public final static int piocheVide = 3;
 	
-	// STATUT ATTAQUE
+	// TYPE ACTION OFFENSIVE/DEFFENSIVE
 	
 	public final static int PasAttaque = 0;
 	public final static int AttaqueDirecte = 1;
 	public final static int AttaqueIndirecte = 2;
-	public final static int Defense = 3;
+	public final static int Parade = 4;
+	public final static int Fuite = 5;
 	
 	// ATTRIBUTS
 	
@@ -182,7 +183,7 @@ public class Tour implements Visitable{
 				while(e.hasMoreElements()){
 					action = e.nextElement();
 					if(actionNeutre(action)){
-						joueur.getPiste().getCases().get(action.getPositionArrivee()-1).setCouleur(Case.BLACK);
+						joueur.getPiste().getCases().get(action.getPositionArrivee()-1).setCouleur(Case.WHITE);
 					}else if(actionOffensive(action)){
 						joueur.getPiste().getCases().get(joueurAdverse(joueur).getPositionDeMaFigurine()-1).setCouleur(Case.VERT);
 					}else{
@@ -231,7 +232,7 @@ public class Tour implements Visitable{
 					estAttaque = jouerAction(action, joueur);
 					if(action.getTypeAction() != Joueur.Parade){
 						joueur.remplirMain(pioche);
-						changerJoueur(joueur);
+						//changerJoueur(joueur);
 					}else{
 						joueur.getMain().deselectionneeToutesLesCartes();
 					}

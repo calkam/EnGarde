@@ -182,10 +182,6 @@ public class MainApp extends Application {
             // Set person overview into the center of root layout.
             rootLayout.setCenter(personOverview);
             
-            mainDroite.toFront();
-            mainGauche.toFront();
-            terrain.toFront();
-            
             try {
 				jeu.init(j1, j2, type1, type2);
 				jeu.lancerJeu();

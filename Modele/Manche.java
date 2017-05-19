@@ -112,14 +112,17 @@ public class Manche implements Visitable{
 		
 		if(distanceEntreCaseMedianeEtFigurineJ1 > distanceEntreCaseMedianeEtFigurineJ2){
 			messageBox.setTexte(joueur2.getNom() + " étant plus proche de la case médiane...");
+			System.out.println(joueur2.getNom() + " étant plus proche de la case médiane...");
 			joueurAGagne(joueur2);
 			return JOUEUR1GAGNE;
 		}else if(distanceEntreCaseMedianeEtFigurineJ1 < distanceEntreCaseMedianeEtFigurineJ2){
 			messageBox.setTexte(joueur1.getNom() + " étant plus proche de la case médiane...");
+			System.out.println(joueur1.getNom() + " étant plus proche de la case médiane...");
 			joueurAGagne(joueur1);
 			return JOUEUR2GAGNE;
 		}else{
 			messageBox.setTexte("Manche nulle");
+			System.out.println("Manche nulle");
 			return MATCHNULLE;
 		}
 	}
@@ -129,21 +132,25 @@ public class Manche implements Visitable{
 		if(resultat == Tour.joueurPremierPerdu){			
 			joueurAGagne(tourEnCours.getJoueurSecond());
 			if(tourEnCours.getJoueurSecond().equals(joueur1)){
+				System.out.println("Joueur 1 a gagné par touche");
 				return JOUEUR1GAGNE;
 			}else{
+				System.out.println("Joueur 2 a gagné par touche");
 				return JOUEUR2GAGNE;
 			}
 		}else if(resultat == Tour.joueurSecondPerdu){
 			joueurAGagne(tourEnCours.getJoueurPremier());
 			if(tourEnCours.getJoueurPremier().equals(joueur1)){
+				System.out.println("Joueur 1 a gagné par touche");
 				return JOUEUR1GAGNE;
 			}else{
+				System.out.println("Joueur 2 a gagné par touche");
 				return JOUEUR2GAGNE;
 			}
 		}else if(resultat == Tour.piocheVide){
 			
 			messageBox.setTexte("La pioche est vide");
-			
+			System.out.println("La pioche est vide");
 			int distanceEntreFigurineJ1EtFigurineJ2 = calculerNormeEntreDeuxPositions(joueur1.getPositionDeMaFigurine(), joueur2.getPositionDeMaFigurine());
 			
 			if(distanceEntreFigurineJ1EtFigurineJ2 < Tas.carteValeurMax){
@@ -152,10 +159,12 @@ public class Manche implements Visitable{
 				
 				if(nbCartesDistanceJ1 > nbCartesDistanceJ2){
 					messageBox.setTexte(joueur1.getNom() + " ayant plus de cartes pour attaquer directectement son adversaire...");
+					System.out.println(joueur1.getNom() + " ayant plus de cartes pour attaquer directectement son adversaire...");
 					joueurAGagne(joueur1);
 					return JOUEUR1GAGNE;
 				}else if(nbCartesDistanceJ1 < nbCartesDistanceJ2){
 					messageBox.setTexte(joueur2.getNom() + " ayant plus de cartes pour attaquer directectement son adversaire...");
+					System.out.println(joueur2.getNom() + " ayant plus de cartes pour attaquer directectement son adversaire...");
 					joueurAGagne(joueur2);
 					return JOUEUR2GAGNE;
 				}else{
