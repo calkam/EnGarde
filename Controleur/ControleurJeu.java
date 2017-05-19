@@ -183,7 +183,8 @@ public class ControleurJeu {
 		}else if(resultat.getC1() == Manche.JOUEUR2GAGNE){
 			jeu.changerScore(jeu.getJoueur2());
 		}
-		if(!jeu.gainPartie()){
+		resultat = jeu.gainPartie();
+		if(resultat == null){
 			afficherWidgetFin(FINMANCHE, resultat);
 			nbCartePioche.setText(Integer.toString(jeu.getManche().getPioche().size()));
 		}else{
@@ -204,6 +205,17 @@ public class ControleurJeu {
 		if(typeFin == FINPARTIE){
 			buttonBarFinPartie.setVisible(true);
 			buttonBarFinManche.setVisible(false);
+			
+			if(resultat.getC1() == Jeu.JOUEUR1GAGNE){
+				joueurVictorieux = jeu.getJoueur1().getNom();
+				joueurPerdant = jeu.getJoueur2().getNom();
+			}else if(resultat.getC1() == Jeu.JOUEUR2GAGNE){
+				joueurVictorieux = jeu.getJoueur2().getNom();
+				joueurPerdant = jeu.getJoueur1().getNom();
+			}
+			
+			textTableauFin.setText(joueurVictorieux + " a triomphé de son adversaire !\n Gloire à " + joueurVictorieux +"!\n "+ joueurPerdant + " est une victime");
+			
 		}else if(typeFin == FINMANCHE){
 			buttonBarFinPartie.setVisible(false);
 			buttonBarFinManche.setVisible(true);
@@ -221,7 +233,7 @@ public class ControleurJeu {
 			}else{
 				switch(resultat.getC2()){
 					case Manche.VICTOIRESIMPLE :
-						textTableauFin.setText(joueurVictorieux + " a gagné la manche !\n" + joueurPerdant + " c'est fait victimisé");
+						textTableauFin.setText(joueurVictorieux + " a gagné la manche !\n" + joueurPerdant + " s'est fait victimiser");
 						break;
 					case Manche.PLUSCARTEATTAQUEDIRECT :
 						textTableauFin.setText(joueurVictorieux + " a plus de cartes pour attaquer directectement son adversaire.\n" + joueurVictorieux + " a gagné la manche !");
@@ -231,7 +243,13 @@ public class ControleurJeu {
 						break;
 				}
 			}
+			
+			buttonGestionTour.setText("Fin De Tour");
+			buttonGestionTour.setDisable(true);
 		}
+		
+		mainDroite.setVisible(true);
+		mainGauche.setVisible(true);
 	}
 	
 	//GESTION DES ACTIONS
