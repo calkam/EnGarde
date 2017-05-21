@@ -24,7 +24,7 @@ public class Configuration {
         Properties p=null;
         InputStream in;
 		try {
-			in = new FileInputStream("/home/c/calkam/ProjetL3/workspace/source/Ressources/defaut.cfg");
+			in = new FileInputStream(System.getProperty("user.home") + "/Programmation/workspace/source/Ressources/defaut.cfg");
 			Properties defaut = new Properties();
 	        chargerProprietes(defaut, in);
 	        try{
