@@ -12,13 +12,18 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import java.util.ArrayList;
+import java.util.Enumeration;
+
 import Modele.Couple;
 import Modele.Jeu;
 import Modele.Manche;
 import Modele.Tour;
+import Modele.Joueur.Action;
+import Modele.Joueur.ActionsJouables;
 import Modele.Joueur.Joueur;
 import Modele.Joueur.Humain.HumainDroit;
 import Modele.Joueur.Humain.HumainGauche;
+import Modele.Plateau.Case;
 import Modele.Tas.Carte;
 import Modele.Tas.Main;
 import Vue.DessinateurCanvasJavaFx;
@@ -27,66 +32,66 @@ import Vue.MainApp;
 public class ControleurJeu {
 
     private MainApp mainApp;
-    
+
     private Jeu jeu;
-    
+
     @FXML
     private Canvas terrain;
-    
+
     @FXML
     private Canvas mainGauche;
-    
+
     @FXML
     private Canvas mainDroite;
-    
+
     @FXML
     private Label nbCartePioche;
-    
+
     @FXML
     private Label nomJoueur1;
-    
+
     @FXML
     private Label nomJoueur2;
-    
+
     @FXML
     private CheckBox mainVisible;
-    
+
     @FXML
     private Pane fondTheatre;
 
     @FXML
     private Pane tableauFin;
-    
+
     @FXML
     private Button buttonGestionTour;
 
     @FXML
     private ButtonBar buttonBarFinPartie;
-    
+
     @FXML
     private ButtonBar buttonBarFinManche;
-    
+
     @FXML
     private Label textTableauFin;
-    
+
     //ATTRIBUT
     private final static int FINPARTIE=0;
     private final static int FINMANCHE=1;
-    
+
     private final static int FINDETOUR=0;
     private final static int PRETAJOUER=1;
-    
+
     private ArrayList<Carte> cartes;
-    
+
     private Joueur joueurEnCours = null;
-    
+
     private int gestionTour = FINDETOUR;
-    
+
 	public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
     }
 
-	public void init(Jeu j){        
+	public void init(Jeu j){
 		this.setJeu(j);
 		nbCartePioche.setText(Integer.toString(jeu.getManche().getPioche().size()));
 		nomJoueur1.setText(jeu.getJoueur1().getNom());
@@ -96,7 +101,7 @@ public class ControleurJeu {
 		cartes = new ArrayList<Carte>();
 		initialiserWidget();
 	}
-	
+
 	public void initialiserWidget(){
 		changeDisableMain(jeu.getManche().getTourEnCours().getJoueurSecond(), true);
 		fondTheatre.setVisible(false);
@@ -107,20 +112,21 @@ public class ControleurJeu {
         fondTheatre.toFront();
 		tableauFin.toFront();
         buttonGestionTour.setDisable(true);
+        DessinateurCanvasJavaFx.visibilityActivated = false;
 	}
-	
+
 	@FXML
 	private void handleIn(){
 		Image imageC = new Image("/Ressources/SourisEpeePlante.png");
 		mainApp.getPrimaryStage().getScene().setCursor(new ImageCursor(imageC));
 	}
-	
+
 	@FXML
 	private void handleOut(){
 		Image imageC = new Image("/Ressources/SourisEpee.png");
 		mainApp.getPrimaryStage().getScene().setCursor(new ImageCursor(imageC));
 	}
-	
+
 	@FXML
 	private void handleIsSelected(){
 		if(mainVisible.isSelected()){
@@ -129,7 +135,7 @@ public class ControleurJeu {
 			DessinateurCanvasJavaFx.visibilityActivated = false;
 		}
 	}
-	
+
 	private boolean modifierActionPossible(int numJoueur, double x, double y){
 		Carte carteAction;
 		if(numJoueur==1){
@@ -146,7 +152,7 @@ public class ControleurJeu {
 		}
     	return jeu.getManche().getTourEnCours().possibiliteAction(joueurEnCours, cartes);
 	}
-	
+
 	private void verifierFinDeManche(Joueur joueur, boolean peutFaireAction){
 		int resultat;
 		if(!peutFaireAction){
@@ -163,7 +169,7 @@ public class ControleurJeu {
 			}
 		}
 	}
-	
+
 	private void verifierFinDeLaPioche(){
 		nbCartePioche.setText(Integer.toString(jeu.getManche().getPioche().size()));
 		if(jeu.getManche().getPioche().estVide()){
@@ -175,7 +181,7 @@ public class ControleurJeu {
 			}
 		}
 	}
-	
+
 	private void verifierFinDuJeu(Couple<Integer, Integer> resultat){
 		cartes = new ArrayList<Carte>();
 		if(resultat.getC1() == Manche.JOUEUR1GAGNE){
@@ -191,12 +197,12 @@ public class ControleurJeu {
 			afficherWidgetFin(FINPARTIE, resultat);
 		}
 	}
-	
+
 	public void cacherWidgetFin(){
 		fondTheatre.setVisible(false);
 		tableauFin.setVisible(false);
 	}
-	
+
 	public void afficherWidgetFin(int typeFin, Couple<Integer, Integer> resultat){
 		String joueurVictorieux = "";
 		String joueurPerdant = "";
@@ -205,7 +211,7 @@ public class ControleurJeu {
 		if(typeFin == FINPARTIE){
 			buttonBarFinPartie.setVisible(true);
 			buttonBarFinManche.setVisible(false);
-			
+
 			if(resultat.getC1() == Jeu.JOUEUR1GAGNE){
 				joueurVictorieux = jeu.getJoueur1().getNom();
 				joueurPerdant = jeu.getJoueur2().getNom();
@@ -213,13 +219,13 @@ public class ControleurJeu {
 				joueurVictorieux = jeu.getJoueur2().getNom();
 				joueurPerdant = jeu.getJoueur1().getNom();
 			}
-			
+
 			textTableauFin.setText(joueurVictorieux + " a triomphé de son adversaire !\n Gloire à " + joueurVictorieux +"!\n "+ joueurPerdant + " est une victime");
-			
+
 		}else if(typeFin == FINMANCHE){
 			buttonBarFinPartie.setVisible(false);
 			buttonBarFinManche.setVisible(true);
-			
+
 			if(resultat.getC1() == Manche.JOUEUR1GAGNE){
 				joueurVictorieux = jeu.getJoueur1().getNom();
 				joueurPerdant = jeu.getJoueur2().getNom();
@@ -227,9 +233,9 @@ public class ControleurJeu {
 				joueurVictorieux = jeu.getJoueur2().getNom();
 				joueurPerdant = jeu.getJoueur1().getNom();
 			}
-			
+
 			if(resultat.getC1() == Manche.MATCHNULLE){
-				
+
 			}else{
 				switch(resultat.getC2()){
 					case Manche.VICTOIRESIMPLE :
@@ -243,15 +249,15 @@ public class ControleurJeu {
 						break;
 				}
 			}
-			
+
 			buttonGestionTour.setText("Fin De Tour");
 			buttonGestionTour.setDisable(true);
 		}
-		
+
 		mainDroite.setVisible(true);
 		mainGauche.setVisible(true);
 	}
-	
+
 	//GESTION DES ACTIONS
 	private void setActionMain(){
 		mainGauche.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -266,7 +272,7 @@ public class ControleurJeu {
             	}
             }
         });
-		
+
 		mainDroite.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -280,7 +286,7 @@ public class ControleurJeu {
             }
         });
 	}
-	
+
 	private void setActionTerrain(){
 		terrain.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -296,12 +302,73 @@ public class ControleurJeu {
         	        			if(jeu.getManche().getTourEnCours().getEstAttaque().getC1() != Tour.parade){
         	        				buttonGestionTour.setDisable(false);
         	        				changeDisableMain(joueurEnCours, true);
+        	        				jeu.getManche().getTourEnCours().getMessageBox().setTexte("Appuyer sur le bouton Fin De Tour");
+        	        			}else{
+        	        				jeu.getManche().getTourEnCours().getMessageBox().setTexte("Vous venez de parer lancer une contre-attaque");
         	        			}
+
         	        		}
         	        	}
         	            break;
         	        default:
         	            break;
+            	}
+            }
+        });
+
+		terrain.setOnMouseMoved(new EventHandler<MouseEvent>() {
+            private ActionsJouables actions_jouables;
+
+			@Override
+            public void handle(MouseEvent event) {
+            	Case caseHovered;
+            	Enumeration<Action> e;
+            	Action action = null;
+            	boolean trouve=false;
+            	Tour tour;
+
+            	tour = jeu.getManche().getTourEnCours();
+
+            	actions_jouables = tour.getActions_jouables();
+            	caseHovered = jeu.getPiste().getCaseEvent(event.getX(), event.getY());
+
+            	if(caseHovered != null){
+	            	if(actions_jouables != null && actions_jouables.size() != 0){
+		            	e = actions_jouables.elements();
+
+		    			while(e.hasMoreElements() && !trouve){
+		    				action = e.nextElement();
+		    				if(caseHovered.getNumero() == action.getPositionArrivee() ||
+		    				  (tour.actionOffensive(action) && caseHovered.getNumero() == tour.joueurAdverse(joueurEnCours).getPositionFigurine())){
+		    					trouve = true;
+		    				}
+		    			}
+
+		    			if(trouve){
+			    			switch(action.getTypeAction()){
+			    				case Joueur.Reculer :
+			    					tour.getMessageBox().setTexte("Reculer de " + action.getCarteDeplacement().getContenu() + " en " + action.getPositionArrivee());
+			    					break;
+			    				case Joueur.Avancer :
+			    					tour.getMessageBox().setTexte("Avancer de " + action.getCarteDeplacement().getContenu() + " en " + action.getPositionArrivee());
+			    					break;
+			    				case Joueur.AttaqueDirecte :
+			    					tour.getMessageBox().setTexte("Effectuer " + action.getNbCartes() + "Attaque de puissance " + action.getCarteAction().getContenu());
+			    					break;
+			    				case Joueur.AttaqueIndirecte :
+			    					tour.getMessageBox().setTexte("Avancer de " + action.getCarteDeplacement() + " puis effectuer " + action.getNbCartes() + "Attaque de puissance " + action.getCarteAction().getContenu());
+			    					break;
+			    				case Joueur.Parade :
+			    					tour.getMessageBox().setTexte("Parade contre " + action.getNbCartes() + " de valeur " + action.getCarteAction());
+			    					break;
+			    				case Joueur.Fuite :
+			    					tour.getMessageBox().setTexte("Fuite de " + action.getCarteDeplacement().getContenu() + "en " + action.getPositionArrivee());
+			    					break;
+			    				default :
+			    					tour.getMessageBox().setTexte("Il n'y a pas d'action possible avec ces cartes");
+			    			}
+		    			}
+	            	}
             	}
             }
         });
@@ -315,7 +382,7 @@ public class ControleurJeu {
 			pretAJouer();
 		}
 	}
-	
+
 	private void pretAJouer(){
 		Tour tour = jeu.getManche().getTourEnCours();
 		tour.changerJoueur(joueurEnCours);
@@ -324,7 +391,7 @@ public class ControleurJeu {
 		changeDisableMain(tour.joueurAdverse(joueurEnCours), false);
 		gestionTour=FINDETOUR;
 	}
-	
+
 	private void finDeTour(){
 		boolean peutFaireAction;
 		int etatAttaque;
@@ -333,21 +400,22 @@ public class ControleurJeu {
 			changeDisableMain(tour.joueurAdverse(joueurEnCours), true);
 			changeDisableMain(joueurEnCours, true);
 		}
-		
+
 		buttonGestionTour.setText("Prêt A Jouer");
 		joueurEnCours.getMain().setVisible(false);
 		gestionTour=PRETAJOUER;
 		buttonGestionTour.setStyle("-fx-background-image:url(/Ressources/finDeTour.png);");
+
 		peutFaireAction = jeu.getManche().getTourEnCours().adversairePeutFaireAction(joueurEnCours);
 		verifierFinDeManche(jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours), peutFaireAction);
-		
+
 		etatAttaque = jeu.getManche().getTourEnCours().getEstAttaque().getC1();
 		if(etatAttaque == Tour.pasAttaque || !peutFaireAction){
 			verifierFinDeLaPioche();
 		}
-		jeu.getPiste().getMessageBox().setTexte("Au tour de " + jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours).getNom());
+		jeu.getPiste().getMessageBox().setTexte("Au tour de " + jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours).getNom() + " Appuyer sur Prêt A Jouer");
 	}
-	
+
 	public void changeDisableMain(Joueur joueur, boolean disable){
 		if(joueur.getMain().getCote() == Main.droite){
 			mainDroite.setDisable(disable);
@@ -355,7 +423,7 @@ public class ControleurJeu {
 			mainGauche.setDisable(disable);
 		}
 	}
-	
+
 	@FXML
 	private void mancheSuivante(){
 		jeu.nouvelleManche();
@@ -367,19 +435,19 @@ public class ControleurJeu {
 		}
 		cacherWidgetFin();
 	}
-	
+
 	@FXML
 	private void menuPrincipal(){
 		mainApp.acceuil();
 	}
-	
+
 	@FXML
 	private void nouvellePartie(){
 		String type1 = jeu.getJoueur1() instanceof HumainGauche || jeu.getJoueur1() instanceof HumainDroit ? "Humain" : "IA" ;
 		String type2 = jeu.getJoueur2() instanceof HumainGauche || jeu.getJoueur2() instanceof HumainDroit ? "Humain" : "IA" ;
 		mainApp.jeu(jeu.getJoueur1().getNom(), jeu.getJoueur2().getNom(), type1, type2);
 	}
-	
+
 	public Jeu getJeu() {
 		return jeu;
 	}

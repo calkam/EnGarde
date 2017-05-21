@@ -12,37 +12,37 @@ import Modele.Tas.Defausse;
 import Modele.Tas.Pioche;
 
 public class Tour implements Visitable{
-	
+
 	private final static int nombreCarteMax = 5;
-	
+
 	private final static boolean joueurPerdu = false;
 	private final static boolean joueurPasPerdu = true;
-	
+
 	public final static int joueurPremierPerdu = 0;
 	public final static int joueurSecondPerdu = 1;
 	public final static int aucunJoueurPerdu = 2;
 	public final static int piocheVide = 3;
-	
+
 	public final static int pasAttaque = 0;
 	public final static int attaqueDirect = 1;
 	public final static int attaqueIndirect = 2;
 	public final static int parade = 4;
 	public final static int fuite = 5;
-	
+
 	private Joueur joueurPremier;
 	private Joueur joueurSecond;
 	private Pioche pioche;
 	private Defausse defausse;
 	private MessageBox messageBox;
-	
+
 	// Type de l'attaque, nombre de cartes attaque, valeur de la carte attaque
 	private Triplet<Integer, Integer, Integer> estAttaque;
 	private ActionsJouables actions_jouables;
-	
+
 	public Tour(){
 		this.estAttaque = new Triplet<>(pasAttaque, 0, 0);
 	}
-	
+
 	public Tour(Joueur m_joueurPremier, Joueur m_joueurSecond){
 		this.pioche = new Pioche();
 		this.defausse = new Defausse();
@@ -50,7 +50,7 @@ public class Tour implements Visitable{
 		this.joueurSecond = m_joueurSecond;
 		this.estAttaque = new Triplet<>(pasAttaque, 0, 0);
 	}
-	
+
 	@Override
 	public boolean accept(Visiteur v) {
 		// TODO Auto-generated method stub
@@ -61,15 +61,15 @@ public class Tour implements Visitable{
 		retour = retour || joueurSecond.accept(v);
 		return retour;
 	}
-	
+
 	public boolean actionNeutre(Action action){
-		return action.getTypeAction() == Joueur.Reculer || action.getTypeAction() == Joueur.Avancer; 
+		return action.getTypeAction() == Joueur.Reculer || action.getTypeAction() == Joueur.Avancer;
 	}
-	
+
 	public boolean actionOffensive(Action action){
-		return action.getTypeAction() == Joueur.AttaqueDirecte || action.getTypeAction() == Joueur.AttaqueIndirecte; 
+		return action.getTypeAction() == Joueur.AttaqueDirecte || action.getTypeAction() == Joueur.AttaqueIndirecte;
 	}
-	
+
 	public Joueur joueurAdverse(Joueur joueur){
 		if(joueur.equals(joueurPremier)){
 			return joueurSecond;
@@ -77,28 +77,28 @@ public class Tour implements Visitable{
 			return joueurPremier;
 		}
 	}
-	
+
 	public void jouerTour() throws Exception{
 		commencerTour(joueurPremier);
 		messageBox.setTexte(joueurPremier.getNom() + " commence");
 	}
-	
+
 	public void commencerTour(Joueur joueur){
 		joueur.getMain().setVisible(true);
 	}
-	
+
 	public boolean possibiliteAction(Joueur joueur, ArrayList<Carte> cartes){
 		try {
 			Action action;
 			Enumeration<Action> e;
-			
+
 			actions_jouables = joueur.peutFaireActionAvecCarteSelectionne(joueur.getMain().getCote(), cartes, estAttaque);
-			
+
 			if(joueur.peutFaireAction(estAttaque).size() != 0){
 				e = actions_jouables.elements();
-				
+
 				joueur.getPiste().reinitialiserCouleurCase();
-				
+
 				while(e.hasMoreElements()){
 					action = e.nextElement();
 					if(actionNeutre(action)){
@@ -115,37 +115,37 @@ public class Tour implements Visitable{
 				}
 				return joueurPasPerdu;
 			}
-			
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return joueurPerdu;
 	}
-	
+
 	public boolean executerAction(Joueur joueur, float x, float y){
 		Action action = null;
 		Enumeration<Action> e;
 		Case caseClicked;
 		boolean trouve = false;
-		
-		caseClicked = joueur.getPiste().getCaseClicked(x, y);
-		
+
+		caseClicked = joueur.getPiste().getCaseEvent(x, y);
+
 		if(caseClicked == null){
 			return false;
 		}
-		
+
 		if(actions_jouables != null && actions_jouables.size() != 0){
 			e = actions_jouables.elements();
-			
+
 			while(e.hasMoreElements() && !trouve){
 				action = e.nextElement();
-				if(caseClicked.getNumero() == action.getPositionArrivee() || (actionOffensive(action) && 
+				if(caseClicked.getNumero() == action.getPositionArrivee() || (actionOffensive(action) &&
 				   caseClicked.getNumero() == joueurAdverse(joueur).getPositionFigurine())){
 					trouve = true;
 				}
 			}
-			
+
 			if(trouve){
 				try {
 					estAttaque = jouerAction(action, joueur);
@@ -154,14 +154,14 @@ public class Tour implements Visitable{
 					}else{
 						joueur.getMain().deselectionneeToutesLesCartes();
 					}
-					
+
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-			
+
 				joueur.getPiste().reinitialiserCouleurCase();
-				
+
 				actions_jouables = null;
 				return trouve;
 			}else{
@@ -171,10 +171,10 @@ public class Tour implements Visitable{
 			return trouve;
 		}
 	}
-	
+
 	public boolean adversairePeutFaireAction(Joueur joueur){
 		ActionsJouables testAction;
-		
+
 		try {
 			testAction = joueurAdverse(joueur).peutFaireAction(estAttaque);
 			if(testAction.size() == 0){
@@ -186,17 +186,17 @@ public class Tour implements Visitable{
 		}
 		return true;
 	}
-	
-	public void changerJoueur(Joueur joueur){		
+
+	public void changerJoueur(Joueur joueur){
 		joueur.getMain().setVisible(false);
 		joueurAdverse(joueur).getMain().setVisible(true);
 	}
-	
+
 	private ArrayList<Carte> getAutreCarteDeValeur(int valeur, int nbCartes, Joueur joueur){
 		ArrayList<Carte> cartes = new ArrayList<Carte>();
-		
-		int i=1; //On commence à 1 car une carte a déjà été défaussée dans executerAction() 
-		
+
+		int i=1; //On commence à 1 car une carte a déjà été défaussée dans executerAction()
+
 		for(Carte c : joueur.getCartesDeLaMain()){
 			if(c.getContenu() == valeur){
 				cartes.add(c);
@@ -206,20 +206,20 @@ public class Tour implements Visitable{
 				break;
 			}
 		}
-		
+
 		return cartes;
 	}
-	
+
 	private Triplet<Integer, Integer, Integer> jouerAction(Action actionAJouer, Joueur joueur) throws Exception{
 		Carte carteDeplacement=null;
 		Carte carteAction=null;
-		
+
 		int typeAction;
 		int nbCartesAttqJouees;
 		int valeurCarteAttqJouee;
-		
+
 		ArrayList<Carte> cartesDeMemeValeur;
-		
+
 		switch(actionAJouer.getTypeAction()){
 			case Joueur.Reculer :
 				carteDeplacement = actionAJouer.getCarteDeplacement();
@@ -235,7 +235,7 @@ public class Tour implements Visitable{
 				joueur.defausserUneCarte(carteDeplacement);
 				typeAction = pasAttaque; nbCartesAttqJouees = 0; valeurCarteAttqJouee = 0;
 				break;
-			case Joueur.AttaqueDirecte : 
+			case Joueur.AttaqueDirecte :
 				carteAction = actionAJouer.getCarteAction();
 				defausse.ajouter(carteAction);
 				joueur.defausserUneCarte(carteAction);
@@ -254,8 +254,8 @@ public class Tour implements Visitable{
 				joueur.avancer(carteDeplacement.getContenu());
 				defausse.ajouter(carteDeplacement);
 				joueur.defausserUneCarte(carteDeplacement);
-				
-				// On attaque dans un second temps	
+
+				// On attaque dans un second temps
 				carteAction = actionAJouer.getCarteAction();
 				defausse.ajouter(carteAction);
 				joueur.defausserUneCarte(carteAction);
@@ -278,7 +278,7 @@ public class Tour implements Visitable{
 						defausse.ajouter(c);
 						joueur.defausserUneCarte(c);
 					}
-				}				
+				}
 				typeAction = parade; nbCartesAttqJouees = 0; valeurCarteAttqJouee = 0;
 				break;
 			case Joueur.Fuite :
@@ -290,28 +290,29 @@ public class Tour implements Visitable{
 				break;
 			default: throw new Exception("Erreur lors de l'exécution de l'action");
 		}
-		
+
 		return new Triplet<>(typeAction, nbCartesAttqJouees, valeurCarteAttqJouee);
 	}
-	
-	public void remplirMain(Joueur j){		
+
+	public void remplirMain(Joueur j){
 		int nbCarteMain = j.getMain().getNombreCarte();
-		
+
 		int i=nbCarteMain;
-		
+
 		while(!pioche.estVide() && i < nombreCarteMax){
 			Carte c = pioche.piocher();
 			c.setVisible(true);
 			j.ajouterCarteDansMain(c);
 			i++;
 		}
-		
+
 		j.getMain().repositionnerMain();
 	}
-	
+
 	/**
 	 * GETTER/SETTER
 	 */
+
 	public Pioche getPioche() {
 		return pioche;
 	}
@@ -339,7 +340,7 @@ public class Tour implements Visitable{
 	public Defausse getDefausse() {
 		return this.defausse;
 	}
-	
+
 	public void setDefausse(Defausse defausse) {
 		this.defausse = defausse;
 	}
@@ -359,5 +360,13 @@ public class Tour implements Visitable{
 	public void setMessageBox(MessageBox messageBox) {
 		this.messageBox = messageBox;
 	}
-	
+
+	public ActionsJouables getActions_jouables() {
+		return actions_jouables;
+	}
+
+	public void setActions_jouables(ActionsJouables actions_jouables) {
+		this.actions_jouables = actions_jouables;
+	}
+
 }
