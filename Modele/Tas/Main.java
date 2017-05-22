@@ -161,6 +161,20 @@ public class Main extends Tas {
 		}
 	}
 	
-	
+	@SuppressWarnings("unchecked")
+	@Override
+	public Main clone () {
+		Main main = new Main();
+		main.setX(this.getX());
+		main.setY(this.getY());
+		main.setLargeur(this.largeur);
+		main.setHauteur(this.hauteur);
+		main.nombreCarte = this.nombreCarte.clone();
+		main.cote = this.cote;
+		main.visible = this.visible;
+		main.setMain((ArrayList<Carte>) this.getMain().clone()) ;
+		return main ;
+		
+	}
 			
 }

@@ -109,4 +109,9 @@ public class JoueurDroit extends Joueur {
 		this.main = new Main(Main.droite); 
 	}
 	
+	@Override
+	public Joueur clone(){
+		
+	}
+	
 }

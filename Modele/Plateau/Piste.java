@@ -198,5 +198,21 @@ public class Piste extends Rectangle implements Visitable {
 		}
 		return null;
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public Piste clone () {
+		
+		Piste piste = new Piste (
+			
+			new FigurineGauche(this.getFigurineGauche().getPosition(), this.getFigurineGauche().getX(), this.getFigurineGauche().getY()),
+			new FigurineDroite(this.getFigurineDroite().getPosition(), this.getFigurineDroite().getX(), this.getFigurineDroite().getY())
+			
+			) ;
+		
+		piste.cases = (ArrayList<Case>) this.cases.clone() ;
+		return piste ;
+		
+	}
 
 }

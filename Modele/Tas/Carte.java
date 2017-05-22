@@ -41,7 +41,7 @@ public class Carte extends Rectangle implements Visitable {
 		this(id, contenu, 0, 0, Reglages.lis("CarteLargeur"), Reglages.lis("CarteHauteur"));
 	}
 	
-	Carte(int contenu){
+	public Carte(int contenu){
 		this(0, contenu);
 	}
 	
