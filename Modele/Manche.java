@@ -83,18 +83,6 @@ public class Manche implements Visitable{
 		return c;
 	}
 	
-	private void joueurAGagne(Joueur joueur){
-		messageBox.setTexte(joueur.getNom() + " a gagné la manche !");
-	}
-	
-	public void afficherScore(){
-		System.out.println("\nScore : " + joueur1.getNom() + " " + joueur1.getNbPoints() + " - " + joueur2.getNbPoints() + " " + joueur2.getNom());
-	}
-	
-	private int calculerNormeEntreDeuxPositions(int position1, int position2){
-		return Math.abs(position1 - position2);
-	}
-	
 	
 	public void reinitialiserPiste() throws Exception{
 		joueur1.reinitialiserPositionFigurine();
@@ -109,6 +97,14 @@ public class Manche implements Visitable{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	private int calculerNormeEntreDeuxPositions(int position1, int position2){
+		return Math.abs(position1 - position2);
+	}
+	
+	private void joueurAGagne(Joueur joueur){
+		messageBox.setTexte(joueur.getNom() + " a gagné la manche !");
 	}
 	
 	private Couple<Integer, Integer> testVictoirePiocheVideDistanceCaseMediane() throws Exception{

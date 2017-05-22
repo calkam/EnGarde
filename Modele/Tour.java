@@ -12,17 +12,17 @@ import Modele.Tas.Carte;
 import Modele.Tas.Defausse;
 import Modele.Tas.Pioche;
 
-public class Tour implements Visitable{
+public class Tour implements Visitable {
 	
 	// CONSTANTES
 	
 	// STATUT JOUEUR
 	
-	private final static boolean joueurPerdu = false;
-	private final static boolean joueurPasPerdu = true;
+	private final static boolean JoueurPerdu = false;
+	private final static boolean JoueurPasPerdu = true;
 	
 	// STATUT FIN DE PARTIE
-	
+
 	public final static int joueurPremierPerdu = 0;
 	public final static int joueurSecondPerdu = 1;
 	public final static int aucunJoueurPerdu = 2;
@@ -56,14 +56,6 @@ public class Tour implements Visitable{
 		
 		this.piste = piste ;
 		this.histo = histo ;
-		this.estAttaque = new Triplet<>(PasAttaque, 0, 0);
-	}
-	
-	public Tour(Joueur m_joueurPremier, Joueur m_joueurSecond){
-		this.pioche = new Pioche();
-		this.defausse = new Defausse();
-		this.joueurPremier = m_joueurPremier;
-		this.joueurSecond = m_joueurSecond;
 		this.estAttaque = new Triplet<>(PasAttaque, 0, 0);
 	}
 	
@@ -142,15 +134,15 @@ public class Tour implements Visitable{
 		retour = retour || joueurSecond.accept(v);
 		return retour;
 	}
-	
+
 	public boolean actionNeutre(Action action){
-		return action.getTypeAction() == Joueur.Reculer || action.getTypeAction() == Joueur.Avancer; 
+		return action.getTypeAction() == Joueur.Reculer || action.getTypeAction() == Joueur.Avancer;
 	}
-	
+
 	public boolean actionOffensive(Action action){
-		return action.getTypeAction() == Joueur.AttaqueDirecte || action.getTypeAction() == Joueur.AttaqueIndirecte; 
+		return action.getTypeAction() == Joueur.AttaqueDirecte || action.getTypeAction() == Joueur.AttaqueIndirecte;
 	}
-	
+
 	public Joueur joueurAdverse(Joueur joueur){
 		if(joueur.equals(joueurPremier)){
 			return joueurSecond;
@@ -158,21 +150,21 @@ public class Tour implements Visitable{
 			return joueurPremier;
 		}
 	}
-	
+
 	public void jouerTour() throws Exception{
 		commencerTour(joueurPremier);
-		messageBox.setTexte(joueurPremier.getNom() + " commence");
 	}
-	
+
 	public void commencerTour(Joueur joueur){
 		joueur.getMain().setVisible(true);
 	}
 	
-	public boolean possibiliteAction(Joueur joueur, ArrayList<Carte> cartes) throws Exception{
-			Action action;
-			Enumeration<Action> e;
-			
-			actions_jouables = joueur.peutFaireActionAvecCarteSelectionne(joueur.getMain().getCote(), cartes, estAttaque);
+	public boolean possibiliteAction(Joueur joueur, ArrayList<Carte> cartes) throws Exception {
+		
+		Action action;
+		Enumeration<Action> e;
+
+		actions_jouables = joueur.peutFaireActionAvecCarteSelectionne(joueur.getMain().getCote(), cartes, estAttaque);
 			
 		if(joueur.peutFaireAction(estAttaque).size() != 0){
 			e = actions_jouables.elements();
@@ -192,38 +184,62 @@ public class Tour implements Visitable{
 						joueur.getPiste().getCases().get(action.getPositionArrivee()-1).setCouleur(Case.JAUNE);
 					}
 				}
+				
+				if(joueur.peutFaireAction(estAttaque).size() != 0){
+					e = actions_jouables.elements();
+	
+					joueur.getPiste().reinitialiserCouleurCase();
+	
+					while(e.hasMoreElements()){
+						action = e.nextElement();
+						if(actionNeutre(action)){
+							joueur.getPiste().getCases().get(action.getPositionArrivee()-1).setCouleur(Case.WHITE);
+						}else if(actionOffensive(action)){
+							joueur.getPiste().getCases().get(joueurAdverse(joueur).getPositionDeMaFigurine()-1).setCouleur(Case.VERT);
+						}else{
+							if(action.getTypeAction() == Joueur.Parade){
+								joueur.getPiste().getCases().get(joueur.getPositionDeMaFigurine()-1).setCouleur(Case.JAUNE);
+							}else if(action.getTypeAction() == Joueur.Fuite){
+								joueur.getPiste().getCases().get(action.getPositionArrivee()-1).setCouleur(Case.JAUNE);
+							}
+						}
+					}
+				}
 			}
 			
-			return joueurPasPerdu;
+			return JoueurPasPerdu;
 			
 		}
-			
-		return joueurPerdu;
+		
+		return JoueurPerdu;
+		
 	}
+					
 	
 	public boolean executerAction(Joueur joueur, float x, float y) throws Exception{
+		
 		Action action = null;
 		Enumeration<Action> e;
 		Case caseClicked;
 		boolean trouve = false;
-		
-		caseClicked = joueur.getPiste().getCaseClicked(x, y);
-		
+
+		caseClicked = joueur.getPiste().getCaseEvent(x, y);
+
 		if(caseClicked == null){
 			return false;
 		}
-		
+
 		if(actions_jouables != null && actions_jouables.size() != 0){
 			e = actions_jouables.elements();
-			
+
 			while(e.hasMoreElements() && !trouve){
 				action = e.nextElement();
-				if(caseClicked.getNumero() == action.getPositionArrivee() || (actionOffensive(action) && 
-				   caseClicked.getNumero() == joueurAdverse(joueur).getPositionDeMaFigurine())){
+				
+				if(caseClicked.getNumero() == action.getPositionArrivee() || (actionOffensive(action) && caseClicked.getNumero() == joueurAdverse(joueur).getPositionDeMaFigurine())){
 					trouve = true;
 				}
 			}
-			
+
 			if(trouve){
 				
 				estAttaque = jouerAction(action, joueur);
@@ -234,9 +250,8 @@ public class Tour implements Visitable{
 				}else{
 					joueur.getMain().deselectionneeToutesLesCartes();
 				}
-			
+
 				joueur.getPiste().reinitialiserCouleurCase();
-				
 				actions_jouables = null;
 				return trouve;
 			}else{
@@ -246,30 +261,29 @@ public class Tour implements Visitable{
 			return trouve;
 		}
 	}
-	
-	public boolean adversairePeutFaireAction(Joueur joueur){
-		ActionsJouables testAction;
+
+	public boolean adversairePeutFaireAction(Joueur joueur) throws Exception{
 		
-		try {
-			testAction = joueurAdverse(joueur).peutFaireAction(estAttaque);
-			if(testAction.size() == 0){
-				return false;
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		ActionsJouables testAction;
+
+		testAction = joueurAdverse(joueur).peutFaireAction(estAttaque);
+		
+		if(testAction.size() == 0){
+			return false;
 		}
+	
 		return true;
 	}
-	
-	public void changerJoueur(Joueur joueur){		
+
+	public void changerJoueur(Joueur joueur){
 		joueur.getMain().setVisible(false);
 		joueurAdverse(joueur).getMain().setVisible(true);
 	}
-	
+
 	/**
 	 * GETTER/SETTER
 	 */
+
 	public Pioche getPioche() {
 		return pioche;
 	}
@@ -297,7 +311,7 @@ public class Tour implements Visitable{
 	public Defausse getDefausse() {
 		return this.defausse;
 	}
-	
+
 	public void setDefausse(Defausse defausse) {
 		this.defausse = defausse;
 	}
@@ -317,5 +331,13 @@ public class Tour implements Visitable{
 	public void setMessageBox(MessageBox messageBox) {
 		this.messageBox = messageBox;
 	}
-	
+
+	public ActionsJouables getActions_jouables() {
+		return actions_jouables;
+	}
+
+	public void setActions_jouables(ActionsJouables actions_jouables) {
+		this.actions_jouables = actions_jouables;
+	}
+
 }

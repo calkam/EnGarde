@@ -28,7 +28,6 @@ public class Piste extends Rectangle implements Visitable {
 	// CONSTRUCTEUR
 
 	public Piste(Figurine figurineGauche, Figurine figurineDroite) {
-		
 		super(0, 0, Reglages.lis("PisteLargeur"), Reglages.lis("PisteHauteur"));
 		this.figurineGauche = figurineGauche ;
 		this.figurineDroite = figurineDroite ;
@@ -110,7 +109,7 @@ public class Piste extends Rectangle implements Visitable {
 	}
 	
 	public Figurine getFigurineGauche() {
-		return figurineGauche;
+		return figurineGauche ;
 	}
 
 	public void setFigurineGauche(Figurine figurineGauche) {
@@ -132,10 +131,6 @@ public class Piste extends Rectangle implements Visitable {
 		figurine.setX(LargeurCase * figurine.getPosition());
 		
 	}
-	
-	public ArrayList<Case> getCases() {
-		return cases;
-	}
 
 	public MessageBox getMessageBox() {
 		return messageBox;
@@ -144,13 +139,9 @@ public class Piste extends Rectangle implements Visitable {
 	public void setMessageBox(MessageBox messageBox) {
 		this.messageBox = messageBox;
 	}
-	
+
 	public void setMessageInMessageBox(String texte) {
 		this.messageBox.setTexte(texte);
-	}
-	
-	public void setCases(ArrayList<Case> cases) {
-		this.cases = cases;
 	}
 	
 	public void rafraichit(long t) {
@@ -200,6 +191,14 @@ public class Piste extends Rectangle implements Visitable {
 	 * @throws Exception 
 	 */
 	
+	public ArrayList<Case> getCases() {
+		return cases;
+	}
+
+	public void setCases(ArrayList<Case> cases) {
+		this.cases = cases;
+	}
+
 	@Override
 	public boolean accept(Visiteur v) throws Exception {
 		boolean retour = v.visite(this);
@@ -229,28 +228,10 @@ public class Piste extends Rectangle implements Visitable {
 			cases.add(cases.get(i));
 		}
 	}
-	
+
 	public void ajouteObservateur(ObjetMouvant objetMouvant) {
 		// TODO Auto-generated method stub
-		
-	}
 
-	public void changeColorCaseClicked(int couleur, double x, double y) {
-		// TODO Auto-generated method stub
-		Case c = getCaseClicked(x, y);
-		if(c.estCollision((float)x, (float)y)){
-			c.setCouleur(couleur);
-		}
-	}
-	
-	public Case getCaseClicked(double x, double y) {
-		// TODO Auto-generated method stub
-		for(Case c : cases){
-			if(c.estCollision((float)x, (float)y)){
-				return c;
-			}
-		}
-		return null;
 	}
 
 	public void reinitialiserCouleurCase() {
@@ -258,6 +239,24 @@ public class Piste extends Rectangle implements Visitable {
 		for(Case c : cases){
 			c.setCouleur(0);
 		}
+	}
+
+	public void changeColorCaseClicked(int couleur, double x, double y) {
+		// TODO Auto-generated method stub
+		Case c = getCaseEvent(x, y);
+		if(c.estCollision((float)x, (float)y)){
+			c.setCouleur(couleur);
+		}
+	}
+
+	public Case getCaseEvent(double x, double y) {
+		// TODO Auto-generated method stub
+		for(Case c : cases){
+			if(c.estCollision((float)x, (float)y)){
+				return c;
+			}
+		}
+		return null;
 	}
 
 }
