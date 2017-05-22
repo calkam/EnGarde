@@ -30,7 +30,6 @@
 .checkbox {
 	-fx-font-family:'MORPHEUS';
 	-fx-font-size:20;
-	/*-fx-background-image:url("/Ressources/checkbox_fond.png");*/
 	-fx-background-size: cover;
 }
 
@@ -63,13 +62,12 @@
 }
 
 .button:pressed, .button:default:hover:pressed {
-  -fx-background-image:url("/Ressources/bouton_presse.png");
-  -fx-text-fill: #999999;
+	-fx-background-image:url("/Ressources/bouton_presse.png");
+	-fx-text-fill: #999999;
 }
 
 .button:disabled, .button:default:disabled {
-      -fx-background-image:url("/Ressources/bouton_disable.png");
-
+	-fx-background-image:url("/Ressources/bouton_disable.png");
 }
 
 .button:default {
@@ -78,6 +76,61 @@
 
 .button:default:hover {
     -fx-background-color: derive(-fx-focus-color,30%);
+}
+
+.scroll-pane > .viewport {
+   -fx-background-color: transparent;
+}
+
+.scroll-pane {
+   -fx-background-color: transparent;
+}
+
+.scroll-pane .scroll-bar:vertical{
+	-fx-background-color: rgba(0,0,0,0.85);
+}
+
+.scroll-pane .scroll-bar:vertical .increment-button{
+	-fx-background-color: transparent;
+	-fx-background-image:url("/Ressources/decrement.png");
+	-fx-background-size: stretch;
+}
+
+.scroll-pane .scroll-bar:vertical .increment-button:pressed{
+	-fx-background-color: transparent;
+	-fx-background-image:url("/Ressources/decrement_pressed.png");
+	-fx-background-size: stretch;
+}
+
+.scroll-pane .scroll-bar:vertical .decrement-button{
+	-fx-background-color: transparent;
+	-fx-background-image:url("/Ressources/increment.png");
+	-fx-background-size: stretch;
+}
+
+.scroll-pane .scroll-bar:vertical .decrement-button:pressed{
+	-fx-background-color: transparent;
+	-fx-background-image:url("/Ressources/increment_pressed.png");
+	-fx-background-size: stretch;
+}
+
+.scroll-pane  .scroll-bar .increment-arrow,
+.scroll-pane  .scroll-bar .decrement-arrow
+{
+	-fx-shape: " ";
+	-fx-padding:8;
+}
+
+.scroll-pane .scroll-bar:vertical .thumb{
+	-fx-background-color: transparent;
+	-fx-background-image:url("/Ressources/thumb.png");
+	-fx-background-size: stretch;
+}
+
+.scroll-pane .scroll-bar:vertical .thumb:pressed{
+	-fx-background-color: transparent;
+	-fx-background-image:url("/Ressources/thumb_pressed.png");
+	-fx-background-size: stretch;
 }
 
 .finDeTour:pressed, .finDeTour:default:hover:pressed{
@@ -92,7 +145,20 @@
 	-fx-text-fill: #ffffff;
 }
 
+.finDeTour:disabled{
+	-fx-font-family:'MORPHEUS';
+	-fx-font-size:20;
+	-fx-background-image:url("/Ressources/finDeTour.png");
+	-fx-background-opacity:0.7;
+}
+
 .fondTheatre{
 	-fx-background-color:black;
 	-fx-opacity: 0.7;
+}
+
+.textTheatre{
+	-fx-background-image:url("/Ressources/quitter.png");
+    -fx-background-size: stretch;
+    -fx-background-position: center center;
 }

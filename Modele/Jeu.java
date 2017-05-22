@@ -6,7 +6,11 @@ import Modele.Tas.*;
 
 public class Jeu implements Visitable{
 	
-	public final static int VICTOIRE = 5; 
+	public final static int VICTOIRE = 1;
+	public final static int JOUEUR1GAGNE = 0;
+	public final static int JOUEUR2GAGNE = 1;
+	public final static int JOUEUR1PERDU = 2;
+	public final static int JOUEUR2PERDU = 3;
 	
 	// CONSTANTES POSITION JOUEUR/FIGURINE
 	
@@ -59,26 +63,21 @@ public class Jeu implements Visitable{
 	/**
 	 * FIN DE PARTIE
 	 */	
-	public boolean gainPartie(){
-		boolean gagne = false;
+	public Couple<Integer, Integer> gainPartie(){
 		
 		if(joueur1.getNbPoints() == VICTOIRE){
-			gagne = true;
-			affichageVictoire(joueur1.getNom(), joueur2.getNom());
+			return new Couple<>(JOUEUR1GAGNE, JOUEUR2PERDU);
 		}
 		if(joueur2.getNbPoints() == VICTOIRE){			
-			gagne = true;
-			affichageVictoire(joueur2.getNom(), joueur1.getNom());
+			return new Couple<>(JOUEUR2GAGNE, JOUEUR1PERDU); 
 		}
-		
-		return gagne;
+		return null;
 	}
 	
 	public void affichageVictoire(String nomJoueurVictorieux, String nomJoueurPerdant){
 		
 		piste.setMessageInMessageBox(nomJoueurVictorieux + " a triomphé de son adversaire ! Gloire à " + nomJoueurVictorieux +"! "+ nomJoueurPerdant + " est une victime");
-		
-		//System.out.println(nomJoueurVictorieux + " a triomphé de son adversaire !");
+	
 		System.out.println("Gloire à " + nomJoueurVictorieux);
 		System.out.println(nomJoueurPerdant + " est une victime");
 	}

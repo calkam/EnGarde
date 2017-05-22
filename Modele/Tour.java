@@ -168,39 +168,36 @@ public class Tour implements Visitable{
 		joueur.getMain().setVisible(true);
 	}
 	
-	public boolean possibiliteAction(Joueur joueur, ArrayList<Carte> cartes){
-		try {
+	public boolean possibiliteAction(Joueur joueur, ArrayList<Carte> cartes) throws Exception{
 			Action action;
 			Enumeration<Action> e;
 			
 			actions_jouables = joueur.peutFaireActionAvecCarteSelectionne(joueur.getMain().getCote(), cartes, estAttaque);
 			
-			if(joueur.peutFaireAction(estAttaque).size() != 0){
-				e = actions_jouables.elements();
-				
-				joueur.getPiste().reinitialiserCouleurCase();
-				
-				while(e.hasMoreElements()){
-					action = e.nextElement();
-					if(actionNeutre(action)){
-						joueur.getPiste().getCases().get(action.getPositionArrivee()-1).setCouleur(Case.WHITE);
-					}else if(actionOffensive(action)){
-						joueur.getPiste().getCases().get(joueurAdverse(joueur).getPositionDeMaFigurine()-1).setCouleur(Case.VERT);
-					}else{
-						if(action.getTypeAction() == Joueur.Parade){
-							joueur.getPiste().getCases().get(joueur.getPositionDeMaFigurine()-1).setCouleur(Case.JAUNE);
-						}else if(action.getTypeAction() == Joueur.Fuite){
-							joueur.getPiste().getCases().get(action.getPositionArrivee()-1).setCouleur(Case.JAUNE);
-						}
+		if(joueur.peutFaireAction(estAttaque).size() != 0){
+			e = actions_jouables.elements();
+			
+			joueur.getPiste().reinitialiserCouleurCase();
+			
+			while(e.hasMoreElements()){
+				action = e.nextElement();
+				if(actionNeutre(action)){
+					joueur.getPiste().getCases().get(action.getPositionArrivee()-1).setCouleur(Case.WHITE);
+				}else if(actionOffensive(action)){
+					joueur.getPiste().getCases().get(joueurAdverse(joueur).getPositionDeMaFigurine()-1).setCouleur(Case.VERT);
+				}else{
+					if(action.getTypeAction() == Joueur.Parade){
+						joueur.getPiste().getCases().get(joueur.getPositionDeMaFigurine()-1).setCouleur(Case.JAUNE);
+					}else if(action.getTypeAction() == Joueur.Fuite){
+						joueur.getPiste().getCases().get(action.getPositionArrivee()-1).setCouleur(Case.JAUNE);
 					}
 				}
-				return joueurPasPerdu;
 			}
 			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return joueurPasPerdu;
+			
 		}
+			
 		return joueurPerdu;
 	}
 	
@@ -228,18 +225,14 @@ public class Tour implements Visitable{
 			}
 			
 			if(trouve){
-				try {
-					estAttaque = jouerAction(action, joueur);
-					if(action.getTypeAction() != Joueur.Parade){
-						joueur.remplirMain(pioche);
-						//changerJoueur(joueur);
-					}else{
-						joueur.getMain().deselectionneeToutesLesCartes();
-					}
-					
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				
+				estAttaque = jouerAction(action, joueur);
+				
+				if(action.getTypeAction() != Joueur.Parade){
+					joueur.remplirMain(pioche);
+					//changerJoueur(joueur);
+				}else{
+					joueur.getMain().deselectionneeToutesLesCartes();
 				}
 			
 				joueur.getPiste().reinitialiserCouleurCase();

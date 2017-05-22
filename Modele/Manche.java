@@ -15,6 +15,10 @@ public class Manche implements Visitable{
 	public final static int JOUEUR2GAGNE = 1;
 	public final static int MATCHNULLE = 2;
 	
+	public final static int VICTOIRESIMPLE = 0;
+	public final static int PLUSCARTEATTAQUEDIRECT = 1;
+	public final static int PLUSCARTEMEDIANE = 2;
+	
 	private int numero;
 	private int nbTourRealise;
 	private Tour tourEnCours;
@@ -91,6 +95,7 @@ public class Manche implements Visitable{
 		return Math.abs(position1 - position2);
 	}
 	
+	
 	public void reinitialiserPiste() throws Exception{
 		joueur1.reinitialiserPositionFigurine();
 		joueur2.reinitialiserPositionFigurine();
@@ -106,7 +111,7 @@ public class Manche implements Visitable{
 		}
 	}
 	
-	public int testVictoirePiocheVideDistanceCaseMediane() throws Exception{
+	private Couple<Integer, Integer> testVictoirePiocheVideDistanceCaseMediane() throws Exception{
 		int distanceEntreCaseMedianeEtFigurineJ1 = calculerNormeEntreDeuxPositions(12, joueur1.getPositionDeMaFigurine());
 		int distanceEntreCaseMedianeEtFigurineJ2 = calculerNormeEntreDeuxPositions(12, joueur2.getPositionDeMaFigurine());
 		
@@ -114,38 +119,38 @@ public class Manche implements Visitable{
 			messageBox.setTexte(joueur2.getNom() + " étant plus proche de la case médiane...");
 			System.out.println(joueur2.getNom() + " étant plus proche de la case médiane...");
 			joueurAGagne(joueur2);
-			return JOUEUR1GAGNE;
+			return new Couple<>(JOUEUR1GAGNE, PLUSCARTEMEDIANE);
 		}else if(distanceEntreCaseMedianeEtFigurineJ1 < distanceEntreCaseMedianeEtFigurineJ2){
 			messageBox.setTexte(joueur1.getNom() + " étant plus proche de la case médiane...");
 			System.out.println(joueur1.getNom() + " étant plus proche de la case médiane...");
 			joueurAGagne(joueur1);
-			return JOUEUR2GAGNE;
+			return new Couple<>(JOUEUR2GAGNE, PLUSCARTEMEDIANE);
 		}else{
 			messageBox.setTexte("Manche nulle");
 			System.out.println("Manche nulle");
-			return MATCHNULLE;
+			return new Couple<>(MATCHNULLE, null);
 		}
 	}
 	
-	public int finDeManche(int resultat) throws Exception{
+	public Couple<Integer, Integer> finDeManche(int resultat) throws Exception{
 	
 		if(resultat == Tour.joueurPremierPerdu){			
 			joueurAGagne(tourEnCours.getJoueurSecond());
 			if(tourEnCours.getJoueurSecond().equals(joueur1)){
 				System.out.println("Joueur 1 a gagné par touche");
-				return JOUEUR1GAGNE;
+				return new Couple<>(JOUEUR1GAGNE, VICTOIRESIMPLE);
 			}else{
 				System.out.println("Joueur 2 a gagné par touche");
-				return JOUEUR2GAGNE;
+				return new Couple<>(JOUEUR2GAGNE, VICTOIRESIMPLE);
 			}
 		}else if(resultat == Tour.joueurSecondPerdu){
 			joueurAGagne(tourEnCours.getJoueurPremier());
 			if(tourEnCours.getJoueurPremier().equals(joueur1)){
 				System.out.println("Joueur 1 a gagné par touche");
-				return JOUEUR1GAGNE;
+				return new Couple<>(JOUEUR1GAGNE, VICTOIRESIMPLE);
 			}else{
 				System.out.println("Joueur 2 a gagné par touche");
-				return JOUEUR2GAGNE;
+				return new Couple<>(JOUEUR2GAGNE, VICTOIRESIMPLE);
 			}
 		}else if(resultat == Tour.piocheVide){
 			
@@ -161,12 +166,12 @@ public class Manche implements Visitable{
 					messageBox.setTexte(joueur1.getNom() + " ayant plus de cartes pour attaquer directectement son adversaire...");
 					System.out.println(joueur1.getNom() + " ayant plus de cartes pour attaquer directectement son adversaire...");
 					joueurAGagne(joueur1);
-					return JOUEUR1GAGNE;
+					return new Couple<>(JOUEUR1GAGNE, PLUSCARTEATTAQUEDIRECT);
 				}else if(nbCartesDistanceJ1 < nbCartesDistanceJ2){
 					messageBox.setTexte(joueur2.getNom() + " ayant plus de cartes pour attaquer directectement son adversaire...");
 					System.out.println(joueur2.getNom() + " ayant plus de cartes pour attaquer directectement son adversaire...");
 					joueurAGagne(joueur2);
-					return JOUEUR2GAGNE;
+					return new Couple<>(JOUEUR2GAGNE, PLUSCARTEATTAQUEDIRECT);
 				}else{
 					return testVictoirePiocheVideDistanceCaseMediane();
 				}
@@ -174,7 +179,7 @@ public class Manche implements Visitable{
 				return testVictoirePiocheVideDistanceCaseMediane();
 			}
 		}
-		return MATCHNULLE;
+		return new Couple<>(MATCHNULLE, null);
 	}
 	
 	/**

@@ -7,6 +7,7 @@ import Controleur.ControleurAcceuil;
 import Controleur.ControleurAlertQuitter;
 import Controleur.ControleurChoixPartie;
 import Controleur.ControleurJeu;
+import Controleur.ControleurRegles;
 import Controleur.ControleurSauvegardes;
 import Modele.Jeu;
 import javafx.application.Application;
@@ -222,6 +223,28 @@ public class MainApp extends Application {
             
             // Give the controller access to the main app.
             ControleurChoixPartie controller = loader.getController();
+            controller.setMainApp(this);
+            
+            Image imageC = new Image("/Ressources/SourisEpee.png");
+            primaryStage.getScene().setCursor(new ImageCursor(imageC));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+	
+	public void regles() {
+   		try {
+            // Load person overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("/Vue/Regles.fxml"));
+            AnchorPane personOverview = (AnchorPane) loader.load();
+
+            // Set person overview into the center of root layout.
+            rootLayout.setCenter(personOverview);
+            
+            // Give the controller access to the main app.
+            ControleurRegles controller = loader.getController();
             controller.setMainApp(this);
             
             Image imageC = new Image("/Ressources/SourisEpee.png");

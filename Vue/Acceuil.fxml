@@ -45,7 +45,7 @@
                         <Insets />
                      </GridPane.margin>
                   </Button>
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefHeight="40.0" prefWidth="340.0" stylesheets="@Theme.css" text="Tutoriel" textOverrun="CLIP" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefHeight="40.0" prefWidth="340.0" stylesheets="@Theme.css" text="Regles Du Jeu" textOverrun="CLIP" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" onAction="#handleRegles">
                      <font>
                         <Font name="MathJax_Caligraphic-Regular" size="18.0" />
                      </font>
