@@ -111,7 +111,7 @@ public class JoueurDroit extends Joueur {
 	
 	@Override
 	public Joueur clone(){
-		
+		return null;
 	}
 	
 }

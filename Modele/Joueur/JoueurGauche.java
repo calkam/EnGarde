@@ -111,5 +111,11 @@ public class JoueurGauche extends Joueur {
 		// TODO Auto-generated method stub
 		this.main = new Main(Main.gauche); 
 	}
+
+	@Override
+	public Joueur clone() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

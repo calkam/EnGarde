@@ -368,7 +368,7 @@ public class Tour implements Visitable{
 		this.actions_jouables = actions_jouables;
 	}
 	
-	@Override
+	/*@Override
 	public Tour clone () {
 		
 		Tour tour = new Tour (this.histo) ;
@@ -379,6 +379,6 @@ public class Tour implements Visitable{
 		
 		return tour ;
 		
-	}
+	}*/
 
 }

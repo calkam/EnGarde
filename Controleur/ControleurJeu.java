@@ -300,7 +300,6 @@ public class ControleurJeu {
         	        case PRIMARY:
         	        	if(joueurEnCours != null){
         	        		boolean caseFound;
-        	        		//boolean peutFaireAction;
         	        		Enumeration<Action> e;
         	        		Tour tour = jeu.getManche().getTourEnCours();
         	        		
@@ -317,13 +316,6 @@ public class ControleurJeu {
         	        				changeDisableMain(joueurEnCours, true);
         	        				jeu.getManche().getTourEnCours().getMessageBox().setTexte("Appuyer sur le bouton Fin De Tour");
         	        			}else{
-        	        				/*try {
-										peutFaireAction = (jeu.getJoueur1().peutFaireAction(jeu.getManche().getTourEnCours().getEstAttaque()) == null || jeu.getJoueur1().peutFaireAction(jeu.getManche().getTourEnCours().getEstAttaque()).size() == 0);
-										verifierFinDeManche(jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours), peutFaireAction);
-									} catch (Exception e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
-									}*/
         	        				jeu.getManche().getTourEnCours().getMessageBox().setTexte("Vous venez de parer lancer une contre-attaque");
         	        			}
         	        			
@@ -344,10 +336,10 @@ public class ControleurJeu {
     	    	    			if(trouve){
     	    		    			switch(action.getTypeAction()){
     	    		    				case Joueur.Reculer :
-    	    		    					messageCourant = jeu.getJoueur1().getNom() + " a avancé de " + action.getCarteDeplacement().getContenu() + " cases";
+    	    		    					messageCourant = jeu.getJoueur1().getNom() + " a reculé de " + action.getCarteDeplacement().getContenu() + " cases";
     	    		    					break;
     	    		    				case Joueur.Avancer :
-    	    		    					messageCourant = jeu.getJoueur1().getNom() + " a reculé de " + action.getCarteDeplacement().getContenu() + " cases";
+    	    		    					messageCourant = jeu.getJoueur1().getNom() + " a avancé de " + action.getCarteDeplacement().getContenu() + " cases";
     	    		    					break;
     	    		    				case Joueur.AttaqueDirecte :
     	    		    					messageCourant = jeu.getJoueur1().getNom() + " vous attaque " + action.getNbCartes() + " fois avec une puissance de " + action.getCarteAction().getContenu();
@@ -414,22 +406,22 @@ public class ControleurJeu {
 	    			if(trouve){
 		    			switch(action.getTypeAction()){
 		    				case Joueur.Reculer :
-		    					tour.getMessageBox().setTexte("Reculer de " + action.getCarteDeplacement().getContenu() + " case vers la position " + action.getPositionArrivee());
+		    					tour.getMessageBox().setTexte("Reculer de " + action.getCarteDeplacement().getContenu() + " cases vers la position " + action.getPositionArrivee());
 		    					break;
 		    				case Joueur.Avancer :
-		    					tour.getMessageBox().setTexte("Avancer de " + action.getCarteDeplacement().getContenu() + " case vers la position " + action.getPositionArrivee());
+		    					tour.getMessageBox().setTexte("Avancer de " + action.getCarteDeplacement().getContenu() + " cases vers la position " + action.getPositionArrivee());
 		    					break;
 		    				case Joueur.AttaqueDirecte :
 		    					tour.getMessageBox().setTexte("Effectuer " + action.getNbCartes() + " attaque de puissance " + action.getCarteAction().getContenu());
 		    					break;
 		    				case Joueur.AttaqueIndirecte :
-		    					tour.getMessageBox().setTexte("Avancer de " + action.getCarteDeplacement().getContenu() + " case puis effectuer " + action.getNbCartes() + " attaque de puissance " + action.getCarteAction().getContenu());
+		    					tour.getMessageBox().setTexte("Avancer de " + action.getCarteDeplacement().getContenu() + " cases puis effectuer " + action.getNbCartes() + " attaque de puissance " + action.getCarteAction().getContenu());
 		    					break;
 		    				case Joueur.Parade :
 		    					tour.getMessageBox().setTexte("Parade contre " + action.getNbCartes() + " attaque de puissance " + action.getCarteAction().getContenu());
 		    					break;
 		    				case Joueur.Fuite :
-		    					tour.getMessageBox().setTexte("Fuite de " + action.getCarteDeplacement().getContenu() + " case vers la position " + action.getPositionArrivee());
+		    					tour.getMessageBox().setTexte("Fuite de " + action.getCarteDeplacement().getContenu() + " cases vers la position " + action.getPositionArrivee());
 		    					break;
 		    				default :
 		    					tour.getMessageBox().setTexte(messageCourant);

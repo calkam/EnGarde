@@ -74,14 +74,12 @@ public class DessinateurCanvasJavaFx extends Visiteur {
     
     public boolean visite(Pioche p){
     	gcPioche = pioche.getGraphicsContext2D();
-    	p.fixeDimensions((float)pioche.getWidth(), (float)pioche.getHeight());
     	dessinerPioche(gcPioche, p);
     	return false;
     }
     
     public boolean visite(Defausse d){
     	gcDefausse = defausse.getGraphicsContext2D();
-    	d.fixeDimensions((float)defausse.getWidth(), (float)defausse.getHeight());
     	dessinerDefausse(gcDefausse, d);
     	return false;
     }
@@ -194,19 +192,17 @@ public class DessinateurCanvasJavaFx extends Visiteur {
 		}
 		gc.setLineWidth(1.0);
 		gc.strokeRect(x, y, l, h);
+		gc.setLineWidth(0.0);
     }
     
     private void dessinerPioche(GraphicsContext gc, Pioche p){
-		gc.clearRect(p.getX(), p.getY(), p.getLargeur(), p.getHauteur());
-    	Image i = new Image("/Ressources/dosCartePioche.jpg");
-    	gc.drawImage(i, 0, 0, 200, 150 /*p.getLargeur(), p.getHauteur()*/);
-        dessinerCarteHoriVerso(gc, 0, 0, 200, 150/*p.getLargeur(), p.getHauteur()*/);
+        dessinerCarteHoriVerso(gc, 0, 0, p.getLargeur(), p.getHauteur());
     }
     
     private void dessinerDefausse(GraphicsContext gc, Defausse d){
     	gc.clearRect(d.getX(), d.getY(), d.getLargeur(), d.getHauteur());
     	if(!d.estVide()){
-    		dessinerCarteHoriRecto(gc, 0, 0,200, 150 /*d.getLargeur(), d.getHauteur()*/, d.carteDuDessus().getContenu());
+    		dessinerCarteHoriRecto(gc, 0, 0, d.getLargeur(), d.getHauteur(), d.carteDuDessus().getContenu());
     	}
     }
     
@@ -233,14 +229,14 @@ public class DessinateurCanvasJavaFx extends Visiteur {
     
     private void dessinerCarteVertiVerso(GraphicsContext gc, double x, double y, double l, double h){
     	gc.clearRect(x, y, l, h);
-    	Image i = new Image("/Ressources/dosCarte.jpg");
+    	Image i = new Image("/Ressources/dosCarte.png");
     	gc.drawImage(i, x, y, l, h);
     	gc.strokeRect(x, y, l, h);
     }
     
     private void dessinerCarteHoriVerso(GraphicsContext gc, double x, double y, double l, double h){
     	gc.clearRect(x, y, l, h);
-    	Image i = new Image("/Ressources/dosCartePioche.jpg");
+    	Image i = new Image("/Ressources/dosCartePioche.png");
     	gc.drawImage(i, x, y, l, h);
     	gc.strokeRect(x, y, l, h);
     }
@@ -270,6 +266,7 @@ public class DessinateurCanvasJavaFx extends Visiteur {
     private void ecrireTexte(GraphicsContext gc, float x, float y, String s, int length){
     	float policeSize = (float) 22.5;
     	float recule = (float) (length*(policeSize/4.10));
+    	gc.setLineWidth(0.0);
     	Font f = Font.font("MathJax_Caligraphic-Regular", FontWeight.EXTRA_BOLD, policeSize);
     	gc.setFill(Color.WHITE);
     	gc.setFont(f);

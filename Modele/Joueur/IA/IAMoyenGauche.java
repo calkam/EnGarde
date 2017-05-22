@@ -22,12 +22,12 @@ public class IAMoyenGauche extends JoueurGauche {
 		return null;
 	}
 
-	@Override
+	/*@Override
 	public Action actionIA(Triplet<Integer, Integer, Integer> attaque, Pioche pioche, Defausse defausse, Tour tour_courant)
 			throws Exception {
 		// TODO Auto-generated method stub
 		return null;
-	}
+	}*/
 
 	
 }

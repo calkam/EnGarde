@@ -26,7 +26,7 @@ public class IALegendaireDroite extends IADroite {
 		ActionsJouables actions_jouables ;
 		Action actionChoisie = null;
 		Action actionJouee = null;
-		Tour tour_sauv= tour_courant.clone();
+		//Tour tour_sauv= tour_courant.clone();
 		int val_max = -1000000;
 		int val_courante = 0;
 		boolean estPremier =tour_courant.getJoueurPremier().getPositionFigurine() > tour_courant.getJoueurSecond().getPositionFigurine() ;
@@ -78,7 +78,7 @@ public class IALegendaireDroite extends IADroite {
 				actionJouee = actionChoisie;
 			}
 			
-			tour_courant = tour_sauv.clone();
+			//tour_courant = tour_sauv.clone();
 			//System.out.println("Val_courante : " + val_courante + "\n");
 
 		}	
@@ -194,7 +194,7 @@ public class IALegendaireDroite extends IADroite {
 		}else{
 			actions_jouables = tour_courant.getJoueurSecond().peutFaireAction(tour_courant.getEstAttaque());
 		}
-		tour_sauv = tour_courant.clone();
+		//tour_sauv = tour_courant.clone();
 	
 		if(actions_jouables.isEmpty()){
 			return val_max;
@@ -270,7 +270,7 @@ public class IALegendaireDroite extends IADroite {
 				val_max = val_courante;
 			}
 			
-			tour_courant = tour_sauv.clone();
+			//tour_courant = tour_sauv.clone();
 
 		}
 		
@@ -297,7 +297,7 @@ public int Min(Tour tour_courant, int profondeur) throws Exception{
 			actions_jouables = tour_courant.getJoueurPremier().peutFaireAction(tour_courant.getEstAttaque());
 		}
 		
-		tour_sauv = tour_courant.clone();
+		//tour_sauv = tour_courant.clone();
 	
 		if(actions_jouables.isEmpty()){
 			return val_max;
@@ -371,7 +371,7 @@ public int Min(Tour tour_courant, int profondeur) throws Exception{
 				val_max = val_courante;
 			}
 			
-			tour_courant = tour_sauv.clone();
+			//tour_courant = tour_sauv.clone();
 
 		}
 		
