@@ -87,7 +87,7 @@ public class Tour implements Visitable {
 		case Joueur.Reculer : joueur.reculer(carteDeplacement.getContenu()) ; break ;
 		default : throw new Exception ("Modele.Tour.jouer_avancer_reculer_fuire : typeAction inconnu") ;
 		}
-		return new Triplet <> (PasAttaque,0,0) ;
+		return new Triplet <> (actionAJouer.getTypeAction() == Fuite ? Fuite : PasAttaque,0,0) ;
 		
 	}
 	
@@ -112,7 +112,7 @@ public class Tour implements Visitable {
 		switch(actionAJouer.getTypeAction()) {
 		case Joueur.AttaqueDirecte : config.setC1(AttaqueDirecte); break ;
 		case Joueur.AttaqueIndirecte : avancer_reculer_fuire(actionAJouer, joueur, Joueur.Avancer) ; config.setC1(AttaqueIndirecte) ; break ;
-		case Joueur.Parade : config.setC1(PasAttaque) ; break ;
+		case Joueur.Parade : config.setC1(Parade) ; break ;
 		default : throw new Exception("Modele.Tour.executerAction : typeAction inconnu") ;
 		}
 		
