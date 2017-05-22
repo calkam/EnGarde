@@ -42,6 +42,14 @@ public class Defausse extends Tas {
 		return d.isEmpty();
 	}
 	
+	public Stack<Carte> getDefausse() {
+		return d;
+	}
+
+	public void setDefause(Stack<Carte> d) {
+		this.d = d;
+	}
+
 	@Override
 	public String toString() {
 		String resultat = "";

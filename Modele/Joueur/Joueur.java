@@ -66,6 +66,9 @@ public abstract class Joueur implements Visitable{
 	abstract public void reinitialiserPositionFigurine() ;
 	abstract public void viderLaMain(); 
 	
+	@Override
+	abstract public Joueur clone();
+	
 	public ActionsJouables peutFaireAction(Triplet<Integer, Integer, Integer> est_attaque) throws Exception {
 		
 		int position ;

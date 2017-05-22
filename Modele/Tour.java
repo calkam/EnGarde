@@ -80,7 +80,6 @@ public class Tour implements Visitable{
 
 	public void jouerTour() throws Exception{
 		commencerTour(joueurPremier);
-		messageBox.setTexte(joueurPremier.getNom() + " commence");
 	}
 
 	public void commencerTour(Joueur joueur){
@@ -192,7 +191,7 @@ public class Tour implements Visitable{
 		joueurAdverse(joueur).getMain().setVisible(true);
 	}
 
-	private ArrayList<Carte> getAutreCarteDeValeur(int valeur, int nbCartes, Joueur joueur){
+	public ArrayList<Carte> getAutreCarteDeValeur(int valeur, int nbCartes, Joueur joueur){
 		ArrayList<Carte> cartes = new ArrayList<Carte>();
 
 		int i=1; //On commence à 1 car une carte a déjà été défaussée dans executerAction()
@@ -367,6 +366,19 @@ public class Tour implements Visitable{
 
 	public void setActions_jouables(ActionsJouables actions_jouables) {
 		this.actions_jouables = actions_jouables;
+	}
+	
+	@Override
+	public Tour clone () {
+		
+		Tour tour = new Tour (this.histo) ;
+		tour.joueurPremier = this.joueurPremier.clone() ;
+		tour.joueurSecond = this.joueurSecond.clone() ;
+		tour.pioche = this.pioche.clone() ;
+		tour.defausse = this.defausse.clone() ;
+		
+		return tour ;
+		
 	}
 
 }
