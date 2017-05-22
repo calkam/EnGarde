@@ -24,7 +24,7 @@ public class Configuration {
         Properties p=null;
         InputStream in;
 		try {
-			in = new FileInputStream(System.getProperty("user.home") + "/ProjetL3/workspace/source/Ressources/defaut.cfg");
+			in = new FileInputStream(System.getProperty("user.home") + "/Documents/Prog6/Projet_En_Garde/workspace/source/Ressources/defaut.cfg");
 			Properties defaut = new Properties();
 	        chargerProprietes(defaut, in);
 	        try{
