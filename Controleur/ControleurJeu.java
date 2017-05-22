@@ -308,7 +308,7 @@ public class ControleurJeu {
         	        			}else{
         	        				jeu.getManche().getTourEnCours().getMessageBox().setTexte("Vous venez de parer lancer une contre-attaque");
         	        			}
-
+        	        			nbCartePioche.setText(Integer.toString(jeu.getManche().getPioche().size()));
         	        		}
         	        	}
         	            break;
@@ -357,7 +357,7 @@ public class ControleurJeu {
 		    					tour.getMessageBox().setTexte("Effectuer " + action.getNbCartes() + " attaque de puissance " + action.getCarteAction().getContenu());
 		    					break;
 		    				case Joueur.AttaqueIndirecte :
-		    					tour.getMessageBox().setTexte("Avancer de " + action.getCarteDeplacement() + " case puis effectuer " + action.getNbCartes() + "attaque de puissance " + action.getCarteAction().getContenu());
+		    					tour.getMessageBox().setTexte("Avancer de " + action.getCarteDeplacement().getContenu() + " case puis effectuer " + action.getNbCartes() + " attaque de puissance " + action.getCarteAction().getContenu());
 		    					break;
 		    				case Joueur.Parade :
 		    					tour.getMessageBox().setTexte("Parade contre " + action.getNbCartes() + " attaque de puissance " + action.getCarteAction());
@@ -416,6 +416,7 @@ public class ControleurJeu {
 		if(etatAttaque == Tour.pasAttaque || !peutFaireAction){
 			verifierFinDeLaPioche();
 		}
+		
 		jeu.getPiste().getMessageBox().setTexte("Au tour de " + jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours).getNom() + ". Appuyer sur Prêt A Jouer !");
 	}
 
@@ -436,6 +437,13 @@ public class ControleurJeu {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		if(jeu.getManche().getTourEnCours().getJoueurPremier().equals(jeu.getJoueur1())){
+			mainGauche.setDisable(false);
+			mainDroite.setDisable(true);
+		}else{
+			mainGauche.setDisable(true);
+			mainDroite.setDisable(false);
 		}
 		cacherWidgetFin();
 	}
