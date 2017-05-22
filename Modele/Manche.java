@@ -97,10 +97,6 @@ public class Manche implements Visitable{
 		}
 	}
 	
-	public void afficherScore(){
-		System.out.println("\nScore : " + joueur1.getNom() + " " + joueur1.getNbPoints() + " - " + joueur2.getNbPoints() + " " + joueur2.getNom());
-	}
-	
 	private int calculerNormeEntreDeuxPositions(int position1, int position2){
 		return Math.abs(position1 - position2);
 	}

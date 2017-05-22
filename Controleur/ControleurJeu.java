@@ -183,18 +183,20 @@ public class ControleurJeu {
 	}
 
 	private void verifierFinDuJeu(Couple<Integer, Integer> resultat){
+		Couple<Integer, Integer> resultatFinPartie;
 		cartes = new ArrayList<Carte>();
 		if(resultat.getC1() == Manche.JOUEUR1GAGNE){
 			jeu.changerScore(jeu.getJoueur1());
 		}else if(resultat.getC1() == Manche.JOUEUR2GAGNE){
 			jeu.changerScore(jeu.getJoueur2());
 		}
-		resultat = jeu.gainPartie();
-		if(resultat == null){
+		DessinateurCanvasJavaFx.visibilityActivated = true;
+		resultatFinPartie = jeu.gainPartie();
+		if(resultatFinPartie == null){
 			afficherWidgetFin(FINMANCHE, resultat);
 			nbCartePioche.setText(Integer.toString(jeu.getManche().getPioche().size()));
 		}else{
-			afficherWidgetFin(FINPARTIE, resultat);
+			afficherWidgetFin(FINPARTIE, resultatFinPartie);
 		}
 	}
 
@@ -225,7 +227,7 @@ public class ControleurJeu {
 		}else if(typeFin == FINMANCHE){
 			buttonBarFinPartie.setVisible(false);
 			buttonBarFinManche.setVisible(true);
-
+			
 			if(resultat.getC1() == Manche.JOUEUR1GAGNE){
 				joueurVictorieux = jeu.getJoueur1().getNom();
 				joueurPerdant = jeu.getJoueur2().getNom();
@@ -332,45 +334,45 @@ public class ControleurJeu {
             	actions_jouables = tour.getActions_jouables();
             	caseHovered = jeu.getPiste().getCaseEvent(event.getX(), event.getY());
 
-            	if(caseHovered != null){
-	            	if(actions_jouables != null && actions_jouables.size() != 0){
-		            	e = actions_jouables.elements();
+            	if(caseHovered != null && actions_jouables != null && actions_jouables.size() != 0){
+	            	e = actions_jouables.elements();
 
-		    			while(e.hasMoreElements() && !trouve){
-		    				action = e.nextElement();
-		    				if(caseHovered.getNumero() == action.getPositionArrivee() ||
-		    				  (tour.actionOffensive(action) && caseHovered.getNumero() == tour.joueurAdverse(joueurEnCours).getPositionFigurine())){
-		    					trouve = true;
-		    				}
-		    			}
+	    			while(e.hasMoreElements() && !trouve){
+	    				action = e.nextElement();
+	    				if(caseHovered.getNumero() == action.getPositionArrivee() ||
+	    				  (tour.actionOffensive(action) && caseHovered.getNumero() == tour.joueurAdverse(joueurEnCours).getPositionFigurine())){
+	    					trouve = true;
+	    				}
+	    			}
 
-		    			if(trouve){
-			    			switch(action.getTypeAction()){
-			    				case Joueur.Reculer :
-			    					tour.getMessageBox().setTexte("Reculer de " + action.getCarteDeplacement().getContenu() + " en " + action.getPositionArrivee());
-			    					break;
-			    				case Joueur.Avancer :
-			    					tour.getMessageBox().setTexte("Avancer de " + action.getCarteDeplacement().getContenu() + " en " + action.getPositionArrivee());
-			    					break;
-			    				case Joueur.AttaqueDirecte :
-			    					tour.getMessageBox().setTexte("Effectuer " + action.getNbCartes() + "Attaque de puissance " + action.getCarteAction().getContenu());
-			    					break;
-			    				case Joueur.AttaqueIndirecte :
-			    					tour.getMessageBox().setTexte("Avancer de " + action.getCarteDeplacement() + " puis effectuer " + action.getNbCartes() + "Attaque de puissance " + action.getCarteAction().getContenu());
-			    					break;
-			    				case Joueur.Parade :
-			    					tour.getMessageBox().setTexte("Parade contre " + action.getNbCartes() + " de valeur " + action.getCarteAction());
-			    					break;
-			    				case Joueur.Fuite :
-			    					tour.getMessageBox().setTexte("Fuite de " + action.getCarteDeplacement().getContenu() + "en " + action.getPositionArrivee());
-			    					break;
-			    				default :
-			    					tour.getMessageBox().setTexte("Il n'y a pas d'action possible avec ces cartes");
-			    			}
+	    			if(trouve){
+		    			switch(action.getTypeAction()){
+		    				case Joueur.Reculer :
+		    					tour.getMessageBox().setTexte("Reculer de " + action.getCarteDeplacement().getContenu() + " case vers la position " + action.getPositionArrivee());
+		    					break;
+		    				case Joueur.Avancer :
+		    					tour.getMessageBox().setTexte("Avancer de " + action.getCarteDeplacement().getContenu() + " case vers la position " + action.getPositionArrivee());
+		    					break;
+		    				case Joueur.AttaqueDirecte :
+		    					tour.getMessageBox().setTexte("Effectuer " + action.getNbCartes() + " attaque de puissance " + action.getCarteAction().getContenu());
+		    					break;
+		    				case Joueur.AttaqueIndirecte :
+		    					tour.getMessageBox().setTexte("Avancer de " + action.getCarteDeplacement() + " case puis effectuer " + action.getNbCartes() + "attaque de puissance " + action.getCarteAction().getContenu());
+		    					break;
+		    				case Joueur.Parade :
+		    					tour.getMessageBox().setTexte("Parade contre " + action.getNbCartes() + " attaque de puissance " + action.getCarteAction());
+		    					break;
+		    				case Joueur.Fuite :
+		    					tour.getMessageBox().setTexte("Fuite de " + action.getCarteDeplacement().getContenu() + " case vers la position " + action.getPositionArrivee());
+		    					break;
+		    				default :
+		    					tour.getMessageBox().setTexte("Il n'y a pas d'action possible avec ces cartes");
 		    			}
-	            	}
+	    			}else{
+	    				tour.getMessageBox().setTexte("Au tour de " + joueurEnCours.getNom());
+	    			}
             	}
-            }
+        	}
         });
 	}
 
@@ -390,6 +392,7 @@ public class ControleurJeu {
 		buttonGestionTour.setDisable(true);
 		changeDisableMain(tour.joueurAdverse(joueurEnCours), false);
 		gestionTour=FINDETOUR;
+		jeu.getPiste().getMessageBox().setTexte("Au tour de " + jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours).getNom() + ".");
 	}
 
 	private void finDeTour(){
@@ -413,7 +416,7 @@ public class ControleurJeu {
 		if(etatAttaque == Tour.pasAttaque || !peutFaireAction){
 			verifierFinDeLaPioche();
 		}
-		jeu.getPiste().getMessageBox().setTexte("Au tour de " + jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours).getNom() + " Appuyer sur Prêt A Jouer");
+		jeu.getPiste().getMessageBox().setTexte("Au tour de " + jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours).getNom() + ". Appuyer sur Prêt A Jouer !");
 	}
 
 	public void changeDisableMain(Joueur joueur, boolean disable){
@@ -426,6 +429,7 @@ public class ControleurJeu {
 
 	@FXML
 	private void mancheSuivante(){
+		DessinateurCanvasJavaFx.visibilityActivated = false;
 		jeu.nouvelleManche();
 		try {
 			jeu.lancerLaManche();
