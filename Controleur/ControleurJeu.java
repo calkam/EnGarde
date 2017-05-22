@@ -368,7 +368,7 @@ public class ControleurJeu {
     	    		    					messageCourant = jeu.getJoueur1().getNom() + " a avancé de " + action.getCarteDeplacement().getContenu() + " cases vers la position " + action.getPositionArrivee() + " et vous attaque " + action.getNbCartes() + " fois avec une puissance " + action.getCarteAction().getContenu();
     	    		    					break;
     	    		    				case Joueur.Fuite :
-    	    		    					messageCourant = jeu.getJoueur1().getNom() + " a fuis de " + action.getCarteDeplacement().getContenu() + " cases";
+    	    		    					messageCourant = jeu.getJoueur1().getNom() + " a fui de " + action.getCarteDeplacement().getContenu() + " cases";
     	    		    					break;
     	    		    			}
     	    	    			}
