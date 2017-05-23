@@ -6,7 +6,9 @@ import Modele.Triplet;
 import Modele.Tas.Carte;
 
 @SuppressWarnings("serial")
-public class ActionsJouables extends Hashtable <Triplet<Integer, Integer, Integer>, Action>{
+public class ActionsJouables extends Hashtable <Triplet<Integer, Integer, Integer>, Action> {
+	
+	// CONSTRUCTEURS
 
 	public ActionsJouables() {
 		super();
@@ -16,21 +18,16 @@ public class ActionsJouables extends Hashtable <Triplet<Integer, Integer, Intege
 		super(initialCapacity);
 	}
 	
-	public void ajouterActionOffensive(Integer idCarte, Integer typeAction, int positionArrivee, Carte carteDepl, Carte carteAttaque, int nbCartes) {
+	public void ajouterAction (int classeAction, Integer idCarte, Integer typeAction, int positionArrivee, Carte carteDeplacement, Carte carteAction, int nbCartes) throws Exception {
 		Triplet<Integer, Integer, Integer> clé = new Triplet<Integer, Integer, Integer>(idCarte, typeAction, nbCartes);
-		Action action = new ActionOffensive(typeAction, nbCartes, positionArrivee, carteDepl, carteAttaque);
-		putIfAbsent(clé, action);
-	}
-	
-	public void ajouterActionDefensive(Integer idCarte, Integer typeAction, int positionArrivee, Carte carteDepl, Carte carteDefense, int nbCartes) {
-		Triplet<Integer, Integer, Integer> clé = new Triplet<Integer, Integer, Integer>(idCarte, typeAction, nbCartes);	
-		Action action = new ActionDefensive(typeAction, nbCartes, positionArrivee, carteDepl, carteDefense);
-		putIfAbsent(clé, action);
-	}
-	
-	public void ajouterActionNeutre(Integer idCarte, Integer typeAction, int positionArrivee, Carte carteDepl) {
-		Triplet<Integer, Integer, Integer> clé = new Triplet<Integer, Integer, Integer>(idCarte, typeAction, 0);
-		Action action = new ActionNeutre(typeAction, 0, positionArrivee, carteDepl);
+		Action action ; 
+		
+		switch (classeAction) {
+		case Action.ActionOffensive : action = new ActionOffensive(typeAction, nbCartes, positionArrivee, carteDeplacement, carteAction) ; break ;
+		case Action.ActionNeutre : action = new ActionNeutre(typeAction, 0, positionArrivee, carteDeplacement) ; break ;
+		case Action.ActionDefensive : action = new ActionDefensive(typeAction, nbCartes, positionArrivee, carteDeplacement, carteAction) ; break ;
+		default : throw new Exception ("classeAction inconnue") ;
+		}
 		putIfAbsent(clé, action);
 	}
 

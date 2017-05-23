@@ -2,6 +2,7 @@ package Modele.Joueur.IA;
 
 import Modele.Tour;
 import Modele.Joueur.Action;
+import Modele.Joueur.ActionsJouables;
 import Modele.Joueur.Joueur;
 import Modele.Plateau.Piste;
 import Modele.Tas.Main;
@@ -469,5 +470,11 @@ public class IADifficile extends IA {
 		joueur.setScore(this.getScore());
 		return joueur ;
 		
+	}
+
+	@Override
+	public Action selectionnerAction(ActionsJouables actions_jouables, Tour tour) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -3,6 +3,7 @@ package Modele.Joueur;
 import java.util.ArrayList;
 
 import Modele.Couple;
+import Modele.Historique;
 import Modele.Tour;
 import Modele.Triplet;
 import Modele.Visitable;
@@ -20,12 +21,13 @@ abstract public class Joueur implements Visitable{
 	// TYPES ACTION
 	
 	public final static int ActionImpossible = -1 ;
-	public final static int Reculer = 0 ;
-	public final static int Avancer = 1 ;
-	public final static int AttaqueDirecte = 2 ;
-	public final static int AttaqueIndirecte  = 3 ;
-	public final static int Parade = 4 ;
-	public final static int Fuite = 5 ;
+	public final static int PasAttaque = 0 ;
+	public final static int Reculer = 1 ;
+	public final static int Avancer = 2 ;
+	public final static int AttaqueDirecte = 3 ;
+	public final static int AttaqueIndirecte  = 4 ;
+	public final static int Parade = 5 ;
+	public final static int Fuite = 6 ;
 	
 	// TYPE JOUEUR
 	// Le Joueur1 a pour direction la DirectionDroite (1)
@@ -48,6 +50,7 @@ abstract public class Joueur implements Visitable{
 	protected Main main ;
 	protected Piste piste ;
 	protected Score score ;
+	protected Historique histo ;
 	
 	// CONSTRUCTEUR
 
@@ -61,6 +64,7 @@ abstract public class Joueur implements Visitable{
 		this.piste = piste;
 		this.score = new Score();
 		this.main.setCote(getDirection());
+		this.histo = new Historique (nom) ;
 	}
 	
 	// EQUALS
@@ -211,12 +215,12 @@ abstract public class Joueur implements Visitable{
 			
 			carte = main.getCarte(i);
 			
-			if(est_attaque.getC1() != Tour.AttaqueDirecte && est_attaque.getC1() != Tour.AttaqueIndirecte){
+			if(est_attaque.getC1() != AttaqueDirecte && est_attaque.getC1() != AttaqueIndirecte){
 
 				Couple <Boolean, Integer> test_avancer_ou_attaquer ;
 				
 				if((position = peut_reculer(carte.getContenu())) != ActionImpossible){
-					actions_jouables.ajouterActionNeutre(carte.getID(), Reculer, position, carte) ;
+					actions_jouables.ajouterAction(Action.ActionNeutre, carte.getID(), Reculer, position, carte, null, 0) ;
 				}
 				
 				if ((test_avancer_ou_attaquer = peut_avancer_ou_attaquer_directement(carte.getContenu())).getC2() != ActionImpossible) {
@@ -224,12 +228,12 @@ abstract public class Joueur implements Visitable{
 					if (!test_avancer_ou_attaquer.getC1()) {
 						
 						for(int j=1; j<=main.getNombreCarteGroupe(carte.getContenu()); j++){
-							actions_jouables.ajouterActionOffensive(carte.getID(), AttaqueDirecte, getPositionFigurine(MaFigurine), null, carte, j);
+							actions_jouables.ajouterAction(Action.ActionOffensive, carte.getID(), AttaqueDirecte, getPositionFigurine(MaFigurine), null, carte, j);
 						}
 							
 					} else {
 						
-						actions_jouables.ajouterActionNeutre(carte.getID(), Avancer, test_avancer_ou_attaquer.getC2(), carte) ;
+						actions_jouables.ajouterAction(Action.ActionNeutre, carte.getID(), Avancer, test_avancer_ou_attaquer.getC2(), carte, null, 0) ;
 					
 						for (int j=0; j<main.getNombreCarte(); j++) {
 							
@@ -239,7 +243,7 @@ abstract public class Joueur implements Visitable{
 							    (peut_attaquer_indirectement(position, carteOpt.getContenu()) != ActionImpossible)){
 						
 								for(int k=1; k<=main.getNombreCarteGroupe(carteOpt.getContenu()) - (main.getCarte(i).getContenu() == carteOpt.getContenu() ? 1 : 0); k++){
-									actions_jouables.ajouterActionOffensive(carte.getID(), AttaqueIndirecte, test_avancer_ou_attaquer.getC2(), carte, carteOpt, k) ;
+									actions_jouables.ajouterAction(Action.ActionOffensive, carte.getID(), AttaqueIndirecte, test_avancer_ou_attaquer.getC2(), carte, carteOpt, k) ;
 								}								
 							}
 						}
@@ -249,12 +253,12 @@ abstract public class Joueur implements Visitable{
 				
 				// On a oublié de tester que la valeur de la carte utilisée pour parer est la même que celle du joueur adverse utilisée pour son attaque 				
 				if(peut_executer_parade(carte.getContenu(), est_attaque.getC2(), est_attaque.getC3())){
-					actions_jouables.ajouterActionDefensive(carte.getID(), Parade, getPositionFigurine(MaFigurine), null, carte, est_attaque.getC2());
+					actions_jouables.ajouterAction(Action.ActionDefensive, carte.getID(), Parade, getPositionFigurine(MaFigurine), null, carte, est_attaque.getC2());
 				}
 				
-				if(est_attaque.getC1() == Tour.AttaqueIndirecte){
+				if(est_attaque.getC1() == AttaqueIndirecte){
 					if((position = peut_reculer(carte.getContenu())) != ActionImpossible){
-						actions_jouables.ajouterActionDefensive(carte.getID(), Fuite, position, carte, null, 0);
+						actions_jouables.ajouterAction(Action.ActionDefensive, carte.getID(), Fuite, position, carte, null, 0);
 					}
 				}
 			}
@@ -279,14 +283,14 @@ abstract public class Joueur implements Visitable{
 		if(main.size() > 0){
 			carte = main.getCarte(0);
 			
-			if(est_attaque.getC1() != Tour.AttaqueDirecte && est_attaque.getC1() != Tour.AttaqueIndirecte){
+			if(est_attaque.getC1() != AttaqueDirecte && est_attaque.getC1() != AttaqueIndirecte){
 				
 				if(main.size() > 1){
 					if(main.getNombreCarteGroupe(carte.getContenu()) == main.size()){
 						
 						if ((test_avancer_ou_attaquer = peut_avancer_ou_attaquer_directement(carte.getContenu())).getC2() != ActionImpossible) {
 							if (!test_avancer_ou_attaquer.getC1()) {
-								actions_jouables.ajouterActionOffensive(carte.getID(), AttaqueDirecte, getPositionDeMaFigurine(), null, carte, main.getNombreCarteGroupe(carte.getContenu()));
+								actions_jouables.ajouterAction(Action.ActionOffensive, carte.getID(), AttaqueDirecte, getPositionDeMaFigurine(), null, carte, main.getNombreCarteGroupe(carte.getContenu()));
 							}else{
 								
 								carteOpt = main.getCarte(1);
@@ -296,7 +300,7 @@ abstract public class Joueur implements Visitable{
 									if (((position = test_avancer_ou_attaquer.getC2()) != ActionImpossible) && 
 										    (peut_attaquer_indirectement(position, carteOpt.getContenu()) != ActionImpossible)){
 									
-										actions_jouables.ajouterActionOffensive(carte.getID(), AttaqueIndirecte, test_avancer_ou_attaquer.getC2(), carte, carteOpt, main.getNombreCarteGroupe(carteOpt.getContenu())-1) ;
+										actions_jouables.ajouterAction(Action.ActionOffensive, carte.getID(), AttaqueIndirecte, test_avancer_ou_attaquer.getC2(), carte, carteOpt, main.getNombreCarteGroupe(carteOpt.getContenu())-1) ;
 										
 									}
 									
@@ -317,7 +321,7 @@ abstract public class Joueur implements Visitable{
 									if (((position = test_avancer_ou_attaquer.getC2()) != ActionImpossible) && 
 										    (peut_attaquer_indirectement(position, carteOpt.getContenu()) != ActionImpossible)){
 									
-										actions_jouables.ajouterActionOffensive(carte.getID(), AttaqueIndirecte, test_avancer_ou_attaquer.getC2(), carte, carteOpt, main.getNombreCarteGroupe(carteOpt.getContenu())) ;
+										actions_jouables.ajouterAction(Action.ActionOffensive, carte.getID(), AttaqueIndirecte, test_avancer_ou_attaquer.getC2(), carte, carteOpt, main.getNombreCarteGroupe(carteOpt.getContenu())) ;
 									
 									}
 									
@@ -329,18 +333,18 @@ abstract public class Joueur implements Visitable{
 					}
 				}else{
 					if((position = peut_reculer(carte.getContenu())) != ActionImpossible){
-						actions_jouables.ajouterActionNeutre(carte.getID(), Reculer, position, carte) ;
+						actions_jouables.ajouterAction(Action.ActionNeutre, carte.getID(), Reculer, position, carte, null, 0) ;
 					}
 					
 					if ((test_avancer_ou_attaquer = peut_avancer_ou_attaquer_directement(carte.getContenu())).getC2() != ActionImpossible) {
 						
 						if (test_avancer_ou_attaquer.getC1()) {
 							
-							actions_jouables.ajouterActionNeutre(carte.getID(), Avancer, test_avancer_ou_attaquer.getC2(), carte) ;
+							actions_jouables.ajouterAction(Action.ActionNeutre, carte.getID(), Avancer, test_avancer_ou_attaquer.getC2(), carte, null, 0) ;
 								
 						}else{
 							
-							actions_jouables.ajouterActionOffensive(carte.getID(), AttaqueDirecte, getPositionDeMaFigurine(), null, carte, 1);
+							actions_jouables.ajouterAction(Action.ActionOffensive, carte.getID(), AttaqueDirecte, getPositionDeMaFigurine(), null, carte, 1);
 							
 						}
 					}
@@ -350,18 +354,17 @@ abstract public class Joueur implements Visitable{
 				
 				if(main.getNombreCarteGroupe(carte.getContenu()) == est_attaque.getC2()){
 					if(peut_executer_parade(carte.getContenu(), est_attaque.getC2(), est_attaque.getC3())){
-						actions_jouables.ajouterActionDefensive(carte.getID(), Parade, getPositionDeMaFigurine(), null, carte, est_attaque.getC2());
+						actions_jouables.ajouterAction(Action.ActionDefensive, carte.getID(), Parade, getPositionDeMaFigurine(), null, carte, est_attaque.getC2());
 					}
 				}
 					
 				if(main.size() == 1){
-					if(est_attaque.getC1() == Tour.AttaqueIndirecte){
+					if(est_attaque.getC1() == AttaqueIndirecte){
 						if((position = peut_reculer(carte.getContenu())) != ActionImpossible){
-							actions_jouables.ajouterActionDefensive(carte.getID(), Fuite, position, carte, null, 0);
+							actions_jouables.ajouterAction(Action.ActionDefensive, carte.getID(), Fuite, position, carte, null, 0);
 						}
 					}
 				}
-
 			}
 		}
 		
@@ -396,6 +399,17 @@ abstract public class Joueur implements Visitable{
 		
 	}
 	
+	public void initHisto () {
+		
+		if (this instanceof Humain) {
+		
+			Humain humain1 = (Humain) this ;
+			humain1.getHisto().init();
+			
+		}
+		
+	}
+	
 	/**
 	 * GETTER/SETTER
 	 * @throws Exception 
@@ -413,6 +427,10 @@ abstract public class Joueur implements Visitable{
 	
 	public int getPositionDeMaFigurine() throws Exception {
 		return getPiste().getFigurine(MaFigurine).getPosition() ;	
+	}
+	
+	public int getPositionFigurineAdverse() throws Exception {
+		return getPiste().getFigurine(FigurineAdverse).getPosition() ;	
 	}
 	
 	public int getDirection() {
@@ -464,6 +482,14 @@ abstract public class Joueur implements Visitable{
 		this.piste = piste;
 	}
 	
+	public Historique getHisto() {
+		return histo;
+	}
+
+	public void setHisto(Historique histo) {
+		this.histo = histo;
+	}
+
 	abstract public Action selectionnerAction(ActionsJouables actions_jouables, Tour tour) throws Exception ;
 	
 	// CLONE

@@ -7,7 +7,6 @@ import Modele.Joueur.ActionsJouables;
 import Modele.Joueur.Joueur;
 import Modele.Plateau.Case;
 import Modele.Plateau.MessageBox;
-import Modele.Plateau.Piste;
 import Modele.Tas.Carte;
 import Modele.Tas.Defausse;
 import Modele.Tas.Pioche;
@@ -18,8 +17,8 @@ public class Tour implements Visitable {
 	
 	// STATUT JOUEUR
 	
-	private final static boolean JoueurPerdu = false;
-	private final static boolean JoueurPasPerdu = true;
+	public final static boolean JoueurPerdu = false;
+	public final static boolean JoueurPasPerdu = true;
 	
 	// STATUT FIN DE PARTIE
 
@@ -28,14 +27,6 @@ public class Tour implements Visitable {
 	public final static int aucunJoueurPerdu = 2;
 	public final static int piocheVide = 3;
 	
-	// TYPE ACTION OFFENSIVE/DEFFENSIVE
-	
-	public final static int PasAttaque = 0;
-	public final static int AttaqueDirecte = 1;
-	public final static int AttaqueIndirecte = 2;
-	public final static int Parade = 4;
-	public final static int Fuite = 5;
-	
 	// ATTRIBUTS
 	
 	private Joueur joueurPremier;
@@ -43,8 +34,6 @@ public class Tour implements Visitable {
 	private Pioche pioche;
 	private Defausse defausse;
 	private MessageBox messageBox;
-	private Piste piste ;
-	private Historique histo ;
 	
 	// Type de l'attaque, nombre de cartes attaque, valeur de la carte attaque
 	private Triplet<Integer, Integer, Integer> estAttaque;
@@ -52,11 +41,8 @@ public class Tour implements Visitable {
 	
 	// CONSTRUCTEURS
 	
-	public Tour(Piste piste, Historique histo){
-		
-		this.piste = piste ;
-		this.histo = histo ;
-		this.estAttaque = new Triplet<>(PasAttaque, 0, 0);
+	public Tour(){
+		this.estAttaque = new Triplet<>(Joueur.PasAttaque, 0, 0);
 	}
 	
 	// CLONE
@@ -64,7 +50,7 @@ public class Tour implements Visitable {
 	@Override
 	public Tour clone () {
 		
-		Tour tour = new Tour (this.piste, this.histo) ;
+		Tour tour = new Tour () ;
 		tour.joueurPremier = this.joueurPremier.clone() ;
 		tour.joueurSecond = this.joueurSecond.clone() ;
 		tour.pioche = this.pioche.clone() ;
@@ -87,7 +73,7 @@ public class Tour implements Visitable {
 		case Joueur.Reculer : joueur.reculer(carteDeplacement.getContenu()) ; break ;
 		default : throw new Exception ("Modele.Tour.jouer_avancer_reculer_fuire : typeAction inconnu") ;
 		}
-		return new Triplet <> (actionAJouer.getTypeAction() == Fuite ? Fuite : PasAttaque,0,0) ;
+		return new Triplet <> (actionAJouer.getTypeAction() == Joueur.Fuite ? Joueur.Fuite : Joueur.PasAttaque,0,0) ;
 		
 	}
 	
@@ -110,9 +96,9 @@ public class Tour implements Visitable {
 		}
 		config = attaquer_directement_parer(actionAJouer, joueur) ;
 		switch(actionAJouer.getTypeAction()) {
-		case Joueur.AttaqueDirecte : config.setC1(AttaqueDirecte); break ;
-		case Joueur.AttaqueIndirecte : avancer_reculer_fuire(actionAJouer, joueur, Joueur.Avancer) ; config.setC1(AttaqueIndirecte) ; break ;
-		case Joueur.Parade : config.setC1(Parade) ; break ;
+		case Joueur.AttaqueDirecte : config.setC1(Joueur.AttaqueDirecte); break ;
+		case Joueur.AttaqueIndirecte : avancer_reculer_fuire(actionAJouer, joueur, Joueur.Avancer) ; config.setC1(Joueur.AttaqueIndirecte) ; break ;
+		case Joueur.Parade : config.setC1(Joueur.Parade) ; break ;
 		default : throw new Exception("Modele.Tour.executerAction : typeAction inconnu") ;
 		}
 		

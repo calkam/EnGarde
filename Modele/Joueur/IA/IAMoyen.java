@@ -5,6 +5,7 @@ import Modele.Joueur.Action;
 import Modele.Joueur.ActionDefensive;
 import Modele.Joueur.ActionNeutre;
 import Modele.Joueur.ActionOffensive;
+import Modele.Joueur.ActionsJouables;
 import Modele.Joueur.Joueur;
 import Modele.Plateau.Piste;
 import Modele.Tas.Carte;
@@ -17,12 +18,6 @@ public class IAMoyen extends IA {
 		super(direction, nom, main, piste);
 	}
 	
-	private int distanceFigurines () throws Exception {
-		
-		return Math.abs(getPositionFigurine(MaFigurine) - getPositionFigurine(FigurineAdverse)) ;
-		
-	}
-	
 	public Action actionIA (Tour tour) throws Exception {
 		
 		Action action_jouee = new ActionNeutre(Reculer,0,22,new Carte(5))  ;
@@ -33,7 +28,7 @@ public class IAMoyen extends IA {
 		if (tour.getEstAttaque().getC1() == 1) { //Attaque directe subie
 			for (Carte c : main.getMain()){
 				if(c.getContenu() == tour.getEstAttaque().getC3()){
-					action_jouee = new ActionDefensive(Parade,tour.getEstAttaque().getC2(), getPositionFigurine(MaFigurine), null,c);
+					action_jouee = new ActionDefensive(Parade,tour.getEstAttaque().getC2(), getPositionDeMaFigurine() ,null,c);
 				}
 			}
 		}
@@ -52,7 +47,7 @@ public class IAMoyen extends IA {
 					
 					for (Carte c : main.getMain()){
 						if(c.getContenu() == tour.getEstAttaque().getC3()){
-							action_jouee = new ActionDefensive(Parade,tour.getEstAttaque().getC2(), getPositionFigurine(MaFigurine) ,null,c);
+							action_jouee = new ActionDefensive(Parade,tour.getEstAttaque().getC2(), getPositionDeMaFigurine() ,null,c);
 						}
 					}
 				}
@@ -61,7 +56,7 @@ public class IAMoyen extends IA {
 
 				for (Carte c : main.getMain()){
 					if(c.getContenu() == tour.getEstAttaque().getC3()){
-						action_jouee = new ActionDefensive(Parade,tour.getEstAttaque().getC2(),getPositionFigurine(MaFigurine) ,null,c);
+						action_jouee = new ActionDefensive(Parade,tour.getEstAttaque().getC2(), getPositionDeMaFigurine() ,null,c);
 					}
 				}
 				//action_jouee = new ActionDefensive(Parade,tour.getEstAttaque().getC2(),piste.getFigurineDroite().getPosition(),null,tour.getEstAttaque().getC1());
@@ -76,8 +71,8 @@ public class IAMoyen extends IA {
 				
 				for (Carte c : main.getMain()) {//On regarde dans le cas ou on est plus avancer que l'adversaire sur la piste, si on peut reculer a une distance >=6 pour gagner directement
 					
-					if( (distance + c.getContenu()) >= 6 && Math.abs(12-(getPositionFigurine(MaFigurine) - direction * c.getContenu())) <= Math.abs(12-getPositionFigurine(FigurineAdverse)) ){
-						action_jouee = new ActionNeutre (Reculer,0, getPositionFigurine(MaFigurine) - direction * c.getContenu(),c);
+					if( (distance + c.getContenu()) >= 6 && Math.abs(12-(getPositionDeMaFigurine() - direction * c.getContenu())) <= Math.abs(12-getPositionFigurineAdverse()) ){
+						action_jouee = new ActionNeutre (Reculer,0, getPositionDeMaFigurine() - direction * c.getContenu(),c);
 					}
 				
 				}
@@ -112,7 +107,7 @@ public class IAMoyen extends IA {
 						//teste si l'tour.getEstAttaque() directe est SANS risques, on tour.getEstAttaque() le cas echeant !
 						for (Carte c : main.getMain()) {
 							if(c.getContenu() == distance){
-								action_jouee = new ActionOffensive(AttaqueDirecte,main.getNombreCarteGroupe(distance), getPositionFigurine(MaFigurine) ,null,c); 
+								action_jouee = new ActionOffensive(AttaqueDirecte,main.getNombreCarteGroupe(distance), getPositionDeMaFigurine() ,null,c); 
 							}
 						}
 						//On tour.getEstAttaque() directement avec toutes les cartes de valeur distance présentes dans la main
@@ -171,7 +166,7 @@ public class IAMoyen extends IA {
 								//Si plusieurs cartes permettent ce déplacement, on choisis celle qui a été le plus jouée :
 								//Tel que nb de cette carte dans main + tour.getDefausse() est maximal !
 								nbcartes = 2*(main.getNombreCarteGroupe(distance - c.getContenu())-surplus) + tour.getDefausse().getNombreCarteGroupe(distance - c.getContenu()) -5;
-								action_jouee = new ActionNeutre (Avancer,0, getPositionFigurine(MaFigurine) + direction * c.getContenu(),c);
+								action_jouee = new ActionNeutre (Avancer,0, getPositionDeMaFigurine() + direction * c.getContenu(),c);
 								//On renvoie comme action la carte jouée, et on avance
 								
 							}
@@ -244,7 +239,7 @@ public class IAMoyen extends IA {
 						//Tel que nb de cette carte dans main + tour.getDefausse() est maximal !
 						
 						nbcartes = 2*(main.getNombreCarteGroupe(c.getContenu())) + defausse.getNombreCarteGroupe(c.getContenu())-5;
-						action_jouee = new ActionNeutre (Reculer,0, getPositionFigurine(MaFigurine) - direction * c.getContenu(),c);
+						action_jouee = new ActionNeutre (Reculer,0, getPositionDeMaFigurine() - direction * c.getContenu(),c);
 						//On renvoie comme action la carte jouée, et on recule
 						
 					}
@@ -262,7 +257,7 @@ public class IAMoyen extends IA {
 						//On choisis la carte avec le moins de risques de perdre au tour adverse !
 						
 						nbcartes = 2*(main.getNombreCarteGroupe(c.getContenu())-surplus) + defausse.getNombreCarteGroupe(c.getContenu())-5;
-						action_jouee = new ActionNeutre (Avancer,0, getPositionFigurine(MaFigurine) + direction * c.getContenu(),c);
+						action_jouee = new ActionNeutre (Avancer,0, getPositionDeMaFigurine() + direction * c.getContenu(),c);
 						//On renvoie comme action la carte jouée, et on avance
 						
 					}
@@ -290,7 +285,7 @@ public class IAMoyen extends IA {
 						//Tel que nb de cette carte dans main + tour.getDefausse() est maximal !
 						
 						nbcartes = 2*(main.getNombreCarteGroupe(c.getContenu())) + defausse.getNombreCarteGroupe(c.getContenu())-5;
-						action_jouee = (Action) new ActionNeutre (Reculer,0, getPositionFigurine(MaFigurine) - direction * c.getContenu(),c);
+						action_jouee = new ActionNeutre (Reculer,0, getPositionDeMaFigurine() - direction * c.getContenu(),c);
 						//On renvoie comme action la carte jouée, et on recule
 						
 					}
@@ -310,6 +305,12 @@ public class IAMoyen extends IA {
 		joueur.setScore(this.getScore());
 		return joueur ;
 		
+	}
+
+	@Override
+	public Action selectionnerAction(ActionsJouables actions_jouables, Tour tour) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

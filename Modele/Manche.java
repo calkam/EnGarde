@@ -4,7 +4,6 @@ import java.util.Random;
 
 import Modele.Joueur.Joueur;
 import Modele.Plateau.MessageBox;
-import Modele.Plateau.Piste;
 import Modele.Tas.Defausse;
 import Modele.Tas.Pioche;
 import Modele.Tas.Tas;
@@ -40,8 +39,8 @@ public class Manche implements Visitable{
 		initialiserTour();
 	}
 	
-	public Manche(int numero, Joueur joueur1, Joueur joueur2, Piste piste, Historique histo){
-		this(numero, 0, joueur1, joueur2, new Tour(piste, histo), piste.getMessageBox());
+	public Manche(int numero, Joueur joueur1, Joueur joueur2, MessageBox messageBox){
+		this(numero, 0, joueur1, joueur2, new Tour(), messageBox);
 	}
 
 	public void initialiserTour(){

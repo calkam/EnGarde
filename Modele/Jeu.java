@@ -24,6 +24,7 @@ public class Jeu implements Visitable{
 	private PlateauScore plateauScoreJ1;
 	private PlateauScore plateauScoreJ2;
 	private Manche manche;
+	private int numero;
 	
 	private long dernierChrono;
 
@@ -42,7 +43,7 @@ public class Jeu implements Visitable{
 	
 	public void lancerJeu(){
 		try {
-			initialiserPremiereManche();
+			nouvelleManche();
 			lancerLaManche();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -56,11 +57,10 @@ public class Jeu implements Visitable{
 	public boolean rafraichit(long nouveau) {
         final long temps = nouveau - dernierChrono;
         dernierChrono = nouveau;
-        
         piste.rafraichit(temps);
         return false;
     }
-	 
+	
 	/**
 	 * FIN DE PARTIE
 	 */	
@@ -87,30 +87,10 @@ public class Jeu implements Visitable{
 	 * INITIALISATION MANCHE
 	 */
 	
-	public void initialiserPremiereManche(){
-		
-		Historique histo = null ;
-		
-		if ((joueur1 instanceof Humain && !(joueur2 instanceof Humain)) || (!(joueur1 instanceof Humain) && joueur2 instanceof Humain)) {
-			
-			histo = new Historique () ;
-			
-		}
-		
-		manche = new Manche(0, joueur1, joueur2, piste, histo);
-	}
-	
 	public void nouvelleManche(){
-		
-		Historique histo = null ;
-		
-		if ((joueur1 instanceof Humain && !(joueur2 instanceof Humain)) || (!(joueur1 instanceof Humain) && joueur2 instanceof Humain)) {
-			
-			histo = new Historique () ;
-			
-		}
-		
-		manche = new Manche(manche.getNumero()+1, joueur1, joueur2, piste, histo);
+		//joueur1.initHisto();
+		//joueur2.initHisto();
+		manche = new Manche(++numero, joueur1, joueur2, piste.getMessageBox());
 	}
 	
 	public void lancerLaManche() throws Exception{

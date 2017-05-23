@@ -4,18 +4,19 @@ import java.util.ArrayList;
 
 public class Historique {
 	
-	ArrayList <Tour> tours ;
+	private ArrayList <Tour> tours ;
+	private String nomjoueur;
 	
-	public Historique () {
-		
+	public Historique (String nomjoueur) {
+		this.nomjoueur = nomjoueur ;
+	}
+	
+	public void init () {
 		this.tours = new ArrayList <> () ;
-		
 	}
 	
 	public void ajouterTour (Tour t) {
-		
 		tours.add(t.clone()) ;
-		
 	}
 	
 	public void annulerTour (Tour t) {
@@ -55,7 +56,7 @@ public class Historique {
 		str += "]\n";
 		return str;*/
 		
-		str += "Historique Dernier Tour [\n";
+		str += "Historique de " + nomjoueur + ", Dernier Tour [\n\n";
 		
 		str += "JoueurPremier : " + tours.get(tours.size()-1).getJoueurPremier() ;
 		str += "JoueurSecond : " + tours.get(tours.size()-1).getJoueurSecond() ;

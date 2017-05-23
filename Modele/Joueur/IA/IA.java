@@ -1,10 +1,12 @@
 package Modele.Joueur.IA;
 
+import java.util.ArrayList;
+
 import Modele.Tour;
 import Modele.Joueur.Action;
-import Modele.Joueur.ActionsJouables;
 import Modele.Joueur.Joueur;
 import Modele.Plateau.Piste;
+import Modele.Tas.Carte;
 import Modele.Tas.Main;
 
 abstract public class IA extends Joueur {
@@ -19,10 +21,13 @@ abstract public class IA extends Joueur {
 	
 	abstract public Action actionIA (Tour tour) throws Exception ;
 	
-	public Action selectionnerAction(ActionsJouables actions_jouables, Tour tour) throws Exception {
-		
-		return actionIA (tour) ;
-		
+	public boolean selectionnerAction(Tour tour, ArrayList <Carte> cartes) throws Exception {
+		actionIA (tour) ;
+		return true ;
+	}
+	
+	protected int distanceFigurines () throws Exception {
+		return Math.abs(getPositionDeMaFigurine() - getPositionFigurineAdverse()) ;
 	}
 
 }
