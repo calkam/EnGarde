@@ -1,6 +1,6 @@
 @font-face {
     font-family:MORPHEUS;
-    src: url('/Ressources/MORPHEUS.TTF');
+    src: url('../../Ressources/MORPHEUS.TTF');
 }
 
 .label{
@@ -13,7 +13,7 @@
 
 .background {
 	-fx-font-family:'MORPHEUS';
-    -fx-background-image:url(/Ressources/fond.gif);
+    -fx-background-image:url(../../Ressources/fond.gif);
     -fx-background-repeat: stretch;   
     -fx-background-size: cover;
     -fx-background-position: center center;
@@ -22,7 +22,7 @@
 .fondQuitter{
 	-fx-font-family:'MORPHEUS';
 	-fx-font-size:20;
-	-fx-background-image:url("/Ressources/quitter.png");  
+	-fx-background-image:url("../../Ressources/quitter.png");  
     -fx-background-size: stretch;
     -fx-background-position: center center;
 }
@@ -34,12 +34,12 @@
 }
 
 .checkbox .box{
-	-fx-background-image:url("/Ressources/checkbox_box.png");
+	-fx-background-image:url("../../Ressources/checkbox_box.png");
 	-fx-background-size: cover;
 }
 
 .checkbox:selected .box{
-	-fx-background-image:url("/Ressources/checkbox_selected.png");
+	-fx-background-image:url("../../Ressources/checkbox_selected.png");
 	-fx-background-size: cover;
 }
 
@@ -51,7 +51,7 @@
 	-fx-font-family:'MORPHEUS';
 	-fx-font-size:20;
   	-fx-background-color: transparent;
-    -fx-background-image:url("/Ressources/bouton_nonPresse.png");
+    -fx-background-image:url("../../Ressources/bouton_nonPresse.png");
     -fx-background-size: stretch;
     -fx-background-position: center center;    
     -fx-text-fill: white;
@@ -62,12 +62,12 @@
 }
 
 .button:pressed, .button:default:hover:pressed {
-	-fx-background-image:url("/Ressources/bouton_presse.png");
+	-fx-background-image:url("../../Ressources/bouton_presse.png");
 	-fx-text-fill: #999999;
 }
 
 .button:disabled, .button:default:disabled {
-	-fx-background-image:url("/Ressources/bouton_disable.png");
+	-fx-background-image:url("../../Ressources/bouton_disable.png");
 }
 
 .button:default {
@@ -92,25 +92,25 @@
 
 .scroll-pane .scroll-bar:vertical .increment-button{
 	-fx-background-color: transparent;
-	-fx-background-image:url("/Ressources/decrement.png");
+	-fx-background-image:url("../../Ressources/decrement.png");
 	-fx-background-size: stretch;
 }
 
 .scroll-pane .scroll-bar:vertical .increment-button:pressed{
 	-fx-background-color: transparent;
-	-fx-background-image:url("/Ressources/decrement_pressed.png");
+	-fx-background-image:url("../../Ressources/decrement_pressed.png");
 	-fx-background-size: stretch;
 }
 
 .scroll-pane .scroll-bar:vertical .decrement-button{
 	-fx-background-color: transparent;
-	-fx-background-image:url("/Ressources/increment.png");
+	-fx-background-image:url("../../Ressources/increment.png");
 	-fx-background-size: stretch;
 }
 
 .scroll-pane .scroll-bar:vertical .decrement-button:pressed{
 	-fx-background-color: transparent;
-	-fx-background-image:url("/Ressources/increment_pressed.png");
+	-fx-background-image:url("../../Ressources/increment_pressed.png");
 	-fx-background-size: stretch;
 }
 
@@ -123,32 +123,32 @@
 
 .scroll-pane .scroll-bar:vertical .thumb{
 	-fx-background-color: transparent;
-	-fx-background-image:url("/Ressources/thumb.png");
+	-fx-background-image:url("../../Ressources/thumb.png");
 	-fx-background-size: stretch;
 }
 
 .scroll-pane .scroll-bar:vertical .thumb:pressed{
 	-fx-background-color: transparent;
-	-fx-background-image:url("/Ressources/thumb_pressed.png");
+	-fx-background-image:url("../../Ressources/thumb_pressed.png");
 	-fx-background-size: stretch;
 }
 
 .finDeTour:pressed, .finDeTour:default:hover:pressed{
-	-fx-background-image:url("/Ressources/finDeTourPresse.png");
+	-fx-background-image:url("../../Ressources/finDeTourPresse.png");
 	-fx-text-fill: #999999;
 }
 
 .finDeTour{
 	-fx-font-family:'MORPHEUS';
 	-fx-font-size:20;
-	-fx-background-image:url("/Ressources/finDeTour.png");
+	-fx-background-image:url("../../Ressources/finDeTour.png");
 	-fx-text-fill: #ffffff;
 }
 
 .finDeTour:disabled{
 	-fx-font-family:'MORPHEUS';
 	-fx-font-size:20;
-	-fx-background-image:url("/Ressources/finDeTour.png");
+	-fx-background-image:url("../../Ressources/finDeTour.png");
 	-fx-background-opacity:0.7;
 }
 
@@ -158,7 +158,7 @@
 }
 
 .textTheatre{
-	-fx-background-image:url("/Ressources/quitter.png");
+	-fx-background-image:url("../../Ressources/quitter.png");
     -fx-background-size: stretch;
     -fx-background-position: center center;
 }

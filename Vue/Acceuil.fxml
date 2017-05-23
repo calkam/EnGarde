@@ -64,7 +64,7 @@
             </GridPane>
             <ImageView fitHeight="272.0" fitWidth="579.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" smooth="false" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                <image>
-                  <Image url="@../Ressources/titre.png" />
+                  <Image url="@../../Ressources/titre.png" />
                </image>
                <GridPane.margin>
                   <Insets top="-80.0" />

@@ -167,7 +167,7 @@ public class ControleurChoixPartie {
 		
 		if(nomCombattant1.length() < nbCaractereMax){
 			if(nomCombattant2.length() < nbCaractereMax){
-				mainApp.jeu(nomCombattant1, nomCombattant2, ChoixCombattant1.getValue(), ChoixCombattant2.getValue());
+				mainApp.jeu(nomCombattant1, nomCombattant2, ChoixCombattant1.getValue(), ChoixCombattant2.getValue(), true);
 			}else{
 				erreurCombattant.setText("Nom Combattant 2 trop long (<16)");
 			}
@@ -183,13 +183,13 @@ public class ControleurChoixPartie {
 
 	@FXML
 	private void handleIn(){
-		Image imageC = new Image("/Ressources/SourisEpeePlante.png");
+		Image imageC = new Image("SourisEpeePlante.png");
 		mainApp.getPrimaryStage().getScene().setCursor(new ImageCursor(imageC));
 	}
 
 	@FXML
 	private void handleOut(){
-		Image imageC = new Image("/Ressources/SourisEpee.png");
+		Image imageC = new Image("SourisEpee.png");
 		mainApp.getPrimaryStage().getScene().setCursor(new ImageCursor(imageC));
 	}
 }

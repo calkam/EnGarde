@@ -17,6 +17,7 @@ import java.util.Enumeration;
 import Modele.Couple;
 import Modele.Jeu;
 import Modele.Manche;
+import Modele.Sauvegarde;
 import Modele.Tour;
 import Modele.Joueur.Action;
 import Modele.Joueur.ActionsJouables;
@@ -82,7 +83,7 @@ public class ControleurJeu {
 
     private ArrayList<Carte> cartes;
 
-    private Joueur joueurEnCours = null;
+    public static Joueur joueurEnCours = null;
     private String messageCourant;
     
     private int gestionTour = FINDETOUR;
@@ -91,7 +92,7 @@ public class ControleurJeu {
         this.mainApp = mainApp;
     }
 
-	public void init(Jeu j){
+	public void init(Jeu j, boolean bjeu){
 		this.setJeu(j);
 		nbCartePioche.setText(Integer.toString(jeu.getManche().getPioche().size()));
 		nomJoueur1.setText(jeu.getJoueur1().getNom());
@@ -102,6 +103,39 @@ public class ControleurJeu {
 		setActionMain();
 		cartes = new ArrayList<Carte>();
 		initialiserWidget();
+		
+		if(!bjeu){
+			if(mainApp.getActionFaites() == Sauvegarde.FINDETOUR){
+				System.out.println("Fin de tour ");
+				
+				messageCourant = "Appuyer sur Fin de Tour";
+				jeu.getManche().getTourEnCours().getMessageBox().setTexte(messageCourant);
+				
+				changeDisableMain(jeu.getManche().getTourEnCours().getJoueurPremier(), true);
+				
+				buttonGestionTour.setDisable(false);
+				buttonGestionTour.setText("Fin de Tour");
+				gestionTour = FINDETOUR;
+				buttonGestionTour.setStyle("-fx-background-image:url(/Ressources/finDeTourC.png);");
+				
+				
+			}else if(mainApp.getActionFaites() == Sauvegarde.ENTREDEUX){
+				System.out.println("Entre deux ");
+				
+				changeDisableMain(jeu.getManche().getTourEnCours().getJoueurPremier(), true);
+				changeDisableMain(jeu.getManche().getTourEnCours().getJoueurSecond(), true);
+				
+				buttonGestionTour.setDisable(false);
+				buttonGestionTour.setText("Pret à jouer");
+				gestionTour = PRETAJOUER;
+				buttonGestionTour.setStyle("-fx-background-image:url(/Ressources/finDeTour.png);");
+			}else{
+				System.out.println("ENCOURS");
+				
+				changeDisableMain(jeu.getManche().getTourEnCours().getJoueurPremier(), false);
+				changeDisableMain(jeu.getManche().getTourEnCours().getJoueurSecond(), true);
+			}
+		}
 	}
 
 	public void initialiserWidget(){
@@ -110,6 +144,8 @@ public class ControleurJeu {
 		tableauFin.setVisible(false);
         mainDroite.toFront();
         mainGauche.toFront();
+        mainDroite.setVisible(true);
+        mainGauche.setVisible(true);
         terrain.toFront();
         fondTheatre.toFront();
 		tableauFin.toFront();
@@ -119,13 +155,13 @@ public class ControleurJeu {
 
 	@FXML
 	private void handleIn(){
-		Image imageC = new Image("/Ressources/SourisEpeePlante.png");
+		Image imageC = new Image("SourisEpeePlante.png");
 		mainApp.getPrimaryStage().getScene().setCursor(new ImageCursor(imageC));
 	}
 
 	@FXML
 	private void handleOut(){
-		Image imageC = new Image("/Ressources/SourisEpee.png");
+		Image imageC = new Image("SourisEpee.png");
 		mainApp.getPrimaryStage().getScene().setCursor(new ImageCursor(imageC));
 	}
 
@@ -247,7 +283,7 @@ public class ControleurJeu {
 			}
 
 			if(resultat.getC1() == Manche.MATCHNULLE){
-
+				textTableauFin.setText("Manche nulle !?\nFaut vraiment le vouloir...");
 			}else{
 				switch(resultat.getC2()){
 					case Manche.VICTOIRESIMPLE :
@@ -337,7 +373,7 @@ public class ControleurJeu {
 									e2.printStackTrace();
 								}
 	        	        		if(caseFound){
-	        	        			buttonGestionTour.setStyle("-fx-background-image:url(/Ressources/finDeTourC.png);");
+	        	        			buttonGestionTour.setStyle("-fx-background-image:url(finDeTourC.png);");
 	        	        			cartes = new ArrayList<Carte>();
 	        	        			if(jeu.getManche().getTourEnCours().getEstAttaque().getC1() != Joueur.Parade){
 	        	        				buttonGestionTour.setDisable(false);
@@ -508,7 +544,7 @@ public class ControleurJeu {
 		buttonGestionTour.setText("Prêt A Jouer");
 		joueurEnCours.getMain().setVisible(false);
 		gestionTour=PRETAJOUER;
-		buttonGestionTour.setStyle("-fx-background-image:url(/Ressources/finDeTour.png);");
+		buttonGestionTour.setStyle("-fx-background-image:url(finDeTour.png);");
 
 		peutFaireAction = jeu.getManche().getTourEnCours().adversairePeutFaireAction(joueurEnCours);
 		verifierFinDeManche(jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours), peutFaireAction);
@@ -558,7 +594,7 @@ public class ControleurJeu {
 	private void nouvellePartie(){
 		String type1 = jeu.getJoueur1() instanceof Humain ? "Humain" : "IA" ;
 		String type2 = jeu.getJoueur2() instanceof Humain ? "Humain" : "IA" ;
-		mainApp.jeu(jeu.getJoueur1().getNom(), jeu.getJoueur2().getNom(), type1, type2);
+		mainApp.jeu(jeu.getJoueur1().getNom(), jeu.getJoueur2().getNom(), type1, type2, true);
 	}
 
 	public Jeu getJeu() {

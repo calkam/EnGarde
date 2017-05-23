@@ -117,10 +117,9 @@ public class DessinateurCanvasJavaFx extends Visiteur {
     	//System.out.println("Figurine : " + fig.getDirection()) ;
     	
     	switch(fig.getDirection()) {
-    	
-    	case Figurine.GAUCHE : dessinerJoueurGauche(gcTerrain, fig); break ;
-    	case Figurine.DROITE : dessinerJoueurDroit(gcTerrain, fig); break ;
-    	default : throw new Exception("Vue.DessinateurCanvasJavaFx.visite(Figurine) : position figurine inconnue") ;
+	    	case Figurine.GAUCHE : dessinerJoueurGauche(gcTerrain, fig); break ;
+	    	case Figurine.DROITE : dessinerJoueurDroit(gcTerrain, fig); break ;
+	    	default : throw new Exception("Vue.DessinateurCanvasJavaFx.visite(Figurine) : position figurine inconnue") ;
     	}
     	
     	return false ;
@@ -167,7 +166,7 @@ public class DessinateurCanvasJavaFx extends Visiteur {
     private void dessinerTerrain(GraphicsContext gc)
     {
         gc.clearRect(0, 0, terrain.getWidth(), terrain.getHeight());
-        Image a = new Image("/Ressources/arriere_plan.png");
+        Image a = new Image("arriere_plan.png");
         gc.drawImage(a, 0, 0);
     }
     
@@ -213,12 +212,12 @@ public class DessinateurCanvasJavaFx extends Visiteur {
     }
     
     private void dessinerJoueurGauche(GraphicsContext gc, Figurine fg){
-    	Image i = new Image("/Ressources/joueurRouge.png");
+    	Image i = new Image("joueurRouge.png");
     	gc.drawImage(i, fg.getX(), fg.getY(), fg.getLargeur(), fg.getHauteur());
     }
     
     private void dessinerJoueurDroit(GraphicsContext gc, Figurine fd){
-    	Image i = new Image("/Ressources/joueurBleu.png");
+    	Image i = new Image("joueurBleu.png");
     	gc.drawImage(i, fd.getX(), fd.getY(), fd.getLargeur(), fd.getHauteur());
     } 
     
@@ -228,28 +227,28 @@ public class DessinateurCanvasJavaFx extends Visiteur {
     
     private void dessinerCarteVertiRecto(GraphicsContext gc, double x, double y, double l, double h, int valeur){
     	gc.clearRect(x, y, l, h);
-    	Image i = new Image("/Ressources/N"+ valeur +".png");
+    	Image i = new Image("N"+ valeur +".png");
     	gc.drawImage(i, x, y, l, h);
     	gc.strokeRect(x, y, l, h);
     }
     
     private void dessinerCarteVertiVerso(GraphicsContext gc, double x, double y, double l, double h){
     	gc.clearRect(x, y, l, h);
-    	Image i = new Image("/Ressources/dosCarte.png");
+    	Image i = new Image("dosCarte.png");
     	gc.drawImage(i, x, y, l, h);
     	gc.strokeRect(x, y, l, h);
     }
     
     private void dessinerCarteHoriVerso(GraphicsContext gc, double x, double y, double l, double h){
     	gc.clearRect(x, y, l, h);
-    	Image i = new Image("/Ressources/dosCartePioche.png");
+    	Image i = new Image("dosCartePioche.png");
     	gc.drawImage(i, x, y, l, h);
     	gc.strokeRect(x, y, l, h);
     }
     
     private void dessinerCarteHoriRecto(GraphicsContext gc, double x, double y, double l, double h, int valeur){
     	gc.clearRect(x, y, l, h);
-    	Image i = new Image("/Ressources/N"+ valeur +"_rotate.png");
+    	Image i = new Image("N"+ valeur +"_rotate.png");
     	gc.drawImage(i, x, y, l, h);
     }
    
@@ -257,15 +256,15 @@ public class DessinateurCanvasJavaFx extends Visiteur {
 		Image i;
 		gc.clearRect(x, y, l, h);
 		if(cote == PlateauScore.droite){
-			i = new Image("/Ressources/bareeDeVieBleu.png");
+			i = new Image("bareeDeVieBleu.png");
 		}else{
-			i = new Image("/Ressources/bareeDeVieRouge.png");
+			i = new Image("bareeDeVieRouge.png");
 		}
     	gc.drawImage(i, x, y, l, h);
     }
     
     private void dessinerJeton(GraphicsContext gc, double x, double y, double l, double h){
-		Image i = new Image("/Ressources/coeur.png");
+		Image i = new Image("coeur.png");
     	gc.drawImage(i, x, y, l, h);
     }
     

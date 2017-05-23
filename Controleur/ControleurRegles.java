@@ -23,13 +23,13 @@ public class ControleurRegles {
 	
 	@FXML
 	private void handleIn(){
-		Image imageC = new Image("/Ressources/SourisEpeePlante.png");
+		Image imageC = new Image("SourisEpeePlante.png");
 		mainApp.getPrimaryStage().getScene().setCursor(new ImageCursor(imageC));
 	}
 	
 	@FXML
 	private void handleOut(){
-		Image imageC = new Image("/Ressources/SourisEpee.png");
+		Image imageC = new Image("SourisEpee.png");
 		mainApp.getPrimaryStage().getScene().setCursor(new ImageCursor(imageC));
 	}
 	

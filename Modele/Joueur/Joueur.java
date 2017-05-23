@@ -295,17 +295,14 @@ abstract public class Joueur implements Visitable{
 								
 								carteOpt = main.getCarte(1);
 								
-								if(main.getNombreCarteGroupe(carteOpt.getContenu())-1 == main.size()-1){
-									
-									if (((position = test_avancer_ou_attaquer.getC2()) != ActionImpossible) && 
-										    (peut_attaquer_indirectement(position, carteOpt.getContenu()) != ActionImpossible)){
-									
-										actions_jouables.ajouterAction(Action.ActionOffensive, carte.getID(), AttaqueIndirecte, test_avancer_ou_attaquer.getC2(), carte, carteOpt, main.getNombreCarteGroupe(carteOpt.getContenu())-1) ;
-										
-									}
+								System.out.println("test1" + main);
+								
+								if (((position = test_avancer_ou_attaquer.getC2()) != ActionImpossible) && 
+									    (peut_attaquer_indirectement(position, carteOpt.getContenu()) != ActionImpossible)){
+								
+									actions_jouables.ajouterAction(Action.ActionOffensive, carte.getID(), AttaqueIndirecte, test_avancer_ou_attaquer.getC2(), carte, carteOpt, main.getNombreCarteGroupe(carteOpt.getContenu())-1) ;
 									
 								}
-								
 							}
 						}
 							
@@ -316,17 +313,18 @@ abstract public class Joueur implements Visitable{
 								
 								carteOpt = main.getCarte(1);
 								
-								if(main.getNombreCarteGroupe(carteOpt.getContenu()) == main.size()-1){
-									
-									if (((position = test_avancer_ou_attaquer.getC2()) != ActionImpossible) && 
-										    (peut_attaquer_indirectement(position, carteOpt.getContenu()) != ActionImpossible)){
-									
-										actions_jouables.ajouterAction(Action.ActionOffensive, carte.getID(), AttaqueIndirecte, test_avancer_ou_attaquer.getC2(), carte, carteOpt, main.getNombreCarteGroupe(carteOpt.getContenu())) ;
-									
+								if(carteOpt.getContenu() != carte.getContenu()){
+									if(main.getNombreCarteGroupe(carteOpt.getContenu()) == main.size()-1){
+										
+										if (((position = test_avancer_ou_attaquer.getC2()) != ActionImpossible) && 
+											    (peut_attaquer_indirectement(position, carteOpt.getContenu()) != ActionImpossible)){
+										
+											actions_jouables.ajouterAction(Action.ActionOffensive, carte.getID(), AttaqueIndirecte, test_avancer_ou_attaquer.getC2(), carte, carteOpt, main.getNombreCarteGroupe(carteOpt.getContenu())) ;
+										
+										}
+										
 									}
-									
 								}
-								
 							}
 						}
 						

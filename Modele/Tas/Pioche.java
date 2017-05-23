@@ -33,19 +33,6 @@ public class Pioche extends Tas {
 		
 	}
 	
-	// CLONE
-	
-	@SuppressWarnings("unchecked")
-	@Override
-	public Pioche clone () {
-		
-		Pioche pioche = new Pioche() ;
-		pioche.nombreCarte = this.nombreCarte.clone() ;
-		pioche.p = (Stack<Carte>) this.p.clone() ;
-		return pioche ;
-		
-	}
-	
 	/**
 	 * MOTEUR
 	 **/
@@ -117,5 +104,27 @@ public class Pioche extends Tas {
 	public boolean accept(Visiteur v) {
 		// TODO Auto-generated method stub
 		return v.visite(this);
+	}
+
+	public void setPioche(Stack<Carte> pile) {
+		// TODO Auto-generated method stub
+		this.p = pile;
+	}
+
+	public Stack<Carte> getPioche() {
+		// TODO Auto-generated method stub
+		return p;
+	}
+	
+	// CLONE
+	@SuppressWarnings("unchecked")
+	@Override
+	public Pioche clone() {
+		
+		Pioche pioche = new Pioche() ;
+		pioche.nombreCarte = this.nombreCarte.clone() ;
+		pioche.p = (Stack<Carte>) this.p.clone() ;
+		return pioche ;
+		
 	}
 }

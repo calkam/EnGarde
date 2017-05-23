@@ -85,7 +85,7 @@ public class Tour implements Visitable {
 		
 	}
 	
-	private Triplet<Integer, Integer, Integer> jouerAction(Action actionAJouer, Joueur joueur) throws Exception{
+	public Triplet<Integer, Integer, Integer> jouerAction(Action actionAJouer, Joueur joueur) throws Exception{
 		
 		Triplet<Integer, Integer, Integer> config ;
 		

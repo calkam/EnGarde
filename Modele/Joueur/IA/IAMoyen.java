@@ -133,29 +133,12 @@ public class IAMoyen extends IA {
 						
 					}
 				}
-				//System.out.println("AAAAAAA\n");
+				
 				if((action_jouee.equals(new ActionNeutre(Reculer,0,22,new Carte(5))))){ 
 					//Si on a decider de ne pas tour.getEstAttaque()r indirectement, on dois alors choisir la derniere action possible : le deplacement uniquement 
 					System.out.println("RENTRER\n");
 					nbcartes = -100;
-					/*for (Carte c : main.getMain()) { //Test si on peut avancer a une case non-mortelle
-						surplus = 0;
-						if(distance == 2*c.getContenu()){
-							surplus = 1;
-						}
-						if( peut_avancer_ou_tour.getEstAttaque()r_directement(c.getContenu()).getC1() ){ //Test si on peut avancer avec la carte c
-							if((distance - c.getContenu()) >= 6){
-								if (2*(main.getNombreCarteGroupe(c.getContenu())) + tour.getDefausse().getNombreCarteGroupe(c.getContenu()) -5 > nbcartes) {
-									nbcartes = 2*(main.getNombreCarteGroupe(c.getContenu())) + tour.getDefausse().getNombreCarteGroupe(c.getContenu()) -5;
-									action_jouee = new ActionNeutre (Avancer,0,piste.getFigurineDroite().getPosition()-c.getContenu(),c);
-								}else if(2*(main.getNombreCarteGroupe(c.getContenu())) + tour.getDefausse().getNombreCarteGroupe(c.getContenu()) -5 == nbcartes){
-									if(action_jouee.getCarteDeplacement().getContenu()<c.getContenu()){
-										action_jouee = new ActionNeutre (Avancer,0,piste.getFigurineDroite().getPosition()-c.getContenu(),c);
-									}
-								}
-							}
-						}
-					}*/
+					
 					for (Carte c : main.getMain()) { //On teste si on peut avancer à une case 'non-mortelle'
 						surplus = 0;
 						if(distance == 2*c.getContenu()){
@@ -174,33 +157,11 @@ public class IAMoyen extends IA {
 						}
 					}
 					
+					
 					if((action_jouee.equals(new ActionNeutre(Reculer,0,22,new Carte(5))))){ //Si on ne peut avancer a une case non-mortelle, on regarde si on peut reculer a une distance >= 6
 						action_jouee = ReculerPlus5(distance, tour.getDefausse());
 					}
 					
-					/*if((action_jouee.equals(new ActionNeutre(Reculer,0,22,new Carte(5))))){ 
-						System.out.println("RENTRER142146142164\n");
-						
-						//Si on n'a pas de carte permettant de reculer a une distance >= 6
-						for (Carte c : main.getMain()) { //On teste si on peut avancer à une case 'non-mortelle'
-							surplus = 0;
-							if(distance == 2*c.getContenu()){
-								surplus = 1;
-							}
-							if ( (2*(main.getNombreCarteGroupe(distance - c.getContenu())-surplus) + tour.getDefausse().getNombreCarteGroupe(distance - c.getContenu()) -5) >= 0 ){
-								if (2*(main.getNombreCarteGroupe(c.getContenu())-surplus) + tour.getDefausse().getNombreCarteGroupe(c.getContenu()) -5 > nbcartes) {
-									//Si plusieurs cartes permettent ce déplacement, on choisis celle qui a été le plus jouée :
-									//Tel que nb de cette carte dans main + tour.getDefausse() est maximal !
-									nbcartes = 2*(main.getNombreCarteGroupe(c.getContenu())-surplus) + tour.getDefausse().getNombreCarteGroupe(c.getContenu()) -5;
-									action_jouee = new ActionNeutre (Avancer,0,piste.getFigurineDroite().getPosition()-c.getContenu(),c);
-									//On renvoie comme action la carte jouée, et on avance
-									
-								}
-								
-							}
-						}
-					}
-					*/
 					if((action_jouee.equals(new ActionNeutre(Reculer,0,22,new Carte(5))))){ //Si on ne peux pas avancer a une case non-mortelle, ni reculer a une distance >= 6 
 								
 							action_jouee = TrouverCarteMoinsRisquee(distance, false, tour.getDefausse());
@@ -211,10 +172,7 @@ public class IAMoyen extends IA {
 						}
 					}
 				}
-				
 			}
-			
-			
 		}
 	
 		return action_jouee;

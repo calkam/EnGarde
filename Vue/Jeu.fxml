@@ -15,16 +15,16 @@
    <children>
       <ImageView fitHeight="535.0" fitWidth="1615.0" layoutX="-7.0" layoutY="70.0" pickOnBounds="true">
          <image>
-            <Image url="@../Ressources/Fin_plan.png" />
+            <Image url="@../../Ressources/Fin_plan.png" />
          </image></ImageView>
       <ImageView fitHeight="320.0" fitWidth="1608.0" layoutY="587.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../Ressources/fond_carte.png" />
+            <Image url="@../../Ressources/fond_carte.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="89.0" fitWidth="1615.0" layoutX="-8.0" layoutY="-9.0" pickOnBounds="true">
          <image>
-            <Image url="@../Ressources/fondTronc.png" />
+            <Image url="@../../Ressources/fondTronc.png" />
          </image>
       </ImageView>
       <Button layoutX="29.0" layoutY="16.0" mnemonicParsing="false" onAction="#menuPrincipal" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefHeight="40.0" prefWidth="216.0" text="Menu Principal">
@@ -32,11 +32,15 @@
             <Font size="18.0" />
          </font>
       </Button>
+      
+      <!--
       <Button layoutX="289.0" layoutY="16.0" mnemonicParsing="false" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefHeight="40.0" prefWidth="216.0" text="Sauvegarder">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
+      -->
+      
       <Button layoutX="549.0" layoutY="16.0" mnemonicParsing="false" onAction="#nouvellePartie" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefHeight="40.0" prefWidth="216.0" text="Nouvelle Partie">
          <font>
             <Font size="18.0" />

@@ -21,30 +21,18 @@ public class Configuration {
     }
 
     public static Properties proprietes() {
-        Properties p=null;
-        InputStream in;
-		try {
-			//dutronce
-			in = new FileInputStream(System.getProperty("user.home") + "/Documents/Prog6/Projet_En_Garde/workspace/source/Ressources/defaut.cfg");
-			//bleuzeb
-			//in = new FileInputStream(System.getProperty("user.home") + "/workspace/ProjetL3/workspace/source/Ressources/defaut.cfg");
-			//calkam
-			//in = new FileInputStream(System.getProperty("user.home") + "/ProjetL3/workspace/source/Ressources/defaut.cfg");
-			Properties defaut = new Properties();
-	        chargerProprietes(defaut, in);
-	        try{
-		        String nom = System.getProperty("user.home") + "/.engardoides";
-	            in = new FileInputStream(nom);
-	            p = new Properties(defaut);
-	            chargerProprietes(p, in);
-	        }catch (FileNotFoundException e1) {
-	        	p = defaut;
-	        }
-            return p;
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		return p;
+        Properties p;
+        InputStream in = ClassLoader.getSystemClassLoader().getResourceAsStream("defaut.cfg");
+        Properties defaut = new Properties();
+        chargerProprietes(defaut, in);
+        String nom = System.getProperty("user.home") + "/.armoroides";
+        try {
+            in = new FileInputStream(nom);
+            p = new Properties(defaut);
+            chargerProprietes(p, in);
+        } catch (FileNotFoundException e) {
+            p = defaut;
+        }
+        return p;
     }
 }

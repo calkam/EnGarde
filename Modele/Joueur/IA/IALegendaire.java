@@ -1,76 +1,56 @@
 package Modele.Joueur.IA;
 
-import java.util.ArrayList;
 import java.util.Enumeration;
 
 import Modele.Tour;
-import Modele.Triplet;
 import Modele.Joueur.Action;
 import Modele.Joueur.ActionsJouables;
 import Modele.Joueur.Joueur;
 import Modele.Plateau.Piste;
-import Modele.Tas.Carte;
-import Modele.Tas.Defausse;
 import Modele.Tas.Main;
-import Modele.Tas.Pioche;
 
 public class IALegendaire extends IA {
 
 	public IALegendaire(int direction, String nom, Main main, Piste piste) {
 		super(direction, nom, main, piste);
 	}
+	
+	public Action actionIA (Tour tour) throws Exception {
 
-	/*@Override
-	public Action actionIA(Triplet<Integer, Integer, Integer> attaque, Pioche pioche, Defausse defausse, Tour tour_courant) throws Exception {
-		
 		ActionsJouables actions_jouables ;
 		Action actionChoisie = null;
 		Action actionJouee = null;
-		Tour tour_sauv= tour_courant.clone();
-		int val_max = -1000000;
+		Tour tour_sauv= tour.clone();
+		int val_max = Integer.MIN_VALUE ;
 		int val_courante = 0;
-		boolean estPremier =tour_courant.getJoueurPremier().getPositionFigurine() > tour_courant.getJoueurSecond().getPositionFigurine() ;
 		
-		if(estPremier){
-			actions_jouables = tour_courant.getJoueurPremier().peutFaireAction(attaque);
-		}else{
-			System.out.println("ATTAQUE : " + tour_courant.getEstAttaque().getC1() + "\n");
-			actions_jouables = tour_courant.getJoueurSecond().peutFaireAction(attaque);
-		}
+		Joueur IA = tour.getJoueurPremier().equals(this) ? tour.getJoueurPremier() : tour.getJoueurSecond() ;
+		Joueur Adverse = tour.getJoueurPremier().equals(tour.joueurAdverse(this)) ? tour.getJoueurPremier() : tour.getJoueurSecond() ;
+		
+		
+		actions_jouables = IA.peutFaireAction(tour.getEstAttaque());
+		
 		System.out.println(actions_jouables.toString());
+		
 		Enumeration<Action> e = actions_jouables.elements();
 		
 		while(e.hasMoreElements()){
 			actionChoisie = e.nextElement();
 			
-			if(estPremier){
-				tour_courant.setEstAttaque(executerAction(actionChoisie,tour_courant.getJoueurPremier(),tour_courant)); 
-			}else{
-				tour_courant.setEstAttaque(executerAction(actionChoisie,tour_courant.getJoueurSecond(),tour_courant));
-			}
+			tour.setEstAttaque(tour.jouerAction(actionChoisie, IA)); 
 			
 			if(actionChoisie.getTypeAction() == Joueur.Parade){
-				System.out.println("PARADE : " + tour_courant.getJoueurPremier().getMain().getNombreCarte() + "\n");
-				val_courante = Max(tour_courant,6);
-				if(estPremier){
-					tour_courant.remplirMain(tour_courant.getJoueurPremier());
-				}else{
-					tour_courant.remplirMain(tour_courant.getJoueurSecond());
-				}
-			}else{
-				if(estPremier){
-					tour_courant.remplirMain(tour_courant.getJoueurPremier());
-				}else{
-					tour_courant.remplirMain(tour_courant.getJoueurSecond());
-				}
-				//System.out.println(tour_courant.getJoueurPremier().toString());
-				//System.out.println(tour_courant.getJoueurSecond().toString());
-				//System.out.println(tour_courant.getDefausse().toString());
-				//System.out.println(tour_courant.getPioche().toString());
-				//System.out.println(tour_courant.getJoueurPremier().getPositionFigurine());
-				//System.out.println(tour_courant.getJoueurSecond().getPositionFigurine());
 				
-				val_courante = Min(tour_courant,6);
+				System.out.println("PARADE : " + tour.getJoueurPremier().getMain().getNombreCarte() + "\n");
+				val_courante = Max(tour,IA, Adverse,4);
+				//val_courante = AlphaBeta(tour,5,-1000000,1000000,false);
+				IA.remplirMain(tour.getPioche());
+			
+			}else{
+				
+				IA.remplirMain(tour.getPioche());
+				val_courante = Min(tour, IA, Adverse, 4);
+				//val_courante = AlphaBeta(tour,5,-1000000,1000000,true);
 			}
 			
 			if(val_courante > val_max){
@@ -78,258 +58,216 @@ public class IALegendaire extends IA {
 				actionJouee = actionChoisie;
 			}
 			
-			tour_courant = tour_sauv.clone();
+			tour = tour_sauv.clone();
 			//System.out.println("Val_courante : " + val_courante + "\n");
-
+	
 		}	
 			
-		//tour_courant = tour_sauv;
+		//tour = tour_sauv;
 		if(actionJouee == null){
 			System.out.println("PROBLEME\n");
 		}
 		
 		return actionJouee;
 	}
-
 	
-	private Triplet<Integer, Integer, Integer> executerAction(Action actionAJouer, Joueur joueur, Tour tour_courant) throws Exception{
-		Carte carteDeplacement=null;
-		Carte carteAction=null;
-		
-		int typeAction;
-		int nbCartesAttqJouees;
-		int valeurCarteAttqJouee;
-		
-		ArrayList<Carte> cartesDeMemeValeur;
-		
-		//System.out.println("Main : " + joueur.getMain().getMain());
-		
-		switch(actionAJouer.getTypeAction()){
-			case Joueur.Reculer :
-				carteDeplacement = actionAJouer.getCarteDeplacement();
-				joueur.reculer(carteDeplacement.getContenu());
-				tour_courant.getDefausse().ajouter(carteDeplacement);
-				joueur.defausserUneCarte(carteDeplacement);
-				typeAction = pasAttaque; nbCartesAttqJouees = 0; valeurCarteAttqJouee = 0;
-				break;
-			case Joueur.Avancer :
-				carteDeplacement = actionAJouer.getCarteDeplacement();
-				joueur.avancer(carteDeplacement.getContenu());
-				tour_courant.getDefausse().ajouter(carteDeplacement);
-				joueur.defausserUneCarte(carteDeplacement);
-				typeAction = pasAttaque; nbCartesAttqJouees = 0; valeurCarteAttqJouee = 0;
-				break;
-			case Joueur.AttaqueDirecte : 
-				carteAction = actionAJouer.getCarteAction();
-				tour_courant.getDefausse().ajouter(carteAction);
-				joueur.defausserUneCarte(carteAction);
-				if(actionAJouer.getNbCartes() > 1){
-					cartesDeMemeValeur = tour_courant.getAutreCarteDeValeur(carteAction.getContenu(), actionAJouer.getNbCartes(), joueur);
-					for(Carte c : cartesDeMemeValeur){
-						tour_courant.getDefausse().ajouter(c);
-						joueur.defausserUneCarte(c);
-					}
-				}
-				typeAction = attaqueDirect; nbCartesAttqJouees = actionAJouer.getNbCartes(); valeurCarteAttqJouee = carteAction.getContenu();
-				break;
-			case Joueur.AttaqueIndirecte :
-				// On avance dans un premier temps
-				carteDeplacement = actionAJouer.getCarteDeplacement();
-				joueur.avancer(carteDeplacement.getContenu());
-				tour_courant.getDefausse().ajouter(carteDeplacement);
-				joueur.defausserUneCarte(carteDeplacement);
-				
-				// On attaque dans un second temps	
-				carteAction = actionAJouer.getCarteAction();
-				tour_courant.getDefausse().ajouter(carteAction);
-				joueur.defausserUneCarte(carteAction);
-				if(actionAJouer.getNbCartes() > 1){
-					cartesDeMemeValeur = tour_courant.getAutreCarteDeValeur(carteAction.getContenu(), actionAJouer.getNbCartes(), joueur);
-					for(Carte c : cartesDeMemeValeur){
-						tour_courant.getDefausse().ajouter(c);
-						joueur.defausserUneCarte(c);
-					}
-				}
-				typeAction = attaqueIndirect; nbCartesAttqJouees = actionAJouer.getNbCartes(); valeurCarteAttqJouee = carteAction.getContenu();
-				break;
-			case Joueur.Parade :
-				carteAction = actionAJouer.getCarteAction();
-				tour_courant.getDefausse().ajouter(carteAction);
-				joueur.defausserUneCarte(carteAction);
-				if(actionAJouer.getNbCartes() > 1){
-					cartesDeMemeValeur = tour_courant.getAutreCarteDeValeur(carteAction.getContenu(), actionAJouer.getNbCartes(), joueur);
-					for(Carte c : cartesDeMemeValeur){
-						tour_courant.getDefausse().ajouter(c);
-						joueur.defausserUneCarte(c);
-					}
-				}				
-				typeAction = pasAttaque; nbCartesAttqJouees = 0; valeurCarteAttqJouee = 0;
-				break;
-			case Joueur.Fuite :
-				carteDeplacement = actionAJouer.getCarteDeplacement();
-				joueur.reculer(carteDeplacement.getContenu());
-				tour_courant.getDefausse().ajouter(carteDeplacement);
-				joueur.defausserUneCarte(carteDeplacement);
-				typeAction = pasAttaque; nbCartesAttqJouees = 0; valeurCarteAttqJouee = 0;
-				break;
-			default: throw new Exception("Erreur lors de l'exécution de l'action");
-		}
-		
-		//System.out.println("\nVous avez joué : carte de déplacement : " + carteDeplacement + ", carte d'action : " + carteAction);
-		
-		return new Triplet<>(typeAction, nbCartesAttqJouees, valeurCarteAttqJouee);
-	}
-	
-	public int Max(Tour tour_courant, int profondeur) throws Exception{
+	public int AlphaBeta(Tour tour, Joueur IA, Joueur Adverse, int profondeur, int alpha, int beta, boolean cherche_min) throws Exception {
 		
 		ActionsJouables actions_jouables ;
 		Action actionChoisie = null;
 		Tour tour_sauv;
-		int val_max = -100000;
 		int val_courante = 0;
-		boolean estPremier =tour_courant.getJoueurPremier().getPositionFigurine() > tour_courant.getJoueurSecond().getPositionFigurine() ;
 		
-		if(estPremier){
-			actions_jouables = tour_courant.getJoueurPremier().peutFaireAction(tour_courant.getEstAttaque());
-		}else{
-			actions_jouables = tour_courant.getJoueurSecond().peutFaireAction(tour_courant.getEstAttaque());
-		}
-		tour_sauv = tour_courant.clone();
-	
-		if(actions_jouables.isEmpty()){
-			return val_max;
-		}
-		
-		if(tour_courant.getPioche().estVide() && tour_courant.getEstAttaque().getC1()!=1 &&  tour_courant.getEstAttaque().getC1()!=2){
-			int distance = calculerNormeEntreDeuxPositions(tour_courant.getJoueurPremier().getPositionFigurine(), tour_courant.getJoueurSecond().getPositionFigurine());
-			int nbcarteIA = 0, nbcarteAdv = 0;
-			if(estPremier){
-				nbcarteIA = tour_courant.getJoueurPremier().getMain().getNombreCarteGroupe(distance);
-				nbcarteAdv = tour_courant.getJoueurSecond().getMain().getNombreCarteGroupe(distance);
-			}else{
-				nbcarteIA = tour_courant.getJoueurSecond().getMain().getNombreCarteGroupe(distance);
-				nbcarteAdv = tour_courant.getJoueurPremier().getMain().getNombreCarteGroupe(distance);
+		if(!cherche_min){
+			int val_max = -100000;
+			
+			actions_jouables = IA.peutFaireAction(tour.getEstAttaque());
+			tour_sauv = tour.clone();
+			
+			if(actions_jouables.isEmpty()){
+				return val_max;
 			}
-			if(nbcarteIA>nbcarteAdv){
-				return 10000;
-			}else if(nbcarteIA<nbcarteAdv){
-				return -10000;
-			}else{
-				int distIA = 25, distAdv = 25;
-				if(estPremier){
-					distIA = Math.abs(tour_courant.getJoueurPremier().getPositionFigurine()-12);
-					distAdv = Math.abs(tour_courant.getJoueurSecond().getPositionFigurine()-12);
-				}else{
-					distIA = Math.abs(tour_courant.getJoueurSecond().getPositionFigurine()-12);
-					distAdv = Math.abs(tour_courant.getJoueurPremier().getPositionFigurine()-12);
-				}
-				if(distIA<distAdv){
+			
+			if(tour.getPioche().estVide() && tour.getEstAttaque().getC1()!=1 &&  tour.getEstAttaque().getC1()!=2){
+				
+				int distance = calculerNormeEntreDeuxPositions(IA.getPositionDeMaFigurine(), Adverse.getPositionDeMaFigurine());
+				int nbcarteIA = 0, nbcarteAdv = 0;
+				nbcarteIA = IA.getMain().getNombreCarteGroupe(distance);
+				nbcarteAdv = Adverse.getMain().getNombreCarteGroupe(distance);
+				
+				if(nbcarteIA>nbcarteAdv){
 					return 10000;
-				}else if(distIA>distAdv){
+				}else if(nbcarteIA<nbcarteAdv){
 					return -10000;
 				}else{
-					return 0;
+						
+					int distIA = 25, distAdv = 25;
+					distIA =  Math.abs(IA.getPositionDeMaFigurine()-12);
+					distAdv = Math.abs(Adverse.getPositionDeMaFigurine()-12);
+						
+					if(distIA<distAdv){
+						return 10000;
+					}else if(distIA>distAdv){
+						return -10000;
+					}else{
+						return 0;
+					}
 				}
 			}
-		}
-		
-		if(profondeur == 0){
-			//System.out.println("\nProfonduer de 0 : "+eval(tour_courant,actions_jouables));
-			return eval(tour_courant,actions_jouables);
-		}
-		
-		
-		Enumeration<Action> e = actions_jouables.elements();
-		
-		while(e.hasMoreElements()){
-			actionChoisie = e.nextElement();
 			
-			if(estPremier){
-				tour_courant.setEstAttaque(executerAction(actionChoisie,tour_courant.getJoueurPremier(),tour_courant));
-			}else{
-				tour_courant.setEstAttaque(executerAction(actionChoisie,tour_courant.getJoueurSecond(),tour_courant));
+			if(profondeur == 0){
+				return eval1(IA,Adverse,actions_jouables);
 			}
 			
-			if(actionChoisie.getTypeAction() == Joueur.Parade){
-				val_courante = Max(tour_courant,profondeur-1);
-				if(estPremier){
-					tour_courant.remplirMain(tour_courant.getJoueurPremier());
+			int A = alpha;
+			int B = beta;
+			
+			Enumeration<Action> e = actions_jouables.elements();
+			
+			while(e.hasMoreElements()){
+				
+				actionChoisie = e.nextElement();
+				tour.setEstAttaque(tour.jouerAction(actionChoisie,IA));
+				
+				if(actionChoisie.getTypeAction() == Joueur.Parade){
+					
+					val_courante = AlphaBeta(tour, IA, Adverse, profondeur-1,A,B,true);
+					IA.remplirMain(tour.getPioche());
+					
 				}else{
-					tour_courant.remplirMain(tour_courant.getJoueurSecond());
+					
+					IA.remplirMain(tour.getPioche());
+					val_courante = AlphaBeta(tour, IA, Adverse, profondeur-1,A,B,false);
 				}
-			}else{
-				if(estPremier){
-					tour_courant.remplirMain(tour_courant.getJoueurPremier());
+				
+				if(val_courante > A){
+					A = val_courante;
+				}
+				if(A>=B){
+					return B;
+				}
+				
+				tour = tour_sauv.clone();
+	
+			}
+			
+			return A;
+			
+		}else{
+			
+			int val_max = 100000;
+			
+			actions_jouables = Adverse.peutFaireAction(tour.getEstAttaque());
+			tour_sauv = tour.clone();
+		
+			if(actions_jouables.isEmpty()){
+				return val_max;
+			}
+			
+			if(tour.getPioche().estVide()){
+				
+				int distance = calculerNormeEntreDeuxPositions(IA.getPositionDeMaFigurine(), Adverse.getPositionDeMaFigurine());
+				int nbcarteIA = 0, nbcarteAdv = 0;
+				nbcarteIA = IA.getMain().getNombreCarteGroupe(distance);
+				nbcarteAdv = Adverse.getMain().getNombreCarteGroupe(distance);
+				
+				if(nbcarteIA>nbcarteAdv){
+					return 10000;
+				}else if(nbcarteIA<nbcarteAdv){
+					return -10000;
 				}else{
-					tour_courant.remplirMain(tour_courant.getJoueurSecond());
+					
+					int distIA = 25, distAdv = 25;
+					distIA =  Math.abs(IA.getPositionDeMaFigurine()-12);
+					distAdv = Math.abs(Adverse.getPositionDeMaFigurine()-12);
+					
+					if(distIA<distAdv){
+						return 10000;
+					}else if(distIA>distAdv){
+						return -10000;
+					}else{
+						return 0;
+					}
 				}
-				val_courante = Min(tour_courant,profondeur-1);
 			}
 			
-			if(val_courante > val_max){
-				val_max = val_courante;
+			if(profondeur == 0){
+				return eval2(IA,Adverse,actions_jouables);
 			}
 			
-			tour_courant = tour_sauv.clone();
-
+			int A = alpha;
+			int B = beta;
+			
+			Enumeration<Action> e = actions_jouables.elements();
+			
+			while(e.hasMoreElements()){
+				
+				actionChoisie = e.nextElement();
+				tour.setEstAttaque(tour.jouerAction(actionChoisie,Adverse));
+				
+				if(actionChoisie.getTypeAction() == Joueur.Parade){
+					
+					val_courante = AlphaBeta(tour,IA,Adverse,profondeur-1,A,B,true);
+					Adverse.remplirMain(tour.getPioche());
+				
+				}else{
+					
+					Adverse.remplirMain(tour.getPioche());
+					val_courante = AlphaBeta(tour,IA,Adverse,profondeur-1,A,B,false);
+				}
+				
+				if(val_courante < B){
+					B = val_courante;
+				}
+				if(A>=B){
+					return A;
+				}
+				
+				tour = tour_sauv.clone();
+	
+			}
+			
+			return B;
 		}
-		
-		
-		return val_max;
-		
-		
 		
 	}
 	
-
-public int Min(Tour tour_courant, int profondeur) throws Exception{
+	public int Min(Tour tour, Joueur IA, Joueur Adverse, int profondeur) throws Exception{
 		
 		ActionsJouables actions_jouables ;
 		Action actionChoisie = null;
 		Tour tour_sauv;
 		int val_max = 100000;
 		int val_courante = 0;
-		boolean estPremier =tour_courant.getJoueurPremier().getPositionFigurine() > tour_courant.getJoueurSecond().getPositionFigurine() ;
 		
-		if(estPremier){
-			actions_jouables = tour_courant.getJoueurSecond().peutFaireAction(tour_courant.getEstAttaque());
-		}else{
-			actions_jouables = tour_courant.getJoueurPremier().peutFaireAction(tour_courant.getEstAttaque());
-		}
-		
-		tour_sauv = tour_courant.clone();
+		actions_jouables = Adverse.peutFaireAction(tour.getEstAttaque());
+		tour_sauv = tour.clone();
 	
 		if(actions_jouables.isEmpty()){
 			return val_max;
 		}
 		
-		if(tour_courant.getPioche().estVide()){
-			int distance = calculerNormeEntreDeuxPositions(tour_courant.getJoueurPremier().getPositionFigurine(), tour_courant.getJoueurSecond().getPositionFigurine());
+		if(tour.getPioche().estVide()){
+			
+			int distance = calculerNormeEntreDeuxPositions(IA.getPositionDeMaFigurine(), Adverse.getPositionDeMaFigurine());
 			int nbcarteIA = 0, nbcarteAdv = 0;
-			if(estPremier){
-				nbcarteIA = tour_courant.getJoueurPremier().getMain().getNombreCarteGroupe(distance);
-				nbcarteAdv = tour_courant.getJoueurSecond().getMain().getNombreCarteGroupe(distance);
-			}else{
-				nbcarteIA = tour_courant.getJoueurSecond().getMain().getNombreCarteGroupe(distance);
-				nbcarteAdv = tour_courant.getJoueurPremier().getMain().getNombreCarteGroupe(distance);
-			}
+			nbcarteIA = IA.getMain().getNombreCarteGroupe(distance);
+			nbcarteAdv = Adverse.getMain().getNombreCarteGroupe(distance);
+			
 			if(nbcarteIA>nbcarteAdv){
-				return 10000;
+				return 1000000;
 			}else if(nbcarteIA<nbcarteAdv){
-				return -10000;
+				return -1000000;
 			}else{
+				
 				int distIA = 25, distAdv = 25;
-				if(estPremier){
-					distIA = Math.abs(tour_courant.getJoueurPremier().getPositionFigurine()-12);
-					distAdv = Math.abs(tour_courant.getJoueurSecond().getPositionFigurine()-12);
-				}else{
-					distIA = Math.abs(tour_courant.getJoueurSecond().getPositionFigurine()-12);
-					distAdv = Math.abs(tour_courant.getJoueurPremier().getPositionFigurine()-12);
-				}
+				distIA =  Math.abs(IA.getPositionDeMaFigurine()-12);
+				distAdv = Math.abs(Adverse.getPositionDeMaFigurine()-12);
+				
 				if(distIA<distAdv){
-					return 10000;
+					return 1000000;
 				}else if(distIA>distAdv){
-					return -10000;
+					return -1000000;
 				}else{
 					return 0;
 				}
@@ -337,92 +275,208 @@ public int Min(Tour tour_courant, int profondeur) throws Exception{
 		}
 		
 		if(profondeur == 0){
-			return eval(tour_courant,actions_jouables);
+			return eval2(IA,Adverse,actions_jouables);
 		}
 		
 		Enumeration<Action> e = actions_jouables.elements();
 		
 		while(e.hasMoreElements()){
-			actionChoisie = e.nextElement();
 			
-			if(estPremier){
-				tour_courant.setEstAttaque(executerAction(actionChoisie,tour_courant.getJoueurSecond(),tour_courant));
-			}else{
-				tour_courant.setEstAttaque(executerAction(actionChoisie,tour_courant.getJoueurPremier(),tour_courant));
-			}
+			actionChoisie = e.nextElement();
+			tour.setEstAttaque(tour.jouerAction(actionChoisie, Adverse));
 			
 			if(actionChoisie.getTypeAction() == Joueur.Parade){
-				val_courante = Min(tour_courant,profondeur-1);
-				if(estPremier){
-					tour_courant.remplirMain(tour_courant.getJoueurSecond());
-				}else{
-					tour_courant.remplirMain(tour_courant.getJoueurPremier());
-				}
+				
+				val_courante = Min(tour,IA,Adverse,profondeur-1);
+				Adverse.remplirMain(tour.getPioche());
+			
 			}else{
-				if(estPremier){
-					tour_courant.remplirMain(tour_courant.getJoueurSecond());
-				}else{
-					tour_courant.remplirMain(tour_courant.getJoueurPremier());
-				}
-				val_courante = Max(tour_courant,profondeur-1);
+				
+				Adverse.remplirMain(tour.getPioche());
+				val_courante = Max(tour,IA,Adverse,profondeur-1);
 			}
 			
 			if(val_courante < val_max){
 				val_max = val_courante;
 			}
 			
-			tour_courant = tour_sauv.clone();
-
+			tour = tour_sauv.clone();
+	
 		}
 		
 		
 		return val_max;
 	
 	}
-
-	public int eval(Tour tour_courant,ActionsJouables actions_jouables) throws Exception {
-		int position = 0;
-		boolean estPremier =tour_courant.getJoueurPremier().getPositionFigurine() > tour_courant.getJoueurSecond().getPositionFigurine() ;
-			position = tour_courant.getJoueurPremier().getPositionFigurine();
-		if(estPremier){
-			position = tour_courant.getJoueurPremier().getPositionFigurine();
-		}else{
-			position = tour_courant.getJoueurSecond().getPositionFigurine();
+	
+	public int Max(Tour tour, Joueur IA, Joueur Adverse, int profondeur) throws Exception{
+		
+		ActionsJouables actions_jouables ;
+		Action actionChoisie = null;
+		Tour tour_sauv;
+		int val_max = -100000;
+		int val_courante = 0;
+		
+		actions_jouables = IA.peutFaireAction(tour.getEstAttaque());
+		tour_sauv = tour.clone();
+	
+		if(actions_jouables.isEmpty()){
+			return val_max;
 		}
-
-		return (23-position) + 1000*nbAttaqueImparable(tour_courant,actions_jouables) -10000*AttaqueImparableRecu(tour_courant,actions_jouables);
+		
+		if(tour.getPioche().estVide() && tour.getEstAttaque().getC1()!=1 &&  tour.getEstAttaque().getC1()!=2){
+			
+			int distance = calculerNormeEntreDeuxPositions(IA.getPositionDeMaFigurine(), Adverse.getPositionDeMaFigurine());
+			int nbcarteIA = 0, nbcarteAdv = 0;
+			nbcarteIA = IA.getMain().getNombreCarteGroupe(distance);
+			nbcarteAdv = Adverse.getMain().getNombreCarteGroupe(distance);
+			
+			if(nbcarteIA>nbcarteAdv){
+				return 1000000;
+			}else if(nbcarteIA<nbcarteAdv){
+				return -1000000;
+			}else{
+				
+				int distIA = 25, distAdv = 25;
+				distIA =  Math.abs(IA.getPositionDeMaFigurine()-12);
+				distAdv = Math.abs(Adverse.getPositionDeMaFigurine()-12);
+				
+				if(distIA<distAdv){
+					return 1000000;
+				}else if(distIA>distAdv){
+					return -1000000;
+				}else{
+					return 0;
+				}
+			}
+		}
+		
+		if(profondeur == 0){
+			//System.out.println("\nProfonduer de 0 : "+eval(tour,actions_jouables));
+			return eval1(IA,Adverse,actions_jouables);
+		}
+		
+		
+		Enumeration<Action> e = actions_jouables.elements();
+		
+		while(e.hasMoreElements()){
+			
+			actionChoisie = e.nextElement();
+			tour.setEstAttaque(tour.jouerAction(actionChoisie,IA));
+			
+			if(actionChoisie.getTypeAction() == Joueur.Parade){
+				val_courante = Max(tour,IA, Adverse, profondeur-1);
+				IA.remplirMain(tour.getPioche());
+				
+			}else{
+				
+				IA.remplirMain(tour.getPioche());
+				val_courante = Min(tour,IA, Adverse, profondeur-1);
+			}
+			
+			if(val_courante > val_max){
+				val_max = val_courante;
+			}
+			
+			tour = tour_sauv.clone();
+	
+		}
+		
+		return val_max;
 	}
 	
-	public int nbAttaqueImparable(Tour tour_courant,ActionsJouables actions_jouables) throws Exception{
+	public int eval2(Joueur IA, Joueur Adverse, ActionsJouables actions_jouables) throws Exception {
+		
+		int position = 0;
+		position = IA.getPositionDeMaFigurine();
+		return (23-position) /*+ 500*PlusAvancerIA(tour,actions_jouables)*/ + 1000*nbAttaqueImparableOuEgale(Adverse, actions_jouables) + 10000*nbAttaqueImparable(Adverse,actions_jouables) + 500*DistSecu();
+	}
+	
+	public int eval1(Joueur IA, Joueur Adverse, ActionsJouables actions_jouables) throws Exception {
+		int position = 0;
+		position = IA.getPositionDeMaFigurine();
+		return (23-position) /*+ 500*PlusAvancerIA(tour,actions_jouables)*/ - 10000*AttaqueImparableRecu(IA,Adverse,actions_jouables) ;
+}
+
+	public int PlusAvancerIA(Joueur IA, ActionsJouables actions_jouables) throws Exception {
+		
+		
+		int position1 = 0, position2 = 0;
+		position1 = IA.getPositionDeMaFigurine();
+		position2 = IA.getPositionFigurineAdverse();
+		if((23 - position1)>position2){
+			return 1;
+		}
+		
+		return 0;
+	}
+	
+	public int DistSecu() throws Exception{
+		int dist = distanceFigurines() ;
+		if(dist > 5){
+			return 1;
+		}
+		return 0;
+	}
+
+	public int nbAttaqueImparableOuEgale(Joueur Adverse, ActionsJouables actions_jouables) throws Exception{
+		
 		Action action_courante;
 		Enumeration<Action> e = actions_jouables.elements();
 		int cpt = 0;
-		boolean estPremier =tour_courant.getJoueurPremier().getPositionFigurine() > tour_courant.getJoueurSecond().getPositionFigurine() ;
 		
 		while(e.hasMoreElements()){
 			action_courante = e.nextElement();
 			if(action_courante.getTypeAction()==Joueur.AttaqueDirecte || action_courante.getTypeAction()==Joueur.AttaqueIndirecte){
-				if(estPremier){
-					if(action_courante.getNbCartes() > tour_courant.getJoueurSecond().getMain().getNombreCarteGroupe(action_courante.getCarteAction().getContenu())){
-						cpt++;
-					}
-				}else{
-					if(action_courante.getNbCartes() > tour_courant.getJoueurPremier().getMain().getNombreCarteGroupe(action_courante.getCarteAction().getContenu())){
-						cpt++;
-					}
+				if(action_courante.getNbCartes() >= Adverse.getMain().getNombreCarteGroupe(action_courante.getCarteAction().getContenu())){
+					cpt++;
 				}
-				
+			}
+		}
+		
+		return cpt;
+	}
+
+	public int nbAttaqueImparable(Joueur Adverse, ActionsJouables actions_jouables) throws Exception{
+		
+		Action action_courante;
+		Enumeration<Action> e = actions_jouables.elements();
+		int cpt = 0;
+		
+		while(e.hasMoreElements()){
+			action_courante = e.nextElement();
+			if(action_courante.getTypeAction()==Joueur.AttaqueDirecte || action_courante.getTypeAction()==Joueur.AttaqueIndirecte){
+				if(action_courante.getNbCartes() > Adverse.getMain().getNombreCarteGroupe(action_courante.getCarteAction().getContenu())){
+					cpt++;
+				}
+			}
+		}
+		
+		return cpt;
+	}
+
+	public int nbAttaqueAdv(Tour tour,ActionsJouables actions_jouables) throws Exception{
+		Action action_courante;
+		Enumeration<Action> e = actions_jouables.elements();
+		int cpt = 0;
+		
+		while(e.hasMoreElements()){
+			action_courante = e.nextElement();
+			if(action_courante.getTypeAction()==Joueur.AttaqueDirecte || action_courante.getTypeAction()==Joueur.AttaqueIndirecte){
+				cpt++;
 			}
 			
 		}
 		
 		return cpt;
 	}
-	
-	public int AttaqueImparableRecu(Tour tour_courant,ActionsJouables actions_jouables) throws Exception{
+
+	public int AttaqueImparableRecu(Joueur IA, Joueur Adverse, ActionsJouables actions_jouables) throws Exception{
+		
 		Action action_courante;
 		Enumeration<Action> e = actions_jouables.elements();
 		boolean FuiteObligatoire = true;
+		int dist = distanceFigurines() ;
 		
 		if(actions_jouables.isEmpty()){
 			return 1;
@@ -437,25 +491,28 @@ public int Min(Tour tour_courant, int profondeur) throws Exception{
 		
 		if(FuiteObligatoire){
 			return 1;
+		
+		}else{
+			
+			if(IA.getMain().getNombreCarteGroupe(dist) < Adverse.getMain().getNombreCarteGroupe(dist)){
+				return 1;
+			}
 		}
 		
 		return 0;
 	}
-	
+
 	private int calculerNormeEntreDeuxPositions(int position1, int position2){
 		return Math.abs(position1 - position2);
-	}*/
-
-	@Override
-	public Action actionIA(Tour tour) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
-	public Joueur clone() {
-		// TODO Auto-generated method stub
-		return null;
+	public Joueur clone () {
+		
+		IALegendaire joueur = new IALegendaire(this.direction, this.nom, this.main.clone(), this.piste.clone()) ;
+		joueur.setScore(this.getScore());
+		return joueur ;
+		
 	}
 
 	@Override
@@ -464,14 +521,7 @@ public int Min(Tour tour_courant, int profondeur) throws Exception{
 		return null;
 	}
 	
-	/*@Override
-	public Joueur clone () {
-		
-		IALegendaireDroite joueur = new IALegendaireDroite(this.nom, this.main.clone(), this.piste.clone()) ;
-		joueur.setScore(this.getScore());
-		return joueur ;
-		
-	}*/
+	
 
 	
 

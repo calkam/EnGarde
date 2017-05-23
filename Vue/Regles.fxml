@@ -2,6 +2,8 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -25,11 +27,11 @@
             <RowConstraints maxHeight="293.0" minHeight="10.0" prefHeight="116.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <ScrollPane fitToHeight="true" fitToWidth="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <ScrollPane fitToHeight="true" fitToWidth="true" vvalue="0.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
               <content>
                 <AnchorPane prefHeight="0.0" prefWidth="0.0" style="-fx-background-color: rgba(0,0,0,0.85);">
                      <children>
-                        <Text fill="WHITE" layoutX="60.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Une partie se joue à un contre un en plusieurs manches. Le premier joueur à toucher cinq fois son adversaire est " AnchorPane.leftAnchor="60.0">
+                        <Text fill="WHITE" layoutX="60.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Une partie se joue à un contre un en plusieurs manches. Le premier joueur à toucher autant de fois que le nombre de vie " AnchorPane.leftAnchor="60.0">
                            <font>
                               <Font name="MathJax_Caligraphic-Regular" size="16.0" />
                            </font>
@@ -39,387 +41,427 @@
                               <Font name="MathJax_Caligraphic-Regular" size="30.0" />
                            </font>
                         </Text>
-                        <Text fill="WHITE" layoutX="30.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mise en place" AnchorPane.leftAnchor="30.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="30.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="60.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" text="A  chaque début de manche :" AnchorPane.leftAnchor="60.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="79.0" layoutY="440.0" strokeType="OUTSIDE" strokeWidth="0.0" text="- déplacer son escrimeur (en avançant, ou en reculant) ;" AnchorPane.leftAnchor="80.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Bold" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="79.0" layoutY="240.0" strokeType="OUTSIDE" strokeWidth="0.0" text="- les 25 cartes sont mélangées, puis chaque joueur en reçoit 5 qui constituent sa main de départ ;" AnchorPane.leftAnchor="80.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="89.0" layoutY="260.0" strokeType="OUTSIDE" strokeWidth="0.0" text="- les cartes restantes forment une pioche, posée face cachée au dessus du terrain de jeu." AnchorPane.leftAnchor="80.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="70.0" layoutY="290.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Le joueur qui commence est choisi aléatoirement. En cours de manche, les joueurs jouent alternativement." AnchorPane.leftAnchor="60.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="70.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="déclaré vainqueur." AnchorPane.leftAnchor="60.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="30.0" layoutY="350.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Règles de jeu" AnchorPane.leftAnchor="30.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="30.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="70.0" layoutY="390.0" strokeType="OUTSIDE" strokeWidth="0.0" text="A son tour, un joueur va jouer une ou plusieurs cartes pour :" AnchorPane.leftAnchor="60.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="89.0" layoutY="460.0" strokeType="OUTSIDE" strokeWidth="0.0" text="- porter une attaque directe ou indirecte." AnchorPane.leftAnchor="80.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Bold" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="60.0" layoutY="410.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Toutes les cartes jouées sont défaussées faces visibles en une pile, de manière à ce que seule la carte du dessus soit visible." wrappingWidth="1000.0" AnchorPane.leftAnchor="60.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="90.0" layoutY="490.0" strokeType="OUTSIDE" strokeWidth="0.0" text="La défausse est innaccessible pour revoir les cartes déjà jouées." AnchorPane.leftAnchor="60.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="100.0" layoutY="510.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Le nombre de carte restante dans la pioche est indiqué." AnchorPane.leftAnchor="60.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="30.0" layoutY="580.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Déplacer son chevalier " AnchorPane.leftAnchor="30.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="30.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="80.0" layoutY="620.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1- Le joueur choisit une de ses cartes et clique sur la zone du terrain correspondant au déplacement de la carte." AnchorPane.leftAnchor="40.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="90.0" layoutY="640.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Il peut soit reculer soit avancer." AnchorPane.leftAnchor="60.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="100.0" layoutY="670.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Attention : Un chevalier ne peut ni sortir de la piste (que ce soit en avançant ou en reculant) ni arriver sur la case" AnchorPane.leftAnchor="60.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Bold" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="110.0" layoutY="690.0" strokeType="OUTSIDE" strokeWidth="0.0" text="de l'autre chevalier, ni le dépasser." AnchorPane.leftAnchor="60.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Bold" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="90.0" layoutY="720.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2- Une fois qu'il a joué sa carte, le tour du joueur se termine, et sa main se complète à un total de cinq cartes." AnchorPane.leftAnchor="40.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="30.0" layoutY="780.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Porter une attaque directe" AnchorPane.leftAnchor="30.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="30.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="60.0" layoutY="820.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Plutot que de jouer une carte pour déplacer son chevalier, il est possible d'attaquer son adversaire. Dans ce cas," AnchorPane.leftAnchor="60.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="70.0" layoutY="840.0" strokeType="OUTSIDE" strokeWidth="0.0" text="l'escrimeur n'avance pas." AnchorPane.leftAnchor="60.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="80.0" layoutY="870.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1. Jouer une ou plusieurs cartes" AnchorPane.leftAnchor="80.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Bold" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="80.0" layoutY="900.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Un joueur fait une attaque directe en jouant une carte avec un chiffre correspondant au nombre exact de  cases" AnchorPane.leftAnchor="60.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="90.0" layoutY="920.0" strokeType="OUTSIDE" strokeWidth="0.0" text="séparant les deux combattants." AnchorPane.leftAnchor="60.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="100.0" layoutY="940.0" strokeType="OUTSIDE" strokeWidth="0.0" text="L'attaquant peut également jouer plusieurs cartes de valeurs identiques pour attaque plus forte." AnchorPane.leftAnchor="60.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="110.0" layoutY="960.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dans tous les cas, le chevalier ne bouge pas : il s'agit d'une attaque et non d'un déplacement." AnchorPane.leftAnchor="60.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="100.0" layoutY="990.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Une fois qu'il a joué les cartes désirées, le tour du joueur se termine et sa main se complète à cinq cartes." AnchorPane.leftAnchor="60.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="90.0" layoutY="1030.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2. Parade de l'adversaire s'il y a eu attaque" AnchorPane.leftAnchor="80.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Bold" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="90.0" layoutY="1060.0" strokeType="OUTSIDE" strokeWidth="0.0" text="L'adversaire a maintenant la possibilité de parer l'attaque : il doit pour cela jouer le meme nombre de cartes" AnchorPane.leftAnchor="60.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="100.0" layoutY="1080.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(et de meme valeur) que son adversaire." AnchorPane.leftAnchor="60.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="110.0" layoutY="1110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Remarque tactique : il n'est jamais possible de parer une attaque de trois cartes puisqu'il n'y a que cinq cartes" AnchorPane.leftAnchor="80.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="120.0" layoutY="1130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="pour chaque valeur." AnchorPane.leftAnchor="80.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="130.0" layoutY="1160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Important : après une parade, sa main ne se complète pas. On enchaine sur son tour de jeu. Ce n'est qu'au" AnchorPane.leftAnchor="80.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Bold" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="140.0" layoutY="1180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="terme de celui-ci que sa main est complété à cinq cartes." AnchorPane.leftAnchor="80.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Bold" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="130.0" layoutY="1210.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Exemple : si l'attaquant a joué deux cartes 2 comme attaque, son adversaire peut effectuer une parade en jouant" AnchorPane.leftAnchor="80.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="140.0" layoutY="1230.0" strokeType="OUTSIDE" strokeWidth="0.0" text="deux cartes 2. Il ne lui reste alors plus que trois cartes en main pour jouer son tour de jeu." AnchorPane.leftAnchor="80.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="150.0" layoutY="1260.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Si un joueur ne peut parer une attaque, il est touché et perd immédiatement la manche." AnchorPane.leftAnchor="60.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="40.0" layoutY="1320.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Porter une attaque indirecte" AnchorPane.leftAnchor="30.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="30.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="160.0" layoutY="1360.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cela se traduit par l'utilisation de plusieurs cartes :" AnchorPane.leftAnchor="60.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="170.0" layoutY="1390.0" strokeType="OUTSIDE" strokeWidth="0.0" text="- une et une seule pour avancer le chevalier (et non pas reculer) ;" AnchorPane.leftAnchor="80.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="180.0" layoutY="1410.0" strokeType="OUTSIDE" strokeWidth="0.0" text="- et une ou plusieurs autres, de valeurs identiques, pour attaquer dans le meme tour de jeu." AnchorPane.leftAnchor="80.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="190.0" layoutY="1440.0" strokeType="OUTSIDE" strokeWidth="0.0" text="On parle alors d'attaque indirecte (qui se différencie de l'attaque directe par le mouvement de l'escrimeur avant l'attaque)." AnchorPane.leftAnchor="60.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="200.0" layoutY="1470.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Exemple : si les deux chevaliers sont séparés par huit cases, un joueur peut jouer une carte 3 pour avancer son" AnchorPane.leftAnchor="80.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="210.0" layoutY="1490.0" strokeType="OUTSIDE" strokeWidth="0.0" text="chevalier de trois cases, puis deux cartes cinq dans le meme tour pour attaquer (le chevalier restant sur place)" AnchorPane.leftAnchor="80.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="220.0" layoutY="1520.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Le joueur qui est attaqué a maintenant deux façons de se défendre :" AnchorPane.leftAnchor="60.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="230.0" layoutY="1550.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1- Il peut parer l'attaque (dans l'exemple ci-dessus, il doit jouer deux cartes cinq pour parer). Après une parade, le joueur" AnchorPane.leftAnchor="60.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="240.0" layoutY="1570.0" strokeType="OUTSIDE" strokeWidth="0.0" text="effectue son tour de jeu normal en avaçant, reculant, attaquant directement , ou indirectement. Sa main ne sera" AnchorPane.leftAnchor="80.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="250.0" layoutY="1590.0" strokeType="OUTSIDE" strokeWidth="0.0" text="complétée à cinq cartes qu'à la fin de son tour ( et non pas juste après la parade) ;" AnchorPane.leftAnchor="80.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="260.0" layoutY="1620.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2- Il peut battre en retraite en reculant sur la piste. Le joueur joue une carte et recule du nombre de cases indiqué sur celle-ci." AnchorPane.leftAnchor="60.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="270.0" layoutY="1640.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Attention : si le défenseur bat en retraite, on considère que son tour de jeu est terminé. Une retraite met toujours fin au tour" AnchorPane.leftAnchor="80.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="280.0" layoutY="1660.0" strokeType="OUTSIDE" strokeWidth="0.0" text="du joueur qui bat en retraite et sa main se complète automatiquement. C'est ensuite à son adversaire de jouer." AnchorPane.leftAnchor="80.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="290.0" layoutY="1690.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Important : il est possible de parer une attaque directe, ou indirecte, alors que la retraite n'est autorisée qu'en" AnchorPane.leftAnchor="60.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Bold" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="300.0" layoutY="1710.0" strokeType="OUTSIDE" strokeWidth="0.0" text="cas d'attaque indirecte." AnchorPane.leftAnchor="60.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Bold" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="40.0" layoutY="1770.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fin de manche" AnchorPane.leftAnchor="30.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="30.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="230.0" layoutY="1810.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Une manche peut se terminer de trois façons différentes :" AnchorPane.leftAnchor="60.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="240.0" layoutY="1840.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1- Dès qu'un joueur réussit à porter un coup à son adversaire et que celui-ci n'a pas pu le parer (où l'éviter en reculant sur" AnchorPane.leftAnchor="60.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="250.0" layoutY="1860.0" strokeType="OUTSIDE" strokeWidth="0.0" text="une attaque indirecte), il gagne la manche ;" AnchorPane.leftAnchor="80.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="250.0" layoutY="1890.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2- Lorsqu'un joueur ne peut plus effectuer de mouvement autorisé (les seules cartes dont il dispose le feraient sortir du" AnchorPane.leftAnchor="60.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="260.0" layoutY="1910.0" strokeType="OUTSIDE" strokeWidth="0.0" text="terrain - que ce soit en avançant, ou en reculant -, ou lui feraient dépasser le chevalier adverse), il perd la manche ;" AnchorPane.leftAnchor="80.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="270.0" layoutY="1940.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3- Si aucun joueur n'a réussi à gagner la manche comme évoqué ci-dessus, elle prend fin lorsque la dernière carte de" AnchorPane.leftAnchor="60.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="280.0" layoutY="1960.0" strokeType="OUTSIDE" strokeWidth="0.0" text="la pioche est prise." AnchorPane.leftAnchor="80.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="290.0" layoutY="1990.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Si le dernier joueur à avoir joué a attaqué son adversaire, ce dernier peut encore parer l'attaque (en cas d'attaque directe" AnchorPane.leftAnchor="80.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="300.0" layoutY="2010.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ou indirecte), ou reculer (en cas d'attaque indirecte uniquement), sinon il perd la manche instantanément." AnchorPane.leftAnchor="80.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="310.0" layoutY="2040.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Si la fin de manche n'est pas prononcée à ce stade du jeu (qu'il y ait eu attaque ou non au dernier tour), le vainqueur est" AnchorPane.leftAnchor="80.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="320.0" layoutY="2060.0" strokeType="OUTSIDE" strokeWidth="0.0" text="désigné de la manière suivante :" AnchorPane.leftAnchor="80.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="330.0" layoutY="2090.0" strokeType="OUTSIDE" strokeWidth="0.0" text="a) Les deux joueurs révèlent les cartes qu'ils ont en main et on regarde celui qui possède le plus de cartes permettant" AnchorPane.leftAnchor="100.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="340.0" layoutY="2110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="une attaque directe. Si un joueur a plus de cartes de la bonne valeur que l'autre, il gagne la manche ;" AnchorPane.leftAnchor="120.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="350.0" layoutY="2140.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Exemple : si les deux joueurs sont distants de deux cases lorsque la dernière carte est piochée, le joueur qui dispose" AnchorPane.leftAnchor="120.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="360.0" layoutY="2160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="du grand nombre de cartes 2 en main remporte a manche." AnchorPane.leftAnchor="120.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="370.0" layoutY="2190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="b) S'il y a toujours égalité, la manche est remportée par le joueur dont le chevalier a le plus avancé vers le camp" AnchorPane.leftAnchor="100.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="380.0" layoutY="2210.0" strokeType="OUTSIDE" strokeWidth="0.0" text="adverse sur la piste." AnchorPane.leftAnchor="120.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="390.0" layoutY="2230.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Si les deux joueurs ont avancé du meme nombre de cases chacun, la manche est déclarée comme nulle." AnchorPane.leftAnchor="120.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="400.0" layoutY="2260.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Le joueur qui gagne une manche fait perdre une vie (un coeur) à l'adversaire." AnchorPane.leftAnchor="60.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="410.0" layoutY="2280.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Le premier joueur qui fait perdre les cinq coeurs de l'adversaire est désigné vainqueur." AnchorPane.leftAnchor="60.0">
+                        <Text fill="WHITE" layoutX="70.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="son adversaire est déclaré vainqueur." AnchorPane.leftAnchor="60.0">
                            <font>
                               <Font name="MathJax_Caligraphic-Regular" size="16.0" />
                            </font>
                         </Text>
                         <Line endX="682.0" layoutX="200.0" layoutY="130.0" stroke="WHITE" />
-                        <Line endX="682.0" layoutX="200.0" layoutY="310.0" stroke="WHITE" />
-                        <Line endX="682.0" layoutX="200.0" layoutY="540.0" stroke="WHITE" />
-                        <Line endX="682.0" layoutX="200.0" layoutY="740.0" stroke="WHITE" />
-                        <Line endX="682.0" layoutX="200.0" layoutY="1280.0" stroke="WHITE" />
-                        <Line endX="682.0" layoutX="200.0" layoutY="1730.0" stroke="WHITE" />
+                        <Text fill="WHITE" layoutX="30.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mise en place" AnchorPane.leftAnchor="30.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="30.0" />
+                           </font>
+                        </Text>
+                        <ImageView fitWidth="920.0" layoutX="80.0" layoutY="190.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Ressources/01.jpg" />
+                           </image>
+                        </ImageView>
+                        <Text fill="WHITE" layoutX="56.0" layoutY="719.0" strokeType="OUTSIDE" strokeWidth="0.0" text="A  chaque début de manche :" AnchorPane.leftAnchor="56.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="76.0" layoutY="936.0" strokeType="OUTSIDE" strokeWidth="0.0" text="- déplacer son chevalier (en avançant, ou en reculant) ;" AnchorPane.leftAnchor="76.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Bold" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="76.0" layoutY="749.0" strokeType="OUTSIDE" strokeWidth="0.0" text="- les 25 cartes sont mélangées, puis chaque joueur en reçoit 5 qui constituent sa main de départ ;" AnchorPane.leftAnchor="76.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="76.0" layoutY="769.0" strokeType="OUTSIDE" strokeWidth="0.0" text="- les cartes restantes forment une pioche, posée face cachée au dessus du terrain de jeu." AnchorPane.leftAnchor="76.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="56.0" layoutY="799.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Le joueur qui commence est choisi aléatoirement. En cours de manche, les joueurs jouent alternativement." AnchorPane.leftAnchor="56.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <Line endX="682.0" layoutX="196.0" layoutY="819.0" stroke="WHITE" />
+                        <Text fill="WHITE" layoutX="26.0" layoutY="859.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Règles de jeu" AnchorPane.leftAnchor="26.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="30.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="56.0" layoutY="899.0" strokeType="OUTSIDE" strokeWidth="0.0" text="A son tour, un joueur va jouer une ou plusieurs cartes pour :" AnchorPane.leftAnchor="56.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="77.0" layoutY="953.0" strokeType="OUTSIDE" strokeWidth="0.0" text="- porter une attaque directe ou indirecte." AnchorPane.leftAnchor="77.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Bold" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="54.0" layoutY="995.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Toutes les cartes jouées sont défaussées faces visibles en une pile au dessus du terrain, de manière à ce que seule" wrappingWidth="1000.0" AnchorPane.leftAnchor="54.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="55.0" layoutY="1012.0" strokeType="OUTSIDE" strokeWidth="0.0" text="La carte du dessus soit visible. Aucune action n'est possible sur la défausse." AnchorPane.leftAnchor="55.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="57.0" layoutY="1029.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Le nombre de carte restante dans la pioche est indiqué." AnchorPane.leftAnchor="57.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <Line endX="682.0" layoutX="196.0" layoutY="1049.0" stroke="WHITE" />
+                        <Text fill="WHITE" layoutX="26.0" layoutY="1089.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Déplacer son chevalier " AnchorPane.leftAnchor="26.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="30.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="36.0" layoutY="1129.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1- Le joueur choisit une de ses cartes et clique sur la zone du terrain correspondant au déplacement de la carte." AnchorPane.leftAnchor="36.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="56.0" layoutY="1149.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Il peut soit reculer soit avancer." AnchorPane.leftAnchor="56.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="56.0" layoutY="1179.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Attention : Un chevalier ne peut ni sortir de la piste (que ce soit en avançant ou en reculant) ni arriver sur la case" AnchorPane.leftAnchor="56.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Bold" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="56.0" layoutY="1199.0" strokeType="OUTSIDE" strokeWidth="0.0" text="de l'autre chevalier, ni le dépasser." AnchorPane.leftAnchor="56.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Bold" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="36.0" layoutY="1229.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2- Une fois qu'il a joué sa carte, le tour du joueur se termine, et sa main se complète à partir de la pioche à un total de cinq cartes." AnchorPane.leftAnchor="36.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <ImageView fitWidth="920.0" layoutX="80.0" layoutY="1250.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Ressources/02.gif" />
+                           </image>
+                        </ImageView>
+                        <Line endX="682.0" layoutX="194.0" layoutY="1609.0" stroke="WHITE" />
+                        <Text fill="WHITE" layoutX="24.0" layoutY="1649.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Porter une attaque directe" AnchorPane.leftAnchor="24.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="30.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="54.0" layoutY="1689.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Plutot que de jouer une carte pour déplacer son chevalier, il est possible d'attaquer son adversaire. Dans ce cas," AnchorPane.leftAnchor="54.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="54.0" layoutY="1709.0" strokeType="OUTSIDE" strokeWidth="0.0" text="le chevalier n'avance pas." AnchorPane.leftAnchor="54.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="74.0" layoutY="1739.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1. Jouer une ou plusieurs cartes" AnchorPane.leftAnchor="74.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Bold" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="54.0" layoutY="1769.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Un joueur fait une attaque directe en jouant une carte avec un chiffre correspondant au nombre exact de cases" AnchorPane.leftAnchor="54.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="54.0" layoutY="1789.0" strokeType="OUTSIDE" strokeWidth="0.0" text="séparant les deux combattants." AnchorPane.leftAnchor="54.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="54.0" layoutY="1809.0" strokeType="OUTSIDE" strokeWidth="0.0" text="L'attaquant peut également jouer plusieurs cartes de valeurs identiques pour une attaque plus forte." AnchorPane.leftAnchor="54.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="54.0" layoutY="1829.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dans tous les cas, le chevalier ne bouge pas : il s'agit d'une attaque et non d'un déplacement." AnchorPane.leftAnchor="54.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="54.0" layoutY="1859.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Une fois qu'il a joué les cartes désirées, le tour du joueur se termine et sa main se complète à cinq cartes." AnchorPane.leftAnchor="54.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <ImageView fitWidth="920.0" layoutX="77.0" layoutY="1879.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Ressources/03.gif" />
+                           </image>
+                        </ImageView>
+                        <Text fill="WHITE" layoutX="74.0" layoutY="2303.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2. Parade de l'adversaire s'il y a eu attaque" AnchorPane.leftAnchor="74.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Bold" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="54.0" layoutY="2333.0" strokeType="OUTSIDE" strokeWidth="0.0" text="L'adversaire a maintenant la possibilité de parer l'attaque : il doit pour cela jouer le meme nombre de cartes" AnchorPane.leftAnchor="54.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="54.0" layoutY="2353.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(et de meme valeur) que son adversaire." AnchorPane.leftAnchor="54.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="74.0" layoutY="2383.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Remarque tactique : il n'est jamais possible de parer une attaque de trois à cinq cartes puisqu'il n'y a que cinq cartes" AnchorPane.leftAnchor="74.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="74.0" layoutY="2403.0" strokeType="OUTSIDE" strokeWidth="0.0" text="pour chaque valeur." AnchorPane.leftAnchor="74.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="74.0" layoutY="2433.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Important : après une parade, sa main ne se complète pas. Il enchaine sur son tour de jeu. Ce n'est qu'au" AnchorPane.leftAnchor="74.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Bold" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="74.0" layoutY="2453.0" strokeType="OUTSIDE" strokeWidth="0.0" text="terme de celui-ci que sa main est complété à cinq cartes." AnchorPane.leftAnchor="74.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Bold" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="74.0" layoutY="2483.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Exemple : si l'attaquant a joué une carte 3 comme attaque, son adversaire peut effectuer une parade en jouant" AnchorPane.leftAnchor="74.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="74.0" layoutY="2503.0" strokeType="OUTSIDE" strokeWidth="0.0" text="une carte 3. Il ne lui reste alors plus que quatre cartes en main pour jouer son tour de jeu." AnchorPane.leftAnchor="74.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="54.0" layoutY="2533.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Si un joueur ne peut parer une attaque, il est touché et perd immédiatement la manche." AnchorPane.leftAnchor="54.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <ImageView fitWidth="920.0" layoutX="77.0" layoutY="2549.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Ressources/04.gif" />
+                           </image>
+                        </ImageView>
+                        <Line endX="682.0" layoutX="200.0" layoutY="2904.0" stroke="WHITE" />
+                        <Text fill="WHITE" layoutX="30.0" layoutY="2944.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Porter une attaque indirecte" AnchorPane.leftAnchor="30.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="30.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="60.0" layoutY="2984.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cela se traduit par l'utilisation de plusieurs cartes :" AnchorPane.leftAnchor="60.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="80.0" layoutY="3014.0" strokeType="OUTSIDE" strokeWidth="0.0" text="- une première carte pour avancer le chevalier (et non pas reculer) ;" AnchorPane.leftAnchor="80.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="80.0" layoutY="3034.0" strokeType="OUTSIDE" strokeWidth="0.0" text="- et une ou plusieurs autres cartes, de valeurs identiques, pour attaquer dans le meme tour de jeu." AnchorPane.leftAnchor="80.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="60.0" layoutY="3064.0" strokeType="OUTSIDE" strokeWidth="0.0" text="On parle alors d'attaque indirecte (qui se différencie de l'attaque directe par le mouvement du chevalier avant l'attaque)." AnchorPane.leftAnchor="60.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="80.0" layoutY="3094.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Exemple : si les deux chevaliers sont séparés par sept cases, un joueur peut jouer une carte 3 pour avancer son" AnchorPane.leftAnchor="80.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="80.0" layoutY="3114.0" strokeType="OUTSIDE" strokeWidth="0.0" text="chevalier de trois cases, puis une carte 4 dans le meme tour pour attaquer (le chevalier restant sur place)." AnchorPane.leftAnchor="80.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <ImageView fitWidth="920.0" layoutX="77.0" layoutY="3134.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Ressources/05.gif" />
+                           </image>
+                        </ImageView>
+                        <Text fill="WHITE" layoutX="57.0" layoutY="3543.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Le joueur qui est attaqué a maintenant deux façons de se défendre :" AnchorPane.leftAnchor="57.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="57.0" layoutY="3573.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1- Il peut parer l'attaque (dans l'exemple ci-dessous, il doit jouer une carte 4 pour parer). Après une parade, le joueur" AnchorPane.leftAnchor="57.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="77.0" layoutY="3593.0" strokeType="OUTSIDE" strokeWidth="0.0" text="effectue son tour de jeu normal en avaçant, reculant, attaquant directement , ou indirectement. Sa main ne sera" AnchorPane.leftAnchor="77.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="77.0" layoutY="3613.0" strokeType="OUTSIDE" strokeWidth="0.0" text="complétée à cinq cartes qu'à la fin de son tour ( et non pas juste après la parade) ;" AnchorPane.leftAnchor="77.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <ImageView fitWidth="920.0" layoutX="77.0" layoutY="3629.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Ressources/06.gif" />
+                           </image>
+                        </ImageView>
+                        <Text fill="WHITE" layoutX="60.0" layoutY="4049.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2- Il peut battre en retraite en reculant sur la piste. Le joueur joue une carte et recule du nombre de cases indiquées sur celle-ci." AnchorPane.leftAnchor="60.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="80.0" layoutY="4069.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Attention : si le défenseur bat en retraite, on considère que son tour de jeu est terminé. Une retraite met toujours fin au tour" AnchorPane.leftAnchor="80.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="80.0" layoutY="4089.0" strokeType="OUTSIDE" strokeWidth="0.0" text="du joueur qui bat en retraite et sa main se complète automatiquement. C'est ensuite à son adversaire de jouer." AnchorPane.leftAnchor="80.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <ImageView fitWidth="920.0" layoutX="77.0" layoutY="4109.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Ressources/07.gif" />
+                           </image>
+                        </ImageView>
+                        <Text fill="WHITE" layoutX="64.0" layoutY="4513.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Important : il est possible de parer une attaque directe, ou indirecte, alors que la retraite n'est autorisée qu'en" AnchorPane.leftAnchor="64.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Bold" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="64.0" layoutY="4533.0" strokeType="OUTSIDE" strokeWidth="0.0" text="cas d'attaque indirecte." AnchorPane.leftAnchor="64.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Bold" size="16.0" />
+                           </font>
+                        </Text>
+                        <Line endX="682.0" layoutX="204.0" layoutY="4553.0" stroke="WHITE" />
+                        <Text fill="WHITE" layoutX="34.0" layoutY="4593.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fin de manche" AnchorPane.leftAnchor="34.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="30.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="64.0" layoutY="4633.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Une manche peut se terminer de trois façons différentes :" AnchorPane.leftAnchor="64.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="64.0" layoutY="4663.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1- Dès qu'un joueur réussit à porter un coup à son adversaire et que celui-ci n'a pas pu le parer (ou l'éviter en reculant sur" AnchorPane.leftAnchor="64.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="84.0" layoutY="4683.0" strokeType="OUTSIDE" strokeWidth="0.0" text="une attaque indirecte), il gagne la manche ;" AnchorPane.leftAnchor="84.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="64.0" layoutY="4713.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2- Lorsqu'un joueur ne peut plus effectuer de mouvement autorisé (les seules cartes dont il dispose le feraient sortir du" AnchorPane.leftAnchor="64.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="84.0" layoutY="4733.0" strokeType="OUTSIDE" strokeWidth="0.0" text="terrain - que ce soit en avançant, ou en reculant -, ou lui feraient dépasser le chevalier adverse), il perd la manche ;" AnchorPane.leftAnchor="84.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="64.0" layoutY="4763.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3- Si aucun joueur n'a réussi à gagner la manche comme évoqué ci-dessus, elle prend fin lorsque la dernière carte de" AnchorPane.leftAnchor="64.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="84.0" layoutY="4783.0" strokeType="OUTSIDE" strokeWidth="0.0" text="la pioche est prise." AnchorPane.leftAnchor="84.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="84.0" layoutY="4813.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Si le dernier joueur à avoir joué a attaqué son adversaire, ce dernier peut encore parer l'attaque (en cas d'attaque directe" AnchorPane.leftAnchor="84.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="84.0" layoutY="4833.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ou indirecte), ou reculer (en cas d'attaque indirecte uniquement), sinon il perd la manche instantanément." AnchorPane.leftAnchor="84.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="84.0" layoutY="4863.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Si la fin de manche n'est pas prononcée à ce stade du jeu (qu'il y ait eu attaque ou non au dernier tour), le vainqueur est" AnchorPane.leftAnchor="84.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="84.0" layoutY="4883.0" strokeType="OUTSIDE" strokeWidth="0.0" text="désigné de la manière suivante :" AnchorPane.leftAnchor="84.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="104.0" layoutY="4913.0" strokeType="OUTSIDE" strokeWidth="0.0" text="a) Les deux joueurs révèlent les cartes qu'ils ont en main et on regarde celui qui possède le plus de cartes permettant" AnchorPane.leftAnchor="104.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="124.0" layoutY="4933.0" strokeType="OUTSIDE" strokeWidth="0.0" text="une attaque directe. Si un joueur a plus de cartes de la bonne valeur que l'autre, il gagne la manche ;" AnchorPane.leftAnchor="124.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="124.0" layoutY="4963.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Exemple : si les deux joueurs sont distants de deux cases lorsque la dernière carte est piochée, le joueur qui dispose" AnchorPane.leftAnchor="124.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="124.0" layoutY="4983.0" strokeType="OUTSIDE" strokeWidth="0.0" text="du grand nombre de cartes 2 en main remporte a manche." AnchorPane.leftAnchor="124.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="104.0" layoutY="5013.0" strokeType="OUTSIDE" strokeWidth="0.0" text="b) S'il y a toujours égalité, la manche est remportée par le joueur dont le chevalier a le plus avancé vers le camp" AnchorPane.leftAnchor="104.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="124.0" layoutY="5033.0" strokeType="OUTSIDE" strokeWidth="0.0" text="adverse sur la piste." AnchorPane.leftAnchor="124.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="124.0" layoutY="5053.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Si les deux joueurs ont avancé du meme nombre de cases chacun, la manche est déclarée comme nulle." AnchorPane.leftAnchor="124.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="64.0" layoutY="5083.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Le joueur qui gagne une manche fait perdre une vie à l'adversaire." AnchorPane.leftAnchor="64.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="64.0" layoutY="5103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Le premier joueur qui fait perdre toutes les vies de l'adversaire est désigné vainqueur." AnchorPane.leftAnchor="64.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text fill="WHITE" layoutX="74.0" layoutY="5130.0" strokeType="OUTSIDE" strokeWidth="0.0">
+                           <font>
+                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
+                           </font>
+                        </Text>
                      </children>
                   </AnchorPane>
               </content>

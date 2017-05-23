@@ -146,7 +146,6 @@ public class Main extends Tas {
 			
 			if (ci.getContenu() == c.getContenu()) {
 				
-				System.out.println(ci) ;
 				defausse.ajouter(ci) ;
 				li.remove();
 				nombreCarte[c.getContenu()]-- ;
