@@ -40,7 +40,7 @@ public class MainApp extends Application {
         //this.primaryStage.setFullScreen(true);
         this.primaryStage.setWidth(1600);
         this.primaryStage.setHeight(900);
-        this.primaryStage.getIcons().add(new Image("Ressources/dosCarte.jpg"));
+        this.primaryStage.getIcons().add(new Image("Ressources/dosCarte.png"));
         
         initRootLayout();
         
