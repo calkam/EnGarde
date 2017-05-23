@@ -47,9 +47,9 @@ public class Piste extends Rectangle implements Visitable {
 		cases = new ArrayList<Case>(nombreDeCases);
 		int proportion = nombreDeCases + 2;
 		for(int i=0; i<nombreDeCases; i++){
-			Case c = new Case(0, 0, 0);
-			c.setLargeur(this.getLargeur() / proportion);
-			c.setHauteur(this.getHauteur());
+			Case c = new Case(0, 0, Reglages.lis("PositionYCase"));
+			c.setLargeur(Reglages.lis("CaseLargeur"));
+			c.setHauteur(Reglages.lis("CaseHauteur"));
 			c.setX(((this.getLargeur()*i)/proportion)+c.getLargeur());
 			c.setNumero(i+1);
 			cases.add(c);

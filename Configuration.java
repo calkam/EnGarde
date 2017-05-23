@@ -24,8 +24,10 @@ public class Configuration {
         Properties p=null;
         InputStream in;
 		try {
+			//dutronce
+			in = new FileInputStream(System.getProperty("user.home") + "/Documents/Prog6/Projet_En_Garde/workspace/source/Ressources/defaut.cfg");
 			//bleuzeb
-			in = new FileInputStream(System.getProperty("user.home") + "/workspace/ProjetL3/workspace/source/Ressources/defaut.cfg");
+			//in = new FileInputStream(System.getProperty("user.home") + "/workspace/ProjetL3/workspace/source/Ressources/defaut.cfg");
 			//calkam
 			//in = new FileInputStream(System.getProperty("user.home") + "/ProjetL3/workspace/source/Ressources/defaut.cfg");
 			Properties defaut = new Properties();
