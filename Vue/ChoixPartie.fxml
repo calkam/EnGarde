@@ -23,19 +23,19 @@
                   <Font name="MathJax_Caligraphic-Regular" size="18.0" />
                </font>
             </Button>
-            <Button layoutX="310.0" layoutY="330.0" mnemonicParsing="false" onAction="#lancerPartie" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefHeight="40.0" prefWidth="350.0" text="Commencer Le Combat !">
+            <Button fx:id="buttonDebut" layoutX="310.0" layoutY="330.0" mnemonicParsing="false" onAction="#lancerPartie" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefHeight="40.0" prefWidth="350.0" text="Commencer Le Combat !">
                <font>
                   <Font name="MathJax_Caligraphic-Regular" size="18.0" />
                </font>
             </Button>
             <Label layoutX="58.0" layoutY="95.0" text="Combattant 1" textFill="WHITE">
                <font>
-                  <Font name="MathJax_Caligraphic-Regular" size="25.0" />
+                  <Font size="25.0" />
                </font>
             </Label>
             <Label layoutX="58.0" layoutY="187.0" text="Combattant 2" textFill="WHITE">
                <font>
-                  <Font name="MathJax_Caligraphic-Regular" size="25.0" />
+                  <Font size="25.0" />
                </font>
             </Label>
             <Label layoutX="38.0" layoutY="30.0" text="Choix Des Combattants" textFill="WHITE">

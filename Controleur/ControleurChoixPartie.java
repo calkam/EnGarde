@@ -3,11 +3,15 @@ package Controleur;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.ImageCursor;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 import javafx.scene.control.Label;
 import Vue.MainApp;
@@ -20,6 +24,8 @@ public class ControleurChoixPartie {
     ObservableList<String> ChoixCombattantList = FXCollections.observableArrayList("Humain","IA");
     ObservableList<String> ChoixNiveauList = FXCollections.observableArrayList("Facile","Moyen","Difficile","Légendaire");
 
+    @FXML
+    private Button buttonDebut;
 
     //Choix type du combattant 1
     @FXML
@@ -69,7 +75,7 @@ public class ControleurChoixPartie {
         Label modej2 = new Label();
         Label niveauj1 = new Label();
         Label niveauj2 = new Label();
-
+        
 		ChoixCombattant1.setValue("Humain");
     	ChoixCombattant1.setItems(ChoixCombattantList);
     	ChoixCombattant2.setValue("IA");
@@ -118,6 +124,26 @@ public class ControleurChoixPartie {
 				(ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
 					niveauj2.setText((String)newValue);
 				});
+		
+		NomCombattant1.setOnKeyPressed(new EventHandler<KeyEvent>()
+				{
+					@Override
+					public void handle(KeyEvent ke){
+						if (ke.getCode().equals(KeyCode.ENTER)){
+							lancerPartie();
+						}
+					}
+				});
+		
+		NomCombattant2.setOnKeyPressed(new EventHandler<KeyEvent>()
+		{
+			@Override
+			public void handle(KeyEvent ke){
+				if (ke.getCode().equals(KeyCode.ENTER)){
+					lancerPartie();
+				}
+			}
+		});
 	}
 
     public ControleurChoixPartie(){
@@ -129,7 +155,7 @@ public class ControleurChoixPartie {
 
 	@FXML
     private void lancerPartie(){
-		int nbCaractereMax = 8;
+		int nbCaractereMax = 16;
 		String nomCombattant1 = NomCombattant1.getText();
 		String nomCombattant2 = NomCombattant2.getText();
 		if(nomCombattant1.length() == 0){
@@ -138,15 +164,15 @@ public class ControleurChoixPartie {
 		if(nomCombattant2.length() == 0){
 			nomCombattant2 = "Joueur2";
 		}
-
+		
 		if(nomCombattant1.length() < nbCaractereMax){
 			if(nomCombattant2.length() < nbCaractereMax){
 				mainApp.jeu(nomCombattant1, nomCombattant2, ChoixCombattant1.getValue(), ChoixCombattant2.getValue());
 			}else{
-				erreurCombattant.setText("Nom Combattant 2 trop long (<8)");
+				erreurCombattant.setText("Nom Combattant 2 trop long (<16)");
 			}
 		}else{
-			erreurCombattant.setText("Nom Combattant 1 trop long (<8)");
+			erreurCombattant.setText("Nom Combattant 1 trop long (<16)");
 		}
     }
 

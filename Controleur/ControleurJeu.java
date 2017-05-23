@@ -155,6 +155,14 @@ public class ControleurJeu {
 		}
     	return jeu.getManche().getTourEnCours().possibiliteAction(joueurEnCours, cartes);
 	}
+	
+	private void reinitialiserApresFinManche(){
+		gestionTour = FINDETOUR;
+		messageCourant = "Au tours de " + jeu.getManche().getTourEnCours().getJoueurPremier().getNom();
+		nbCartePioche.setText("15");
+        mainVisible.setSelected(false);
+		terrain.setDisable(false);
+	}
 
 	private void verifierFinDeManche(Joueur joueur, boolean peutFaireAction){
 		int resultat;
@@ -165,10 +173,7 @@ public class ControleurJeu {
 				resultat = Tour.joueurSecondPerdu;
 			}
 			try {
-				gestionTour = FINDETOUR;
-				messageCourant = "Au tours de " + jeu.getManche().getTourEnCours().getJoueurPremier().getNom();
-				nbCartePioche.setText("15");
-				terrain.setDisable(false);
+				reinitialiserApresFinManche();
 				verifierFinDuJeu(jeu.getManche().finDeManche(resultat));
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -178,8 +183,8 @@ public class ControleurJeu {
 	}
 
 	private void verifierFinDeLaPioche(){
-		nbCartePioche.setText(Integer.toString(jeu.getManche().getPioche().size()));
 		if(jeu.getManche().getPioche().estVide()){
+			reinitialiserApresFinManche();
 			try {
 				verifierFinDuJeu(jeu.getManche().finDeManche(Tour.piocheVide));
 			} catch (Exception e) {
@@ -201,7 +206,6 @@ public class ControleurJeu {
 		resultatFinPartie = jeu.gainPartie();
 		if(resultatFinPartie == null){
 			afficherWidgetFin(FINMANCHE, resultat);
-			nbCartePioche.setText(Integer.toString(jeu.getManche().getPioche().size()));
 		}else{
 			afficherWidgetFin(FINPARTIE, resultatFinPartie);
 		}
@@ -251,10 +255,10 @@ public class ControleurJeu {
 						textTableauFin.setText(joueurVictorieux + " a gagné la manche !\n" + joueurPerdant + " s'est fait victimiser");
 						break;
 					case Manche.PLUSCARTEATTAQUEDIRECT :
-						textTableauFin.setText(joueurVictorieux + " a plus de cartes pour attaquer directectement son adversaire.\n" + joueurVictorieux + " a gagné la manche !");
+						textTableauFin.setText(joueurVictorieux + " a plus de cartes \n pour attaquer directectement son adversaire.\n" + joueurVictorieux + " a gagné la manche !");
 						break;
 					case Manche.PLUSCARTEMEDIANE :
-						textTableauFin.setText(joueurVictorieux + " étant plus proche de la case médiane....\n" + joueurVictorieux + " a gagné la manche !");
+						textTableauFin.setText(joueurVictorieux + " étant plus proche de la case médiane\n" + joueurVictorieux + " a gagné la manche !");
 						break;
 				}
 			}
