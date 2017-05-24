@@ -228,10 +228,10 @@ public class Piste extends Rectangle implements Visitable {
 			cases.add(cases.get(i));
 		}
 	}
-
-	public void ajouteObservateur(ObjetMouvant objetMouvant) {
+	
+	public Case getCasesNumero(int positionArrivee) {
 		// TODO Auto-generated method stub
-
+		return cases.get(positionArrivee-1);
 	}
 
 	public void reinitialiserCouleurCase() {

@@ -2,7 +2,6 @@ package Modele.Joueur ;
 
 import Modele.Tour;
 import Modele.Joueur.Action;
-import Modele.Joueur.ActionsJouables;
 import Modele.Joueur.Joueur;
 import Modele.Tas.Main;
 import Modele.Plateau.Piste;
@@ -23,9 +22,9 @@ public class Humain extends Joueur {
 	}
 
 	@Override
-	public Action selectionnerAction(ActionsJouables actions_jouables, Tour tour) throws Exception {
-		
-		return null ;// actionHumain(actions_jouables, tour) ;
+	public Action actionIA(Tour tour) throws Exception {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Impossible - James Arthur");
 	}
 
 }

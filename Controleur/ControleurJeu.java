@@ -22,6 +22,7 @@ import Modele.Tour;
 import Modele.Joueur.Action;
 import Modele.Joueur.ActionsJouables;
 import Modele.Joueur.Joueur;
+import Modele.Joueur.IA.IA;
 import Modele.Joueur.Humain;
 import Modele.Plateau.Case;
 import Modele.Tas.Carte;
@@ -113,6 +114,7 @@ public class ControleurJeu {
 	public void init(Jeu j, boolean bjeu){
 		//on initialise le jeu
 		this.setJeu(j);
+		
 		//On modifie le nombre de carte dans la pioche
 		nbCartePioche.setText(Integer.toString(jeu.getManche().getPioche().size()));
 		//on initialise les labels de nom des joueurs
@@ -157,11 +159,57 @@ public class ControleurJeu {
 				gestionTour = PRETAJOUER;
 				buttonGestionTour.setStyle("-fx-background-image:url(/Ressources/finDeTour.png);");
 			}else{
-				System.out.println("ENCOURS");
-				
 				changeDisableMain(jeu.getManche().getTourEnCours().getJoueurPremier(), false);
 				changeDisableMain(jeu.getManche().getTourEnCours().getJoueurSecond(), true);
 			}
+		}
+		
+		//test si il y a une IA qui commence si oui joue son coup
+		debutJeu();
+	}
+	
+	public void debutJeu(){
+		if(jeu.getManche().getTourEnCours().getJoueurPremier() instanceof IA){
+			joueurEnCours = jeu.getManche().getTourEnCours().getJoueurPremier();
+			changeDisableMain(joueurEnCours, true);
+			jouerIA(joueurEnCours);
+		}
+	}
+	
+	//OutKast power - Hey Ah !
+	public void jouerIA(Joueur joueur){
+		try {
+			Action action;
+			Case c;
+			Tour tour;
+			ActionsJouables actions_jouables = new ActionsJouables();
+			
+			tour = jeu.getManche().getTourEnCours();
+			
+			action = joueur.actionIA(jeu.getManche().getTourEnCours());
+			
+			actions_jouables.ajouterAction(action);
+			
+			c = jeu.getPiste().getCasesNumero(action.getPositionArrivee());
+			
+			tour.setActionsJouables(actions_jouables);
+			
+			jeu.getManche().getTourEnCours().executerAction(joueur, c.getX()+5, c.getY()+5);
+			
+			joueur.getMain().setVisible(false);
+			
+			//on passe le button a prêt à jouer
+			buttonGestionTour.setText("Fin De Tour");
+			buttonGestionTour.setDisable(true);
+			gestionTour=FINDETOUR;
+			buttonGestionTour.setStyle("-fx-background-image:url(finDeTour.png);");
+			
+			jeu.getManche().getTourEnCours().joueurAdverse(joueur).getMain().setVisible(true);
+			changeDisableMain(jeu.getManche().getTourEnCours().joueurAdverse(joueur), false);
+			terrain.setDisable(false);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
@@ -425,7 +473,7 @@ public class ControleurJeu {
         	        		Tour tour = jeu.getManche().getTourEnCours();
         	        		
         	        		//on initialise les actions_jouables
-    	                	actions_jouables = tour.getActions_jouables();
+    	                	actions_jouables = tour.getActionsJouables();
 
     	                	//si il y a des actions
     	                	if(actions_jouables != null){
@@ -542,7 +590,7 @@ public class ControleurJeu {
 
             	tour = jeu.getManche().getTourEnCours();
 
-            	actions_jouables = tour.getActions_jouables();
+            	actions_jouables = tour.getActionsJouables();
             	caseHovered = jeu.getPiste().getCaseEvent(event.getX(), event.getY());
 
             	if(caseHovered != null && actions_jouables != null && actions_jouables.size() != 0){
@@ -636,12 +684,18 @@ public class ControleurJeu {
 			changeDisableMain(joueurEnCours, true);
 		}
 
-		//on passe le button a prêt à jouer
-		buttonGestionTour.setText("Prêt A Jouer");
-		joueurEnCours.getMain().setVisible(false);
-		gestionTour=PRETAJOUER;
-		buttonGestionTour.setStyle("-fx-background-image:url(finDeTour.png);");
-
+		if(tour.joueurAdverse(joueurEnCours) instanceof IA){
+			joueurEnCours = tour.joueurAdverse(joueurEnCours); 
+			jouerIA(joueurEnCours);
+			jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours).getMain().setVisible(true);
+		}else{
+			//on passe le button a prêt à jouer
+			buttonGestionTour.setText("Prêt A Jouer");
+			joueurEnCours.getMain().setVisible(false);
+			gestionTour=PRETAJOUER;
+			buttonGestionTour.setStyle("-fx-background-image:url(finDeTour.png);");
+		}
+			
 		//on test les actions de l'adversaire
 		peutFaireAction = jeu.getManche().getTourEnCours().adversairePeutFaireAction(joueurEnCours);
 		//on vérifie la fin de la manche par rapport à ca

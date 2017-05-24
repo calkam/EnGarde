@@ -6,7 +6,8 @@ public class ActionNeutre extends Action {
 	
 	@Override
 	public Carte getCarteAction() {
-		throw new UnsupportedOperationException("Modele.Joueur.ActionNeutre.getCarteAction : Une ActionNeutre n'a pas d'attribut carteAction") ;
+		return null;
+		//throw new UnsupportedOperationException("Modele.Joueur.ActionNeutre.getCarteAction : Une ActionNeutre n'a pas d'attribut carteAction") ;
 	}
 	
 	@Override

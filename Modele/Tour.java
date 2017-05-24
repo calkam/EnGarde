@@ -208,9 +208,9 @@ public class Tour implements Visitable {
 		Enumeration<Action> e;
 		Case caseClicked;
 		boolean trouve = false;
-
+		
 		caseClicked = joueur.getPiste().getCaseEvent(x, y);
-
+		
 		if(caseClicked == null){
 			return false;
 		}
@@ -227,12 +227,10 @@ public class Tour implements Visitable {
 			}
 
 			if(trouve){
-				
 				estAttaque = jouerAction(action, joueur);
 				
 				if(action.getTypeAction() != Joueur.Parade){
 					joueur.remplirMain(pioche);
-					//changerJoueur(joueur);
 				}else{
 					joueur.getMain().deselectionneeToutesLesCartes();
 				}
@@ -318,11 +316,11 @@ public class Tour implements Visitable {
 		this.messageBox = messageBox;
 	}
 
-	public ActionsJouables getActions_jouables() {
+	public ActionsJouables getActionsJouables() {
 		return actions_jouables;
 	}
 
-	public void setActions_jouables(ActionsJouables actions_jouables) {
+	public void setActionsJouables(ActionsJouables actions_jouables) {
 		this.actions_jouables = actions_jouables;
 	}
 

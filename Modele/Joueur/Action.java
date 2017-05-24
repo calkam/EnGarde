@@ -127,7 +127,9 @@ public abstract class Action {
 			default: strTypeAction += "Erreur";
 		}
 		
-		String str = estActionOffensive() ? "ActionOffensive" : estActionNeutre() ? "ActionNeutre" : "ActionDefensive" + " [ typeAction= " + strTypeAction + ", nbCartes= " + nbCartes 
+		String str = estActionOffensive() ? "ActionOffensive" : estActionNeutre() ? "ActionNeutre" : "ActionDefensive";
+		
+		str += " [ typeAction= " + strTypeAction + ", nbCartes= " + nbCartes 
 				+ ", positionArrivee= " + positionArrivee + ", deplacement= " + carteDeplacement + ", defense= " + carteAction + " ]";
 		
 		return str;

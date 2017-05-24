@@ -67,6 +67,8 @@ abstract public class Joueur implements Visitable{
 		this.histo = new Historique (nom) ;
 	}
 	
+	abstract public Action actionIA (Tour tour) throws Exception ;
+	
 	// EQUALS
 	
 	@Override
@@ -487,8 +489,6 @@ abstract public class Joueur implements Visitable{
 	public void setHisto(Historique histo) {
 		this.histo = histo;
 	}
-
-	abstract public Action selectionnerAction(ActionsJouables actions_jouables, Tour tour) throws Exception ;
 	
 	// CLONE
 	
