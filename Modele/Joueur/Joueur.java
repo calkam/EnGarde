@@ -105,8 +105,6 @@ abstract public class Joueur implements Visitable{
 	 * MOTEUR
 	 **/
 	
-	abstract public Action actionIA (Tour tour) throws Exception ;
-	
 	// RÉ-INITIALISATION POSITION FIGURINE
 	
 	public void reinitialiserPositionFigurine() throws Exception {

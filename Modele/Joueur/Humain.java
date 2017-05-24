@@ -27,10 +27,4 @@ public class Humain extends Joueur {
 		throw new UnsupportedOperationException("Impossible - James Arthur");
 	}
 
-	@Override
-	public Action actionIA(Tour tour) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

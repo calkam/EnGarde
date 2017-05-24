@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import Modele.Reglages;
 import Modele.Visitable;
 import Modele.Visiteur;
-import Modele.Composant.ObjetMouvant;
 import Modele.Composant.Rectangle;
 
 

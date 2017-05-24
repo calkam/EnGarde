@@ -186,37 +186,73 @@ public class ControleurJeu {
 			
 			tour = jeu.getManche().getTourEnCours();
 			
-			action = joueur.actionIA(jeu.getManche().getTourEnCours());
+			action = joueur.actionIA(tour);
+
+			System.out.println(action);
 			
 			if(action == null){
 				verifierFinDeManche(joueur, false);
+			}else{
+			
+				actions_jouables.ajouterAction(action);
+				
+				c = jeu.getPiste().getCasesNumero(action.getPositionArrivee());
+				
+				tour.setActionsJouables(actions_jouables);
+				
+				jeu.getManche().getTourEnCours().executerAction(joueur, c.getX()+5, c.getY()+5);
+				
+				if(jeu.getManche().getTourEnCours().getEstAttaque().getC1() == Joueur.Parade){
+					action = joueur.actionIA(jeu.getManche().getTourEnCours());
+					
+					if(action == null){
+						System.out.println("Pas d'action possible");
+					}else{
+						actions_jouables.ajouterAction(action);
+						c = jeu.getPiste().getCasesNumero(action.getPositionArrivee());
+						tour.setActionsJouables(actions_jouables);
+						jeu.getManche().getTourEnCours().executerAction(joueur, c.getX()+5, c.getY()+5);
+					}
+				}
+				
+				joueur.getMain().setVisible(false);
+				
+				finDeTourIA();
 			}
 			
-			actions_jouables.ajouterAction(action);
-			
-			c = jeu.getPiste().getCasesNumero(action.getPositionArrivee());
-			
-			tour.setActionsJouables(actions_jouables);
-			
-			jeu.getManche().getTourEnCours().executerAction(joueur, c.getX()+5, c.getY()+5);
-			
-			joueur.getMain().setVisible(false);
-			
-			System.out.println(actions_jouables);
-			
-			//on passe le button a prêt à jouer
-			buttonGestionTour.setText("Fin De Tour");
-			buttonGestionTour.setDisable(true);
-			gestionTour=FINDETOUR;
-			buttonGestionTour.setStyle("-fx-background-image:url(finDeTour.png);");
-			
-			jeu.getManche().getTourEnCours().joueurAdverse(joueur).getMain().setVisible(true);
-			changeDisableMain(jeu.getManche().getTourEnCours().joueurAdverse(joueur), false);
-			terrain.setDisable(false);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public void finDeTourIA() throws Exception{
+		boolean peutFaireAction;
+		int etatAttaque;
+
+		//on passe le button a prêt à jouer
+		buttonGestionTour.setText("Fin De Tour");
+		buttonGestionTour.setDisable(true);
+		gestionTour=FINDETOUR;
+		buttonGestionTour.setStyle("-fx-background-image:url(finDeTour.png);");
+		
+		jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours).getMain().setVisible(true);
+		changeDisableMain(jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours), false);
+		terrain.setDisable(false);
+		
+		//on test les actions de l'adversaire
+		peutFaireAction = jeu.getManche().getTourEnCours().adversairePeutFaireAction(joueurEnCours);
+		//on vérifie la fin de la manche par rapport à ca
+		verifierFinDeManche(jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours), peutFaireAction);
+
+		//on test si il n'y pas fin de la pioche ( BUG SUREMENT A CE NIVEAU )
+		etatAttaque = jeu.getManche().getTourEnCours().getEstAttaque().getC1();
+		if(etatAttaque == Joueur.PasAttaque || !peutFaireAction){
+			verifierFinDeLaPioche();
+		}
+		
+		//Changement du message
+		jeu.getPiste().getMessageBox().setTexte("Au tour de " + jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours).getNom() + ". Appuyer sur Prêt A Jouer !");
 	}
 
 	//Fonction d'initilisation des Widgets(Labels, button, etc...)
@@ -753,6 +789,7 @@ public class ControleurJeu {
 			mainGauche.setDisable(true);
 			mainDroite.setDisable(false);
 		}
+		debutJeu();
 		//on chache les widgets de fin
 		cacherWidgetFin();
 	}

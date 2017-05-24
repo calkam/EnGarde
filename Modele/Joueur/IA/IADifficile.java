@@ -1,6 +1,7 @@
 package Modele.Joueur.IA;
 
 import Modele.Tour;
+import Modele.Triplet;
 import Modele.Joueur.Action;
 import Modele.Joueur.ActionDefensive;
 import Modele.Joueur.ActionNeutre;
@@ -25,7 +26,15 @@ public class IADifficile extends IA {
 		double risque = 17.0;
 		double reussite = 50.0;
 		
-		if (tour.getEstAttaque().getC1() == 1) { //Attaque directe subie
+		if (tour.getEstAttaque().getC1() == Parade) { //Attaque directe subie
+			Triplet<Integer, Integer, Integer> estAttaque;
+			estAttaque = tour.getEstAttaque();
+			estAttaque.setC1(0);
+			tour.setEstAttaque(estAttaque);
+			action_jouee = actionIA(tour);
+		}
+		
+		if (tour.getEstAttaque().getC1() == AttaqueDirecte) { //Attaque directe subie
 			for (Carte c : main.getMain()){
 				if(c.getContenu() == tour.getEstAttaque().getC3()){ //Parade obligatoire
 					action_jouee = new ActionDefensive(Parade,tour.getEstAttaque().getC2(),getPositionDeMaFigurine(),null,c);
@@ -33,7 +42,7 @@ public class IADifficile extends IA {
 			}
 		}		
 		
-		if (tour.getEstAttaque().getC1() == 2) { //Attaque indirecte subie
+		if (tour.getEstAttaque().getC1() == AttaqueIndirecte) { //Attaque indirecte subie
 			
 			if (main.getNombreCarteGroupe(tour.getEstAttaque().getC3()) >= tour.getEstAttaque().getC2() ) {// Si je peux parer, je pare
 				
@@ -114,7 +123,7 @@ public class IADifficile extends IA {
 			}
 		}
 		
-		if(tour.getEstAttaque().getC1() == pasAttaque){ //Si on a pas encore decider du coup a jouer (si on a pas subie d'attaque indirecte/directe)
+		if(tour.getEstAttaque().getC1() == PasAttaque || tour.getEstAttaque().getC1() == Fuite){ //Si on a pas encore decider du coup a jouer (si on a pas subie d'attaque indirecte/directe)
 			
 			if(tour.getPioche().getNombreCarte() == 1){ //Si il n'y a plus qu'une carte dans la pioche au debut de mon tour
 				
@@ -290,7 +299,7 @@ public class IADifficile extends IA {
 									System.out.println("Risque : "+ Proba +"\n");
 								}
 								
-								if(Proba <= 30){ //Si on calcule un risque de perdre au tour prochain < 0.2, on avance, on choisis, si plusieurs cartes, celle qui nous permet d'avancer le plus possible 
+								if(Proba <= 30){ //Si on calcule un risque de perdre au tourJoueur. prochain < 0.2, on avance, on choisis, si plusieurs cartes, celle qui nous permet d'avancer le plus possible 
 									sans_risque = true;
 									if((action_jouee.equals(new ActionNeutre(Reculer,0,22,new Carte(5))))){
 										action_jouee = new ActionNeutre (Avancer,0,getPositionDeMaFigurine() + direction * c.getContenu(),c);
