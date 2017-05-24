@@ -57,11 +57,12 @@ public abstract class Tas extends Rectangle implements Visitable {
 		nombreCarte[0] = nbCartes;
 	}	
 	public int getNombreCarteGroupe(int i) throws Exception{	
-		if(i > carteValeurMax){
-			throw new Exception("Il n'y pas autant de carte dans la main");
+		if(i > carteValeurMax -1 || i < 1){
+			return 0;
 		}
 		return nombreCarte[i];
 	}
+	
 	public void setNombreCarteGroupe(int i, int nbCartes){
 		nombreCarte[i] = nbCartes;
 	}

@@ -188,6 +188,10 @@ public class ControleurJeu {
 			
 			action = joueur.actionIA(jeu.getManche().getTourEnCours());
 			
+			if(action == null){
+				verifierFinDeManche(joueur, false);
+			}
+			
 			actions_jouables.ajouterAction(action);
 			
 			c = jeu.getPiste().getCasesNumero(action.getPositionArrivee());
@@ -197,6 +201,8 @@ public class ControleurJeu {
 			jeu.getManche().getTourEnCours().executerAction(joueur, c.getX()+5, c.getY()+5);
 			
 			joueur.getMain().setVisible(false);
+			
+			System.out.println(actions_jouables);
 			
 			//on passe le button a prêt à jouer
 			buttonGestionTour.setText("Fin De Tour");
@@ -550,6 +556,11 @@ public class ControleurJeu {
 	        	        			
 	    	    	    			//on modifie le nombre de carte dans la pioche
 	        	        			nbCartePioche.setText(Integer.toString(jeu.getManche().getPioche().size()));
+	        	        			
+	        	        			if(tour.joueurAdverse(joueurEnCours) instanceof IA){
+	        	        				joueurEnCours.getMain().setVisible(false);
+	        	        				joueurEnCours.getMain().setVisible(true);
+	        	        			}
 	        	        		}
     	                	}
         	        	}
@@ -683,18 +694,6 @@ public class ControleurJeu {
 			changeDisableMain(tour.joueurAdverse(joueurEnCours), true);
 			changeDisableMain(joueurEnCours, true);
 		}
-
-		if(tour.joueurAdverse(joueurEnCours) instanceof IA){
-			joueurEnCours = tour.joueurAdverse(joueurEnCours); 
-			jouerIA(joueurEnCours);
-			jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours).getMain().setVisible(true);
-		}else{
-			//on passe le button a prêt à jouer
-			buttonGestionTour.setText("Prêt A Jouer");
-			joueurEnCours.getMain().setVisible(false);
-			gestionTour=PRETAJOUER;
-			buttonGestionTour.setStyle("-fx-background-image:url(finDeTour.png);");
-		}
 			
 		//on test les actions de l'adversaire
 		peutFaireAction = jeu.getManche().getTourEnCours().adversairePeutFaireAction(joueurEnCours);
@@ -709,6 +708,18 @@ public class ControleurJeu {
 		
 		//Changement du message
 		jeu.getPiste().getMessageBox().setTexte("Au tour de " + jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours).getNom() + ". Appuyer sur Prêt A Jouer !");
+		
+		if(tour.joueurAdverse(joueurEnCours) instanceof IA){
+			joueurEnCours = tour.joueurAdverse(joueurEnCours); 
+			jouerIA(joueurEnCours);
+			jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours).getMain().setVisible(true);
+		}else{
+			//on passe le button a prêt à jouer
+			buttonGestionTour.setText("Prêt A Jouer");
+			joueurEnCours.getMain().setVisible(false);
+			gestionTour=PRETAJOUER;
+			buttonGestionTour.setStyle("-fx-background-image:url(finDeTour.png);");
+		}
 	}
 
 	//changement du disable des mains

@@ -71,7 +71,7 @@ public class MainApp extends Application {
         
         initRootLayout();
         //acceuil();
-        jeu("Joueur1", "Facile", "Humain", "IA", true);
+        jeu("Joueur1", "Moyen", "Humain", "IA", true);
     }
     
     /**
