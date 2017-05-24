@@ -245,7 +245,6 @@ public class ControleurJeu {
 				//on vérifie si la partie et fini en envoyant le résultat de la manche
 				verifierFinDuJeu(jeu.getManche().finDeManche(resultat));
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -261,7 +260,6 @@ public class ControleurJeu {
 				//on vérifie si la partie et fini en envoyant le résultat de la manche
 				verifierFinDuJeu(jeu.getManche().finDeManche(Tour.piocheVide));
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -374,7 +372,6 @@ public class ControleurJeu {
 							//on modifie les actions possibles par rapport à la carte clicker
 							modifierActionPossible(1, event.getX(), event.getY());
 						} catch (Exception e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
         	            break;
@@ -394,7 +391,6 @@ public class ControleurJeu {
 							//on modifie les actions possibles par rapport à la carte clicker
 							modifierActionPossible(2, event.getX(), event.getY());
 						} catch (Exception e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
         	            break;
@@ -433,9 +429,8 @@ public class ControleurJeu {
 	        	        		
 		    	            	//on regarde si la case clicker existe et est une action jouable et on l'exécute si possible
 	        	        		try {
-									caseFound = jeu.getManche().getTourEnCours().executerAction(joueurEnCours, (float)event.getX(), (float)event.getY());
+									caseFound = tour.executerAction(joueurEnCours, (float)event.getX(), (float)event.getY());
 								} catch (Exception e2) {
-									// TODO Auto-generated catch block
 									e2.printStackTrace();
 								}
 	        	        		//si on a pu exécuter l'action
@@ -443,25 +438,48 @@ public class ControleurJeu {
 	        	        			//on modifie le button fin de tour
 	        	        			buttonGestionTour.setStyle("-fx-background-image:url(finDeTourC.png);");
 	        	        			//on réinitialise les cartes seléctionné
-	        	        			cartes = new ArrayList<Carte>();
+	        	        			cartes = new ArrayList<Carte>();	        	        			
 	        	        			//test de la parade
-	        	        			if(jeu.getManche().getTourEnCours().getEstAttaque().getC1() != Joueur.Parade){
-	        	        				//si pas de parade
-	        	        				//on empêche le click sur le bouton fin de tour
+	        	        			if(tour.getEstAttaque().getC1() != Joueur.Parade || (tour.getEstAttaque().getC1() == Joueur.Parade && tour.getPioche().estVide())){
+	        	        				//si pas de parade ou une parade mais la pioche est vide
+	        	        				//on autorise le click sur le bouton fin de tour
 	        	        				buttonGestionTour.setDisable(false);
 	        	        				//on empêche le click sur la main
 	        	        				changeDisableMain(joueurEnCours, true);
 	        	        				//on change la messageBox
-	        	        				jeu.getManche().getTourEnCours().getMessageBox().setTexte("Appuyer sur le bouton Fin De Tour");
+	        	        				tour.getMessageBox().setTexte("Appuyer sur le bouton Fin De Tour");
 	        	        				//on empêche le click sur le terrain
 	        	        				terrain.setDisable(true);
-	        	        			}else{
-	        	        				//si on a eu une parade
-	        	        				//on change la messageBox
-	        	        				jeu.getManche().getTourEnCours().getMessageBox().setTexte("Vous venez de parer lancer une contre-attaque");
-	        	        			}
+	        	        			}else if(tour.getEstAttaque().getC1() == Joueur.Parade && !tour.getPioche().estVide()){
+	        	        				//si on a eu une parade et que la pioche n'est pas vide
+	        	        				
+	        	        				//On regarde si on peut effectuer des actions le tour suivant	        	        				
+	        	        				try {
+											ActionsJouables actionsTourSuivant = joueurEnCours.peutFaireAction(tour.getEstAttaque());
+												        	        					
+			        	        			if(actionsTourSuivant.size() == 0 || actionsTourSuivant == null){
+		        	        					//si on ne peut pas contre-attaquer
+		        	        					
+			        	        				//on autorise le click sur le bouton fin de tour
+			        	        				buttonGestionTour.setDisable(false);
+			        	        				//on empêche le click sur la main
+			        	        				changeDisableMain(joueurEnCours, true);
+			        	        				//on change la messageBox
+			        	        				tour.getMessageBox().setTexte("Appuyer sur le bouton Fin De Tour");
+			        	        				//on empêche le click sur le terrain
+			        	        				terrain.setDisable(true);
+		        	        				}else{
+			        	        				//si on peut contre-attaquer		        	        					
+		        	        					
+			        	        				//on change la messageBox
+			        	        				tour.getMessageBox().setTexte("Vous venez de parer, lancez une contre-attaque !");	
+		        	        				}
+										} catch (Exception e1) {
+											e1.printStackTrace();
+										}
+	        	        			}		
 	        	        			
-	        	        			//Affichage des messages, lier à l'action venant d'être jouer
+	        	        			//Affichage des messages, liés à l'action venant d'être jouée
 	        	        			Action action = null;
 	        	        			boolean trouve = false;
 	    	    	            	
@@ -475,7 +493,6 @@ public class ControleurJeu {
 												trouve = true;
 											}
 										} catch (Exception e1) {
-											// TODO Auto-generated catch block
 											e1.printStackTrace();
 										}
 	    	    	    			}
@@ -495,7 +512,7 @@ public class ControleurJeu {
 	    	    		    					messageCourant = joueurEnCours.getNom() + " a avancé de " + action.getCarteDeplacement().getContenu() + " cases vers la position " + action.getPositionArrivee() + " et vous attaque " + action.getNbCartes() + " fois avec une puissance " + action.getCarteAction().getContenu();
 	    	    		    					break;
 	    	    		    				case Joueur.Fuite :
-	    	    		    					messageCourant = joueurEnCours.getNom() + " a fuis de " + action.getCarteDeplacement().getContenu() + " cases";
+	    	    		    					messageCourant = joueurEnCours.getNom() + " a fui de " + action.getCarteDeplacement().getContenu() + " cases";
 	    	    		    					break;
 	    	    		    			}
 	    	    	    			}
@@ -556,7 +573,6 @@ public class ControleurJeu {
 								trouve = true;
 							}
 						} catch (Exception e1) {
-							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
 	    			}
@@ -626,35 +642,49 @@ public class ControleurJeu {
 	//Si FINDETOUR - click sur le button fin de tour
 	private void finDeTour() throws Exception{
 		boolean peutFaireAction;
-		int etatAttaque;
 		Tour tour = jeu.getManche().getTourEnCours();
+		int etatAttaque = tour.getEstAttaque().getC1();
 		
-		//si le joueur n'a pas parer au tour d'avant
-		if(tour.getEstAttaque().getC1() != Joueur.Parade){
-			//on change le disable des mains
-			changeDisableMain(tour.joueurAdverse(joueurEnCours), true);
-			changeDisableMain(joueurEnCours, true);
-		}
-
-		//on passe le button a prêt à jouer
-		buttonGestionTour.setText("Prêt A Jouer");
-		joueurEnCours.getMain().setVisible(false);
-		gestionTour=PRETAJOUER;
-		buttonGestionTour.setStyle("-fx-background-image:url(finDeTour.png);");
-
-		//on test les actions de l'adversaire
-		peutFaireAction = jeu.getManche().getTourEnCours().adversairePeutFaireAction(joueurEnCours);
-		//on vérifie la fin de la manche par rapport à ca
-		verifierFinDeManche(jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours), peutFaireAction);
-
-		//on test si il n'y pas fin de la pioche ( BUG SUREMENT A CE NIVEAU )
-		etatAttaque = jeu.getManche().getTourEnCours().getEstAttaque().getC1();
-		if(etatAttaque == Joueur.PasAttaque || !peutFaireAction){
-			verifierFinDeLaPioche();
-		}
+		ActionsJouables actionsTourSuivant = joueurEnCours.peutFaireAction(tour.getEstAttaque());
 		
-		//Changement du message
-		jeu.getPiste().getMessageBox().setTexte("Au tour de " + jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours).getNom() + ". Appuyer sur Prêt A Jouer !");
+		if(etatAttaque == Joueur.Parade && !tour.getPioche().estVide() && (actionsTourSuivant.size() == 0 || actionsTourSuivant == null)){
+			//on passe le button a prêt à jouer
+			buttonGestionTour.setText("Prêt A Jouer");
+			joueurEnCours.getMain().setVisible(false);
+			gestionTour=PRETAJOUER;
+			buttonGestionTour.setStyle("-fx-background-image:url(finDeTour.png);");
+			
+			verifierFinDeManche(joueurEnCours, false);
+			
+			//Changement du message
+			jeu.getPiste().getMessageBox().setTexte("Au tour de " + jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours).getNom() + ". Appuyer sur Prêt A Jouer !");
+		}else{
+			//si le joueur n'a pas parer au tour d'avant ou a paré mais la pioche est vide
+			if(etatAttaque != Joueur.Parade || (etatAttaque == Joueur.Parade && tour.getPioche().estVide())){
+				//on change le disable des mains
+				changeDisableMain(tour.joueurAdverse(joueurEnCours), true);
+				changeDisableMain(joueurEnCours, true);
+			}
+
+			//on passe le button a prêt à jouer
+			buttonGestionTour.setText("Prêt A Jouer");
+			joueurEnCours.getMain().setVisible(false);
+			gestionTour=PRETAJOUER;
+			buttonGestionTour.setStyle("-fx-background-image:url(finDeTour.png);");
+
+			//on test les actions de l'adversaire
+			peutFaireAction = tour.adversairePeutFaireAction(joueurEnCours);
+			//on vérifie la fin de la manche par rapport à ca
+			verifierFinDeManche(tour.joueurAdverse(joueurEnCours), peutFaireAction);
+
+			//on test si il n'y a pas fin de la pioche
+			if(etatAttaque == Joueur.PasAttaque || etatAttaque == Joueur.Parade){
+				verifierFinDeLaPioche();
+			}
+			
+			//Changement du message
+			jeu.getPiste().getMessageBox().setTexte("Au tour de " + jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours).getNom() + ". Appuyer sur Prêt A Jouer !");
+		}		
 	}
 
 	//changement du disable des mains
@@ -677,7 +707,6 @@ public class ControleurJeu {
 			//on la lance
 			jeu.lancerLaManche();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		//change le disable des mains

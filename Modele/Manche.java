@@ -59,7 +59,6 @@ public class Manche implements Visitable{
 	
 	@Override
 	public boolean accept(Visiteur v) {
-		// TODO Auto-generated method stub
 		return tourEnCours.accept(v);
 	}
 	
@@ -93,7 +92,6 @@ public class Manche implements Visitable{
 			tourEnCours.getJoueurSecond().getMain().setVisible(false);
 			tourEnCours.jouerTour();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
