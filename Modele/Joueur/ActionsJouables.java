@@ -41,7 +41,27 @@ public class ActionsJouables extends Hashtable <Triplet<Integer, Integer, Intege
 		}
 		putIfAbsent(clé, action);
 	}
-
+	
+	public ActionsJouables supprimerAction (Action action) throws Exception {
+		
+		Enumeration<Action> e = this.elements() ;
+		
+		while(e.hasMoreElements()) {
+			
+			Action action_courante = e.nextElement() ;
+			
+			if (action_courante.equals(action)) {
+				
+				this.remove(action) ;
+				return this ;
+			}
+			
+		}
+		
+		return null;
+	}
+	
+	
 	@Override
 	public String toString() {
 		String str = "";		

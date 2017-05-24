@@ -246,6 +246,7 @@ public class Tour implements Visitable {
 		}
 	}
 
+	
 	public boolean adversairePeutFaireAction(Joueur joueur) throws Exception{
 		
 		ActionsJouables testAction;
