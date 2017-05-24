@@ -124,6 +124,10 @@ public class IAFacile extends IA {
 			
 		}
 	
+		if((action_jouee.equals(new ActionNeutre(Reculer,0,22,new Carte(5))))){ 
+			return null;
+		}
+		
 		return action_jouee;
 		
 	}

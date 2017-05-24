@@ -28,4 +28,10 @@ public class Humain extends Joueur {
 		return null ;// actionHumain(actions_jouables, tour) ;
 	}
 
+	@Override
+	public Action actionIA(Tour tour) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
