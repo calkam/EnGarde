@@ -158,6 +158,8 @@ public class ControleurChoixPartie {
 		int nbCaractereMax = 16;
 		String nomCombattant1 = NomCombattant1.getText();
 		String nomCombattant2 = NomCombattant2.getText();
+		
+		
 		if(nomCombattant1.length() == 0){
 			nomCombattant1 = "Joueur1";
 		}
@@ -165,14 +167,26 @@ public class ControleurChoixPartie {
 			nomCombattant2 = "Joueur2";
 		}
 		
-		if(nomCombattant1.length() < nbCaractereMax){
-			if(nomCombattant2.length() < nbCaractereMax){
-				mainApp.jeu(nomCombattant1, nomCombattant2, ChoixCombattant1.getValue(), ChoixCombattant2.getValue(), true);
+		if(ChoixCombattant1.getValue().equals("Humain") && ChoixCombattant2.getValue().equals("Humain")){
+			if(nomCombattant1.length() < nbCaractereMax){
+				if(nomCombattant2.length() < nbCaractereMax){
+					mainApp.jeu(nomCombattant1, nomCombattant2, ChoixCombattant1.getValue(), ChoixCombattant2.getValue(), true);
+				}else{
+					erreurCombattant.setText("Nom Combattant 2 trop long (<16)");
+				}
 			}else{
-				erreurCombattant.setText("Nom Combattant 2 trop long (<16)");
+				erreurCombattant.setText("Nom Combattant 1 trop long (<16)");
 			}
-		}else{
-			erreurCombattant.setText("Nom Combattant 1 trop long (<16)");
+		}else if(ChoixCombattant1.getValue().equals("Humain") && ChoixCombattant2.getValue().equals("IA")){
+			System.out.println("Humain VS IA");
+			System.out.println(NiveauCombattant2.getValue());
+		}else if(ChoixCombattant1.getValue().equals("IA") && ChoixCombattant2.getValue().equals("Humain")){
+			System.out.println("IA VS Humain");
+			System.out.println(NiveauCombattant1.getValue());
+		}else if(ChoixCombattant1.getValue().equals("IA") && ChoixCombattant2.getValue().equals("IA")){
+			System.out.println("IA VS IA");
+			System.out.println(NiveauCombattant1.getValue());
+			System.out.println(NiveauCombattant2.getValue());
 		}
     }
 
