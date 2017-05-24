@@ -10,10 +10,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 import javafx.scene.control.Label;
+import Modele.Jeu;
 import Vue.MainApp;
 
 
@@ -68,6 +70,18 @@ public class ControleurChoixPartie {
 
     @FXML
     private Label erreurCombattant;
+    
+    @FXML
+    private Label TextNombreVie;
+    
+    @FXML
+    private int NombreVie;
+    
+    @FXML 
+    private ImageView plus;
+    
+    @FXML
+    private ImageView moins;    
 
     @FXML
 	private void initialize(){
@@ -76,6 +90,7 @@ public class ControleurChoixPartie {
         Label niveauj1 = new Label();
         Label niveauj2 = new Label();
         
+        TextNombreVie.setText("3");
 		ChoixCombattant1.setValue("Humain");
     	ChoixCombattant1.setItems(ChoixCombattantList);
     	ChoixCombattant2.setValue("IA");
@@ -152,6 +167,90 @@ public class ControleurChoixPartie {
 	public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
     }
+	
+	@FXML
+	private void incrementeVie(){
+		NombreVie = Integer.parseInt(TextNombreVie.getText());
+		if (NombreVie < 5){
+			if(NombreVie == 2){
+				moins.setDisable(false);
+				Image moinsEnable = new Image("moins.png");
+				moins.setImage(moinsEnable);				
+			}
+			NombreVie++;
+			TextNombreVie.setText(Integer.toString(NombreVie));
+		}
+	}
+	
+	@FXML
+	private void handleInPlus(){
+		if (NombreVie == 5){
+			Image plusDisable = new Image("plus_disable.png");
+			plus.setImage(plusDisable);
+			plus.setDisable(true);
+		} else {
+			Image imageC = new Image("SourisEpeePlante.png");
+			mainApp.getPrimaryStage().getScene().setCursor(new ImageCursor(imageC));
+			Image plusHover = new Image("plus_hover.png");
+			plus.setImage(plusHover);
+		}
+	}
+	
+	@FXML
+	private void handleOutPlus(){
+		if (NombreVie == 5){
+			Image plusDisable = new Image("plus_disable.png");
+			plus.setImage(plusDisable);
+			plus.setDisable(true);
+		}else {
+			Image imageC = new Image("SourisEpee.png");
+			mainApp.getPrimaryStage().getScene().setCursor(new ImageCursor(imageC));
+			Image plusEnable = new Image("plus.png");
+			plus.setImage(plusEnable);
+		}
+	}
+	
+	@FXML
+	private void decrementeVie(){
+		NombreVie = Integer.parseInt(TextNombreVie.getText());
+		if (NombreVie > 2){
+			if(NombreVie == 5){
+				plus.setDisable(false);
+				Image plusEnable = new Image("plus.png");
+				plus.setImage(plusEnable);				
+			}
+			NombreVie--;
+			TextNombreVie.setText(Integer.toString(NombreVie));
+		}
+	}	
+	
+	@FXML
+	private void handleInMoins(){
+		if (NombreVie == 2){
+			Image moinsDisable = new Image("moins_disable.png");
+			moins.setImage(moinsDisable);
+			moins.setDisable(true);
+		} else {
+			Image imageC = new Image("SourisEpeePlante.png");
+			mainApp.getPrimaryStage().getScene().setCursor(new ImageCursor(imageC));
+			Image moinsHover = new Image("moins_hover.png");
+			moins.setImage(moinsHover);
+		}
+	}
+	
+	@FXML
+	private void handleOutMoins(){
+		if (NombreVie == 2){
+			Image moinsDisable = new Image("moins_disable.png");
+			moins.setImage(moinsDisable);
+			moins.setDisable(true);
+		} else {
+			Image imageC = new Image("SourisEpee.png");
+			mainApp.getPrimaryStage().getScene().setCursor(new ImageCursor(imageC));
+			Image moinsEnable = new Image("moins.png");
+			moins.setImage(moinsEnable);
+		}
+	}
 
 	@FXML
     private void lancerPartie(){
@@ -167,6 +266,7 @@ public class ControleurChoixPartie {
 		
 		if(nomCombattant1.length() < nbCaractereMax){
 			if(nomCombattant2.length() < nbCaractereMax){
+				Jeu.VICTOIRE = NombreVie;
 				mainApp.jeu(nomCombattant1, nomCombattant2, ChoixCombattant1.getValue(), ChoixCombattant2.getValue(), true);
 			}else{
 				erreurCombattant.setText("Nom Combattant 2 trop long (<16)");

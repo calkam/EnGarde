@@ -7,6 +7,11 @@
 	-fx-font-family:'MORPHEUS';
 }
 
+.labelBIG{
+	-fx-font-family:'MORPHEUS';
+	-fx-font-size:40;
+}
+
 .text{
 	-fx-font-family:'MORPHEUS';
 }

@@ -4,26 +4,28 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="900.0" prefWidth="1600.0" styleClass="background" stylesheets="@Theme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controleur.ControleurChoixPartie">
    <children>
-      <Pane layoutX="449.0" layoutY="242.0" prefHeight="396.0" prefWidth="674.0" styleClass="fondQuitter" AnchorPane.leftAnchor="450.0" AnchorPane.rightAnchor="450.0">
+      <Pane layoutX="449.0" layoutY="242.0" prefHeight="500.0" prefWidth="674.0" styleClass="fondQuitter" AnchorPane.leftAnchor="450.0" AnchorPane.rightAnchor="450.0">
          <children>
             <ChoiceBox fx:id="ChoixCombattant1" layoutX="50.0" layoutY="140.0" prefHeight="26.0" prefWidth="200.0" />
             <ChoiceBox fx:id="NiveauCombattant1" layoutX="320.0" layoutY="140.0" prefHeight="26.0" prefWidth="200.0" visible="false" />
-            <TextField fx:id="NomCombattant1" layoutX="320.0" layoutY="140.0" prefHeight="26.0" prefWidth="200.0"  promptText="Entrez Un Nom..." />
+            <TextField fx:id="NomCombattant1" layoutX="320.0" layoutY="140.0" prefHeight="26.0" prefWidth="200.0" promptText="Entrez Un Nom..." />
             <ChoiceBox fx:id="ChoixCombattant2" layoutX="50.0" layoutY="230.0" prefHeight="26.0" prefWidth="200.0" />
             <ChoiceBox fx:id="NiveauCombattant2" layoutX="320.0" layoutY="230.0" prefHeight="26.0" prefWidth="200.0" />
             <TextField fx:id="NomCombattant2" layoutX="320.0" layoutY="230.0" prefHeight="26.0" prefWidth="200.0" promptText="Entrez Un Nom..." visible="false" />
-            <Button layoutX="40.0" layoutY="330.0" mnemonicParsing="false" onAction="#menu" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefHeight="40.0" prefWidth="200.0" text="Menu Principal">
+            <Button layoutX="40.0" layoutY="430.0" mnemonicParsing="false" onAction="#menu" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefHeight="40.0" prefWidth="200.0" text="Menu Principal">
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button fx:id="buttonDebut" layoutX="310.0" layoutY="330.0" mnemonicParsing="false" onAction="#lancerPartie" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefHeight="40.0" prefWidth="350.0" text="Commencer Le Combat !">
+            <Button fx:id="buttonDebut" layoutX="310.0" layoutY="430.0" mnemonicParsing="false" onAction="#lancerPartie" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefHeight="40.0" prefWidth="350.0" text="Commencer Le Combat !">
                <font>
                   <Font size="18.0" />
                </font>
@@ -48,6 +50,26 @@
                   <Font size="20.0" />
                </font>
             </Label>
+            <Label layoutX="38.0" layoutY="320.0" text="Nombre de vies" textFill="WHITE">
+               <font>
+                  <Font size="35.0" />
+               </font>
+            </Label>
+            <Label fx:id="TextNombreVie" layoutX="110.0" layoutY="350.0" styleClass="labelBIG" stylesheets="@Theme.css" textFill="WHITE">
+               <font>
+                  <Font size="35.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="moins" fitHeight="32.0" fitWidth="32.0" layoutX="60.0" layoutY="368.0" onMouseClicked="#decrementeVie" onMouseEntered="#handleInMoins" onMouseExited="#handleOutMoins" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Ressources/moins.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="plus" fitHeight="32.0" fitWidth="32.0" layoutX="150.0" layoutY="368.0" onMouseClicked="#incrementeVie" onMouseEntered="#handleInPlus" onMouseExited="#handleOutPlus" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Ressources/plus.png" />
+               </image>
+            </ImageView>
          </children></Pane>
    </children>
 </AnchorPane>
