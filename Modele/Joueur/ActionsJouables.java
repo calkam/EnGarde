@@ -18,6 +18,17 @@ public class ActionsJouables extends Hashtable <Triplet<Integer, Integer, Intege
 		super(initialCapacity);
 	}
 	
+	public void ajouterAction(Action action){
+		int id;
+		if(action.getCarteAction() != null){
+			id = action.getCarteAction().getID();
+		}else{
+			id = action.getCarteDeplacement().getID();
+		}
+		Triplet<Integer, Integer, Integer> clé = new Triplet<Integer, Integer, Integer>(id, action.getTypeAction(), action.getNbCartes());
+		putIfAbsent(clé, action);
+	}
+	
 	public void ajouterAction (int classeAction, Integer idCarte, Integer typeAction, int positionArrivee, Carte carteDeplacement, Carte carteAction, int nbCartes) throws Exception {
 		Triplet<Integer, Integer, Integer> clé = new Triplet<Integer, Integer, Integer>(idCarte, typeAction, nbCartes);
 		Action action ; 

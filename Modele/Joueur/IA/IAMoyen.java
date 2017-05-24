@@ -1,11 +1,11 @@
 package Modele.Joueur.IA;
 
 import Modele.Tour;
+import Modele.Triplet;
 import Modele.Joueur.Action;
 import Modele.Joueur.ActionDefensive;
 import Modele.Joueur.ActionNeutre;
 import Modele.Joueur.ActionOffensive;
-import Modele.Joueur.ActionsJouables;
 import Modele.Joueur.Joueur;
 import Modele.Plateau.Piste;
 import Modele.Tas.Carte;
@@ -25,7 +25,17 @@ public class IAMoyen extends IA {
 		int distance = distanceFigurines () ;
 		int surplus = 0;
 		
-		if (tour.getEstAttaque().getC1() == 1) { //Attaque directe subie
+		System.out.println(tour.getEstAttaque().getC1());
+		
+		if (tour.getEstAttaque().getC1() == Parade) { //Attaque directe subie
+			Triplet<Integer, Integer, Integer> estAttaque;
+			estAttaque = tour.getEstAttaque();
+			estAttaque.setC1(0);
+			tour.setEstAttaque(estAttaque);
+			action_jouee = actionIA(tour);
+		}
+		
+		if (tour.getEstAttaque().getC1() == Joueur.AttaqueDirecte) { //Attaque directe subie
 			for (Carte c : main.getMain()){
 				if(c.getContenu() == tour.getEstAttaque().getC3()){
 					action_jouee = new ActionDefensive(Parade,tour.getEstAttaque().getC2(), getPositionDeMaFigurine() ,null,c);
@@ -33,8 +43,8 @@ public class IAMoyen extends IA {
 			}
 		}
 		
-		if (tour.getEstAttaque().getC1() == 2) { //Attaque indirecte subie
-			
+		if (tour.getEstAttaque().getC1() == Joueur.AttaqueIndirecte) { //Attaque indirecte subie
+			System.out.println("ATTAQUE INDIRECT SUBIE\n");
 			if ( 2*(main.getNombreCarteGroupe(distance)) < (5 - tour.getDefausse().getNombreCarteGroupe(distance)) || main.getNombreCarteGroupe(tour.getEstAttaque().getC3()) <= tour.getEstAttaque().getC2() ) {
 				//Si je ne peux pas parer, ou bien que je peux parer mais que je peux perde en attaquant directement juste après
 				action_jouee = ReculerPlus5(distance, tour.getDefausse()); //On regarde si on peux reculer a une distance >= 6
@@ -65,8 +75,8 @@ public class IAMoyen extends IA {
 			
 		}
 		
-		if(tour.getEstAttaque().getC1() == pasAttaque){ //Si on a pas encore decider du coup a jouer (si on a pas subie d'tour.getEstAttaque() indirecte/directe)
-			
+		if(tour.getEstAttaque().getC1() == Joueur.PasAttaque || tour.getEstAttaque().getC1() == Fuite){ //Si on a pas encore decider du coup a jouer (si on a pas subie d'tour.getEstAttaque() indirecte/directe)
+			System.out.println("WOAH\n");
 			if(tour.getPioche().getNombreCarte() == 1){ //Si il n'y a plus qu'une carte dans la pioche au debut de mon tour
 				
 				for (Carte c : main.getMain()) {//On regarde dans le cas ou on est plus avancer que l'adversaire sur la piste, si on peut reculer a une distance >=6 pour gagner directement
@@ -115,15 +125,18 @@ public class IAMoyen extends IA {
 				
 				
 				if((action_jouee.equals(new ActionNeutre(Reculer,0,22,new Carte(5))))){ //Si on ne peut pas tour.getEstAttaque()r directement (sous condition), on teste si on peut tour.getEstAttaque()r directement
-					
+					surplus = 0;
 					for(int i=0; i<main.getNombreCarte(); i++){ //Pour chaque carte de la main
 						for(int j=0; j<main.getNombreCarte(); j++){ //On regarde pour les 4 autres cartes
 							if(i!=j){
 								if((main.getCarte(i).getContenu() + main.getCarte(j).getContenu()) == distance ){ //Si on a (c1+c2)=distance --> tour.getEstAttaque() indirecte possible
-									if( (main.getNombreCarteGroupe(main.getCarte(j).getContenu()) >= 3) || 
-											(main.getNombreCarteGroupe(main.getCarte(j).getContenu()) == 2 && tour.getDefausse().getNombreCarteGroupe(main.getCarte(j).getContenu()) >= 2 ) ||
-											(main.getNombreCarteGroupe(main.getCarte(j).getContenu()) == 1 && tour.getDefausse().getNombreCarteGroupe(main.getCarte(j).getContenu()) >= 3 ) ){
-										action_jouee = new ActionOffensive(AttaqueIndirecte,main.getNombreCarteGroupe(main.getCarte(j).getContenu()), getPositionFigurine(MaFigurine) + direction * main.getCarte(i).getContenu(),main.getCarte(i),main.getCarte(j));
+									if(main.getCarte(i).getContenu() == main.getCarte(j).getContenu()){
+										surplus = 1;
+									}
+									if( (main.getNombreCarteGroupe(main.getCarte(j).getContenu())-surplus >= 3) || 
+											(main.getNombreCarteGroupe(main.getCarte(j).getContenu()) == (2-surplus) && tour.getDefausse().getNombreCarteGroupe(main.getCarte(j).getContenu()) >= 2 ) ||
+											(main.getNombreCarteGroupe(main.getCarte(j).getContenu()) == (1-surplus)  && tour.getDefausse().getNombreCarteGroupe(main.getCarte(j).getContenu()) >= 3 ) ){
+										action_jouee = new ActionOffensive(AttaqueIndirecte,main.getNombreCarteGroupe(main.getCarte(j).getContenu())-surplus , getPositionFigurine(MaFigurine) + direction * main.getCarte(i).getContenu(),main.getCarte(i),main.getCarte(j));
 										//On tour.getEstAttaque() indirectement si on est sur de ne pas perdre au prochain tour
 									}
 											
@@ -136,7 +149,6 @@ public class IAMoyen extends IA {
 				
 				if((action_jouee.equals(new ActionNeutre(Reculer,0,22,new Carte(5))))){ 
 					//Si on a decider de ne pas tour.getEstAttaque()r indirectement, on dois alors choisir la derniere action possible : le deplacement uniquement 
-					System.out.println("RENTRER\n");
 					nbcartes = -100;
 					
 					for (Carte c : main.getMain()) { //On teste si on peut avancer à une case 'non-mortelle'
@@ -197,6 +209,7 @@ public class IAMoyen extends IA {
 				if(peut_reculer(c.getContenu()) != ActionImpossible) { //Test si on peut reculer avec la carte c
 					
 					if (2*(main.getNombreCarteGroupe(c.getContenu())) + defausse.getNombreCarteGroupe(c.getContenu())-5 > nbcartes) {
+						System.out.println("ACTION RECULER TROUVER\n");
 						//Si plusieurs cartes permettent ce déplacement, on choisis celle qui a été le plus jouée :
 						//Tel que nb de cette carte dans main + tour.getDefausse() est maximal !
 						
@@ -241,7 +254,7 @@ public class IAMoyen extends IA {
 			if(peut_reculer(c.getContenu()) != ActionImpossible) { //Test si on peut reculer avec la carte c
 				
 				if (distance + c.getContenu() >= 6) { //Teste si on peut reculer a une distance >= 6 avec la carte c
-					
+					System.out.println("RECULER PLUS DE 5\n");
 					if (2*(main.getNombreCarteGroupe(c.getContenu())) + defausse.getNombreCarteGroupe(c.getContenu())-5 > nbcartes) {
 						//Si plusieurs cartes permettent ce déplacement, on choisis celle qui a été le plus jouée :
 						//Tel que nb de cette carte dans main + tour.getDefausse() est maximal !
@@ -267,12 +280,6 @@ public class IAMoyen extends IA {
 		joueur.setScore(this.getScore());
 		return joueur ;
 		
-	}
-
-	@Override
-	public Action selectionnerAction(ActionsJouables actions_jouables, Tour tour) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
 	}
 	
 }

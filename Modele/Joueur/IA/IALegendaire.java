@@ -597,16 +597,5 @@ public class IALegendaire extends IA {
 		return joueur ;
 		
 	}
-
-	@Override
-	public Action selectionnerAction(ActionsJouables actions_jouables, Tour tour) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	
-
-	
-
 	
 }

@@ -15,7 +15,6 @@ public abstract class ObjetMouvant extends ComposantGraphique {
     
     void observe(Piste p) {
         piste = p;
-        piste.ajouteObservateur(this);
     }
 
     @Override

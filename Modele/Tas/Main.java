@@ -145,7 +145,6 @@ public class Main extends Tas {
 			Carte ci = li.next() ;
 			
 			if (ci.getContenu() == c.getContenu()) {
-				
 				defausse.ajouter(ci) ;
 				li.remove();
 				nombreCarte[c.getContenu()]-- ;
@@ -157,7 +156,7 @@ public class Main extends Tas {
 			
 		}
 			
-		if (cpt < nbCartes) throw new Exception ("Modele.Tas.Main.supprimer : rien a supprimer");
+		//if (cpt < nbCartes) throw new Exception ("Modele.Tas.Main.supprimer : rien a supprimer");
 		
 	}
 

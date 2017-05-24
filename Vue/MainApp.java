@@ -70,8 +70,8 @@ public class MainApp extends Application {
         iActionFaites = Sauvegarde.ENCOURS;
         
         initRootLayout();
-        acceuil();
-        //jeu();
+        //acceuil();
+        jeu("Joueur1", "Moyen", "Humain", "IA", true);
     }
     
     /**

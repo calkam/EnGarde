@@ -156,6 +156,7 @@ public class ControleurChoixPartie {
 	@FXML
     private void lancerPartie(){
 		int nbCaractereMax = 16;
+		
 		String nomCombattant1 = NomCombattant1.getText();
 		String nomCombattant2 = NomCombattant2.getText();
 		

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import Modele.Reglages;
 import Modele.Visitable;
 import Modele.Visiteur;
-import Modele.Composant.ObjetMouvant;
 import Modele.Composant.Rectangle;
 
 
@@ -228,10 +227,10 @@ public class Piste extends Rectangle implements Visitable {
 			cases.add(cases.get(i));
 		}
 	}
-
-	public void ajouteObservateur(ObjetMouvant objetMouvant) {
+	
+	public Case getCasesNumero(int positionArrivee) {
 		// TODO Auto-generated method stub
-
+		return cases.get(positionArrivee-1);
 	}
 
 	public void reinitialiserCouleurCase() {
