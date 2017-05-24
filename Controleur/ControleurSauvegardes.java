@@ -40,4 +40,9 @@ public class ControleurSauvegardes {
 		Image imageC = new Image("/Ressources/SourisEpee.png");
 		mainApp.getPrimaryStage().getScene().setCursor(new ImageCursor(imageC));
 	}
+	
+	@FXML
+	private void menuPrincipal(){
+		mainApp.acceuil();
+	}
 }

@@ -7,8 +7,8 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane minHeight="900.0" minWidth="1600.0" styleClass="background" stylesheets="@Theme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controleur.ControleurSauvegardes">
+   <!-- 
    <children>
-  	<!-- 
       <TableView id="personTable" fixedCellSize="0.0" layoutX="250.0" layoutY="110.0" prefHeight="313.0" prefWidth="500.0" style="-fx-background-color: rgba(0,0,0,0.75);" stylesheets="@Theme.css" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="250.0" AnchorPane.topAnchor="110.0">
          <columns>
             <TableColumn id="firstNameColumn" editable="true" minWidth="-Infinity" prefWidth="242.0" sortable="false" text="Nom" />
@@ -19,16 +19,11 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-       -->
-       <!--
        <Button layoutX="1055.0" layoutY="700.0" mnemonicParsing="false" onMouseClicked="#menu" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefHeight="40.0" prefWidth="275.0" text="Menu Principal" textOverrun="CLIP" AnchorPane.leftAnchor="270.0">
          <font>
             <Font name="Calibri" size="20.0" />
          </font>
       </Button>
-         -->
-      
-      <!-- 
       <Button disable="true" layoutX="1055.0" layoutY="700.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="275.0" text="Charger" textOverrun="CLIP">
          <font>
             <Font name="eufm10" size="20.0" />
@@ -39,7 +34,6 @@
             <Font name="eufm10" size="20.0" />
          </font>
       </Button>
-       -->
-    
    </children>
+         -->
 </AnchorPane>
