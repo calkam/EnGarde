@@ -112,7 +112,6 @@ public class Tour implements Visitable {
 	
 	@Override
 	public boolean accept(Visiteur v) {
-		// TODO Auto-generated method stub
 		boolean retour = false;
 		retour = retour || pioche.accept(v);
 		retour = retour || defausse.accept(v);
@@ -170,27 +169,6 @@ public class Tour implements Visitable {
 						joueur.getPiste().getCases().get(action.getPositionArrivee()-1).setCouleur(Case.JAUNE);
 					}
 				}
-				
-				if(joueur.peutFaireAction(estAttaque).size() != 0){
-					e = actions_jouables.elements();
-	
-					joueur.getPiste().reinitialiserCouleurCase();
-	
-					while(e.hasMoreElements()){
-						action = e.nextElement();
-						if(actionNeutre(action)){
-							joueur.getPiste().getCases().get(action.getPositionArrivee()-1).setCouleur(Case.WHITE);
-						}else if(actionOffensive(action)){
-							joueur.getPiste().getCases().get(joueurAdverse(joueur).getPositionDeMaFigurine()-1).setCouleur(Case.VERT);
-						}else{
-							if(action.getTypeAction() == Joueur.Parade){
-								joueur.getPiste().getCases().get(joueur.getPositionDeMaFigurine()-1).setCouleur(Case.JAUNE);
-							}else if(action.getTypeAction() == Joueur.Fuite){
-								joueur.getPiste().getCases().get(action.getPositionArrivee()-1).setCouleur(Case.JAUNE);
-							}
-						}
-					}
-				}
 			}
 			
 			return JoueurPasPerdu;
@@ -232,7 +210,7 @@ public class Tour implements Visitable {
 				if(action.getTypeAction() != Joueur.Parade){
 					joueur.remplirMain(pioche);
 				}else{
-					joueur.getMain().deselectionneeToutesLesCartes();
+					joueur.getMain().deselectionneeToutesLesCartes();					
 				}
 
 				joueur.getPiste().reinitialiserCouleurCase();
@@ -253,7 +231,7 @@ public class Tour implements Visitable {
 
 		testAction = joueurAdverse(joueur).peutFaireAction(estAttaque);
 		
-		if(testAction.size() == 0){
+		if(testAction.size() == 0 || testAction == null){
 			return false;
 		}
 	
