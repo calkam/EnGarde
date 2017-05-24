@@ -75,35 +75,62 @@ public class ControleurJeu {
     private Label textTableauFin;
 
     //ATTRIBUT
+    //Variable static pour regarder dans verifierFinDeJeu si on est
+    //dans une fin de partie ou de manche
     private final static int FINPARTIE=0;
     private final static int FINMANCHE=1;
 
+    //Variable static pour indiquer dans gestionTour si on doit afficher
+    //prêt à jouer ou  fin de tour
     private final static int FINDETOUR=0;
     private final static int PRETAJOUER=1;
 
+    //arrayList de carte dans lequel on stock les cartes seléctionné pour
+    //définir les action jouables et exécuter les actions
     private ArrayList<Carte> cartes;
 
+    //variable static représentant le joueur entrain de jouer
+    //initilialiser dans modificationActionPossible
     public static Joueur joueurEnCours = null;
+    
+    //Chaine de caractère définissant le message a afficher
+    //dans la messageBox du jeu
     private String messageCourant;
     
+    //Variable s'utilisant avec les variables static
+    //- FINDETOUR
+    //- PRETAJOUER
     private int gestionTour = FINDETOUR;
 
+    //partie mainApp (pas important pour la compréhension du Controleur)
 	public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
     }
 
+	//Initialisation du jeu 2 paramètres
+	//j pour le jeu, et bjeu pour indiquer si y vient de la sauvegarde
+	//ou du menu principal
 	public void init(Jeu j, boolean bjeu){
+		//on initialise le jeu
 		this.setJeu(j);
+		//On modifie le nombre de carte dans la pioche
 		nbCartePioche.setText(Integer.toString(jeu.getManche().getPioche().size()));
+		//on initialise les labels de nom des joueurs
 		nomJoueur1.setText(jeu.getJoueur1().getNom());
 		nomJoueur2.setText(jeu.getJoueur2().getNom());
+		//on initialise le message courant de la message Box
 		messageCourant = "Au tour de " + jeu.getManche().getTourEnCours().getJoueurPremier().getNom();
+		//on initilialise la message Box
 		jeu.getManche().getTourEnCours().getMessageBox().setTexte(messageCourant);
+		//on définit les écouteurs d'évènements sur le terrain (cf. fonctionnement des events JavaFX)
 		setActionTerrain();
 		setActionMain();
+		//On initilialise les cartes seléctionné a vide
 		cartes = new ArrayList<Carte>();
+		//on initilialise les widgets
 		initialiserWidget();
 		
+		//partie cédric Sauvegarde / Revenir Au Jeu
 		if(!bjeu){
 			if(mainApp.getActionFaites() == Sauvegarde.FINDETOUR){
 				System.out.println("Fin de tour ");
@@ -138,77 +165,84 @@ public class ControleurJeu {
 		}
 	}
 
+	//Fonction d'initilisation des Widgets(Labels, button, etc...)
 	public void initialiserWidget(){
+		//on empêche de cliquer sur la main du joueur en seconde position
 		changeDisableMain(jeu.getManche().getTourEnCours().getJoueurSecond(), true);
+		//on cache le tableau de fin de partie et de fin de manche
 		fondTheatre.setVisible(false);
 		tableauFin.setVisible(false);
+		//on met les mains en premier plans et on rend les canvas des mains visibles
         mainDroite.toFront();
         mainGauche.toFront();
         mainDroite.setVisible(true);
         mainGauche.setVisible(true);
+        //on met le terrain et le tableau de fin et le voile au premier plan
         terrain.toFront();
         fondTheatre.toFront();
 		tableauFin.toFront();
+		//on empêche le click sur le bouttons fin de tour
         buttonGestionTour.setDisable(true);
+        //on met la visibilité des cartes de la main à faux
         DessinateurCanvasJavaFx.visibilityActivated = false;
 	}
-
-	@FXML
-	private void handleIn(){
-		Image imageC = new Image("SourisEpeePlante.png");
-		mainApp.getPrimaryStage().getScene().setCursor(new ImageCursor(imageC));
-	}
-
-	@FXML
-	private void handleOut(){
-		Image imageC = new Image("SourisEpee.png");
-		mainApp.getPrimaryStage().getScene().setCursor(new ImageCursor(imageC));
-	}
-
-	@FXML
-	private void handleIsSelected(){
-		if(mainVisible.isSelected()){
-			DessinateurCanvasJavaFx.visibilityActivated = true;
-		}else{
-			DessinateurCanvasJavaFx.visibilityActivated = false;
-		}
-	}
 	
+	//Modifier action possible 2 paramètres
+	//numéro du joueur : 1, 2 (resp. joueur1, joueur2)
+	//x, y : position du click sur une carte
 	private boolean modifierActionPossible(int numJoueur, double x, double y) throws Exception{
 		Carte carteAction;
+		//on initialise le joueurEncours par rapport au numJoueur
 		if(numJoueur==1){
 			joueurEnCours = jeu.getJoueur1();
 		}else{
 			joueurEnCours = jeu.getJoueur2();
 		}
+		//si la carte cliquer existe
 		if((carteAction = joueurEnCours.getMain().getCarteClick(x, y)) != null){
+			//on ajoute la carte si elle est seléctionné:
+			//sinon on la supprime de carte
 	    	if(!cartes.contains(carteAction)){
 	    		cartes.add(carteAction);
 	    	}else{
 	    		cartes.remove(carteAction);
 	    	}
 		}
+		//on regarde les actions possible pour le joueur, avec les cartes seléctionné
     	return jeu.getManche().getTourEnCours().possibiliteAction(joueurEnCours, cartes);
 	}
 	
+	//On réinitialise la partie après une fin de manche
 	private void reinitialiserApresFinManche(){
+		//on remet le bouton fin de tour
 		gestionTour = FINDETOUR;
+		//on change le message courant de la messageBox
 		messageCourant = "Au tours de " + jeu.getManche().getTourEnCours().getJoueurPremier().getNom();
+		//on réinitialise le nombre de carte dans la pioche
 		nbCartePioche.setText("15");
+		//on désactive la seléction de la main
         mainVisible.setSelected(false);
+        //on réactive le click sur terrain
 		terrain.setDisable(false);
 	}
 
+	//vérifier fin de manche : 2 paramètres - test si on est a la fin de la manche si oui la réinitialise et test la fin de partie
+	//joueur le joueur ayant fini son tour
+	//peutFaireAction : boolean spécifiant si il peut encore faire des actions
 	private void verifierFinDeManche(Joueur joueur, boolean peutFaireAction) throws Exception{
 		int resultat;
+		//test si le joueur ne peut plus faire des actions
 		if(!peutFaireAction){
+			//si il ne peut plus on test si il est joueur premier ou second
 			if(joueur.equals(jeu.getManche().getTourEnCours().getJoueurPremier())){
 				resultat = Tour.joueurPremierPerdu;
 			}else{
 				resultat = Tour.joueurSecondPerdu;
 			}
 			try {
+				//on réinitialise la manche
 				reinitialiserApresFinManche();
+				//on vérifie si la partie et fini en envoyant le résultat de la manche
 				verifierFinDuJeu(jeu.getManche().finDeManche(resultat));
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -217,10 +251,14 @@ public class ControleurJeu {
 		}
 	}
 
+	//On vérifie si la pioche n'est pas vide
 	private void verifierFinDeLaPioche(){
+		//si la pioche est vide
 		if(jeu.getManche().getPioche().estVide()){
+			//on réinitialise la manche
 			reinitialiserApresFinManche();
 			try {
+				//on vérifie si la partie et fini en envoyant le résultat de la manche
 				verifierFinDuJeu(jeu.getManche().finDeManche(Tour.piocheVide));
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -229,16 +267,25 @@ public class ControleurJeu {
 		}
 	}
 
+	//On test la fin du jeu
+	//resultat : couple avec le joueur ayant gagné ou match nulle et la façon dont il a gagné
 	private void verifierFinDuJeu(Couple<Integer, Integer> resultat){
+		//couple avec le joueur ayant gagné et le joueur ayant perdu
 		Couple<Integer, Integer> resultatFinPartie;
+		//on réinitialise les cartes sélectionné
 		cartes = new ArrayList<Carte>();
+		//on test quel joueur a gagné la manche et on modifie son score
 		if(resultat.getC1() == Manche.JOUEUR1GAGNE){
 			jeu.changerScore(jeu.getJoueur1());
 		}else if(resultat.getC1() == Manche.JOUEUR2GAGNE){
 			jeu.changerScore(jeu.getJoueur2());
 		}
+		//on affiche la main des 2 joueurs pour pouvoir les comparer
 		DessinateurCanvasJavaFx.visibilityActivated = true;
+		//on test si la partie est fini
 		resultatFinPartie = jeu.gainPartie();
+		//si pas fin de partie, on affiche les widgets de fin de manche
+		//sinon ceux de fin de partie
 		if(resultatFinPartie == null){
 			afficherWidgetFin(FINMANCHE, resultat);
 		}else{
@@ -246,17 +293,23 @@ public class ControleurJeu {
 		}
 	}
 
+	//on cache les widgets de fin de partie
 	public void cacherWidgetFin(){
 		fondTheatre.setVisible(false);
 		tableauFin.setVisible(false);
 	}
 
+	//affichage des widgets de fin
 	public void afficherWidgetFin(int typeFin, Couple<Integer, Integer> resultat){
+		//chaine de caractère, avec le nom du joueur victorieux, et du perdant
 		String joueurVictorieux = "";
 		String joueurPerdant = "";
+		//on affiche les 2 widgets de fin
 		fondTheatre.setVisible(true);
 		tableauFin.setVisible(true);
+		//si on a une fin de partie
 		if(typeFin == FINPARTIE){
+			//on affiche les messages de fin de partie dans le tableau de fin
 			buttonBarFinPartie.setVisible(true);
 			buttonBarFinManche.setVisible(false);
 
@@ -271,6 +324,7 @@ public class ControleurJeu {
 			textTableauFin.setText(joueurVictorieux + " a triomphé de son adversaire !\n Gloire à " + joueurVictorieux +"!\n "+ joueurPerdant + " est une victime");
 
 		}else if(typeFin == FINMANCHE){
+			//on affiche les messages de fin de manche dans le tableau de fin
 			buttonBarFinPartie.setVisible(false);
 			buttonBarFinManche.setVisible(true);
 			
@@ -298,27 +352,31 @@ public class ControleurJeu {
 				}
 			}
 
+			//on désactive le button de fin de tour et on remet le texte fin de tour dedans
 			buttonGestionTour.setText("Fin De Tour");
 			buttonGestionTour.setDisable(true);
 		}
 
+		//on réaffiche les mains
 		mainDroite.setVisible(true);
 		mainGauche.setVisible(true);
 	}
 
 	//GESTION DES ACTIONS
 	private void setActionMain(){
+		//quand on click sur la main du joueur1
 		mainGauche.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
             	switch (event.getButton()) {
         	        case PRIMARY:
-					try {
-						modifierActionPossible(1, event.getX(), event.getY());
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+						try {
+							//on modifie les actions possibles par rapport à la carte clicker
+							modifierActionPossible(1, event.getX(), event.getY());
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
         	            break;
         	        default:
         	            break;
@@ -326,17 +384,19 @@ public class ControleurJeu {
             }
         });
 
+		//quand on click sur la main du joueur2
 		mainDroite.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
             	switch (event.getButton()) {
         	        case PRIMARY:
-					try {
-						modifierActionPossible(2, event.getX(), event.getY());
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+						try {
+							//on modifie les actions possibles par rapport à la carte clicker
+							modifierActionPossible(2, event.getX(), event.getY());
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
         	            break;
         	        default:
         	            break;
@@ -345,7 +405,9 @@ public class ControleurJeu {
         });
 	}
 
+	//event sur le terrain
 	private void setActionTerrain(){
+		//quand on click sur le terrain
 		terrain.setOnMouseClicked(new EventHandler<MouseEvent>() {
             private ActionsJouables actions_jouables;
 
@@ -356,35 +418,50 @@ public class ControleurJeu {
             	
             	switch (event.getButton()) {
         	        case PRIMARY:
-
+        	        	//on empêche les actions si pas de joueur seléctionné 
         	        	if(joueurEnCours != null){
+        	        		//on crée une énumération des actions_jouables
         	        		Enumeration<Action> e;
         	        		Tour tour = jeu.getManche().getTourEnCours();
         	        		
+        	        		//on initialise les actions_jouables
     	                	actions_jouables = tour.getActions_jouables();
 
+    	                	//si il y a des actions
     	                	if(actions_jouables != null){
 		    	            	e = actions_jouables.elements();
 	        	        		
+		    	            	//on regarde si la case clicker existe et est une action jouable et on l'exécute si possible
 	        	        		try {
 									caseFound = jeu.getManche().getTourEnCours().executerAction(joueurEnCours, (float)event.getX(), (float)event.getY());
 								} catch (Exception e2) {
 									// TODO Auto-generated catch block
 									e2.printStackTrace();
 								}
+	        	        		//si on a pu exécuter l'action
 	        	        		if(caseFound){
+	        	        			//on modifie le button fin de tour
 	        	        			buttonGestionTour.setStyle("-fx-background-image:url(finDeTourC.png);");
+	        	        			//on réinitialise les cartes seléctionné
 	        	        			cartes = new ArrayList<Carte>();
+	        	        			//test de la parade
 	        	        			if(jeu.getManche().getTourEnCours().getEstAttaque().getC1() != Joueur.Parade){
+	        	        				//si pas de parade
+	        	        				//on empêche le click sur le bouton fin de tour
 	        	        				buttonGestionTour.setDisable(false);
+	        	        				//on empêche le click sur la main
 	        	        				changeDisableMain(joueurEnCours, true);
+	        	        				//on change la messageBox
 	        	        				jeu.getManche().getTourEnCours().getMessageBox().setTexte("Appuyer sur le bouton Fin De Tour");
+	        	        				//on empêche le click sur le terrain
 	        	        				terrain.setDisable(true);
 	        	        			}else{
+	        	        				//si on a eu une parade
+	        	        				//on change la messageBox
 	        	        				jeu.getManche().getTourEnCours().getMessageBox().setTexte("Vous venez de parer lancer une contre-attaque");
 	        	        			}
 	        	        			
-	        	        			//Affichage des messages
+	        	        			//Affichage des messages, lier à l'action venant d'être jouer
 	        	        			Action action = null;
 	        	        			boolean trouve = false;
 	    	    	            	
@@ -423,6 +500,7 @@ public class ControleurJeu {
 	    	    		    			}
 	    	    	    			}
 	        	        			
+	    	    	    			//on modifie le nombre de carte dans la pioche
 	        	        			nbCartePioche.setText(Integer.toString(jeu.getManche().getPioche().size()));
 	        	        		}
     	                	}
@@ -435,10 +513,13 @@ public class ControleurJeu {
             }
         });
 
+		//si on quitte le terrain
 		terrain.setOnMouseExited(new EventHandler<MouseEvent>() {
 			
 			public void handle(MouseEvent event){
+				//si le terrain n'est pas clickable
 				if(!terrain.isDisable()){
+					//on modifie le message courant
 					Tour tour = jeu.getManche().getTourEnCours();
 					tour.getMessageBox().setTexte(messageCourant);
 				}
@@ -446,9 +527,11 @@ public class ControleurJeu {
 			
 		});
 		
+		//si on bouge dans le terrain
 		terrain.setOnMouseMoved(new EventHandler<MouseEvent>() {
             private ActionsJouables actions_jouables;
 
+            //si on passe sur une case on modifie le message courant de la message Box
 			@Override
             public void handle(MouseEvent event) {
             	Case caseHovered;
@@ -511,52 +594,70 @@ public class ControleurJeu {
         });
 	}
 
+	//définit l'action a effectuer au click sur le boutton fin de tour
 	@FXML
 	private void gestionTour() throws Exception{
+		//si FINDETOUR
 		if(gestionTour == FINDETOUR){
 			finDeTour();
+		//SI PRETAJOUER
 		}else if(gestionTour == PRETAJOUER){
 			pretAJouer();
 		}
 	}
 
+	//Si PRETAJOUER - click sur le button prêt à jouer
 	private void pretAJouer(){
 		Tour tour = jeu.getManche().getTourEnCours();
+		//on change de joueur dans le moteur
 		tour.changerJoueur(joueurEnCours);
+		//on repasse le button à fin de tour et on le désactive
 		buttonGestionTour.setText("Fin De Tour");
 		buttonGestionTour.setDisable(true);
+		//on repasse la main du joueur adverse a clickable
 		changeDisableMain(tour.joueurAdverse(joueurEnCours), false);
 		gestionTour=FINDETOUR;
+		//on change le message courant
 		jeu.getPiste().getMessageBox().setTexte(messageCourant);
+		//on autorise a clicker sur la piste
 		terrain.setDisable(false);
 	}
 
+	//Si FINDETOUR - click sur le button fin de tour
 	private void finDeTour() throws Exception{
 		boolean peutFaireAction;
 		int etatAttaque;
 		Tour tour = jeu.getManche().getTourEnCours();
 		
+		//si le joueur n'a pas parer au tour d'avant
 		if(tour.getEstAttaque().getC1() != Joueur.Parade){
+			//on change le disable des mains
 			changeDisableMain(tour.joueurAdverse(joueurEnCours), true);
 			changeDisableMain(joueurEnCours, true);
 		}
 
+		//on passe le button a prêt à jouer
 		buttonGestionTour.setText("Prêt A Jouer");
 		joueurEnCours.getMain().setVisible(false);
 		gestionTour=PRETAJOUER;
 		buttonGestionTour.setStyle("-fx-background-image:url(finDeTour.png);");
 
+		//on test les actions de l'adversaire
 		peutFaireAction = jeu.getManche().getTourEnCours().adversairePeutFaireAction(joueurEnCours);
+		//on vérifie la fin de la manche par rapport à ca
 		verifierFinDeManche(jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours), peutFaireAction);
 
+		//on test si il n'y pas fin de la pioche ( BUG SUREMENT A CE NIVEAU )
 		etatAttaque = jeu.getManche().getTourEnCours().getEstAttaque().getC1();
 		if(etatAttaque == Joueur.PasAttaque || !peutFaireAction){
 			verifierFinDeLaPioche();
 		}
 		
+		//Changement du message
 		jeu.getPiste().getMessageBox().setTexte("Au tour de " + jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours).getNom() + ". Appuyer sur Prêt A Jouer !");
 	}
 
+	//changement du disable des mains
 	public void changeDisableMain(Joueur joueur, boolean disable){
 		if(joueur.getMain().getCote() == Main.droite){
 			mainDroite.setDisable(disable);
@@ -565,16 +666,21 @@ public class ControleurJeu {
 		}
 	}
 
+	//on passe à la manche suivante
 	@FXML
 	private void mancheSuivante(){
+		//on change la variable de main visible
 		DessinateurCanvasJavaFx.visibilityActivated = false;
+		//on créer une nouvelle manche
 		jeu.nouvelleManche();
 		try {
+			//on la lance
 			jeu.lancerLaManche();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		//change le disable des mains
 		if(jeu.getManche().getTourEnCours().getJoueurPremier().equals(jeu.getJoueur1())){
 			mainGauche.setDisable(false);
 			mainDroite.setDisable(true);
@@ -582,6 +688,7 @@ public class ControleurJeu {
 			mainGauche.setDisable(true);
 			mainDroite.setDisable(false);
 		}
+		//on chache les widgets de fin
 		cacherWidgetFin();
 	}
 
@@ -590,6 +697,7 @@ public class ControleurJeu {
 		mainApp.acceuil();
 	}
 
+	//on lance une nouvelle partie
 	@FXML
 	private void nouvellePartie(){
 		String type1 = jeu.getJoueur1() instanceof Humain ? "Humain" : "IA" ;
@@ -597,6 +705,30 @@ public class ControleurJeu {
 		mainApp.jeu(jeu.getJoueur1().getNom(), jeu.getJoueur2().getNom(), type1, type2, true);
 	}
 
+	//Pour changer le curseur
+	@FXML
+	private void handleIn(){
+		Image imageC = new Image("SourisEpeePlante.png");
+		mainApp.getPrimaryStage().getScene().setCursor(new ImageCursor(imageC));
+	}
+
+	//Pour changer le curseur
+	@FXML
+	private void handleOut(){
+		Image imageC = new Image("SourisEpee.png");
+		mainApp.getPrimaryStage().getScene().setCursor(new ImageCursor(imageC));
+	}
+
+	//on seléctionne ou on desélectionne la main visible
+	@FXML
+	private void handleIsSelected(){
+		if(mainVisible.isSelected()){
+			DessinateurCanvasJavaFx.visibilityActivated = true;
+		}else{
+			DessinateurCanvasJavaFx.visibilityActivated = false;
+		}
+	}
+	
 	public Jeu getJeu() {
 		return jeu;
 	}
