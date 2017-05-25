@@ -63,7 +63,7 @@
             <Font size="57.0" />
          </font>
       </Label>
-      <Label fx:id="nomJoueur1" alignment="CENTER" layoutX="14.0" layoutY="90.0" prefHeight="42.0" prefWidth="300.0" stylesheets="@Theme.css" text="" textAlignment="RIGHT">
+      <Label fx:id="nomJoueur1" alignment="CENTER" layoutX="14.0" layoutY="90.0" prefHeight="42.0" prefWidth="320.0" stylesheets="@Theme.css" text="" textAlignment="RIGHT">
          <font>
             <Font size="40.0" />
          </font>
@@ -73,7 +73,7 @@
             <Font size="18.0" />
          </font>
       </CheckBox>
-      <Label fx:id="nomJoueur2" alignment="CENTER" layoutX="1250.0" layoutY="90.0" prefHeight="42.0" prefWidth="300.0" text="" textAlignment="RIGHT">
+      <Label fx:id="nomJoueur2" alignment="CENTER" layoutX="1230.0" layoutY="90.0" prefHeight="42.0" prefWidth="320.0" text="" textAlignment="RIGHT">
          <font>
             <Font size="40.0" />
          </font>

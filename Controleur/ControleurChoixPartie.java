@@ -258,7 +258,7 @@ public class ControleurChoixPartie {
 
 	@FXML
     private void lancerPartie(){
-		int nbCaractereMax = 16;
+		int nbCaractereMax = 12;
 
 		String nomCombattant1 = NomCombattant1.getText();
 		String nomCombattant2 = NomCombattant2.getText();
@@ -297,10 +297,10 @@ public class ControleurChoixPartie {
 				Jeu.VICTOIRE = NombreVie;
 				mainApp.jeu(nomCombattant1, nomCombattant2, typeCombattant1, typeCombattant2, true);
 			}else{
-				erreurCombattant.setText("Nom Combattant 2 trop long (<16)");
+				erreurCombattant.setText("Nom Combattant 2 trop long (<12)");
 			}
 		}else{
-			erreurCombattant.setText("Nom Combattant 1 trop long (<16)");
+			erreurCombattant.setText("Nom Combattant 1 trop long (<12)");
 		}
     }
 

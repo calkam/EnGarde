@@ -222,7 +222,6 @@ public class ControleurJeu {
 			finDeTourIA();
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -410,7 +409,7 @@ public class ControleurJeu {
 				joueurPerdant = jeu.getJoueur1().getNom();
 			}
 
-			textTableauFin.setText(joueurVictorieux + " a triomphé de son adversaire !\n Gloire à " + joueurVictorieux +"!\n "+ joueurPerdant + " est une victime");
+			textTableauFin.setText(joueurVictorieux + " a triomphé\nde son adversaire ! Gloire à\n" + joueurVictorieux +" !\n"+ joueurPerdant + " est une victime");
 
 		}else if(typeFin == FINMANCHE){
 			//on affiche les messages de fin de manche dans le tableau de fin
@@ -426,17 +425,17 @@ public class ControleurJeu {
 			}
 
 			if(resultat.getC1() == Manche.MATCHNULLE){
-				textTableauFin.setText("Manche nulle !?\nFaut vraiment le vouloir...");
+				textTableauFin.setText("Manche nulle !?\nFaut vraiment le vouloir !");
 			}else{
 				switch(resultat.getC2()){
 					case Manche.VICTOIRESIMPLE :
-						textTableauFin.setText(joueurVictorieux + " a gagné la manche !\n" + joueurPerdant + " s'est fait victimiser");
+						textTableauFin.setText(joueurVictorieux + "\na gagné la manche !\n" + joueurPerdant + " a perdu\ncar il ne pouvait jouer aucune carte");
 						break;
 					case Manche.PLUSCARTEATTAQUEDIRECT :
-						textTableauFin.setText(joueurVictorieux + " a plus de cartes \n pour attaquer directectement son adversaire.\n" + joueurVictorieux + " a gagné la manche !");
+						textTableauFin.setText(joueurVictorieux + " a gagné la\nmanche ! " + joueurVictorieux + "\na plus de cartes pour attaquer\ndirectectement son adversaire");
 						break;
 					case Manche.PLUSCARTEMEDIANE :
-						textTableauFin.setText(joueurVictorieux + " étant plus proche de la case médiane\n" + joueurVictorieux + " a gagné la manche !");
+						textTableauFin.setText(joueurVictorieux + " étant plus\nproche de la case médiane\n" + joueurVictorieux + "\na gagné la manche !");
 						break;
 				}
 			}
