@@ -143,7 +143,7 @@ public class ControleurJeu {
 				buttonGestionTour.setDisable(false);
 				buttonGestionTour.setText("Fin de Tour");
 				gestionTour = FINDETOUR;
-				buttonGestionTour.setStyle("-fx-background-image:url(/Ressources/finDeTourC.png);");
+				buttonGestionTour.setStyle("-fx-background-image:url(finDeTourC.png);");
 
 			}else if(mainApp.getActionFaites() == Sauvegarde.ENTREDEUX){
 				messageCourant = "Appuyer sur prêt ";
@@ -155,7 +155,7 @@ public class ControleurJeu {
 				buttonGestionTour.setDisable(false);
 				buttonGestionTour.setText("Pret à jouer");
 				gestionTour = PRETAJOUER;
-				buttonGestionTour.setStyle("-fx-background-image:url(/Ressources/finDeTour.png);");
+				buttonGestionTour.setStyle("-fx-background-image:url(finDeTour.png);");
 			}else{
 				changeDisableMain(jeu.getManche().getTourEnCours().getJoueurPremier(), false);
 				changeDisableMain(jeu.getManche().getTourEnCours().getJoueurSecond(), true);

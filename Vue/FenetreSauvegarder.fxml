@@ -5,21 +5,21 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane cache="true" cacheHint="QUALITY" focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="650.0" styleClass="fondSauvegarde" stylesheets="@Theme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controleur.ControleurAlertQuitter">
+<AnchorPane cache="true" cacheHint="QUALITY" focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="650.0" styleClass="fondQuitter" stylesheets="@Theme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controleur.ControleurAlertQuitter">
    <children>   
-   	 <Text fill="#f8f8f8" layoutX="100.0" layoutY="52.0" smooth="false" stroke="BLACK" text="Veuillez saisir le nom de la sauvegarde:" wrappingWidth="600">
+   	 <Text fill="#f8f8f8" layoutX="100.0" layoutY="52.0" smooth="false" text="Veuillez saisir le nom de la sauvegarde:" wrappingWidth="600" styleClass="label">
          <font>
-            <Font name="Calibri" size="20.0" />
+            <Font size="20.0" />
          </font>
       </Text>
-      <Text fill="#f8f8f8" layoutX="180.0" layoutY="100.0" smooth="false" stroke="BLACK" text="Name:" wrappingWidth="60">
+      <Text fill="#f8f8f8" layoutX="180.0" layoutY="100.0" smooth="false" text="Name:" wrappingWidth="60" styleClass="label">
          <font>
-            <Font name="Calibri" size="14.0" />
+            <Font size="20.0" />
          </font>
       </Text>     
-      <Button layoutX="100.0" layoutY="140.0" mnemonicParsing="false" onAction="#handleAnnuler" prefHeight="40.0" prefWidth="175.0" text="Annuler">
+      <Button layoutX="100.0" layoutY="140.0" mnemonicParsing="false" onAction="#handleAnnuler" prefHeight="40.0" prefWidth="175.0" text="Annuler" styleClass="label">
          <font>
-            <Font name="Calibri" size="20.0" />
+            <Font size="20.0" />
          </font>
       </Button>
    </children>

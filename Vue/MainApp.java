@@ -331,14 +331,14 @@ public class MainApp extends Application {
             dialogStage.initOwner(primaryStage);
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
-
+            
             Image imageC = new Image("SourisEpee.png");
             scene.setCursor(new ImageCursor(imageC));
 
 
             TextField textField = new TextField ();
             textField.setLayoutX(250);
-            textField.setLayoutY(80);
+            textField.setLayoutY(70);
             textField.setMinWidth(250);
             page.getChildren().add(textField);
 
