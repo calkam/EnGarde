@@ -93,11 +93,11 @@ public class ControleurJeu {
     //variable static représentant le joueur entrain de jouer
     //initilialiser dans modificationActionPossible
     public static Joueur joueurEnCours = null;
-    
+
     //Chaine de caractère définissant le message a afficher
     //dans la messageBox du jeu
     private String messageCourant;
-    
+
     //Variable s'utilisant avec les variables static
     //- FINDETOUR
     //- PRETAJOUER
@@ -114,7 +114,7 @@ public class ControleurJeu {
 	public void init(Jeu j, boolean bjeu){
 		//on initialise le jeu
 		this.setJeu(j);
-		
+
 		//On modifie le nombre de carte dans la pioche
 		nbCartePioche.setText(Integer.toString(jeu.getManche().getPioche().size()));
 		//on initialise les labels de nom des joueurs
@@ -131,29 +131,27 @@ public class ControleurJeu {
 		cartes = new ArrayList<Carte>();
 		//on initilialise les widgets
 		initialiserWidget();
-		
+
 		//partie cédric Sauvegarde / Revenir Au Jeu
 		if(!bjeu){
 			if(mainApp.getActionFaites() == Sauvegarde.FINDETOUR){
-				System.out.println("Fin de tour ");
-				
 				messageCourant = "Appuyer sur Fin de Tour";
 				jeu.getManche().getTourEnCours().getMessageBox().setTexte(messageCourant);
-				
+
 				changeDisableMain(jeu.getManche().getTourEnCours().getJoueurPremier(), true);
-				
+
 				buttonGestionTour.setDisable(false);
 				buttonGestionTour.setText("Fin de Tour");
 				gestionTour = FINDETOUR;
 				buttonGestionTour.setStyle("-fx-background-image:url(/Ressources/finDeTourC.png);");
-				
-				
+
 			}else if(mainApp.getActionFaites() == Sauvegarde.ENTREDEUX){
-				System.out.println("Entre deux ");
-				
+				messageCourant = "Appuyer sur prêt ";
+				jeu.getManche().getTourEnCours().getMessageBox().setTexte(messageCourant);
+
 				changeDisableMain(jeu.getManche().getTourEnCours().getJoueurPremier(), true);
 				changeDisableMain(jeu.getManche().getTourEnCours().getJoueurSecond(), true);
-				
+
 				buttonGestionTour.setDisable(false);
 				buttonGestionTour.setText("Pret à jouer");
 				gestionTour = PRETAJOUER;
@@ -163,11 +161,11 @@ public class ControleurJeu {
 				changeDisableMain(jeu.getManche().getTourEnCours().getJoueurSecond(), true);
 			}
 		}
-		
+
 		//test si il y a une IA qui commence si oui joue son coup
 		debutJeu();
 	}
-	
+
 	public void debutJeu(){
 		if(jeu.getManche().getTourEnCours().getJoueurPremier() instanceof IA){
 			joueurEnCours = jeu.getManche().getTourEnCours().getJoueurPremier();
@@ -175,7 +173,7 @@ public class ControleurJeu {
 			jouerIA(joueurEnCours);
 		}
 	}
-	
+
 	//OutKast power - Hey Ah !
 	public void jouerIA(Joueur joueur){
 		try {
@@ -183,28 +181,28 @@ public class ControleurJeu {
 			Case c;
 			Tour tour;
 			ActionsJouables actions_jouables = new ActionsJouables();
-			
+
+			joueurEnCours = joueur;
+
 			tour = jeu.getManche().getTourEnCours();
-			
+
 			action = joueur.actionIA(tour);
 
-			System.out.println(action);
-			
 			if(action == null){
 				verifierFinDeManche(joueur, false);
 			}else{
-			
+
 				actions_jouables.ajouterAction(action);
-				
+
 				c = jeu.getPiste().getCasesNumero(action.getPositionArrivee());
-				
+
 				tour.setActionsJouables(actions_jouables);
-				
+
 				jeu.getManche().getTourEnCours().executerAction(joueur, c.getX()+5, c.getY()+5);
-				
+
 				if(jeu.getManche().getTourEnCours().getEstAttaque().getC1() == Joueur.Parade){
 					action = joueur.actionIA(jeu.getManche().getTourEnCours());
-					
+
 					if(action == null){
 						System.out.println("Pas d'action possible");
 					}else{
@@ -214,18 +212,19 @@ public class ControleurJeu {
 						jeu.getManche().getTourEnCours().executerAction(joueur, c.getX()+5, c.getY()+5);
 					}
 				}
-				
-				joueur.getMain().setVisible(false);
-				
-				finDeTourIA();
+
 			}
-			
+
+			joueur.getMain().setVisible(false);
+
+			finDeTourIA();
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void finDeTourIA() throws Exception{
 		boolean peutFaireAction;
 		int etatAttaque;
@@ -235,11 +234,11 @@ public class ControleurJeu {
 		buttonGestionTour.setDisable(true);
 		gestionTour=FINDETOUR;
 		buttonGestionTour.setStyle("-fx-background-image:url(finDeTour.png);");
-		
+
 		jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours).getMain().setVisible(true);
 		changeDisableMain(jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours), false);
 		terrain.setDisable(false);
-		
+
 		//on test les actions de l'adversaire
 		peutFaireAction = jeu.getManche().getTourEnCours().adversairePeutFaireAction(joueurEnCours);
 		//on vérifie la fin de la manche par rapport à ca
@@ -250,7 +249,7 @@ public class ControleurJeu {
 		if(etatAttaque == Joueur.PasAttaque || !peutFaireAction){
 			verifierFinDeLaPioche();
 		}
-		
+
 		//Changement du message
 		jeu.getPiste().getMessageBox().setTexte("Au tour de " + jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours).getNom() + ". Appuyer sur Prêt A Jouer !");
 	}
@@ -276,7 +275,7 @@ public class ControleurJeu {
         //on met la visibilité des cartes de la main à faux
         DessinateurCanvasJavaFx.visibilityActivated = false;
 	}
-	
+
 	//Modifier action possible 2 paramètres
 	//numéro du joueur : 1, 2 (resp. joueur1, joueur2)
 	//x, y : position du click sur une carte
@@ -301,7 +300,7 @@ public class ControleurJeu {
 		//on regarde les actions possible pour le joueur, avec les cartes seléctionné
     	return jeu.getManche().getTourEnCours().possibiliteAction(joueurEnCours, cartes);
 	}
-	
+
 	//On réinitialise la partie après une fin de manche
 	private void reinitialiserApresFinManche(){
 		//on remet le bouton fin de tour
@@ -415,7 +414,7 @@ public class ControleurJeu {
 			//on affiche les messages de fin de manche dans le tableau de fin
 			buttonBarFinPartie.setVisible(false);
 			buttonBarFinManche.setVisible(true);
-			
+
 			if(resultat.getC1() == Manche.JOUEUR1GAGNE){
 				joueurVictorieux = jeu.getJoueur1().getNom();
 				joueurPerdant = jeu.getJoueur2().getNom();
@@ -499,24 +498,24 @@ public class ControleurJeu {
 
 			@Override
             public void handle(MouseEvent event) {
-            	
+
             	boolean caseFound = false ;
-            	
+
             	switch (event.getButton()) {
         	        case PRIMARY:
-        	        	//on empêche les actions si pas de joueur seléctionné 
+        	        	//on empêche les actions si pas de joueur seléctionné
         	        	if(joueurEnCours != null){
         	        		//on crée une énumération des actions_jouables
         	        		Enumeration<Action> e;
         	        		Tour tour = jeu.getManche().getTourEnCours();
-        	        		
+
         	        		//on initialise les actions_jouables
     	                	actions_jouables = tour.getActionsJouables();
 
     	                	//si il y a des actions
     	                	if(actions_jouables != null){
 		    	            	e = actions_jouables.elements();
-	        	        		
+
 		    	            	//on regarde si la case clicker existe et est une action jouable et on l'exécute si possible
 	        	        		try {
 									caseFound = tour.executerAction(joueurEnCours, (float)event.getX(), (float)event.getY());
@@ -528,7 +527,7 @@ public class ControleurJeu {
 	        	        			//on modifie le button fin de tour
 	        	        			buttonGestionTour.setStyle("-fx-background-image:url(finDeTourC.png);");
 	        	        			//on réinitialise les cartes seléctionné
-	        	        			cartes = new ArrayList<Carte>();	        	        			
+	        	        			cartes = new ArrayList<Carte>();
 	        	        			//test de la parade
 	        	        			if(tour.getEstAttaque().getC1() != Joueur.Parade || (tour.getEstAttaque().getC1() == Joueur.Parade && tour.getPioche().estVide())){
 	        	        				//si pas de parade ou une parade mais la pioche est vide
@@ -542,14 +541,14 @@ public class ControleurJeu {
 	        	        				terrain.setDisable(true);
 	        	        			}else if(tour.getEstAttaque().getC1() == Joueur.Parade && !tour.getPioche().estVide()){
 	        	        				//si on a eu une parade et que la pioche n'est pas vide
-	        	        				
-	        	        				//On regarde si on peut effectuer des actions le tour suivant	        	        				
+
+	        	        				//On regarde si on peut effectuer des actions le tour suivant
 	        	        				try {
 											ActionsJouables actionsTourSuivant = joueurEnCours.peutFaireAction(tour.getEstAttaque());
-												        	        					
+
 			        	        			if(actionsTourSuivant.size() == 0 || actionsTourSuivant == null){
 		        	        					//si on ne peut pas contre-attaquer
-		        	        					
+
 			        	        				//on autorise le click sur le bouton fin de tour
 			        	        				buttonGestionTour.setDisable(false);
 			        	        				//on empêche le click sur la main
@@ -559,22 +558,24 @@ public class ControleurJeu {
 			        	        				//on empêche le click sur le terrain
 			        	        				terrain.setDisable(true);
 		        	        				}else{
-			        	        				//si on peut contre-attaquer		        	        					
-		        	        					
+			        	        				//si on peut contre-attaquer
+
 			        	        				//on change la messageBox
-			        	        				tour.getMessageBox().setTexte("Vous venez de parer, lancez une contre-attaque !");	
+		        	        					messageCourant = "Vous venez de parer, lancez une contre-attaque !";
+			        	        				tour.getMessageBox().setTexte(messageCourant);
+			        	        				joueurEnCours.getMain().deseletionneMain();
 		        	        				}
 										} catch (Exception e1) {
 											e1.printStackTrace();
 										}
-	        	        			}		
-	        	        			
+	        	        			}
+
 	        	        			//Affichage des messages, liés à l'action venant d'être jouée
 	        	        			Action action = null;
 	        	        			boolean trouve = false;
-	    	    	            	
+
 	    	    	            	Case caseClicked = jeu.getPiste().getCaseEvent(event.getX(), event.getY());
-	    	    	            	
+
 	    	    	    			while(e.hasMoreElements() && !trouve){
 	    	    	    				action = e.nextElement();
 	    	    	    				try {
@@ -586,7 +587,7 @@ public class ControleurJeu {
 											e1.printStackTrace();
 										}
 	    	    	    			}
-	
+
 	    	    	    			if(trouve){
 	    	    		    			switch(action.getTypeAction()){
 	    	    		    				case Joueur.Reculer :
@@ -606,10 +607,11 @@ public class ControleurJeu {
 	    	    		    					break;
 	    	    		    			}
 	    	    	    			}
-	        	        			
+
 	    	    	    			//on modifie le nombre de carte dans la pioche
 	        	        			nbCartePioche.setText(Integer.toString(jeu.getManche().getPioche().size()));
-	        	        			
+	        	        			mainApp.setActionFaites(Sauvegarde.FINDETOUR);
+
 	        	        			if(tour.joueurAdverse(joueurEnCours) instanceof IA){
 	        	        				joueurEnCours.getMain().setVisible(false);
 	        	        				joueurEnCours.getMain().setVisible(true);
@@ -618,7 +620,7 @@ public class ControleurJeu {
     	                	}
         	        	}
         	            break;
-        	            
+
         	        default:
         	            break;
             	}
@@ -627,7 +629,7 @@ public class ControleurJeu {
 
 		//si on quitte le terrain
 		terrain.setOnMouseExited(new EventHandler<MouseEvent>() {
-			
+
 			public void handle(MouseEvent event){
 				//si le terrain n'est pas clickable
 				if(!terrain.isDisable()){
@@ -636,9 +638,9 @@ public class ControleurJeu {
 					tour.getMessageBox().setTexte(messageCourant);
 				}
 			}
-			
+
 		});
-		
+
 		//si on bouge dans le terrain
 		terrain.setOnMouseMoved(new EventHandler<MouseEvent>() {
             private ActionsJouables actions_jouables;
@@ -719,6 +721,8 @@ public class ControleurJeu {
 
 	//Si PRETAJOUER - click sur le button prêt à jouer
 	private void pretAJouer(){
+		mainApp.setActionFaites(Sauvegarde.ENCOURS);
+
 		Tour tour = jeu.getManche().getTourEnCours();
 		//on change de joueur dans le moteur
 		tour.changerJoueur(joueurEnCours);
@@ -739,18 +743,20 @@ public class ControleurJeu {
 		boolean peutFaireAction;
 		Tour tour = jeu.getManche().getTourEnCours();
 		int etatAttaque = tour.getEstAttaque().getC1();
-		
+
+		mainApp.setActionFaites(Sauvegarde.ENTREDEUX);
+
 		ActionsJouables actionsTourSuivant = joueurEnCours.peutFaireAction(tour.getEstAttaque());
-		
+
 		if(etatAttaque == Joueur.Parade && !tour.getPioche().estVide() && (actionsTourSuivant.size() == 0 || actionsTourSuivant == null)){
 			//on passe le button a prêt à jouer
 			buttonGestionTour.setText("Prêt A Jouer");
 			joueurEnCours.getMain().setVisible(false);
 			gestionTour=PRETAJOUER;
 			buttonGestionTour.setStyle("-fx-background-image:url(finDeTour.png);");
-			
+
 			verifierFinDeManche(joueurEnCours, false);
-			
+
 			//Changement du message
 			jeu.getPiste().getMessageBox().setTexte("Au tour de " + jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours).getNom() + ". Appuyer sur Prêt A Jouer !");
 		}else{
@@ -761,12 +767,6 @@ public class ControleurJeu {
 				changeDisableMain(joueurEnCours, true);
 			}
 
-			//on passe le button a prêt à jouer
-			buttonGestionTour.setText("Prêt A Jouer");
-			joueurEnCours.getMain().setVisible(false);
-			gestionTour=PRETAJOUER;
-			buttonGestionTour.setStyle("-fx-background-image:url(finDeTour.png);");
-
 			//on test les actions de l'adversaire
 			peutFaireAction = tour.adversairePeutFaireAction(joueurEnCours);
 			//on vérifie la fin de la manche par rapport à ca
@@ -776,10 +776,22 @@ public class ControleurJeu {
 			if(etatAttaque == Joueur.PasAttaque || etatAttaque == Joueur.Parade){
 				verifierFinDeLaPioche();
 			}
-			
+
 			//Changement du message
 			jeu.getPiste().getMessageBox().setTexte("Au tour de " + jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours).getNom() + ". Appuyer sur Prêt A Jouer !");
-		}		
+
+			if(tour.joueurAdverse(joueurEnCours) instanceof IA){
+				tour.joueurAdverse(joueurEnCours).getMain().setVisible(false);
+				changeDisableMain(tour.joueurAdverse(joueurEnCours), true);
+				jouerIA(tour.joueurAdverse(joueurEnCours));
+			}else{
+				//on passe le button a prêt à jouer
+				buttonGestionTour.setText("Prêt A Jouer");
+				joueurEnCours.getMain().setVisible(false);
+				gestionTour=PRETAJOUER;
+				buttonGestionTour.setStyle("-fx-background-image:url(finDeTour.png);");
+			}
+		}
 	}
 
 	//changement du disable des mains
@@ -853,7 +865,7 @@ public class ControleurJeu {
 			DessinateurCanvasJavaFx.visibilityActivated = false;
 		}
 	}
-	
+
 	public Jeu getJeu() {
 		return jeu;
 	}

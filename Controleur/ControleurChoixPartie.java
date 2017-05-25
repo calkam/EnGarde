@@ -70,18 +70,18 @@ public class ControleurChoixPartie {
 
     @FXML
     private Label erreurCombattant;
-    
+
     @FXML
     private Label TextNombreVie;
-    
+
     @FXML
     private int NombreVie = 3;
-    
-    @FXML 
-    private ImageView plus;
-    
+
     @FXML
-    private ImageView moins;    
+    private ImageView plus;
+
+    @FXML
+    private ImageView moins;
 
     @FXML
 	private void initialize(){
@@ -89,7 +89,7 @@ public class ControleurChoixPartie {
         Label modej2 = new Label();
         Label niveauj1 = new Label();
         Label niveauj2 = new Label();
-        
+
         TextNombreVie.setText("3");
 		ChoixCombattant1.setValue("Humain");
     	ChoixCombattant1.setItems(ChoixCombattantList);
@@ -139,7 +139,7 @@ public class ControleurChoixPartie {
 				(ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
 					niveauj2.setText((String)newValue);
 				});
-		
+
 		NomCombattant1.setOnKeyPressed(new EventHandler<KeyEvent>()
 				{
 					@Override
@@ -149,7 +149,7 @@ public class ControleurChoixPartie {
 						}
 					}
 				});
-		
+
 		NomCombattant2.setOnKeyPressed(new EventHandler<KeyEvent>()
 		{
 			@Override
@@ -167,7 +167,7 @@ public class ControleurChoixPartie {
 	public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
     }
-	
+
 	@FXML
 	private void incrementeVie(){
 		NombreVie = Integer.parseInt(TextNombreVie.getText());
@@ -175,7 +175,7 @@ public class ControleurChoixPartie {
 			if(NombreVie == 2){
 				moins.setDisable(false);
 				Image moinsEnable = new Image("moins.png");
-				moins.setImage(moinsEnable);				
+				moins.setImage(moinsEnable);
 			}
 			NombreVie++;
 			TextNombreVie.setText(Integer.toString(NombreVie));			System.out.println("IA VS IA");
@@ -183,7 +183,7 @@ public class ControleurChoixPartie {
 			System.out.println(NiveauCombattant2.getValue());
 		}
 	}
-	
+
 	@FXML
 	private void handleInPlus(){
 		if (NombreVie == 5){
@@ -197,7 +197,7 @@ public class ControleurChoixPartie {
 			plus.setImage(plusHover);
 		}
 	}
-	
+
 	@FXML
 	private void handleOutPlus(){
 		if (NombreVie == 5){
@@ -211,7 +211,7 @@ public class ControleurChoixPartie {
 			plus.setImage(plusEnable);
 		}
 	}
-	
+
 	@FXML
 	private void decrementeVie(){
 		NombreVie = Integer.parseInt(TextNombreVie.getText());
@@ -219,13 +219,13 @@ public class ControleurChoixPartie {
 			if(NombreVie == 5){
 				plus.setDisable(false);
 				Image plusEnable = new Image("plus.png");
-				plus.setImage(plusEnable);				
+				plus.setImage(plusEnable);
 			}
 			NombreVie--;
 			TextNombreVie.setText(Integer.toString(NombreVie));
 		}
-	}	
-	
+	}
+
 	@FXML
 	private void handleInMoins(){
 		if (NombreVie == 2){			System.out.println("IA VS IA");
@@ -241,7 +241,7 @@ public class ControleurChoixPartie {
 			moins.setImage(moinsHover);
 		}
 	}
-	
+
 	@FXML
 	private void handleOutMoins(){
 		if (NombreVie == 2){
@@ -259,19 +259,12 @@ public class ControleurChoixPartie {
 	@FXML
     private void lancerPartie(){
 		int nbCaractereMax = 16;
-		
+
 		String nomCombattant1 = NomCombattant1.getText();
 		String nomCombattant2 = NomCombattant2.getText();
 		String typeCombattant1 = null;
 		String typeCombattant2 = null;
-		
-		if(nomCombattant1.length() == 0){
-			nomCombattant1 = "Joueur1";
-		}
-		if(nomCombattant2.length() == 0){
-			nomCombattant2 = "Joueur2";
-		}
-		
+
 		if(ChoixCombattant1.getValue().equals("Humain") && ChoixCombattant2.getValue().equals("Humain")){
 			typeCombattant1 = "Humain";
 			typeCombattant2 = "Humain";
@@ -289,9 +282,18 @@ public class ControleurChoixPartie {
 			nomCombattant1 = NiveauCombattant1.getValue();
 			nomCombattant2 = NiveauCombattant2.getValue();
 		}
-		
+
+		if(nomCombattant1.length() == 0){
+			nomCombattant1 = "Joueur1";
+		}
+		if(nomCombattant2.length() == 0){
+			nomCombattant2 = "Joueur2";
+		}
+
 		if(nomCombattant1.length() < nbCaractereMax){
 			if(nomCombattant2.length() < nbCaractereMax){
+				System.out.print(typeCombattant1);
+				System.out.print(typeCombattant2);
 				Jeu.VICTOIRE = NombreVie;
 				mainApp.jeu(nomCombattant1, nomCombattant2, typeCombattant1, typeCombattant2, true);
 			}else{

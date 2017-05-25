@@ -5,19 +5,19 @@ import Modele.Plateau.*;
 import Modele.Tas.*;
 
 public class Jeu implements Visitable{
-	
+
 	public static int VICTOIRE = 4;
-	
+
 	public final static int JOUEUR1GAGNE = 0;
 	public final static int JOUEUR2GAGNE = 1;
 	public final static int JOUEUR1PERDU = 2;
 	public final static int JOUEUR2PERDU = 3;
-	
+
 	// CONSTANTES POSITION JOUEUR/FIGURINE
-	
+
 	private final static int PositionGauche = Joueur.DirectionDroite ;
 	private final static int PositionDroite = Joueur.DirectionGauche ;
-	
+
 	private Joueur joueur1;
 	private Joueur joueur2;
 	private Piste piste;
@@ -25,7 +25,7 @@ public class Jeu implements Visitable{
 	private PlateauScore plateauScoreJ2;
 	private Manche manche;
 	private int numero;
-	
+
 	private long dernierChrono;
 
 	public void init(String j1, String j2, String type1, String type2) throws Exception {
@@ -40,7 +40,7 @@ public class Jeu implements Visitable{
 		joueur2.setScore(scoreJ2);
 		this.dernierChrono = System.nanoTime();
 	}
-	
+
 	public void lancerJeu(){
 		try {
 			nouvelleManche();
@@ -49,36 +49,36 @@ public class Jeu implements Visitable{
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * RAFFRAICHISSEMENT
 	 */
-	
+
 	public boolean rafraichit(long nouveau) {
         final long temps = nouveau - dernierChrono;
         dernierChrono = nouveau;
         piste.rafraichit(temps);
         return false;
     }
-	
+
 	/**
 	 * FIN DE PARTIE
-	 */	
+	 */
 	public Couple<Integer, Integer> gainPartie(){
-		
+
 		if(joueur1.getNbPoints() == VICTOIRE){
 			return new Couple<>(JOUEUR1GAGNE, JOUEUR2PERDU);
 		}
-		if(joueur2.getNbPoints() == VICTOIRE){			
-			return new Couple<>(JOUEUR2GAGNE, JOUEUR1PERDU); 
+		if(joueur2.getNbPoints() == VICTOIRE){
+			return new Couple<>(JOUEUR2GAGNE, JOUEUR1PERDU);
 		}
 		return null;
 	}
-	
+
 	public void affichageVictoire(String nomJoueurVictorieux, String nomJoueurPerdant){
-		
+
 		piste.setMessageInMessageBox(nomJoueurVictorieux + " a triomphé de son adversaire ! Gloire à " + nomJoueurVictorieux +"! "+ nomJoueurPerdant + " est une victime");
-	
+
 		System.out.println("Gloire à " + nomJoueurVictorieux);
 		System.out.println(nomJoueurPerdant + " est une victime");
 	}
@@ -86,13 +86,13 @@ public class Jeu implements Visitable{
 	/**
 	 * INITIALISATION MANCHE
 	 */
-	
+
 	public void nouvelleManche(){
 		//joueur1.initHisto();
 		//joueur2.initHisto();
 		manche = new Manche(++numero, joueur1, joueur2, piste.getMessageBox());
 	}
-	
+
 	public void lancerLaManche() throws Exception{
 		manche.reinitialiserPiste();
 		manche.commencerManche();
@@ -102,18 +102,19 @@ public class Jeu implements Visitable{
 		// TODO Auto-generated method stub
 		joueur.setNbPoints(joueur.getNbPoints()+1);
 		if(joueur.equals(joueur1)){
+			System.out.println(VICTOIRE-joueur.getNbPoints());
 			plateauScoreJ2.getJetonsNumero(VICTOIRE-joueur.getNbPoints()).setVisible(false);
 		}else{
 			plateauScoreJ1.getJetonsNumero(VICTOIRE-joueur.getNbPoints()).setVisible(false);
 		}
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * VISITABLE
-	 * @throws Exception 
+	 * @throws Exception
 	 */
-	
+
 	@Override
 	public boolean accept(Visiteur d) throws Exception {
 	   if(piste != null){
@@ -126,7 +127,7 @@ public class Jeu implements Visitable{
             return true;
         }
 	}
-	
+
 	/**
 	 * GETTER / SETTER / TOSTRING
 	 */
@@ -161,7 +162,7 @@ public class Jeu implements Visitable{
 	public void setPlateauScoreJ1(PlateauScore plateauScore) {
 		this.plateauScoreJ2 = plateauScore;
 	}
-	
+
 	public PlateauScore getPlateauScoreJ2() {
 		return plateauScoreJ2;
 	}
@@ -177,7 +178,7 @@ public class Jeu implements Visitable{
 	public void setManche(Manche manche) {
 		this.manche = manche;
 	}
-	
+
 	@Override
 	public String toString() {
 		String str = "Jeu" + joueur1;
