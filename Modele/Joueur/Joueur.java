@@ -71,22 +71,7 @@ abstract public class Joueur implements Visitable{
 
 	// EQUALS
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Joueur other = (Joueur) obj;
-		if (nom == null) {
-			if (other.nom != null)
-				return false;
-		} else if (!nom.equals(other.nom))
-			return false;
-		return true;
-	}
+
 
 	// TO STRING
 
@@ -99,6 +84,29 @@ abstract public class Joueur implements Visitable{
 		str += "  score =" + score + ",\n";
 		str += "]\n";
 		return str;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Joueur other = (Joueur) obj;
+		if (FigurineAdverse != other.FigurineAdverse)
+			return false;
+		if (MaFigurine != other.MaFigurine)
+			return false;
+		if (direction != other.direction)
+			return false;
+		if (nom == null) {
+			if (other.nom != null)
+				return false;
+		} else if (!nom.equals(other.nom))
+			return false;
+		return true;
 	}
 
 	/**

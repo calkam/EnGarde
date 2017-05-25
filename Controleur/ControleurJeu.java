@@ -178,7 +178,14 @@ public class ControleurJeu {
 		if(jeu.getManche().getTourEnCours().getJoueurPremier() instanceof IA){
 			joueurEnCours = jeu.getManche().getTourEnCours().getJoueurPremier();
 			changeDisableMain(joueurEnCours, true);
-			jouerIA(joueurEnCours);
+			Timeline timer = new Timeline(new KeyFrame(Duration.seconds(3), new EventHandler<ActionEvent>() {
+			    @Override
+			    public void handle(ActionEvent event) {
+			    	jouerIA(joueurEnCours);
+			    }
+
+			}));
+			timer.play();
 		}
 	}
 
@@ -279,15 +286,14 @@ public class ControleurJeu {
 		}
 
 		if(peutFaireAction && jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours) instanceof IA){
-			Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(2), new EventHandler<ActionEvent>() {
-
+			Timeline timer = new Timeline(new KeyFrame(Duration.seconds(3), new EventHandler<ActionEvent>() {
 			    @Override
 			    public void handle(ActionEvent event) {
 			    	jouerIA(jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours));
 			    }
 
 			}));
-			fiveSecondsWonder.play();
+			timer.play();
 		}
 
 		nbCartePioche.setText(Integer.toString(jeu.getManche().getPioche().size()));
