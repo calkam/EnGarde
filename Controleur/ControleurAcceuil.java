@@ -5,7 +5,6 @@ import javafx.scene.ImageCursor;
 import javafx.scene.image.Image;
 import Vue.MainApp;
 
-
 public class ControleurAcceuil {
 		
     private MainApp mainApp;
