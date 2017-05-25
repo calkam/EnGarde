@@ -33,7 +33,7 @@ public class Jeu implements Visitable{
 		Score scoreJ2 = new Score();
 		plateauScoreJ1 = new PlateauScore(scoreJ2, PlateauScore.gauche) ;
 		plateauScoreJ2 = new PlateauScore(scoreJ1, PlateauScore.droite) ;
-		piste = new Piste(new Figurine(PositionGauche,1), new Figurine(PositionDroite,23)) ;
+		piste = new Piste(new Figurine(PositionGauche,1), new Figurine(PositionDroite,23));
 		joueur1 = new FabriqueJoueur (PositionGauche, type1, j1, new Main(PositionGauche), piste).nouveauJoueur() ;
 		joueur2 = new FabriqueJoueur (PositionDroite, type2, j2, new Main(PositionDroite), piste).nouveauJoueur() ;
 		joueur1.setScore(scoreJ1);
@@ -88,8 +88,6 @@ public class Jeu implements Visitable{
 	 */
 
 	public void nouvelleManche(){
-		//joueur1.initHisto();
-		//joueur2.initHisto();
 		manche = new Manche(++numero, joueur1, joueur2, piste.getMessageBox());
 	}
 
@@ -101,8 +99,8 @@ public class Jeu implements Visitable{
 	public void changerScore(Joueur joueur) {
 		// TODO Auto-generated method stub
 		joueur.setNbPoints(joueur.getNbPoints()+1);
+		System.out.println(joueur);
 		if(joueur.equals(joueur1)){
-			System.out.println(VICTOIRE-joueur.getNbPoints());
 			plateauScoreJ2.getJetonsNumero(VICTOIRE-joueur.getNbPoints()).setVisible(false);
 		}else{
 			plateauScoreJ1.getJetonsNumero(VICTOIRE-joueur.getNbPoints()).setVisible(false);

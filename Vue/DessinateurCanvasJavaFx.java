@@ -102,8 +102,6 @@ public class DessinateurCanvasJavaFx extends Visiteur {
     		}
     	}
 
-    	//System.out.println("visite Main Coté : Tas : " + c.getTas() + " ID : " + c.getID()) ;
-
     	if(c.isVisible() || visibilityActivated){
     		dessinerCarteVertiRecto(gc, c.getX(), c.getY(), c.getLargeur(), c.getHauteur(), c.getContenu());
     	}else{

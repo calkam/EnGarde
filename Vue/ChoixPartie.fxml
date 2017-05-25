@@ -45,9 +45,9 @@
                   <Font size="35.0" />
                </font>
             </Label>
-            <Label fx:id="erreurCombattant" layoutX="58.0" layoutY="275.0" text="" textFill="RED">
+            <Label fx:id="erreurCombattant" layoutX="58.0" layoutY="275.0" text="" textFill="#e74c3c">
                <font>
-                  <Font size="20.0" />
+                  <Font size="25.0" />
                </font>
             </Label>
             <Label layoutX="38.0" layoutY="320.0" text="Nombre de vies" textFill="WHITE">

@@ -331,7 +331,7 @@ public class MainApp extends Application {
             dialogStage.initOwner(primaryStage);
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
-            
+
             Image imageC = new Image("SourisEpee.png");
             scene.setCursor(new ImageCursor(imageC));
 
