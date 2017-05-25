@@ -132,6 +132,8 @@ public class ControleurJeu {
 		//on initilialise les widgets
 		initialiserWidget();
 
+		joueurEnCours = jeu.getManche().getTourEnCours().getJoueurPremier();
+
 		//partie cédric Sauvegarde / Revenir Au Jeu
 		if(!bjeu){
 			if(mainApp.getActionFaites() == Sauvegarde.FINDETOUR){
@@ -187,8 +189,6 @@ public class ControleurJeu {
 			tour = jeu.getManche().getTourEnCours();
 
 			action = joueur.actionIA(tour);
-
-			System.out.println(action);
 
 			if(action == null){
 				verifierFinDeManche(joueur, false);
@@ -751,16 +751,22 @@ public class ControleurJeu {
 		ActionsJouables actionsTourSuivant = joueurEnCours.peutFaireAction(tour.getEstAttaque());
 
 		if(etatAttaque == Joueur.Parade && !tour.getPioche().estVide() && (actionsTourSuivant.size() == 0 || actionsTourSuivant == null)){
-			//on passe le button a prêt à jouer
-			buttonGestionTour.setText("Prêt A Jouer");
-			joueurEnCours.getMain().setVisible(false);
-			gestionTour=PRETAJOUER;
-			buttonGestionTour.setStyle("-fx-background-image:url(finDeTour.png);");
-
 			verifierFinDeManche(joueurEnCours, false);
 
 			//Changement du message
 			jeu.getPiste().getMessageBox().setTexte("Au tour de " + jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours).getNom() + ". Appuyer sur Prêt A Jouer !");
+
+			if(tour.joueurAdverse(joueurEnCours) instanceof IA){
+				tour.joueurAdverse(joueurEnCours).getMain().setVisible(false);
+				changeDisableMain(tour.joueurAdverse(joueurEnCours), true);
+				jouerIA(tour.joueurAdverse(joueurEnCours));
+			}else{
+				//on passe le button a prêt à jouer
+				buttonGestionTour.setText("Prêt A Jouer");
+				joueurEnCours.getMain().setVisible(false);
+				gestionTour=PRETAJOUER;
+				buttonGestionTour.setStyle("-fx-background-image:url(finDeTour.png);");
+			}
 		}else{
 			//si le joueur n'a pas parer au tour d'avant ou a paré mais la pioche est vide
 			if(etatAttaque != Joueur.Parade || (etatAttaque == Joueur.Parade && tour.getPioche().estVide())){

@@ -33,7 +33,7 @@ public class Jeu implements Visitable{
 		Score scoreJ2 = new Score();
 		plateauScoreJ1 = new PlateauScore(scoreJ2, PlateauScore.gauche) ;
 		plateauScoreJ2 = new PlateauScore(scoreJ1, PlateauScore.droite) ;
-		piste = new Piste(new Figurine(PositionGauche,1), new Figurine(PositionDroite,23)) ;
+		piste = new Piste(new Figurine(PositionGauche,1), new Figurine(PositionDroite,23));
 		joueur1 = new FabriqueJoueur (PositionGauche, type1, j1, new Main(PositionGauche), piste).nouveauJoueur() ;
 		joueur2 = new FabriqueJoueur (PositionDroite, type2, j2, new Main(PositionDroite), piste).nouveauJoueur() ;
 		joueur1.setScore(scoreJ1);
