@@ -415,7 +415,7 @@ public static ArrayList<ArrayList<String>>recuperationNomSauvegarde(){
 		    }
 
 		    Element aquidejouer = document.createElement("Aquidejouer");
-
+		    //aquidejouer.appendChild(document.createTextNode(ControleurJeu.joueurEnCours.getNom()));
 
 		    if(m.getJoueur1().getMain().isVisible()){
 		    	 aquidejouer.appendChild(document.createTextNode(m.getJoueur1().getNom()));
