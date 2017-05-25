@@ -809,11 +809,13 @@ public class ControleurJeu {
 				changeDisableMain(tour.joueurAdverse(joueurEnCours), true);
 				jouerIA(tour.joueurAdverse(joueurEnCours));
 			}else{
-				//on passe le button a prêt à jouer
-				buttonGestionTour.setText("Prêt A Jouer");
-				joueurEnCours.getMain().setVisible(false);
-				gestionTour=PRETAJOUER;
-				buttonGestionTour.setStyle("-fx-background-image:url(finDeTour.png);");
+				if(!isMainVisible()){
+					//on passe le button a prêt à jouer
+					buttonGestionTour.setText("Prêt A Jouer");
+					joueurEnCours.getMain().setVisible(false);
+					gestionTour=PRETAJOUER;
+					buttonGestionTour.setStyle("-fx-background-image:url(finDeTour.png);");
+				}
 			}
 		}else{
 			//si le joueur n'a pas parer au tour d'avant ou a paré mais la pioche est vide
@@ -841,11 +843,17 @@ public class ControleurJeu {
 				changeDisableMain(tour.joueurAdverse(joueurEnCours), true);
 				jouerIA(tour.joueurAdverse(joueurEnCours));
 			}else{
-				//on passe le button a prêt à jouer
-				buttonGestionTour.setText("Prêt A Jouer");
-				joueurEnCours.getMain().setVisible(false);
-				gestionTour=PRETAJOUER;
-				buttonGestionTour.setStyle("-fx-background-image:url(finDeTour.png);");
+				if(!isMainVisible()){
+					//on passe le button a prêt à jouer
+					buttonGestionTour.setText("Prêt A Jouer");
+					joueurEnCours.getMain().setVisible(false);
+					gestionTour=PRETAJOUER;
+					buttonGestionTour.setStyle("-fx-background-image:url(finDeTour.png);");
+				}else{
+					buttonGestionTour.setDisable(true);
+					changeDisableMain(tour.joueurAdverse(joueurEnCours), false);
+					terrain.setDisable(false);
+				}
 			}
 		}
 	}
@@ -898,6 +906,10 @@ public class ControleurJeu {
 		mainApp.jeu(jeu.getJoueur1().getNom(), jeu.getJoueur2().getNom(), type1, type2, true);
 	}
 
+	private boolean isMainVisible(){
+		return DessinateurCanvasJavaFx.visibilityActivated == true;
+	}
+
 	//Pour changer le curseur
 	@FXML
 	private void handleIn(){
@@ -919,6 +931,13 @@ public class ControleurJeu {
 			DessinateurCanvasJavaFx.visibilityActivated = true;
 		}else{
 			DessinateurCanvasJavaFx.visibilityActivated = false;
+			if(joueurEnCours.equals(jeu.getJoueur1())){
+				jeu.getJoueur1().getMain().setVisible(true);
+				jeu.getJoueur2().getMain().setVisible(false);
+			}else{
+				jeu.getJoueur1().getMain().setVisible(false);
+				jeu.getJoueur2().getMain().setVisible(true);
+			}
 		}
 	}
 
