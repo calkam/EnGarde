@@ -8,21 +8,21 @@ import Modele.Reglages;
 import Modele.Visiteur;
 
 public class Pioche extends Tas {
-	
+
 	// ATTRIBUT
-	
+
 	private Stack<Carte> p;
-	
+
 	// CONSTRUCTEUR
-	
+
 	public Pioche(){
 		super(25, Reglages.lis("PiocheLargeur"), Reglages.lis("PiocheHauteur"));
 		p = new Stack<Carte>();
 		this.melanger();
 	}
-	
+
 	// TO STRING
-	
+
 	public String toString(){
 		String resultat = "";
 		resultat += "Pioche [\n";
@@ -30,13 +30,13 @@ public class Pioche extends Tas {
 		resultat += "  pioche= " + p.toString() + "\n";
 		resultat += "]\n";
 		return resultat;
-		
+
 	}
-	
+
 	/**
 	 * MOTEUR
 	 **/
-	
+
 	// On mélange les cartes de la pioche selon l'algo suivant :
 	// On crée 5 tas de 5 cartes de valeurs identiques de 1 à 5
 	// On ajoute dans la pioche une carte d'un des tas d'indice i tiré aléatoirement
@@ -45,12 +45,12 @@ public class Pioche extends Tas {
 	public void melanger(){
 		ArrayList<ArrayList<Carte> > jeu = new ArrayList<> (5);
 		ArrayList<Carte> tas;
-		
+
 		int index = 0;
 		Random r = new Random();
-		
+
 		int idCarte, valeurCarte;
-		
+
 		for(int i=1; i<=5; i++){
 			tas = new ArrayList<>();
 			for(int j = 1 ; j <= 5 ; j++){
@@ -60,46 +60,46 @@ public class Pioche extends Tas {
 			}
 			jeu.add(tas);
 		}
-		
+
 		do{
 			if(jeu.size()==1){
 				index = 0;
 			}else{
 				index = r.nextInt(jeu.size());
 			}
-			
+
 			p.push(jeu.get(index).get(0));
 			nombreCarte[index+1]++ ;
-			
-			
+
+
 			jeu.get(index).remove(0);
-			
+
 			if(jeu.get(index).isEmpty()){
 				jeu.remove(index);
-			}			
-		}while(!jeu.isEmpty());	
+			}
+		}while(!jeu.isEmpty());
 	}
-	
+
 	public boolean estVide(){
 		return (p.size() == 0);
 	}
-	
+
 	public int size(){
 		return p.size();
 	}
-	
+
 	public Carte piocher(){
 		nombreCarte[0]--;
 		Carte c = p.pop();
 		nombreCarte[c.getContenu()]--;
 		return c ;
 	}
-	
+
 
 	/**
 	 * VUE
 	 **/
-	
+
 	@Override
 	public boolean accept(Visiteur v) {
 		// TODO Auto-generated method stub
@@ -115,16 +115,17 @@ public class Pioche extends Tas {
 		// TODO Auto-generated method stub
 		return p;
 	}
-	
+
 	// CLONE
 	@SuppressWarnings("unchecked")
 	@Override
 	public Pioche clone() {
-		
+
 		Pioche pioche = new Pioche() ;
 		pioche.nombreCarte = this.nombreCarte.clone() ;
 		pioche.p = (Stack<Carte>) this.p.clone() ;
 		return pioche ;
-		
+
 	}
+
 }
