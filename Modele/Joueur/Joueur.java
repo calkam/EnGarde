@@ -352,8 +352,7 @@ abstract public class Joueur implements Visitable{
 
 			}else{
 
-				if(main.getNombreCarteGroupe(carte.getContenu()) == est_attaque.getC2()){
-					System.out.println(main);
+				if(main.getNombreCarteGroupe(carte.getContenu()) == est_attaque.getC2() && main.getNombreCarteGroupe(carte.getContenu()) == main.size()){
 					if(peut_executer_parade(carte.getContenu(), est_attaque.getC2(), est_attaque.getC3())){
 						actions_jouables.ajouterAction(Action.ActionDefensive, carte.getID(), Parade, getPositionDeMaFigurine(), null, carte, est_attaque.getC2());
 					}

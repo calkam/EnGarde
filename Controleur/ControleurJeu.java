@@ -1,5 +1,9 @@
 package Controleur;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.PauseTransition;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.ImageCursor;
@@ -11,6 +15,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.util.Duration;
+
 import java.util.ArrayList;
 import java.util.Enumeration;
 
@@ -215,6 +221,26 @@ public class ControleurJeu {
 					}
 				}
 
+				switch(action.getTypeAction()){
+					case Joueur.Reculer :
+						messageCourant = joueurEnCours.getNom() + " a reculé de " + action.getCarteDeplacement().getContenu() + " cases";
+						break;
+					case Joueur.Avancer :
+						messageCourant = joueurEnCours.getNom() + " a avancé de " + action.getCarteDeplacement().getContenu() + " cases";
+						break;
+					case Joueur.AttaqueDirecte :
+						messageCourant = joueurEnCours.getNom() + " vous attaque " + action.getNbCartes() + " fois avec une puissance de " + action.getCarteAction().getContenu();
+						break;
+					case Joueur.AttaqueIndirecte :
+						messageCourant = joueurEnCours.getNom() + " a avancé de " + action.getCarteDeplacement().getContenu() + " cases vers la position " + action.getPositionArrivee() + " et vous attaque " + action.getNbCartes() + " fois avec une puissance " + action.getCarteAction().getContenu();
+						break;
+					case Joueur.Fuite :
+						messageCourant = joueurEnCours.getNom() + " a fui de " + action.getCarteDeplacement().getContenu() + " cases";
+						break;
+				}
+
+				jeu.getManche().getTourEnCours().getMessageBox().setTexte(messageCourant);
+
 			}
 
 			joueur.getMain().setVisible(false);
@@ -246,14 +272,25 @@ public class ControleurJeu {
 		//on vérifie la fin de la manche par rapport à ca
 		verifierFinDeManche(jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours), peutFaireAction);
 
-		//on test si il n'y pas fin de la pioche ( BUG SUREMENT A CE NIVEAU )
+		//on test si il n'y pas fin de la pioche
 		etatAttaque = jeu.getManche().getTourEnCours().getEstAttaque().getC1();
 		if(etatAttaque == Joueur.PasAttaque || !peutFaireAction){
 			verifierFinDeLaPioche();
 		}
 
-		//Changement du message
-		jeu.getPiste().getMessageBox().setTexte("Au tour de " + jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours).getNom() + ". Appuyer sur Prêt A Jouer !");
+		if(peutFaireAction && jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours) instanceof IA){
+			Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(2), new EventHandler<ActionEvent>() {
+
+			    @Override
+			    public void handle(ActionEvent event) {
+			    	jouerIA(jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours));
+			    }
+
+			}));
+			fiveSecondsWonder.play();
+		}
+
+		nbCartePioche.setText(Integer.toString(jeu.getManche().getPioche().size()));
 	}
 
 	//Fonction d'initilisation des Widgets(Labels, button, etc...)
@@ -276,6 +313,11 @@ public class ControleurJeu {
         buttonGestionTour.setDisable(true);
         //on met la visibilité des cartes de la main à faux
         DessinateurCanvasJavaFx.visibilityActivated = false;
+
+        if(jeu.getJoueur1() instanceof IA && jeu.getJoueur2() instanceof IA){
+        	jeu.getJoueur1().getMain().setVisible(true);
+        	jeu.getJoueur2().getMain().setVisible(true);
+        }
 	}
 
 	//Modifier action possible 2 paramètres
@@ -359,6 +401,7 @@ public class ControleurJeu {
 	//On test la fin du jeu
 	//resultat : couple avec le joueur ayant gagné ou match nulle et la façon dont il a gagné
 	private void verifierFinDuJeu(Couple<Integer, Integer> resultat){
+		nbCartePioche.setText("15");
 		//couple avec le joueur ayant gagné et le joueur ayant perdu
 		Couple<Integer, Integer> resultatFinPartie;
 		//on réinitialise les cartes sélectionné
@@ -561,11 +604,10 @@ public class ControleurJeu {
 			        	        				terrain.setDisable(true);
 		        	        				}else{
 			        	        				//si on peut contre-attaquer
-
 			        	        				//on change la messageBox
 		        	        					messageCourant = "Vous venez de parer, lancez une contre-attaque !";
 			        	        				tour.getMessageBox().setTexte(messageCourant);
-			        	        				joueurEnCours.getMain().deseletionneMain();
+			        	        				joueurEnCours.getMain().deselectionneeToutesLesCartes();
 		        	        				}
 										} catch (Exception e1) {
 											e1.printStackTrace();

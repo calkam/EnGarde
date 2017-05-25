@@ -88,8 +88,6 @@ public class Jeu implements Visitable{
 	 */
 
 	public void nouvelleManche(){
-		//joueur1.initHisto();
-		//joueur2.initHisto();
 		manche = new Manche(++numero, joueur1, joueur2, piste.getMessageBox());
 	}
 
@@ -101,8 +99,8 @@ public class Jeu implements Visitable{
 	public void changerScore(Joueur joueur) {
 		// TODO Auto-generated method stub
 		joueur.setNbPoints(joueur.getNbPoints()+1);
+		System.out.println(joueur);
 		if(joueur.equals(joueur1)){
-			System.out.println(VICTOIRE-joueur.getNbPoints());
 			plateauScoreJ2.getJetonsNumero(VICTOIRE-joueur.getNbPoints()).setVisible(false);
 		}else{
 			plateauScoreJ1.getJetonsNumero(VICTOIRE-joueur.getNbPoints()).setVisible(false);

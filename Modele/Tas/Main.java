@@ -132,6 +132,7 @@ public class Main extends Tas {
 	public void deselectionneeToutesLesCartes(){
 		for(Carte c : main){
 			c.setSelectionne(false);
+			c.setY(Reglages.lis("PositionYCarte"));
 		}
 	}
 
@@ -204,12 +205,6 @@ public class Main extends Tas {
 			c.setX((float)(i*c.getLargeur()*0.63));
 			c.setY(Reglages.lis("PositionYCarte"));
 			i++;
-		}
-	}
-
-	public void deseletionneMain(){
-		for(Carte c : main){
-			c.setSelectionne(false);
 		}
 	}
 
