@@ -188,6 +188,8 @@ public class ControleurJeu {
 
 			action = joueur.actionIA(tour);
 
+			System.out.println(action);
+
 			if(action == null){
 				verifierFinDeManche(joueur, false);
 			}else{
