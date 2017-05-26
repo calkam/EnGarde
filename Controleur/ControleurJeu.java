@@ -877,7 +877,11 @@ public class ControleurJeu {
 			}
 
 			//Changement du message
-			jeu.getPiste().getMessageBox().setTexte("Au tour de " + jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours).getNom() + ". Appuyer sur Prêt A Jouer !");
+			if(isMainVisible()){
+				jeu.getPiste().getMessageBox().setTexte("Au tour de " + jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours).getNom() + ".");
+			}else{
+				jeu.getPiste().getMessageBox().setTexte("Au tour de " + jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours).getNom() + ". Appuyer sur Prêt A Jouer !");
+			}
 
 			if(tour.joueurAdverse(joueurEnCours) instanceof IA && !mancheTerminee){
 				tour.joueurAdverse(joueurEnCours).getMain().setVisible(false);
