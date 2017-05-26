@@ -225,7 +225,7 @@ public class ControleurJeu {
 					messageCourant = "Vous venez de parer, lancez une contre-attaque ou déplacez-vous !";
     				tour.getMessageBox().setTexte(messageCourant);
 
-					action = joueur.actionIA(jeu.getManche().getTourEnCours());
+					action = joueur.actionIA(tour);
 
 					if(action == null){
 						System.out.println("Pas d'action possible");
@@ -471,7 +471,7 @@ public class ControleurJeu {
 				joueurPerdant = jeu.getJoueur1().getNom();
 			}
 
-			textTableauFin.setText(joueurVictorieux + " a triomphé de son adversaire !\n Gloire à " + joueurVictorieux +"!");
+			textTableauFin.setText(joueurVictorieux + "\na triomphé de son adversaire ! Gloire à\n" + joueurVictorieux +" !");
 
 		}else if(typeFin == FINMANCHE){
 			//on affiche les messages de fin de manche dans le tableau de fin
@@ -491,7 +491,7 @@ public class ControleurJeu {
 			}else{
 				switch(resultat.getC2()){
 					case Manche.VICTOIRESIMPLE :
-						textTableauFin.setText(joueurVictorieux + " a gagné la manche !\n" + joueurPerdant + " ne pouvait pas parer");
+						textTableauFin.setText(joueurVictorieux + "\na gagné la manche !\n" + joueurPerdant + "\nne pouvait faire aucune action !");
 						break;
 					case Manche.PLUSCARTEATTAQUEDIRECT :
 						textTableauFin.setText(joueurVictorieux + " a gagné la\nmanche ! " + joueurVictorieux + "\na plus de cartes pour attaquer\ndirectectement son adversaire");
