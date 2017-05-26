@@ -4,10 +4,17 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Properties;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+
 import Controleur.ControleurAcceuil;
 import Controleur.ControleurAlertQuitter;
 import Controleur.ControleurChoixPartie;
@@ -18,6 +25,7 @@ import Modele.Jeu;
 import Modele.Manche;
 import Modele.Sauvegarde;
 import Modele.Plateau.PlateauScore;
+import Modele.Plateau.Score;
 import javafx.application.Application;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -38,9 +46,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
+import javafx.scene.input.DataFormat;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -118,8 +129,12 @@ public class MainApp extends Application {
             Image imageC = new Image("SourisEpee.png");
             primaryStage.getScene().setCursor(new ImageCursor(imageC , 100, 100));
 
-            //Utils.playSound("MainTheme.mp3");
-            //Utils.playSound("itsTimeToDuel.mp3");
+            /*String musicFile = "Ressources/MainTheme.mp3";
+
+            Media sound = new Media(new File(musicFile).toURI().toString());
+            MediaPlayer mediaPlayer = new MediaPlayer(sound);
+            mediaPlayer.play();*/
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -160,7 +175,7 @@ public class MainApp extends Application {
    }
 
    	public void sauvegardes(Boolean bfenetre){
-   		try {
+		try {
 			WritableImage writableImage = new WritableImage((int)primaryStage.getScene().getWidth(), (int)primaryStage.getScene().getHeight());
 	   		primaryStage.getScene().snapshot(writableImage);
 
@@ -192,11 +207,7 @@ public class MainApp extends Application {
 
 	        if(!str.isEmpty()){
 	            for(int i = 0 ; i < str.size();i++){
-	            	if( str .get(i).get(0).length() > 14 && str.get(i).get(0).substring(0, 14).equals("aucuncaractere")){
-	            		data.add(new Person(str.get(i).get(0).substring(14),str.get(i).get(2),str.get(i).get(1)));
-	            	}else{
-	            		data.add(new Person(str.get(i).get(0),str.get(i).get(2),str.get(i).get(1)));
-	            	}
+	            	data.add(new Person(str.get(i).get(1),str.get(i).get(3),str.get(i).get(2)));
 	            }
 	        }
 	        table.setTranslateY(100);
@@ -220,7 +231,7 @@ public class MainApp extends Application {
 
 	        Image imageC = new Image("SourisEpee.png");
 	        primaryStage.getScene().setCursor(new ImageCursor(imageC));
-   		} catch (IOException e) {
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -294,13 +305,14 @@ public class MainApp extends Application {
 
 	}
 
-	private void ecraserElement(AnchorPane personOverview,TableView<Person> table, ArrayList<ArrayList<String>> str, WritableImage writableImage){
+   	private void ecraserElement(AnchorPane personOverview,TableView<Person> table, ArrayList<ArrayList<String>> str, WritableImage writableImage){
 		int selectedIndex = table.getSelectionModel().getSelectedIndex();
-		String nom = new String(str.get(selectedIndex).get(0));
+		String nom = new String(str.get(selectedIndex).get(1));
+		String idnom = new String(str.get(selectedIndex).get(0));
 		supprimerElement(personOverview,table,str);
 
 		try {
-			Sauvegarde.ecrireHistorique(nom, jeu.getManche());
+			Sauvegarde.ecrireHistorique(idnom,nom, jeu.getManche());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -377,27 +389,26 @@ public class MainApp extends Application {
         }
 	}
 
-
 	private void enregistrerPartie(TextField textField, ArrayList<ArrayList<String>> str, WritableImage writableImage, Button sauvegarder){
    		String tmp = textField.getText();
 
-   		if(tmp.charAt(0) >='0' && tmp.charAt(0) <= '9'){
-   			tmp = "aucuncaractere"+tmp;
-   		}
+   		SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
+		String idnom = "D"+format.format(new Date());
 
    	  if(!str.isEmpty()){
    		int i = 0;
-   		while(i < str.size() && (!str.get(i).get(0).equals(tmp))){
+   		while(i < str.size() && (!str.get(i).get(1).equals(tmp))){
    			i++;
    		}
 
    		if(i >= str.size()){
    			dialogStage.close();
 			File file = new File(tmp);
+
 			try {
 				ImageIO.write(SwingFXUtils.fromFXImage(writableImage, null), "png", file);
 				System.out.println("snapshot saved: " + file.getAbsolutePath());
-				Sauvegarde.ecrireHistorique(tmp,jeu.getManche());
+				Sauvegarde.ecrireHistorique(idnom,tmp,jeu.getManche());
 
 			} catch (IOException ex) {
 			} catch (Exception e) {
@@ -412,10 +423,11 @@ public class MainApp extends Application {
    	  }else{
    		dialogStage.close();
 		File file = new File(tmp);
+
 		try {
 			ImageIO.write(SwingFXUtils.fromFXImage(writableImage, null), "png", file);
 			System.out.println("snapshot saved: " + file.getAbsolutePath());
-			Sauvegarde.ecrireHistorique(tmp,jeu.getManche());
+			Sauvegarde.ecrireHistorique(idnom,tmp,jeu.getManche());
 		} catch (IOException ex) {
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -429,7 +441,7 @@ public class MainApp extends Application {
 
     	Sauvegarde.supprimerHistorique(str.get(selectedIndex).get(0));
 
-    	File file = new File(str.get(selectedIndex).get(0));
+    	File file = new File(str.get(selectedIndex).get(1));
 		file.delete();
 
     	str.remove(selectedIndex);
@@ -469,17 +481,18 @@ public class MainApp extends Application {
 		}
    	}
 
-   	private void affichageImage(TableView<Person> table, ArrayList<ArrayList<String>> str, AnchorPane personOverview){
+	private void affichageImage(TableView<Person> table, ArrayList<ArrayList<String>> str, AnchorPane personOverview){
    		if(!str.isEmpty()){
    			int index = table.getSelectionModel().getSelectedIndex();
-	   	   	String name = str.get(index).get(0);
+	   	   	String name = str.get(index).get(1);
 
 	   	    ImageView imageView = new ImageView();
 	   	    imageView.setX(950);
 	   	    imageView.setY(100);
 
    	        try {
-   				imageView.setImage(new Image(new FileInputStream(new File(name)),450,300,false,false));
+   	        	File nom = new File(name);
+   				imageView.setImage(new Image(new FileInputStream(nom),450,300,false,false));
    				index = personOverview.getChildren().size()-1;
    				if(personOverview.getChildren().get(index) instanceof ImageView){
    					personOverview.getChildren().remove(index);
@@ -488,6 +501,7 @@ public class MainApp extends Application {
 
    				personOverview.getChildren().get(1).setDisable(false);
    				personOverview.getChildren().get(2).setDisable(false);
+
    			} catch (FileNotFoundException e) {
 
    				index = personOverview.getChildren().size()-1;
