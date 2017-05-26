@@ -21,7 +21,9 @@ import Modele.Joueur.FabriqueJoueur;
 import Modele.Joueur.Humain;
 import Modele.Joueur.Joueur;
 import Modele.Plateau.Figurine;
+import Modele.Plateau.MessageBox;
 import Modele.Plateau.Piste;
+import Modele.Plateau.PlateauScore;
 import Modele.Tas.Carte;
 import Modele.Tas.Main;
 import Vue.MainApp;
@@ -265,8 +267,8 @@ public static ArrayList<ArrayList<String>>recuperationNomSauvegarde(){
 			    		 ArrayList<String> tmp = new ArrayList<String>(3);
 
 			    		 tmp.add(nom.getNodeName());
+			    		 tmp.add(nom.getAttribute("nom"));
 			    		 tmp.add(nom.getElementsByTagName("Date").item(0).getTextContent());
-
 
 
 			    		 Element jg  = (Element) nom.getElementsByTagName("JoueurGauche").item(0);
@@ -291,7 +293,7 @@ public static ArrayList<ArrayList<String>>recuperationNomSauvegarde(){
 		return str;
 	}
 
-	public static void ecrireHistorique(String nomSauvegarde,Manche manche) throws DOMException, Exception{
+	public static void ecrireHistorique(String id,String nomSauvegarde,Manche manche) throws DOMException, Exception{
 		if(xml.exists()){
 			System.out.println("Teste modification");
 			try {
@@ -301,11 +303,7 @@ public static ArrayList<ArrayList<String>>recuperationNomSauvegarde(){
 				Element racine = doc.getDocumentElement();
 
 
-				ajoutXml(manche,doc,nomSauvegarde,racine);
-				/*Element p = doc.createElement("personne");
-		        p.setAttribute("nom", "aa");
-		        p.setAttribute("téléphone", "bbb");
-		        racine.appendChild(p);*/
+				ajoutXml(id,manche,doc,nomSauvegarde,racine);
 
 				TransformerFactory tfact = TransformerFactory.newInstance();
 				Transformer transformer = tfact.newTransformer();
@@ -333,7 +331,7 @@ public static ArrayList<ArrayList<String>>recuperationNomSauvegarde(){
 				Element jeu = document.createElement("Jeu");
 				document.appendChild(jeu);
 
-				ajoutXml(manche,document,nomSauvegarde,jeu);
+				ajoutXml(id,manche,document,nomSauvegarde,jeu);
 
 				TransformerFactory XML_Fabrique_Transformeur = TransformerFactory.newInstance();
 				Transformer XML_Transformeur = XML_Fabrique_Transformeur.newTransformer();
@@ -353,12 +351,10 @@ public static ArrayList<ArrayList<String>>recuperationNomSauvegarde(){
 		}
 	}
 
-	private static void ajoutXml(Manche m, Document document,String nomSauvegarde,Element jeu) throws DOMException, Exception{
+	private static void ajoutXml(String idnom,Manche m, Document document,String nomSauvegarde,Element jeu) throws DOMException, Exception{
 
-			//Element sauvegarde = document.createElement("Sauvegarde"+this.index);
-			System.out.println(nomSauvegarde);
-			Element sauvegarde = document.createElement(nomSauvegarde);
-			//sauvegarde.setAttribute("nom", nomSauvegarde);
+			Element sauvegarde = document.createElement(idnom);
+			sauvegarde.setAttribute("nom", nomSauvegarde);
 			jeu.appendChild(sauvegarde);
 
 			Element dateNow = document.createElement("Date");
@@ -372,7 +368,10 @@ public static ArrayList<ArrayList<String>>recuperationNomSauvegarde(){
 		    sauvegarde.appendChild(etatencours);
 
 		    Element manche = document.createElement("Manche");
-		    manche.appendChild(document.createTextNode(m.getNumero()+""));
+
+
+			manche.appendChild(document.createTextNode(m.getNumero()+""));
+
 		    sauvegarde.appendChild(manche);
 
 		    Element pioche = document.createElement("Pioche");
@@ -413,13 +412,14 @@ public static ArrayList<ArrayList<String>>recuperationNomSauvegarde(){
 		    }
 
 		    Element aquidejouer = document.createElement("Aquidejouer");
-		    //aquidejouer.appendChild(document.createTextNode(ControleurJeu.joueurEnCours.getNom()));
+		    aquidejouer.appendChild(document.createTextNode(ControleurJeu.joueurEnCours.getNom()));
 
+		    /*
 		    if(m.getJoueur1().getMain().isVisible()){
 		    	 aquidejouer.appendChild(document.createTextNode(m.getJoueur1().getNom()));
 		    }else{
 		    	 aquidejouer.appendChild(document.createTextNode(m.getJoueur2().getNom()));
-		    }
+		    }*/
 
 		    sauvegarde.appendChild(aquidejouer);
 

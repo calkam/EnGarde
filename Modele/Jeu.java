@@ -158,7 +158,7 @@ public class Jeu implements Visitable{
 	}
 
 	public void setPlateauScoreJ1(PlateauScore plateauScore) {
-		this.plateauScoreJ2 = plateauScore;
+		this.plateauScoreJ1 = plateauScore;
 	}
 
 	public PlateauScore getPlateauScoreJ2() {
