@@ -220,6 +220,11 @@ public class ControleurJeu {
 
 					if(action == null){
 						System.out.println("Pas d'action possible");
+						if(!tour.getPioche().estVide()){
+							verifierFinDeManche(joueur, false);
+						}else{
+							verifierFinDeLaPioche();
+						}
 					}else{
 						actions_jouables.ajouterAction(action);
 						c = jeu.getPiste().getCasesNumero(action.getPositionArrivee());
@@ -280,7 +285,7 @@ public class ControleurJeu {
 
 		//on test si il n'y pas fin de la pioche
 		etatAttaque = jeu.getManche().getTourEnCours().getEstAttaque().getC1();
-		if(etatAttaque == Joueur.PasAttaque || !peutFaireAction){
+		if(etatAttaque == Joueur.PasAttaque){ //|| !peutFaireAction){
 			verifierFinDeLaPioche();
 		}
 
