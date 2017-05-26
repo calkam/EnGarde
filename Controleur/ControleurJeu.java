@@ -209,9 +209,11 @@ public class ControleurJeu {
 
 			action = joueur.actionIA(tour);
 
-			if(action == null){
+			/*if(action == null){
 				verifierFinDeManche(joueur, false);
-			}else{
+			}*/
+			
+			if(action != null){
 
 				actions_jouables.ajouterAction(action);
 
@@ -227,14 +229,16 @@ public class ControleurJeu {
 
 					action = joueur.actionIA(tour);
 
-					if(action == null){
+					/*if(action == null){
 						System.out.println("Pas d'action possible");
 						if(!tour.getPioche().estVide()){
 							verifierFinDeManche(joueur, false);
 						}else{
 							verifierFinDeLaPioche();
 						}
-					}else{
+					}*/
+					
+					if(action != null){
 						actions_jouables.ajouterAction(action);
 						c = jeu.getPiste().getCasesNumero(action.getPositionArrivee());
 						tour.setActionsJouables(actions_jouables);
@@ -263,9 +267,9 @@ public class ControleurJeu {
 				jeu.getManche().getTourEnCours().getMessageBox().setTexte(messageCourant);
 
 				joueur.getMain().setVisible(false);
-
-				finDeTourIA();
 			}
+			
+			finDeTourIA();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -274,40 +278,48 @@ public class ControleurJeu {
 
 	public void finDeTourIA() throws Exception{
 		boolean peutFaireAction;
-		int etatAttaque;
+		boolean mancheTerminee;
+		
+		Tour tour = jeu.getManche().getTourEnCours();
+		int etatAttaque = tour.getEstAttaque().getC1();
 
-		//on passe le button a prêt à jouer
-		buttonGestionTour.setText("Fin De Tour");
-		buttonGestionTour.setDisable(true);
-		gestionTour=FINDETOUR;
-		buttonGestionTour.setStyle("-fx-background-image:url(finDeTour.png);");
+		ActionsJouables actionsTourSuivant = joueurEnCours.peutFaireAction(tour.getEstAttaque());
+		
+		if(etatAttaque == Joueur.Parade && !tour.getPioche().estVide() && (actionsTourSuivant.size() == 0 || actionsTourSuivant == null)){
+			verifierFinDeManche(joueurEnCours, false);
+		}else{
+			//on passe le button a prêt à jouer
+			buttonGestionTour.setText("Fin De Tour");
+			buttonGestionTour.setDisable(true);
+			gestionTour=FINDETOUR;
+			buttonGestionTour.setStyle("-fx-background-image:url(finDeTour.png);");
 
-		jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours).getMain().setVisible(true);
-		changeDisableMain(jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours), false);
-		terrain.setDisable(false);
+			tour.joueurAdverse(joueurEnCours).getMain().setVisible(true);
+			changeDisableMain(tour.joueurAdverse(joueurEnCours), false);
+			terrain.setDisable(false);
 
-		nbCartePioche.setText(Integer.toString(jeu.getManche().getPioche().size()));
+			nbCartePioche.setText(Integer.toString(jeu.getManche().getPioche().size()));
 
-		//on test les actions de l'adversaire
-		peutFaireAction = jeu.getManche().getTourEnCours().adversairePeutFaireAction(joueurEnCours);
-		//on vérifie la fin de la manche par rapport à ca
-		verifierFinDeManche(jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours), peutFaireAction);
+			//on test les actions de l'adversaire
+			peutFaireAction = tour.adversairePeutFaireAction(joueurEnCours);
+			//on vérifie la fin de la manche par rapport à ca
+			mancheTerminee = verifierFinDeManche(tour.joueurAdverse(joueurEnCours), peutFaireAction);
 
-		//on test si il n'y pas fin de la pioche
-		etatAttaque = jeu.getManche().getTourEnCours().getEstAttaque().getC1();
-		if(etatAttaque == Joueur.PasAttaque){ //|| !peutFaireAction){
-			verifierFinDeLaPioche();
-		}
+			//on test si il n'y pas fin de la pioche
+			if(etatAttaque == Joueur.PasAttaque || etatAttaque == Joueur.Parade){ //|| !peutFaireAction){
+				mancheTerminee = verifierFinDeLaPioche();
+			}
 
-		if(peutFaireAction && jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours) instanceof IA){
-			Timeline timer = new Timeline(new KeyFrame(Duration.seconds(3), new EventHandler<ActionEvent>() {
-			    @Override
-			    public void handle(ActionEvent event) {
-			    	jouerIA(jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours));
-			    }
-			}));
-			timer.play();
-		}
+			if(peutFaireAction && tour.joueurAdverse(joueurEnCours) instanceof IA && !mancheTerminee){
+				Timeline timer = new Timeline(new KeyFrame(Duration.seconds(3), new EventHandler<ActionEvent>() {
+				    @Override
+				    public void handle(ActionEvent event) {
+				    	jouerIA(tour.joueurAdverse(joueurEnCours));
+				    }
+				}));
+				timer.play();
+			}
+		}		
 	}
 
 	//Fonction d'initilisation des Widgets(Labels, button, etc...)
@@ -379,7 +391,7 @@ public class ControleurJeu {
 	//vérifier fin de manche : 2 paramètres - test si on est a la fin de la manche si oui la réinitialise et test la fin de partie
 	//joueur le joueur ayant fini son tour
 	//peutFaireAction : boolean spécifiant si il peut encore faire des actions
-	private void verifierFinDeManche(Joueur joueur, boolean peutFaireAction) throws Exception{
+	private boolean verifierFinDeManche(Joueur joueur, boolean peutFaireAction) throws Exception{
 		int resultat;
 
 		//test si le joueur ne peut plus faire des actions
@@ -398,11 +410,17 @@ public class ControleurJeu {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			
+			// la manche est terminée
+			return true;
 		}
+		
+		// la manche n'est pas terminée
+		return false;
 	}
 
 	//On vérifie si la pioche n'est pas vide
-	private void verifierFinDeLaPioche(){
+	private boolean verifierFinDeLaPioche(){
 		//si la pioche est vide
 		if(jeu.getManche().getPioche().estVide()){
 			//on réinitialise la manche
@@ -413,7 +431,13 @@ public class ControleurJeu {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			
+			// la manche est terminée
+			return true;
 		}
+		
+		// la manche n'est pas terminée
+		return false;
 	}
 
 	//On test la fin du jeu
@@ -809,6 +833,7 @@ public class ControleurJeu {
 		boolean peutFaireAction;
 		Tour tour = jeu.getManche().getTourEnCours();
 		int etatAttaque = tour.getEstAttaque().getC1();
+		boolean mancheTerminee;		
 
 		mainApp.setActionFaites(Sauvegarde.ENTREDEUX);
 
@@ -844,17 +869,17 @@ public class ControleurJeu {
 			//on test les actions de l'adversaire
 			peutFaireAction = tour.adversairePeutFaireAction(joueurEnCours);
 			//on vérifie la fin de la manche par rapport à ca
-			verifierFinDeManche(tour.joueurAdverse(joueurEnCours), peutFaireAction);
+			mancheTerminee = verifierFinDeManche(tour.joueurAdverse(joueurEnCours), peutFaireAction);
 
 			//on test si il n'y a pas fin de la pioche
 			if(etatAttaque == Joueur.PasAttaque || etatAttaque == Joueur.Parade){
-				verifierFinDeLaPioche();
+				mancheTerminee = verifierFinDeLaPioche();
 			}
 
 			//Changement du message
 			jeu.getPiste().getMessageBox().setTexte("Au tour de " + jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours).getNom() + ". Appuyer sur Prêt A Jouer !");
 
-			if(tour.joueurAdverse(joueurEnCours) instanceof IA){
+			if(tour.joueurAdverse(joueurEnCours) instanceof IA && !mancheTerminee){
 				tour.joueurAdverse(joueurEnCours).getMain().setVisible(false);
 				changeDisableMain(tour.joueurAdverse(joueurEnCours), true);
 				jouerIA(tour.joueurAdverse(joueurEnCours));
