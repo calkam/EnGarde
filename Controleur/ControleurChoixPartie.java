@@ -292,8 +292,6 @@ public class ControleurChoixPartie {
 
 		if(nomCombattant1.length() < nbCaractereMax){
 			if(nomCombattant2.length() < nbCaractereMax){
-				System.out.print(typeCombattant1);
-				System.out.print(typeCombattant2);
 				Jeu.VICTOIRE = NombreVie;
 				mainApp.jeu(nomCombattant1, nomCombattant2, typeCombattant1, typeCombattant2, true);
 			}else{

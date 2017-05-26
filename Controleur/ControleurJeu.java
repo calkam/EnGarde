@@ -1,7 +1,6 @@
 package Controleur;
 
 import javafx.animation.KeyFrame;
-import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -122,7 +121,7 @@ public class ControleurJeu {
 		this.setJeu(j);
 
 		//On modifie le nombre de carte dans la pioche
-		nbCartePioche.setText(Integer.toString(jeu.getManche().getPioche().size()));
+		nbCartePioche.setText(Integer.toString(15));
 		//on initialise les labels de nom des joueurs
 		nomJoueur1.setText(jeu.getJoueur1().getNom());
 		nomJoueur2.setText(jeu.getJoueur2().getNom());
@@ -177,8 +176,15 @@ public class ControleurJeu {
 	public void debutJeu(){
 		if(jeu.getManche().getTourEnCours().getJoueurPremier() instanceof IA){
 			joueurEnCours = jeu.getManche().getTourEnCours().getJoueurPremier();
+			if(jeu.getManche().getTourEnCours().getJoueurSecond() instanceof IA){
+				joueurEnCours.getMain().setVisible(true);
+				jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours).getMain().setVisible(false);
+			}else{
+				joueurEnCours.getMain().setVisible(false);
+				jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours).getMain().setVisible(true);
+			}
 			changeDisableMain(joueurEnCours, true);
-			Timeline timer = new Timeline(new KeyFrame(Duration.seconds(3), new EventHandler<ActionEvent>() {
+			Timeline timer = new Timeline(new KeyFrame(Duration.seconds(2), new EventHandler<ActionEvent>() {
 			    @Override
 			    public void handle(ActionEvent event) {
 			    	jouerIA(joueurEnCours);
@@ -216,6 +222,9 @@ public class ControleurJeu {
 				jeu.getManche().getTourEnCours().executerAction(joueur, c.getX()+5, c.getY()+5);
 
 				if(jeu.getManche().getTourEnCours().getEstAttaque().getC1() == Joueur.Parade){
+					messageCourant = "Vous venez de parer, lancez une contre-attaque ou déplacez-vous !";
+    				tour.getMessageBox().setTexte(messageCourant);
+
 					action = joueur.actionIA(jeu.getManche().getTourEnCours());
 
 					if(action == null){
@@ -241,10 +250,10 @@ public class ControleurJeu {
 						messageCourant = joueurEnCours.getNom() + " a avancé de " + action.getCarteDeplacement().getContenu() + " cases";
 						break;
 					case Joueur.AttaqueDirecte :
-						messageCourant = joueurEnCours.getNom() + " vous attaque " + action.getNbCartes() + " fois avec une puissance de " + action.getCarteAction().getContenu();
-						break;
-					case Joueur.AttaqueIndirecte :
-						messageCourant = joueurEnCours.getNom() + " a avancé de " + action.getCarteDeplacement().getContenu() + " cases vers la position " + action.getPositionArrivee() + " et vous attaque " + action.getNbCartes() + " fois avec une puissance " + action.getCarteAction().getContenu();
+						messageCourant = "Vous devez parer avec " + action.getNbCartes() + " cartes de valeur " + action.getCarteAction().getContenu();
+    					break;
+    				case Joueur.AttaqueIndirecte :
+    					messageCourant = "Vous devez parer avec " + action.getNbCartes() + " cartes de valeur " + action.getCarteAction().getContenu() + " ou fuire";
 						break;
 					case Joueur.Fuite :
 						messageCourant = joueurEnCours.getNom() + " a fui de " + action.getCarteDeplacement().getContenu() + " cases";
@@ -253,11 +262,10 @@ public class ControleurJeu {
 
 				jeu.getManche().getTourEnCours().getMessageBox().setTexte(messageCourant);
 
+				joueur.getMain().setVisible(false);
+
+				finDeTourIA();
 			}
-
-			joueur.getMain().setVisible(false);
-
-			finDeTourIA();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -278,6 +286,8 @@ public class ControleurJeu {
 		changeDisableMain(jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours), false);
 		terrain.setDisable(false);
 
+		nbCartePioche.setText(Integer.toString(jeu.getManche().getPioche().size()));
+
 		//on test les actions de l'adversaire
 		peutFaireAction = jeu.getManche().getTourEnCours().adversairePeutFaireAction(joueurEnCours);
 		//on vérifie la fin de la manche par rapport à ca
@@ -295,12 +305,9 @@ public class ControleurJeu {
 			    public void handle(ActionEvent event) {
 			    	jouerIA(jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours));
 			    }
-
 			}));
 			timer.play();
 		}
-
-		nbCartePioche.setText(Integer.toString(jeu.getManche().getPioche().size()));
 	}
 
 	//Fonction d'initilisation des Widgets(Labels, button, etc...)
@@ -374,6 +381,7 @@ public class ControleurJeu {
 	//peutFaireAction : boolean spécifiant si il peut encore faire des actions
 	private void verifierFinDeManche(Joueur joueur, boolean peutFaireAction) throws Exception{
 		int resultat;
+
 		//test si le joueur ne peut plus faire des actions
 		if(!peutFaireAction){
 			//si il ne peut plus on test si il est joueur premier ou second
@@ -463,7 +471,7 @@ public class ControleurJeu {
 				joueurPerdant = jeu.getJoueur1().getNom();
 			}
 
-			textTableauFin.setText(joueurVictorieux + " a triomphé\nde son adversaire ! Gloire à\n" + joueurVictorieux +" !\n"+ joueurPerdant + " est une victime");
+			textTableauFin.setText(joueurVictorieux + " a triomphé de son adversaire !\n Gloire à " + joueurVictorieux +"!");
 
 		}else if(typeFin == FINMANCHE){
 			//on affiche les messages de fin de manche dans le tableau de fin
@@ -479,11 +487,11 @@ public class ControleurJeu {
 			}
 
 			if(resultat.getC1() == Manche.MATCHNULLE){
-				textTableauFin.setText("Manche nulle !?\nFaut vraiment le vouloir !");
+				textTableauFin.setText("Manche nulle !?");
 			}else{
 				switch(resultat.getC2()){
 					case Manche.VICTOIRESIMPLE :
-						textTableauFin.setText(joueurVictorieux + "\na gagné la manche !\n" + joueurPerdant + " a perdu\ncar il ne pouvait jouer aucune carte");
+						textTableauFin.setText(joueurVictorieux + " a gagné la manche !\n" + joueurPerdant + " ne pouvait pas parer");
 						break;
 					case Manche.PLUSCARTEATTAQUEDIRECT :
 						textTableauFin.setText(joueurVictorieux + " a gagné la\nmanche ! " + joueurVictorieux + "\na plus de cartes pour attaquer\ndirectectement son adversaire");
@@ -615,7 +623,7 @@ public class ControleurJeu {
 		        	        				}else{
 			        	        				//si on peut contre-attaquer
 			        	        				//on change la messageBox
-		        	        					messageCourant = "Vous venez de parer, lancez une contre-attaque !";
+		        	        					messageCourant = "Vous venez de parer, lancez une contre-attaque ou déplacez-vous !";
 			        	        				tour.getMessageBox().setTexte(messageCourant);
 			        	        				joueurEnCours.getMain().deselectionneeToutesLesCartes();
 		        	        				}
@@ -651,10 +659,12 @@ public class ControleurJeu {
 	    	    		    					messageCourant = joueurEnCours.getNom() + " a avancé de " + action.getCarteDeplacement().getContenu() + " cases";
 	    	    		    					break;
 	    	    		    				case Joueur.AttaqueDirecte :
-	    	    		    					messageCourant = joueurEnCours.getNom() + " vous attaque " + action.getNbCartes() + " fois avec une puissance de " + action.getCarteAction().getContenu();
+	    	    		    					messageCourant = "Vous devez parer avec " + action.getNbCartes() + " cartes de valeur " + action.getCarteAction().getContenu();
+	    	    		    					//messageCourant = joueurEnCours.getNom() + " vous attaque " + action.getNbCartes() + " fois avec une puissance de " + action.getCarteAction().getContenu();
 	    	    		    					break;
 	    	    		    				case Joueur.AttaqueIndirecte :
-	    	    		    					messageCourant = joueurEnCours.getNom() + " a avancé de " + action.getCarteDeplacement().getContenu() + " cases vers la position " + action.getPositionArrivee() + " et vous attaque " + action.getNbCartes() + " fois avec une puissance " + action.getCarteAction().getContenu();
+	    	    		    					messageCourant = "Vous devez parer avec " + action.getNbCartes() + " cartes de valeur " + action.getCarteAction().getContenu() + " ou fuire";
+	    	    		    					//messageCourant = joueurEnCours.getNom() + " a avancé de " + action.getCarteDeplacement().getContenu() + " cases vers la position " + action.getPositionArrivee() + " et vous attaque " + action.getNbCartes() + " fois avec une puissance " + action.getCarteAction().getContenu();
 	    	    		    					break;
 	    	    		    				case Joueur.Fuite :
 	    	    		    					messageCourant = joueurEnCours.getNom() + " a fui de " + action.getCarteDeplacement().getContenu() + " cases";
@@ -790,6 +800,8 @@ public class ControleurJeu {
 		jeu.getPiste().getMessageBox().setTexte(messageCourant);
 		//on autorise a clicker sur la piste
 		terrain.setDisable(false);
+
+		joueurEnCours = tour.joueurAdverse(joueurEnCours);
 	}
 
 	//Si FINDETOUR - click sur le button fin de tour
@@ -809,9 +821,9 @@ public class ControleurJeu {
 			jeu.getPiste().getMessageBox().setTexte("Au tour de " + jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours).getNom() + ". Appuyer sur Prêt A Jouer !");
 
 			if(tour.joueurAdverse(joueurEnCours) instanceof IA){
-				tour.joueurAdverse(joueurEnCours).getMain().setVisible(false);
-				changeDisableMain(tour.joueurAdverse(joueurEnCours), true);
-				jouerIA(tour.joueurAdverse(joueurEnCours));
+				//tour.joueurAdverse(joueurEnCours).getMain().setVisible(false);
+				//changeDisableMain(tour.joueurAdverse(joueurEnCours), true);
+				//jouerIA(tour.joueurAdverse(joueurEnCours));
 			}else{
 				if(!isMainVisible()){
 					//on passe le button a prêt à jouer
@@ -859,6 +871,7 @@ public class ControleurJeu {
 					terrain.setDisable(false);
 				}
 			}
+
 		}
 	}
 
@@ -935,12 +948,19 @@ public class ControleurJeu {
 			DessinateurCanvasJavaFx.visibilityActivated = true;
 		}else{
 			DessinateurCanvasJavaFx.visibilityActivated = false;
-			if(joueurEnCours.equals(jeu.getJoueur1())){
-				jeu.getJoueur1().getMain().setVisible(true);
-				jeu.getJoueur2().getMain().setVisible(false);
-			}else{
-				jeu.getJoueur1().getMain().setVisible(false);
-				jeu.getJoueur2().getMain().setVisible(true);
+			if(jeu.getJoueur1() instanceof Humain && jeu.getJoueur2() instanceof Humain){
+				if(gestionTour == FINDETOUR){
+					if(joueurEnCours.equals(jeu.getJoueur1())){
+						jeu.getJoueur1().getMain().setVisible(true);
+						jeu.getJoueur2().getMain().setVisible(false);
+					}else{
+						jeu.getJoueur1().getMain().setVisible(false);
+						jeu.getJoueur2().getMain().setVisible(true);
+					}
+				}else if(gestionTour == PRETAJOUER){
+					jeu.getJoueur1().getMain().setVisible(false);
+					jeu.getJoueur2().getMain().setVisible(false);
+				}
 			}
 		}
 	}
