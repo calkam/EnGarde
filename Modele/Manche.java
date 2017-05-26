@@ -109,13 +109,13 @@ public class Manche implements Visitable{
 		int distanceEntreCaseMedianeEtFigurineJ2 = calculerNormeEntreDeuxPositions(12, joueur2.getPositionDeMaFigurine());
 		
 		if(distanceEntreCaseMedianeEtFigurineJ1 > distanceEntreCaseMedianeEtFigurineJ2){
-			messageBox.setTexte(joueur2.getNom() + " étant plus proche de la case médiane...");
-			System.out.println(joueur2.getNom() + " étant plus proche de la case médiane...");
+			messageBox.setTexte(joueur2.getNom() + " étant plus proche\n de la case médiane,");
+			System.out.println(joueur2.getNom() + " étant plus proche\n de la case médiane,");
 			joueurAGagne(joueur2);
 			return new Couple<>(JOUEUR2GAGNE, PLUSCARTEMEDIANE);
 		}else if(distanceEntreCaseMedianeEtFigurineJ1 < distanceEntreCaseMedianeEtFigurineJ2){
-			messageBox.setTexte(joueur1.getNom() + " étant plus proche de la case médiane...");
-			System.out.println(joueur1.getNom() + " étant plus proche de la case médiane...");
+			messageBox.setTexte(joueur1.getNom() + " étant plus proche\n de la case médiane,");
+			System.out.println(joueur1.getNom() + " étant plus proche\n de la case médiane,");
 			joueurAGagne(joueur1);
 			return new Couple<>(JOUEUR1GAGNE, PLUSCARTEMEDIANE);
 		}else{
@@ -156,13 +156,13 @@ public class Manche implements Visitable{
 				int nbCartesDistanceJ2 = joueur2.getMain().getNombreCarteGroupe(distanceEntreFigurineJ1EtFigurineJ2);
 				
 				if(nbCartesDistanceJ1 > nbCartesDistanceJ2){
-					messageBox.setTexte(joueur1.getNom() + " ayant plus de cartes pour attaquer directectement\n son adversaire");
-					System.out.println(joueur1.getNom() + " ayant plus de cartes pour attaquer directectement\n son adversaire");
+					messageBox.setTexte(joueur1.getNom() + " ayant plus de cartes\n pour attaquer directectement\n son adversaire");
+					System.out.println(joueur1.getNom() + " ayant plus de cartes\n pour attaquer directectement\n son adversaire");
 					joueurAGagne(joueur1);
 					return new Couple<>(JOUEUR1GAGNE, PLUSCARTEATTAQUEDIRECT);
 				}else if(nbCartesDistanceJ1 < nbCartesDistanceJ2){
-					messageBox.setTexte(joueur2.getNom() + " ayant plus de cartes pour attaquer directectement\n son adversaire");
-					System.out.println(joueur2.getNom() + " ayant plus de cartes pour attaquer directectement\n son adversaire");
+					messageBox.setTexte(joueur2.getNom() + " ayant plus de cartes\n pour attaquer directectement\n son adversaire");
+					System.out.println(joueur2.getNom() + " ayant plus de cartes\n pour attaquer directectement\n son adversaire");
 					joueurAGagne(joueur2);
 					return new Couple<>(JOUEUR2GAGNE, PLUSCARTEATTAQUEDIRECT);
 				}else{

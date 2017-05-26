@@ -462,7 +462,6 @@ public class MainApp extends Application {
 			jeu.setPlateauScoreJ2(new PlateauScore(m.getJoueur1().getScore(), PlateauScore.droite));
 
 			jeu.setManche(m);
-			//Ajouter le nouveau plateau de score ???
 			jeu("","","","",false);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -561,8 +560,8 @@ public class MainApp extends Application {
             }
 
             Button sauvegarder = new Button("Sauvegarder");
-            sauvegarder.setMinWidth(151);
-            sauvegarder.setMinHeight(37);
+            sauvegarder.setMinWidth(216);
+            sauvegarder.setMinHeight(40);
             sauvegarder.setLayoutX(289.0);
             sauvegarder.setLayoutY(16.0);
             sauvegarder.setTextOverrun(OverrunStyle.CLIP);

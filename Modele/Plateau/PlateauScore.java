@@ -28,17 +28,20 @@ public class PlateauScore extends Rectangle implements Visitable {
 		super(x, y, largeur, hauteur);
 		this.cote = cote;
 		this.score = score;
-		initTableauJeton();
+		initTableauJeton(score);
 	}
 	
 	public PlateauScore(Score score, int cote){
 		this(0, 0, Reglages.lis("PlateauScoreLargeur"), Reglages.lis("PlateauScoreHauteur"), score, cote);
 	}
 	
-	private void initTableauJeton(){
+	private void initTableauJeton(Score score2){
+		
 		jetons = new ArrayList<Jeton>();
 		int proportion = Jeu.VICTOIRE+1;
-		for(int i=0; i<Jeu.VICTOIRE; i++){
+		int tmp = Jeu.VICTOIRE- score2.getNbPoints(); 
+		
+		for(int i=0; i< tmp; i++){
 			Jeton j = new Jeton(0, 0, 0);
 			j.setCote(this.cote);
 			j.setLargeur(Reglages.lis("JetonLargeur"));

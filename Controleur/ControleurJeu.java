@@ -263,7 +263,6 @@ public class ControleurJeu {
 			}
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -490,10 +489,10 @@ public class ControleurJeu {
 						textTableauFin.setText(joueurVictorieux + " a gagné la manche !\n" + joueurPerdant + " ne pouvait pas parer");
 						break;
 					case Manche.PLUSCARTEATTAQUEDIRECT :
-						textTableauFin.setText(joueurVictorieux + " a plus de cartes \n pour attaquer directectement son adversaire.\n" + joueurVictorieux + " a gagné la manche !");
+						textTableauFin.setText(joueurVictorieux + " a gagné la\nmanche ! " + joueurVictorieux + "\na plus de cartes pour attaquer\ndirectectement son adversaire");
 						break;
 					case Manche.PLUSCARTEMEDIANE :
-						textTableauFin.setText(joueurVictorieux + " étant plus proche de la case médiane\n" + joueurVictorieux + " a gagné la manche !");
+						textTableauFin.setText(joueurVictorieux + " étant plus\nproche de la case médiane\n" + joueurVictorieux + "\na gagné la manche !");
 						break;
 				}
 			}
