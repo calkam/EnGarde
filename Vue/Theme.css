@@ -19,7 +19,7 @@
 .background {
 	-fx-font-family:'MORPHEUS';
     -fx-background-image:url(../../Ressources/fond.gif);
-    -fx-background-repeat: stretch;   
+    -fx-background-repeat: stretch;
     -fx-background-size: cover;
     -fx-background-position: center center;
 }
@@ -27,7 +27,7 @@
 .fondQuitter{
 	-fx-font-family:'MORPHEUS';
 	-fx-font-size:20;
-	-fx-background-image:url("../../Ressources/quitter.png");  
+	-fx-background-image:url("../../Ressources/quitter.png");
     -fx-background-size: stretch;
     -fx-background-position: center center;
 }
@@ -58,7 +58,7 @@
   	-fx-background-color: transparent;
     -fx-background-image:url("../../Ressources/bouton_nonPresse.png");
     -fx-background-size: stretch;
-    -fx-background-position: center center;    
+    -fx-background-position: center center;
     -fx-text-fill: white;
 }
 
