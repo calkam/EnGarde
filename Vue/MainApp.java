@@ -4,17 +4,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;
-
 import javax.imageio.ImageIO;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-
 import Controleur.ControleurAcceuil;
 import Controleur.ControleurAlertQuitter;
 import Controleur.ControleurChoixPartie;
@@ -25,7 +19,6 @@ import Modele.Jeu;
 import Modele.Manche;
 import Modele.Sauvegarde;
 import Modele.Plateau.PlateauScore;
-import Modele.Plateau.Score;
 import javafx.application.Application;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -46,7 +39,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
-import javafx.scene.input.DataFormat;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -129,11 +121,7 @@ public class MainApp extends Application {
             Image imageC = new Image("SourisEpee.png");
             primaryStage.getScene().setCursor(new ImageCursor(imageC , 100, 100));
 
-            /*String musicFile = "Ressources/MainTheme.mp3";
-
-            Media sound = new Media(new File(musicFile).toURI().toString());
-            MediaPlayer mediaPlayer = new MediaPlayer(sound);
-            mediaPlayer.play();*/
+            //Utils.playSound("Ressources/MainTheme.mp3");
 
         } catch (IOException e) {
             e.printStackTrace();

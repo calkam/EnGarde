@@ -9,7 +9,7 @@ public class Utils {
 
     public static void playSound(String nameFile){
     	try{
-    		String musicFile = "Ressources/" + nameFile;
+    		String musicFile = /*"Ressources/" +*/ nameFile;
 
 	        Media m = new Media(new File(musicFile).toURI().toString());
 	        MediaPlayer player = new MediaPlayer(m);
