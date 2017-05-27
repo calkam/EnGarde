@@ -249,7 +249,7 @@ public class ControleurJeu {
 						if(action.getCarteDeplacement().getContenu() > 1){
 							messageCourant = joueurEnCours.getNom() + " a avancé de " + action.getCarteDeplacement().getContenu() + " cases";
 						}else{
-							messageCourant = joueurEnCours.getNom() + " a reculé de " + action.getCarteDeplacement().getContenu() + " case";
+							messageCourant = joueurEnCours.getNom() + " a avancé de " + action.getCarteDeplacement().getContenu() + " case";
 						}
 						break;
 					case Joueur.AttaqueDirecte :
@@ -526,13 +526,13 @@ public class ControleurJeu {
 			}else{
 				switch(resultat.getC2()){
 					case Manche.VICTOIRESIMPLE :
-						textTableauFin.setText(joueurVictorieux + "\na gagné la manche !\n" + joueurPerdant + "\nne pouvait faire aucune action !");
+						textTableauFin.setText(joueurVictorieux + "\na gagné la manche !\n" + joueurPerdant + "\nne peut plus faire d'action !");
 						break;
 					case Manche.PLUSCARTEATTAQUEDIRECT :
-						textTableauFin.setText(joueurVictorieux + " a gagné la\nmanche ! " + joueurVictorieux + "\na plus de cartes pour attaquer\ndirectectement son adversaire");
+						textTableauFin.setText("La pioche est vide.\n" + joueurVictorieux + " a gagné la\nmanche ! " + joueurVictorieux + "\na plus de cartes pour attaquer\ndirectectement son adversaire");
 						break;
 					case Manche.PLUSCARTEMEDIANE :
-						textTableauFin.setText(joueurVictorieux + " étant plus\nproche de la case médiane\n" + joueurVictorieux + "\na gagné la manche !");
+						textTableauFin.setText("La pioche est vide.\n" + joueurVictorieux + " étant plus\nproche de la case médiane\n" + joueurVictorieux + "\na gagné la manche !");
 						break;
 				}
 			}
@@ -698,7 +698,7 @@ public class ControleurJeu {
 	    	    							if(action.getCarteDeplacement().getContenu() > 1){
 	    	    								messageCourant = joueurEnCours.getNom() + " a avancé de " + action.getCarteDeplacement().getContenu() + " cases";
 	    	    							}else{
-	    	    								messageCourant = joueurEnCours.getNom() + " a reculé de " + action.getCarteDeplacement().getContenu() + " case";
+	    	    								messageCourant = joueurEnCours.getNom() + " a avancé de " + action.getCarteDeplacement().getContenu() + " case";
 	    	    							}
 	    	    							break;
 	    	    						case Joueur.AttaqueDirecte :

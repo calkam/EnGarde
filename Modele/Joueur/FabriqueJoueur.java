@@ -35,7 +35,7 @@ public class FabriqueJoueur {
 					case "Facile"     : return new IAFacile(position, nom, main, piste) ;
 					case "Moyen"      : return new IAMoyen(position, nom, main, piste) ;
 					case "Difficile"  : return new IADifficile(position, nom, main, piste) ;
-					case "Legendaire" : return new IALegendaire(position, nom, main, piste) ;
+					case "Légendaire" : return new IALegendaire(position, nom, main, piste) ;
 					default : throw new Exception("Modele.Joueur.FabriqueJoueur.nouveauJoueur : difficulté inconnue") ;
 				}
 

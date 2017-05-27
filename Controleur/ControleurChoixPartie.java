@@ -290,6 +290,8 @@ public class ControleurChoixPartie {
 			nomCombattant2 = "Joueur2";
 		}
 
+		System.out.println(nomCombattant2);
+
 		if(nomCombattant1.length() < nbCaractereMax){
 			if(nomCombattant2.length() < nbCaractereMax){
 				Jeu.VICTOIRE = NombreVie;

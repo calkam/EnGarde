@@ -27,6 +27,7 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -45,6 +46,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -232,8 +234,7 @@ public class MainApp extends Application {
    			menu.setMinHeight(40);
    			menu.setLayoutX(200.0);
    			menu.setLayoutY(700);
-   			menu.setTextOverrun(OverrunStyle.CLIP);
-   			menu.setFont(Font.font("Calibri", 20));
+   			menu.setAlignment(Pos.CENTER);
    			menu.setOnAction(actionEvent ->  acceuil());
    			personOverview.getChildren().add(menu);
 
@@ -242,9 +243,8 @@ public class MainApp extends Application {
    			charger.setMinHeight(40);
    			charger.setLayoutX(829.0);
    			charger.setLayoutY(700);
-   			charger.setTextOverrun(OverrunStyle.CLIP);
-   			charger.setFont(Font.font("Calibri", 20));
    			charger.setDisable(true);
+   			charger.setAlignment(Pos.CENTER);
    			charger.setOnAction(actionEvent ->  chargerElement(personOverview,table,str));
    			personOverview.getChildren().add(charger);
 
@@ -252,9 +252,8 @@ public class MainApp extends Application {
    			supprimer.setMinWidth(275);
    			supprimer.setMinHeight(40);
    			supprimer.setLayoutX(1125.0);
+   			supprimer.setAlignment(Pos.CENTER);
    			supprimer.setLayoutY(700);
-   			supprimer.setTextOverrun(OverrunStyle.CLIP);
-   			supprimer.setFont(Font.font("Calibri", 20));
    			supprimer.setDisable(true);
    			supprimer.setOnAction(actionEvent ->  supprimerElement(personOverview,table,str));
    			personOverview.getChildren().add(supprimer);
@@ -264,8 +263,7 @@ public class MainApp extends Application {
    			jeu.setMinHeight(40);
    			jeu.setLayoutX(200.0);
    			jeu.setLayoutY(700);
-   			jeu.setTextOverrun(OverrunStyle.CLIP);
-   			jeu.setFont(Font.font("Calibri", 20));
+   			jeu.setAlignment(Pos.CENTER);
    			jeu.setOnAction(actionEvent ->  jeu("","","","",false));
    			personOverview.getChildren().add(jeu);
 
@@ -274,8 +272,7 @@ public class MainApp extends Application {
    			ajout.setMinHeight(40);
    			ajout.setLayoutX(829.0);
    			ajout.setLayoutY(700);
-   			ajout.setTextOverrun(OverrunStyle.CLIP);
-   			ajout.setFont(Font.font("Calibri", 20));
+   			ajout.setAlignment(Pos.CENTER);
    			ajout.setOnAction(actionEvent ->  ajouterElement(personOverview,table,str,writableImage));
    			personOverview.getChildren().add(ajout);
 
@@ -284,9 +281,8 @@ public class MainApp extends Application {
    			ecrase.setMinHeight(40);
    			ecrase.setLayoutX(1125.0);
    			ecrase.setLayoutY(700);
-   			ecrase.setTextOverrun(OverrunStyle.CLIP);
-   			ecrase.setFont(Font.font("Calibri", 20));
    			ecrase.setDisable(true);
+   			ecrase.setAlignment(Pos.CENTER);
    			ecrase.setOnAction(actionEvent ->  ecraserElement(personOverview,table,str,writableImage));
    			personOverview.getChildren().add(ecrase);
    		}
@@ -347,8 +343,7 @@ public class MainApp extends Application {
             sauvegarder.setMinHeight(40);
             sauvegarder.setLayoutX(360.0);
             sauvegarder.setLayoutY(140.0);
-            sauvegarder.setTextOverrun(OverrunStyle.CLIP);
-            sauvegarder.setFont(Font.font("Calibri", 20));
+            sauvegarder.setAlignment(Pos.CENTER);
             sauvegarder.setOnAction(actionEvent -> enregistrerPartie(textField,str ,writableImage,sauvegarder) );
             sauvegarder.setDisable(true);
             page.getChildren().add(sauvegarder);
