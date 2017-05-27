@@ -198,6 +198,8 @@ public class ControleurJeu {
 	//OutKast power - Hey Ah !
 	public void jouerIA(Joueur joueur){
 		try {
+			boolean aParer = false;
+
 			Action action;
 			Case c;
 			Tour tour;
@@ -222,8 +224,10 @@ public class ControleurJeu {
 				jeu.getManche().getTourEnCours().executerAction(joueur, c.getX()+5, c.getY()+5);
 
 				if(jeu.getManche().getTourEnCours().getEstAttaque().getC1() == Joueur.Parade){
-					messageCourant = "Vous venez de parer, lancez une contre-attaque ou déplacez-vous !";
+					messageCourant = joueurEnCours.getNom() + " a parer";
     				tour.getMessageBox().setTexte(messageCourant);
+
+    				aParer = true;
 
 					action = joueur.actionIA(tour);
 
@@ -244,19 +248,39 @@ public class ControleurJeu {
 
 				switch(action.getTypeAction()){
 					case Joueur.Reculer :
-						messageCourant = joueurEnCours.getNom() + " a reculé de " + action.getCarteDeplacement().getContenu() + " cases";
+						if(action.getCarteDeplacement().getContenu() > 1){
+							messageCourant = joueurEnCours.getNom() + " a reculé de " + action.getCarteDeplacement().getContenu() + " cases";
+						}else{
+							messageCourant = joueurEnCours.getNom() + " a reculé de " + action.getCarteDeplacement().getContenu() + " case";
+						}
 						break;
 					case Joueur.Avancer :
-						messageCourant = joueurEnCours.getNom() + " a avancé de " + action.getCarteDeplacement().getContenu() + " cases";
+						if(action.getCarteDeplacement().getContenu() > 1){
+							messageCourant = joueurEnCours.getNom() + " a avancé de " + action.getCarteDeplacement().getContenu() + " cases";
+						}else{
+							messageCourant = joueurEnCours.getNom() + " a reculé de " + action.getCarteDeplacement().getContenu() + " case";
+						}
 						break;
 					case Joueur.AttaqueDirecte :
-						messageCourant = "Vous devez parer avec " + action.getNbCartes() + " cartes de valeur " + action.getCarteAction().getContenu();
-    					break;
-    				case Joueur.AttaqueIndirecte :
-    					messageCourant = "Vous devez parer avec " + action.getNbCartes() + " cartes de valeur " + action.getCarteAction().getContenu() + " ou fuire";
+						if(action.getNbCartes() > 1){
+							messageCourant = "Vous devez parer avec " + action.getNbCartes() + " cartes de valeur " + action.getCarteAction().getContenu();
+						}else{
+							messageCourant = "Vous devez parer avec " + action.getNbCartes() + " carte de valeur " + action.getCarteAction().getContenu();
+						}
+						break;
+					case Joueur.AttaqueIndirecte :
+						if(action.getNbCartes() > 1){
+							messageCourant = "Vous devez parer avec " + action.getNbCartes() + " cartes de valeur " + action.getCarteAction().getContenu() + " ou fuire";
+						}else{
+							messageCourant = "Vous devez parer avec " + action.getNbCartes() + " carte de valeur " + action.getCarteAction().getContenu() + " ou fuire";
+						}
 						break;
 					case Joueur.Fuite :
-						messageCourant = joueurEnCours.getNom() + " a fui de " + action.getCarteDeplacement().getContenu() + " cases";
+						if(action.getCarteDeplacement().getContenu() > 1){
+							messageCourant = joueurEnCours.getNom() + " a fui de " + action.getCarteDeplacement().getContenu() + " cases";
+						}else{
+							messageCourant = joueurEnCours.getNom() + " a fui de " + action.getCarteDeplacement().getContenu() + " case";
+						}
 						break;
 				}
 
@@ -651,25 +675,43 @@ public class ControleurJeu {
 	    	    	    			}
 
 	    	    	    			if(trouve){
-	    	    		    			switch(action.getTypeAction()){
-	    	    		    				case Joueur.Reculer :
-	    	    		    					messageCourant = joueurEnCours.getNom() + " a reculé de " + action.getCarteDeplacement().getContenu() + " cases";
-	    	    		    					break;
-	    	    		    				case Joueur.Avancer :
-	    	    		    					messageCourant = joueurEnCours.getNom() + " a avancé de " + action.getCarteDeplacement().getContenu() + " cases";
-	    	    		    					break;
-	    	    		    				case Joueur.AttaqueDirecte :
-	    	    		    					messageCourant = "Vous devez parer avec " + action.getNbCartes() + " cartes de valeur " + action.getCarteAction().getContenu();
-	    	    		    					//messageCourant = joueurEnCours.getNom() + " vous attaque " + action.getNbCartes() + " fois avec une puissance de " + action.getCarteAction().getContenu();
-	    	    		    					break;
-	    	    		    				case Joueur.AttaqueIndirecte :
-	    	    		    					messageCourant = "Vous devez parer avec " + action.getNbCartes() + " cartes de valeur " + action.getCarteAction().getContenu() + " ou fuire";
-	    	    		    					//messageCourant = joueurEnCours.getNom() + " a avancé de " + action.getCarteDeplacement().getContenu() + " cases vers la position " + action.getPositionArrivee() + " et vous attaque " + action.getNbCartes() + " fois avec une puissance " + action.getCarteAction().getContenu();
-	    	    		    					break;
-	    	    		    				case Joueur.Fuite :
-	    	    		    					messageCourant = joueurEnCours.getNom() + " a fui de " + action.getCarteDeplacement().getContenu() + " cases";
-	    	    		    					break;
-	    	    		    			}
+	    	    	    				switch(action.getTypeAction()){
+	    	    						case Joueur.Reculer :
+	    	    							if(action.getCarteDeplacement().getContenu() > 1){
+	    	    								messageCourant = joueurEnCours.getNom() + " a reculé de " + action.getCarteDeplacement().getContenu() + " cases";
+	    	    							}else{
+	    	    								messageCourant = joueurEnCours.getNom() + " a reculé de " + action.getCarteDeplacement().getContenu() + " case";
+	    	    							}
+	    	    							break;
+	    	    						case Joueur.Avancer :
+	    	    							if(action.getCarteDeplacement().getContenu() > 1){
+	    	    								messageCourant = joueurEnCours.getNom() + " a avancé de " + action.getCarteDeplacement().getContenu() + " cases";
+	    	    							}else{
+	    	    								messageCourant = joueurEnCours.getNom() + " a reculé de " + action.getCarteDeplacement().getContenu() + " case";
+	    	    							}
+	    	    							break;
+	    	    						case Joueur.AttaqueDirecte :
+	    	    							if(action.getNbCartes() > 1){
+	    	    								messageCourant = "Vous devez parer avec " + action.getNbCartes() + " cartes de valeur " + action.getCarteAction().getContenu();
+	    	    							}else{
+	    	    								messageCourant = "Vous devez parer avec " + action.getNbCartes() + " carte de valeur " + action.getCarteAction().getContenu();
+	    	    							}
+	    	    							break;
+	    	    						case Joueur.AttaqueIndirecte :
+	    	    							if(action.getNbCartes() > 1){
+	    	    								messageCourant = "Vous devez parer avec " + action.getNbCartes() + " cartes de valeur " + action.getCarteAction().getContenu() + " ou fuire";
+	    	    							}else{
+	    	    								messageCourant = "Vous devez parer avec " + action.getNbCartes() + " carte de valeur " + action.getCarteAction().getContenu() + " ou fuire";
+	    	    							}
+	    	    							break;
+	    	    						case Joueur.Fuite :
+	    	    							if(action.getCarteDeplacement().getContenu() > 1){
+	    	    								messageCourant = joueurEnCours.getNom() + " a fui de " + action.getCarteDeplacement().getContenu() + " cases";
+	    	    							}else{
+	    	    								messageCourant = joueurEnCours.getNom() + " a fui de " + action.getCarteDeplacement().getContenu() + " case";
+	    	    							}
+	    	    							break;
+	    	    					}
 	    	    	    			}
 
 	    	    	    			//on modifie le nombre de carte dans la pioche
