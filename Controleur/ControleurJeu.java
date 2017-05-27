@@ -209,10 +209,6 @@ public class ControleurJeu {
 
 			action = joueur.actionIA(tour);
 
-			/*if(action == null){
-				verifierFinDeManche(joueur, false);
-			}*/
-			
 			if(action != null){
 
 				actions_jouables.ajouterAction(action);
@@ -229,15 +225,6 @@ public class ControleurJeu {
 
 					action = joueur.actionIA(tour);
 
-					/*if(action == null){
-						System.out.println("Pas d'action possible");
-						if(!tour.getPioche().estVide()){
-							verifierFinDeManche(joueur, false);
-						}else{
-							verifierFinDeLaPioche();
-						}
-					}*/
-					
 					if(action != null){
 						actions_jouables.ajouterAction(action);
 						c = jeu.getPiste().getCasesNumero(action.getPositionArrivee());
@@ -268,7 +255,7 @@ public class ControleurJeu {
 
 				joueur.getMain().setVisible(false);
 			}
-			
+
 			finDeTourIA();
 
 		} catch (Exception e) {
@@ -279,12 +266,12 @@ public class ControleurJeu {
 	public void finDeTourIA() throws Exception{
 		boolean peutFaireAction;
 		boolean mancheTerminee;
-		
+
 		Tour tour = jeu.getManche().getTourEnCours();
 		int etatAttaque = tour.getEstAttaque().getC1();
 
 		ActionsJouables actionsTourSuivant = joueurEnCours.peutFaireAction(tour.getEstAttaque());
-		
+
 		if(etatAttaque == Joueur.Parade && !tour.getPioche().estVide() && (actionsTourSuivant.size() == 0 || actionsTourSuivant == null)){
 			verifierFinDeManche(joueurEnCours, false);
 		}else{
@@ -319,7 +306,7 @@ public class ControleurJeu {
 				}));
 				timer.play();
 			}
-		}		
+		}
 	}
 
 	//Fonction d'initilisation des Widgets(Labels, button, etc...)
@@ -410,11 +397,11 @@ public class ControleurJeu {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
+
 			// la manche est terminée
 			return true;
 		}
-		
+
 		// la manche n'est pas terminée
 		return false;
 	}
@@ -431,11 +418,11 @@ public class ControleurJeu {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
+
 			// la manche est terminée
 			return true;
 		}
-		
+
 		// la manche n'est pas terminée
 		return false;
 	}
@@ -833,7 +820,7 @@ public class ControleurJeu {
 		boolean peutFaireAction;
 		Tour tour = jeu.getManche().getTourEnCours();
 		int etatAttaque = tour.getEstAttaque().getC1();
-		boolean mancheTerminee;		
+		boolean mancheTerminee;
 
 		mainApp.setActionFaites(Sauvegarde.ENTREDEUX);
 
