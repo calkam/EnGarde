@@ -31,7 +31,7 @@
               <content>
                 <AnchorPane prefHeight="0.0" prefWidth="0.0" style="-fx-background-color: rgba(0,0,0,0.85);">
                      <children>
-                        <Text fill="WHITE" layoutX="60.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Une partie se joue à un contre un en plusieurs manches. Le premier joueur à toucher autant de fois que le nombre de vie " AnchorPane.leftAnchor="60.0">
+                        <Text fill="WHITE" layoutX="60.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Une partie se joue à un contre un en plusieurs manches. Le gagnant est celui ayant enlevé toutes ces vies à son adversaire " AnchorPane.leftAnchor="60.0">
                            <font>
                               <Font name="MathJax_Caligraphic-Regular" size="16.0" />
                            </font>
@@ -39,11 +39,6 @@
                         <Text fill="WHITE" layoutX="30.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="But du jeu">
                            <font>
                               <Font name="MathJax_Caligraphic-Regular" size="30.0" />
-                           </font>
-                        </Text>
-                        <Text fill="WHITE" layoutX="70.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="son adversaire est déclaré vainqueur." AnchorPane.leftAnchor="60.0">
-                           <font>
-                              <Font name="MathJax_Caligraphic-Regular" size="16.0" />
                            </font>
                         </Text>
                         <Line endX="682.0" layoutX="200.0" layoutY="130.0" stroke="WHITE" />
@@ -72,7 +67,7 @@
                               <Font name="MathJax_Caligraphic-Regular" size="16.0" />
                            </font>
                         </Text>
-                        <Text fill="WHITE" layoutX="76.0" layoutY="769.0" strokeType="OUTSIDE" strokeWidth="0.0" text="- les cartes restantes forment une pioche, posée face cachée au dessus du terrain de jeu." AnchorPane.leftAnchor="76.0">
+                        <Text fill="WHITE" layoutX="76.0" layoutY="769.0" strokeType="OUTSIDE" strokeWidth="0.0" text="- les cartes restantes forment une pioche, posées face cachée au dessus du terrain de jeu." AnchorPane.leftAnchor="76.0">
                            <font>
                               <Font name="MathJax_Caligraphic-Regular" size="16.0" />
                            </font>
@@ -103,12 +98,12 @@
                               <Font name="MathJax_Caligraphic-Regular" size="16.0" />
                            </font>
                         </Text>
-                        <Text fill="WHITE" layoutX="55.0" layoutY="1012.0" strokeType="OUTSIDE" strokeWidth="0.0" text="La carte du dessus soit visible. Aucune action n'est possible sur la défausse." AnchorPane.leftAnchor="55.0">
+                        <Text fill="WHITE" layoutX="55.0" layoutY="1012.0" strokeType="OUTSIDE" strokeWidth="0.0" text="la carte du dessus soit visible. Aucune action n'est possible sur la défausse." AnchorPane.leftAnchor="55.0">
                            <font>
                               <Font name="MathJax_Caligraphic-Regular" size="16.0" />
                            </font>
                         </Text>
-                        <Text fill="WHITE" layoutX="57.0" layoutY="1029.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Le nombre de carte restante dans la pioche est indiqué." AnchorPane.leftAnchor="57.0">
+                        <Text fill="WHITE" layoutX="57.0" layoutY="1029.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Le nombre de cartes restantes dans la pioche est indiqué." AnchorPane.leftAnchor="57.0">
                            <font>
                               <Font name="MathJax_Caligraphic-Regular" size="16.0" />
                            </font>
@@ -230,7 +225,7 @@
                               <Font name="MathJax_Caligraphic-Bold" size="16.0" />
                            </font>
                         </Text>
-                        <Text fill="WHITE" layoutX="74.0" layoutY="2453.0" strokeType="OUTSIDE" strokeWidth="0.0" text="terme de celui-ci que sa main est complété à cinq cartes." AnchorPane.leftAnchor="74.0">
+                        <Text fill="WHITE" layoutX="74.0" layoutY="2453.0" strokeType="OUTSIDE" strokeWidth="0.0" text="terme de celui-ci que sa main est complétée à cinq cartes." AnchorPane.leftAnchor="74.0">
                            <font>
                               <Font name="MathJax_Caligraphic-Bold" size="16.0" />
                            </font>
@@ -422,12 +417,12 @@
                               <Font name="MathJax_Caligraphic-Regular" size="16.0" />
                            </font>
                         </Text>
-                        <Text fill="WHITE" layoutX="124.0" layoutY="4963.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Exemple : si les deux joueurs sont distants de deux cases lorsque la dernière carte est piochée, le joueur qui dispose" AnchorPane.leftAnchor="124.0">
+                        <Text fill="WHITE" layoutX="124.0" layoutY="4963.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Exemple : si les deux joueurs sont distants de 2 cases lorsque la dernière carte est piochée, le joueur qui dispose" AnchorPane.leftAnchor="124.0">
                            <font>
                               <Font name="MathJax_Caligraphic-Regular" size="16.0" />
                            </font>
                         </Text>
-                        <Text fill="WHITE" layoutX="124.0" layoutY="4983.0" strokeType="OUTSIDE" strokeWidth="0.0" text="du grand nombre de cartes 2 en main remporte a manche." AnchorPane.leftAnchor="124.0">
+                        <Text fill="WHITE" layoutX="124.0" layoutY="4983.0" strokeType="OUTSIDE" strokeWidth="0.0" text="du grand nombre de cartes de valeurs 2 en main remporte a manche." AnchorPane.leftAnchor="124.0">
                            <font>
                               <Font name="MathJax_Caligraphic-Regular" size="16.0" />
                            </font>

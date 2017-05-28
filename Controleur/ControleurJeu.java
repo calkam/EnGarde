@@ -125,6 +125,12 @@ public class ControleurJeu {
 		//on initialise les labels de nom des joueurs
 		nomJoueur1.setText(jeu.getJoueur1().getNom());
 		nomJoueur2.setText(jeu.getJoueur2().getNom());
+		if(jeu.getJoueur1() instanceof IA){
+			nomJoueur1.setText("IA " + jeu.getJoueur1().getNom());
+		}
+		if(jeu.getJoueur2() instanceof IA){
+			nomJoueur2.setText("IA " + jeu.getJoueur2().getNom());
+		}
 		//on initialise le message courant de la message Box
 		messageCourant = "Au tour de " + jeu.getManche().getTourEnCours().getJoueurPremier().getNom();
 		//on initilialise la message Box
@@ -361,6 +367,8 @@ public class ControleurJeu {
         	jeu.getJoueur1().getMain().setVisible(true);
         	jeu.getJoueur2().getMain().setVisible(true);
         }
+
+        MainApp.sauvegarder.setDisable(true);
 	}
 
 	//Modifier action possible 2 paramètres
@@ -388,16 +396,6 @@ public class ControleurJeu {
 
 		//on regarde les actions possible pour le joueur, avec les cartes seléctionné
 		estActionPossible = jeu.getManche().getTourEnCours().possibiliteAction(joueurEnCours, cartes);
-
-		/*if(!estActionPossible){
-			System.out.println("coucou");
-			for(Carte c : cartes){
-				c.setSelectionne(true);
-			}
-			carteAction.setSelectionne(false);
-			cartes = new ArrayList<Carte>();
-			cartes.add(carteAction);
-		}*/
 
 		return estActionPossible;
 	}
@@ -523,7 +521,7 @@ public class ControleurJeu {
 				joueurPerdant = jeu.getJoueur1().getNom();
 			}
 
-			textTableauFin.setText(joueurVictorieux + "\na triomphé de son adversaire ! Gloire à\n" + joueurVictorieux +" !");
+			textTableauFin.setText(joueurVictorieux + "\na triomphé de son adversaire !\n Gloire à\n" + joueurVictorieux +" !");
 
 		}else if(typeFin == FINMANCHE){
 			//on affiche les messages de fin de manche dans le tableau de fin
@@ -704,42 +702,42 @@ public class ControleurJeu {
 
 	    	    	    			if(trouve){
 	    	    	    				switch(action.getTypeAction()){
-	    	    						case Joueur.Reculer :
-	    	    							if(action.getCarteDeplacement().getContenu() > 1){
-	    	    								messageCourant = joueurEnCours.getNom() + " a reculé de " + action.getCarteDeplacement().getContenu() + " cases";
-	    	    							}else{
-	    	    								messageCourant = joueurEnCours.getNom() + " a reculé de " + action.getCarteDeplacement().getContenu() + " case";
-	    	    							}
-	    	    							break;
-	    	    						case Joueur.Avancer :
-	    	    							if(action.getCarteDeplacement().getContenu() > 1){
-	    	    								messageCourant = joueurEnCours.getNom() + " a avancé de " + action.getCarteDeplacement().getContenu() + " cases";
-	    	    							}else{
-	    	    								messageCourant = joueurEnCours.getNom() + " a avancé de " + action.getCarteDeplacement().getContenu() + " case";
-	    	    							}
-	    	    							break;
-	    	    						case Joueur.AttaqueDirecte :
-	    	    							if(action.getNbCartes() > 1){
-	    	    								messageCourant = "Vous devez parer avec " + action.getNbCartes() + " cartes de valeur " + action.getCarteAction().getContenu();
-	    	    							}else{
-	    	    								messageCourant = "Vous devez parer avec " + action.getNbCartes() + " carte de valeur " + action.getCarteAction().getContenu();
-	    	    							}
-	    	    							break;
-	    	    						case Joueur.AttaqueIndirecte :
-	    	    							if(action.getNbCartes() > 1){
-	    	    								messageCourant = "Vous devez parer avec " + action.getNbCartes() + " cartes de valeur " + action.getCarteAction().getContenu() + " ou fuire";
-	    	    							}else{
-	    	    								messageCourant = "Vous devez parer avec " + action.getNbCartes() + " carte de valeur " + action.getCarteAction().getContenu() + " ou fuire";
-	    	    							}
-	    	    							break;
-	    	    						case Joueur.Fuite :
-	    	    							if(action.getCarteDeplacement().getContenu() > 1){
-	    	    								messageCourant = joueurEnCours.getNom() + " a fui de " + action.getCarteDeplacement().getContenu() + " cases";
-	    	    							}else{
-	    	    								messageCourant = joueurEnCours.getNom() + " a fui de " + action.getCarteDeplacement().getContenu() + " case";
-	    	    							}
-	    	    							break;
-	    	    					}
+		    	    						case Joueur.Reculer :
+		    	    							if(action.getCarteDeplacement().getContenu() > 1){
+		    	    								messageCourant = joueurEnCours.getNom() + " a reculé de " + action.getCarteDeplacement().getContenu() + " cases";
+		    	    							}else{
+		    	    								messageCourant = joueurEnCours.getNom() + " a reculé de " + action.getCarteDeplacement().getContenu() + " case";
+		    	    							}
+		    	    							break;
+		    	    						case Joueur.Avancer :
+		    	    							if(action.getCarteDeplacement().getContenu() > 1){
+		    	    								messageCourant = joueurEnCours.getNom() + " a avancé de " + action.getCarteDeplacement().getContenu() + " cases";
+		    	    							}else{
+		    	    								messageCourant = joueurEnCours.getNom() + " a avancé de " + action.getCarteDeplacement().getContenu() + " case";
+		    	    							}
+		    	    							break;
+		    	    						case Joueur.AttaqueDirecte :
+		    	    							if(action.getNbCartes() > 1){
+		    	    								messageCourant = "Vous devez parer avec " + action.getNbCartes() + " cartes de valeur " + action.getCarteAction().getContenu();
+		    	    							}else{
+		    	    								messageCourant = "Vous devez parer avec " + action.getNbCartes() + " carte de valeur " + action.getCarteAction().getContenu();
+		    	    							}
+		    	    							break;
+		    	    						case Joueur.AttaqueIndirecte :
+		    	    							if(action.getNbCartes() > 1){
+		    	    								messageCourant = "Vous devez parer avec " + action.getNbCartes() + " cartes de valeur " + action.getCarteAction().getContenu() + " ou fuire";
+		    	    							}else{
+		    	    								messageCourant = "Vous devez parer avec " + action.getNbCartes() + " carte de valeur " + action.getCarteAction().getContenu() + " ou fuire";
+		    	    							}
+		    	    							break;
+		    	    						case Joueur.Fuite :
+		    	    							if(action.getCarteDeplacement().getContenu() > 1){
+		    	    								messageCourant = joueurEnCours.getNom() + " a fui de " + action.getCarteDeplacement().getContenu() + " cases";
+		    	    							}else{
+		    	    								messageCourant = joueurEnCours.getNom() + " a fui de " + action.getCarteDeplacement().getContenu() + " case";
+		    	    							}
+		    	    							break;
+	    	    	    				}
 	    	    	    			}
 
 	    	    	    			//on modifie le nombre de carte dans la pioche
@@ -753,6 +751,8 @@ public class ControleurJeu {
 	        	        		}
     	                	}
         	        	}
+
+        	        	MainApp.sauvegarder.setDisable(false);
         	            break;
 
         	        default:
@@ -872,6 +872,7 @@ public class ControleurJeu {
 		terrain.setDisable(false);
 
 		joueurEnCours = tour.joueurAdverse(joueurEnCours);
+
 	}
 
 	//Si FINDETOUR - click sur le button fin de tour
@@ -948,6 +949,7 @@ public class ControleurJeu {
 			}
 
 		}
+		MainApp.sauvegarder.setDisable(true);
 	}
 
 	//changement du disable des mains
@@ -966,6 +968,8 @@ public class ControleurJeu {
 		DessinateurCanvasJavaFx.visibilityActivated = false;
 		//on créer une nouvelle manche
 		jeu.nouvelleManche();
+		joueurEnCours = jeu.getManche().getTourEnCours().getJoueurPremier();
+		jeu.getPiste().getMessageBox().setTexte("Au tour de " + joueurEnCours.getNom() + ".");
 		try {
 			//on la lance
 			jeu.lancerLaManche();

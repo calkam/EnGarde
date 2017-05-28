@@ -63,6 +63,8 @@ public class MainApp extends Application {
     private BorderPane rootLayout;
     public static int iActionFaites;
 
+    public static Button sauvegarder;
+
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -557,7 +559,7 @@ public class MainApp extends Application {
             	}
             }
 
-            Button sauvegarder = new Button("Sauvegarder");
+            sauvegarder = new Button("Sauvegarder");
             sauvegarder.setMinWidth(216);
             sauvegarder.setMinHeight(40);
             sauvegarder.setLayoutX(289.0);
