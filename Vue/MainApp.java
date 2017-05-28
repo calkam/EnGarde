@@ -68,6 +68,7 @@ public class MainApp extends Application {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("En Garde");
         //this.primaryStage.setFullScreen(true);
+        this.primaryStage.setResizable(false);
         this.primaryStage.setWidth(1600);
         this.primaryStage.setHeight(900);
         this.primaryStage.getIcons().add(new Image("dosCarte.png"));

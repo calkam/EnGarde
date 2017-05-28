@@ -138,6 +138,10 @@
 	-fx-background-size: stretch;
 }
 
+.scroll-pane{
+	-fx-hbar-policy : never;
+}
+
 .finDeTour:pressed, .finDeTour:default:hover:pressed{
 	-fx-background-image:url("../../Ressources/finDeTourPresse.png");
 	-fx-text-fill: #999999;

@@ -186,11 +186,11 @@ public class Main extends Tas {
 			if(estCollisionCarte(i, (float)x, (float)y)){
 				if(!main.get(i).isSelectionne()){
 					main.get(i).setSelectionne(true);
-					main.get(i).setY(0);
+					//main.get(i).setY(0);
 					return main.get(i);
 				}else{
 					main.get(i).setSelectionne(false);
-					main.get(i).setY(Reglages.lis("PositionYCarte"));
+					//main.get(i).setY(Reglages.lis("PositionYCarte"));
 					return main.get(i);
 				}
 			}

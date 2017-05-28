@@ -142,6 +142,7 @@ public class ControleurJeu {
 		//partie cédric Sauvegarde / Revenir Au Jeu
 		if(!bjeu){
 			if(mainApp.getActionFaites() == Sauvegarde.FINDETOUR){
+				System.out.println("test1");
 				messageCourant = "Appuyer sur Fin de Tour";
 				jeu.getManche().getTourEnCours().getMessageBox().setTexte(messageCourant);
 
@@ -153,6 +154,7 @@ public class ControleurJeu {
 				buttonGestionTour.setStyle("-fx-background-image:url(finDeTourC.png);");
 
 			}else if(mainApp.getActionFaites() == Sauvegarde.ENTREDEUX){
+				System.out.println("test2");
 				messageCourant = "Appuyer sur prêt ";
 				jeu.getManche().getTourEnCours().getMessageBox().setTexte(messageCourant);
 
@@ -164,6 +166,7 @@ public class ControleurJeu {
 				gestionTour = PRETAJOUER;
 				buttonGestionTour.setStyle("-fx-background-image:url(finDeTour.png);");
 			}else{
+				System.out.println("test3");
 				changeDisableMain(jeu.getManche().getTourEnCours().getJoueurPremier(), false);
 				changeDisableMain(jeu.getManche().getTourEnCours().getJoueurSecond(), true);
 			}
@@ -365,6 +368,7 @@ public class ControleurJeu {
 	//x, y : position du click sur une carte
 	private boolean modifierActionPossible(int numJoueur, double x, double y) throws Exception{
 		Carte carteAction;
+		boolean estActionPossible;
 		//on initialise le joueurEncours par rapport au numJoueur
 		if(numJoueur==1){
 			joueurEnCours = jeu.getJoueur1();
@@ -381,8 +385,21 @@ public class ControleurJeu {
 	    		cartes.remove(carteAction);
 	    	}
 		}
+
 		//on regarde les actions possible pour le joueur, avec les cartes seléctionné
-    	return jeu.getManche().getTourEnCours().possibiliteAction(joueurEnCours, cartes);
+		estActionPossible = jeu.getManche().getTourEnCours().possibiliteAction(joueurEnCours, cartes);
+
+		/*if(!estActionPossible){
+			System.out.println("coucou");
+			for(Carte c : cartes){
+				c.setSelectionne(true);
+			}
+			carteAction.setSelectionne(false);
+			cartes = new ArrayList<Carte>();
+			cartes.add(carteAction);
+		}*/
+
+		return estActionPossible;
 	}
 
 	//On réinitialise la partie après une fin de manche

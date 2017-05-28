@@ -27,7 +27,7 @@
             <RowConstraints maxHeight="293.0" minHeight="10.0" prefHeight="116.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <ScrollPane fitToHeight="true" fitToWidth="true" vvalue="0.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" vvalue="0.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
               <content>
                 <AnchorPane prefHeight="0.0" prefWidth="0.0" style="-fx-background-color: rgba(0,0,0,0.85);">
                      <children>
