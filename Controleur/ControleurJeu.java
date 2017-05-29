@@ -546,7 +546,7 @@ public class ControleurJeu {
 						textTableauFin.setText("La pioche est vide.\n" + joueurVictorieux + " a gagné la\nmanche ! " + joueurVictorieux + "\na plus de cartes pour attaquer\ndirectectement son adversaire");
 						break;
 					case Manche.PLUSCARTEMEDIANE :
-						textTableauFin.setText("La pioche est vide.\n" + joueurVictorieux + " étant plus\nproche de la case médiane\n" + joueurVictorieux + "\na gagné la manche !");
+						textTableauFin.setText("La pioche est vide.\n" + joueurVictorieux + " étant plus\nproche de la case médiane\n" + joueurVictorieux + " a gagné la manche !");
 						break;
 				}
 			}
