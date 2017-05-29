@@ -143,12 +143,10 @@ public class ControleurJeu {
 		//on initilialise les widgets
 		initialiserWidget();
 
-		joueurEnCours = jeu.getManche().getTourEnCours().getJoueurPremier();
-
 		//partie cédric Sauvegarde / Revenir Au Jeu
 		if(!bjeu){
 			if(mainApp.getActionFaites() == Sauvegarde.FINDETOUR){
-				System.out.println("test1");
+				System.out.println(joueurEnCours);
 				messageCourant = "Appuyer sur Fin de Tour";
 				jeu.getManche().getTourEnCours().getMessageBox().setTexte(messageCourant);
 
@@ -172,10 +170,11 @@ public class ControleurJeu {
 				gestionTour = PRETAJOUER;
 				buttonGestionTour.setStyle("-fx-background-image:url(finDeTour.png);");
 			}else{
-				System.out.println("test3");
 				changeDisableMain(jeu.getManche().getTourEnCours().getJoueurPremier(), false);
 				changeDisableMain(jeu.getManche().getTourEnCours().getJoueurSecond(), true);
 			}
+		}else{
+			joueurEnCours = jeu.getManche().getTourEnCours().getJoueurPremier();
 		}
 
 		//test si il y a une IA qui commence si oui joue son coup
@@ -537,7 +536,7 @@ public class ControleurJeu {
 			}
 
 			if(resultat.getC1() == Manche.MATCHNULLE){
-				textTableauFin.setText("Manche nulle !?");
+				textTableauFin.setText("Manche nulle !");
 			}else{
 				switch(resultat.getC2()){
 					case Manche.VICTOIRESIMPLE :
