@@ -211,8 +211,6 @@ public class ControleurJeu {
 	//OutKast power - Hey Ah !
 	public void jouerIA(Joueur joueur){
 		try {
-			boolean aParer = false;
-
 			Action action;
 			Case c;
 			Tour tour;
@@ -237,8 +235,6 @@ public class ControleurJeu {
 				if(jeu.getManche().getTourEnCours().getEstAttaque().getC1() == Joueur.Parade){
 					messageCourant = joueurEnCours.getNom() + " a parer";
     				tour.getMessageBox().setTexte(messageCourant);
-
-    				aParer = true;
 
 					action = joueur.actionIA(tour);
 
@@ -293,14 +289,14 @@ public class ControleurJeu {
 				joueur.getMain().setVisible(false);
 			}
 
-			finDeTourIA();
+			finDeTourIA(action);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void finDeTourIA() throws Exception{
+	public void finDeTourIA(Action action) throws Exception{
 		boolean peutFaireAction;
 		boolean mancheTerminee;
 
@@ -309,7 +305,7 @@ public class ControleurJeu {
 
 		ActionsJouables actionsTourSuivant = joueurEnCours.peutFaireAction(tour.getEstAttaque());
 
-		if(etatAttaque == Joueur.Parade && !tour.getPioche().estVide() && (actionsTourSuivant.size() == 0 || actionsTourSuivant == null)){
+		if((etatAttaque == Joueur.Parade && !tour.getPioche().estVide() && (actionsTourSuivant.size() == 0 || actionsTourSuivant == null)) || action == null){
 			verifierFinDeManche(joueurEnCours, false);
 		}else{
 			//on passe le button a prêt à jouer
