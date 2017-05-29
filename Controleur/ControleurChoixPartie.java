@@ -24,7 +24,7 @@ public class ControleurChoixPartie {
     private MainApp mainApp;
 
     ObservableList<String> ChoixCombattantList = FXCollections.observableArrayList("Humain","IA");
-    ObservableList<String> ChoixNiveauList = FXCollections.observableArrayList("Facile","Moyen","Difficile","Légendaire");
+    ObservableList<String> ChoixNiveauList = FXCollections.observableArrayList("Facile","Moyen","Difficile");
 
     @FXML
     private Button buttonDebut;

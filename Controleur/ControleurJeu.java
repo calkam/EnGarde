@@ -337,6 +337,8 @@ public class ControleurJeu {
 			}
 
 			if(peutFaireAction && tour.joueurAdverse(joueurEnCours) instanceof IA && !mancheTerminee){
+				mainDroite.setDisable(true);
+				mainGauche.setDisable(true);
 				Timeline timer = new Timeline(new KeyFrame(Duration.seconds(3), new EventHandler<ActionEvent>() {
 				    @Override
 				    public void handle(ActionEvent event) {
