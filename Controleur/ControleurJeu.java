@@ -377,11 +377,11 @@ public class ControleurJeu {
 		Carte carteAction;
 		boolean estActionPossible;
 		//on initialise le joueurEncours par rapport au numJoueur
-		/*if(numJoueur==1){
+		if(numJoueur==1){
 			joueurEnCours = jeu.getJoueur1();
 		}else{
 			joueurEnCours = jeu.getJoueur2();
-		}*/
+		}
 		//si la carte cliquer existe
 		if((carteAction = joueurEnCours.getMain().getCarteClick(x, y)) != null){
 			//on ajoute la carte si elle est seléctionné:
