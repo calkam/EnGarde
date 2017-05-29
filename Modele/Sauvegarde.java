@@ -423,14 +423,14 @@ public static ArrayList<ArrayList<String>>recuperationNomSauvegarde(){
 
 		    sauvegarde.appendChild(aquidejouer);
 
-		    if(m.getJoueur1().getDirection() == Joueur.DirectionDroite){
+		    //if(m.getJoueur1().getDirection() == Joueur.DirectionDroite){
 		    	miseajourJoueur(m,document,sauvegarde,"JoueurGauche",m.getJoueur1());
 		    	miseajourJoueur(m,document,sauvegarde,"JoueurDroit",m.getJoueur2());
-		    }else{
+		    //}else{
 
-		      	miseajourJoueur(m,document,sauvegarde,"JoueurGauche",m.getJoueur2());
-		    	miseajourJoueur(m,document,sauvegarde,"JoueurDroit",m.getJoueur1());
-		    }
+		    //  	miseajourJoueur(m,document,sauvegarde,"JoueurGauche",m.getJoueur2());
+		    //	miseajourJoueur(m,document,sauvegarde,"JoueurDroit",m.getJoueur1());
+		    //}
 	}
 
 	private static void miseajourJoueur(Manche manche,Document document, Element sauvegarde, String string, Joueur joueur1) throws DOMException, Exception {
@@ -443,10 +443,10 @@ public static ArrayList<ArrayList<String>>recuperationNomSauvegarde(){
 
 	    Element type = document.createElement("Type");
 
-	    if(manche.getJoueur1() instanceof Humain){
+	    if(joueur1 instanceof Humain){
 	    	type.appendChild(document.createTextNode("Humain"));
 	    }else{
-	    	type.appendChild(document.createTextNode(joueur1.getNom()));
+	    	type.appendChild(document.createTextNode("IA"));
 	    }
 	    joueur.appendChild(type);
 

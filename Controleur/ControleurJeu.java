@@ -125,7 +125,7 @@ public class ControleurJeu {
 		this.setJeu(j);
 
 		//On modifie le nombre de carte dans la pioche
-		nbCartePioche.setText(Integer.toString(15));
+		nbCartePioche.setText(Integer.toString(jeu.getManche().getPioche().size()));
 		//on initialise les labels de nom des joueurs
 		nomJoueur1.setText(jeu.getJoueur1().getNom());
 		nomJoueur2.setText(jeu.getJoueur2().getNom());
@@ -150,7 +150,6 @@ public class ControleurJeu {
 		//partie cédric Sauvegarde / Revenir Au Jeu
 		if(!bjeu){
 			if(mainApp.getActionFaites() == Sauvegarde.FINDETOUR){
-				System.out.println(joueurEnCours);
 				messageCourant = "Appuyer sur Fin de Tour";
 				jeu.getManche().getTourEnCours().getMessageBox().setTexte(messageCourant);
 
@@ -164,7 +163,6 @@ public class ControleurJeu {
 				buttonGestionTour.setStyle("-fx-background-image:url(finDeTourC.png);");
 
 			}else if(mainApp.getActionFaites() == Sauvegarde.ENTREDEUX){
-				System.out.println("test2");
 				messageCourant = "Appuyer sur prêt ";
 				jeu.getManche().getTourEnCours().getMessageBox().setTexte(messageCourant);
 
@@ -871,6 +869,8 @@ public class ControleurJeu {
 
 	//Si PRETAJOUER - click sur le button prêt à jouer
 	private void pretAJouer(){
+		joueurEnCours = jeu.getManche().getTourEnCours().joueurAdverse(joueurEnCours);
+
 		mainApp.setActionFaites(Sauvegarde.ENCOURS);
 
 		Tour tour = jeu.getManche().getTourEnCours();
@@ -889,7 +889,6 @@ public class ControleurJeu {
 		terrain.setDisable(false);
 
 		joueurEnCours = tour.joueurAdverse(joueurEnCours);
-
 	}
 
 	//Si FINDETOUR - click sur le button fin de tour
@@ -968,6 +967,8 @@ public class ControleurJeu {
 
 		}
 		MainApp.sauvegarder.setDisable(true);
+
+		joueurEnCours = tour.joueurAdverse(joueurEnCours);
 	}
 
 	//changement du disable des mains
@@ -1155,7 +1156,7 @@ public class ControleurJeu {
 		jeu.getManche().setDefausse(tourAvant.getDefausse());
 		nbCartePioche.setText(Integer.toString(jeu.getManche().getPioche().size()));
 
-		gestionTour = PRETAJOUER;
+		gestionTour = FINDETOUR;
 	}
 
 }
