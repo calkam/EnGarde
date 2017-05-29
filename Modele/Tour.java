@@ -80,29 +80,25 @@ public class Tour implements Visitable {
 	private Triplet<Integer, Integer, Integer> attaquer_directement_parer (Action actionAJouer, Joueur joueur) throws Exception {
 
 		Carte carteAction = actionAJouer.getCarteAction();
+		int typeAction = actionAJouer.getTypeAction() == Joueur.AttaqueDirecte ? Joueur.AttaqueDirecte : actionAJouer.getTypeAction() == Joueur.AttaqueIndirecte ? Joueur.AttaqueIndirecte : Joueur.Parade ;
 		joueur.defausserCartes(carteAction, actionAJouer.getNbCartes(), defausse) ;
-		return new Triplet <> (null, actionAJouer.getNbCartes(), carteAction.getContenu()) ;
+		return new Triplet <> (typeAction, actionAJouer.getNbCartes(), carteAction.getContenu()) ;
 
 	}
 
 	public Triplet<Integer, Integer, Integer> jouerAction(Action actionAJouer, Joueur joueur) throws Exception{
-
-		Triplet<Integer, Integer, Integer> config ;
 
 		switch(actionAJouer.getTypeAction()) {
 		case Joueur.Avancer : return avancer_reculer_fuire(actionAJouer, joueur, Joueur.Avancer) ;
 		case Joueur.Reculer : case Joueur.Fuite : return avancer_reculer_fuire(actionAJouer, joueur, Joueur.Reculer) ;
 		default :
 		}
-		config = attaquer_directement_parer(actionAJouer, joueur) ;
-		switch(actionAJouer.getTypeAction()) {
-		case Joueur.AttaqueDirecte : config.setC1(Joueur.AttaqueDirecte); break ;
-		case Joueur.AttaqueIndirecte : avancer_reculer_fuire(actionAJouer, joueur, Joueur.Avancer) ; config.setC1(Joueur.AttaqueIndirecte) ; break ;
-		case Joueur.Parade : config.setC1(Joueur.Parade) ; break ;
-		default : throw new Exception("Modele.Tour.executerAction : typeAction inconnu") ;
-		}
-
-		return config ;
+		
+		if (actionAJouer.getTypeAction() == Joueur.AttaqueIndirecte)
+			
+			avancer_reculer_fuire(actionAJouer, joueur, Joueur.Avancer) ;
+		
+		return attaquer_directement_parer(actionAJouer, joueur) ;
 
 	}
 
