@@ -12,5 +12,4 @@ public class Engardoide {
         j = new Jeu();
         MainApp.creer(args, j, p);
     }
-
 }

@@ -15,10 +15,8 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
-
 import java.util.ArrayList;
 import java.util.Enumeration;
-
 import Modele.Couple;
 import Modele.Jeu;
 import Modele.Manche;
@@ -768,7 +766,9 @@ public class ControleurJeu {
     	                	}
         	        	}
 
-        	        	MainApp.sauvegarder.setDisable(false);
+        	        	if(jeu.getManche().getTourEnCours().getEstAttaque().getC1() != Joueur.Parade){
+        	        		MainApp.sauvegarder.setDisable(false);
+        	        	}
         	            break;
 
         	        default:
