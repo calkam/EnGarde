@@ -55,6 +55,7 @@ public class Tour implements Visitable {
 		tour.joueurSecond = this.joueurSecond.clone() ;
 		tour.pioche = this.pioche.clone() ;
 		tour.defausse = this.defausse.clone() ;
+		tour.messageBox = this.messageBox.clone() ;
 
 		return tour ;
 

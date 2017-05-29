@@ -59,7 +59,8 @@ public class Main extends Tas {
 		Main main = new Main(getCote(), getX(), getY(), getLargeur(), getHauteur()) ;
 		main.setVisible(this.visible);
 		main.nombreCarte = this.nombreCarte.clone() ;
-		main.setMain((ArrayList<Carte>) getMain().clone()) ;
+		//main.setMain((ArrayList<Carte>) getMain().clone()) ;
+		main.setM((ArrayList<Carte>) getMain().clone()) ;
 		return main ;
 
 	}
@@ -78,6 +79,10 @@ public class Main extends Tas {
 
 	public ArrayList<Carte> getMain(){
 		return this.main;
+	}
+
+	public void setM(ArrayList<Carte> m) {
+		this.main = m;
 	}
 
 	public void setMain(ArrayList<Carte> m) {

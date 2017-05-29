@@ -13,11 +13,11 @@ public class MessageBox extends Rectangle implements Visitable{
     	super(x, y, largeur, hauteur);
     	this.texte = t;
     }
-    
+
     MessageBox(String t, float x, float y){
     	this(t, x, y, Reglages.lis("MessageBoxLargeur"), Reglages.lis("MessageBoxHauteur"));
     }
-    
+
     public MessageBox(String t){
     	this(t, 0, 0, Reglages.lis("MessageBoxLargeur"), Reglages.lis("MessageBoxHauteur"));
     }
@@ -25,7 +25,7 @@ public class MessageBox extends Rectangle implements Visitable{
     public String getTexte() {
         return texte;
     }
-    
+
     public void setTexte(String t) {
         this.texte = t;
     }
@@ -33,5 +33,10 @@ public class MessageBox extends Rectangle implements Visitable{
     @Override
 	public boolean accept(Visiteur v) {
         return v.visite(this);
+    }
+
+    public MessageBox clone () {
+    	MessageBox m = new MessageBox(new String(this.texte), this.getX(), this.getY(), this.getLargeur(), this.getHauteur());
+		return m;
     }
 }

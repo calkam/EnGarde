@@ -22,6 +22,7 @@ import java.util.Enumeration;
 import Modele.Couple;
 import Modele.Jeu;
 import Modele.Manche;
+import Modele.Reglages;
 import Modele.Sauvegarde;
 import Modele.Tour;
 import Modele.Joueur.Action;
@@ -30,6 +31,7 @@ import Modele.Joueur.Joueur;
 import Modele.Joueur.IA.IA;
 import Modele.Joueur.Humain;
 import Modele.Plateau.Case;
+import Modele.Plateau.Figurine;
 import Modele.Tas.Carte;
 import Modele.Tas.Main;
 import Vue.DessinateurCanvasJavaFx;
@@ -72,6 +74,9 @@ public class ControleurJeu {
     private Button buttonGestionTour;
 
     @FXML
+    private Button buttonAnnuler;
+
+    @FXML
     private ButtonBar buttonBarFinPartie;
 
     @FXML
@@ -107,6 +112,7 @@ public class ControleurJeu {
     //- FINDETOUR
     //- PRETAJOUER
     private int gestionTour = FINDETOUR;
+    private Tour tourAvant;
 
     //partie mainApp (pas important pour la compréhension du Controleur)
 	public void setMainApp(MainApp mainApp) {
@@ -153,6 +159,8 @@ public class ControleurJeu {
 				changeDisableMain(jeu.getManche().getTourEnCours().getJoueurPremier(), true);
 
 				buttonGestionTour.setDisable(false);
+				buttonAnnuler.setDisable(false);
+
 				buttonGestionTour.setText("Fin de Tour");
 				gestionTour = FINDETOUR;
 				buttonGestionTour.setStyle("-fx-background-image:url(finDeTourC.png);");
@@ -166,6 +174,7 @@ public class ControleurJeu {
 				changeDisableMain(jeu.getManche().getTourEnCours().getJoueurSecond(), true);
 
 				buttonGestionTour.setDisable(false);
+				buttonAnnuler.setDisable(false);
 				buttonGestionTour.setText("Pret à jouer");
 				gestionTour = PRETAJOUER;
 				buttonGestionTour.setStyle("-fx-background-image:url(finDeTour.png);");
@@ -310,6 +319,8 @@ public class ControleurJeu {
 			//on passe le button a prêt à jouer
 			buttonGestionTour.setText("Fin De Tour");
 			buttonGestionTour.setDisable(true);
+			buttonAnnuler.setDisable(true);
+
 			gestionTour=FINDETOUR;
 			buttonGestionTour.setStyle("-fx-background-image:url(finDeTour.png);");
 
@@ -359,6 +370,8 @@ public class ControleurJeu {
 		tableauFin.toFront();
 		//on empêche le click sur le bouttons fin de tour
         buttonGestionTour.setDisable(true);
+        buttonAnnuler.setDisable(true);
+
         //on met la visibilité des cartes de la main à faux
         DessinateurCanvasJavaFx.visibilityActivated = false;
 
@@ -554,6 +567,7 @@ public class ControleurJeu {
 			//on désactive le button de fin de tour et on remet le texte fin de tour dedans
 			buttonGestionTour.setText("Fin De Tour");
 			buttonGestionTour.setDisable(true);
+			buttonAnnuler.setDisable(true);
 		}
 
 		//on réaffiche les mains
@@ -615,6 +629,7 @@ public class ControleurJeu {
 
             	switch (event.getButton()) {
         	        case PRIMARY:
+        	        	tourAvant = jeu.getManche().getTourEnCours().clone();
         	        	//on empêche les actions si pas de joueur seléctionné
         	        	if(joueurEnCours != null){
         	        		//on crée une énumération des actions_jouables
@@ -645,6 +660,7 @@ public class ControleurJeu {
 	        	        				//si pas de parade ou une parade mais la pioche est vide
 	        	        				//on autorise le click sur le bouton fin de tour
 	        	        				buttonGestionTour.setDisable(false);
+	        	        				buttonAnnuler.setDisable(false);
 	        	        				//on empêche le click sur la main
 	        	        				changeDisableMain(joueurEnCours, true);
 	        	        				//on change la messageBox
@@ -663,6 +679,7 @@ public class ControleurJeu {
 
 			        	        				//on autorise le click sur le bouton fin de tour
 			        	        				buttonGestionTour.setDisable(false);
+			        	        				buttonAnnuler.setDisable(false);
 			        	        				//on empêche le click sur la main
 			        	        				changeDisableMain(joueurEnCours, true);
 			        	        				//on change la messageBox
@@ -862,6 +879,7 @@ public class ControleurJeu {
 		//on repasse le button à fin de tour et on le désactive
 		buttonGestionTour.setText("Fin De Tour");
 		buttonGestionTour.setDisable(true);
+		buttonAnnuler.setDisable(true);
 		//on repasse la main du joueur adverse a clickable
 		changeDisableMain(tour.joueurAdverse(joueurEnCours), false);
 		gestionTour=FINDETOUR;
@@ -942,6 +960,7 @@ public class ControleurJeu {
 					buttonGestionTour.setStyle("-fx-background-image:url(finDeTour.png);");
 				}else{
 					buttonGestionTour.setDisable(true);
+					buttonAnnuler.setDisable(true);
 					changeDisableMain(tour.joueurAdverse(joueurEnCours), false);
 					terrain.setDisable(false);
 				}
@@ -1049,6 +1068,94 @@ public class ControleurJeu {
 
 	public void setJeu(Jeu jeu) {
 		this.jeu = jeu;
+	}
+
+	@FXML
+	private void gestionAnnuler(){
+
+		buttonGestionTour.setDisable(true);
+
+		jeu.getManche().setTourEnCours(tourAvant);
+
+		float[] tabePosition = new float[5];
+		tabePosition[0]= 0;
+		tabePosition[1]= (float) 94.5;
+		tabePosition[2]= 189;
+		tabePosition[3]= (float) 283.5;
+		tabePosition[4]= 378;
+
+
+		if(joueurEnCours.getDirection() == tourAvant.getJoueurPremier().getDirection()){
+			joueurEnCours = tourAvant.getJoueurPremier();
+
+			for (int i = 0 ; i < tourAvant.getJoueurPremier().getMain().getNombreCarte();i++) {
+				if(jeu.getManche().getTourEnCours().getJoueurPremier().getDirection() == Joueur.DirectionDroite){
+					jeu.getManche().getTourEnCours().getJoueurPremier().getMain().getCarte(i).setTas(Main.gauche);
+				}else{
+					jeu.getManche().getTourEnCours().getJoueurPremier().getMain().getCarte(i).setTas(Main.droite);
+				}
+				jeu.getManche().getTourEnCours().getJoueurPremier().getMain().getCarte(i).setX(tabePosition[i]);
+
+			}
+
+		}else{
+			joueurEnCours = tourAvant.getJoueurSecond();
+			for (int i = 0 ; i < tourAvant.getJoueurSecond().getMain().getNombreCarte();i++) {
+				if(jeu.getManche().getTourEnCours().getJoueurSecond().getDirection() == Joueur.DirectionDroite){
+					jeu.getManche().getTourEnCours().getJoueurSecond().getMain().getCarte(i).setTas(Main.gauche);
+				}else{
+					jeu.getManche().getTourEnCours().getJoueurSecond().getMain().getCarte(i).setTas(Main.droite);
+				}
+				jeu.getManche().getTourEnCours().getJoueurSecond().getMain().getCarte(i).setX(tabePosition[i]);
+
+			}
+		}
+
+		jeu.getManche().getTourEnCours().getJoueurPremier().getMain().repositionnerMain();
+		jeu.getManche().getTourEnCours().getJoueurSecond().getMain().repositionnerMain();
+
+		changeDisableMain(joueurEnCours, false);
+		terrain.setDisable(false);
+
+		if(tourAvant.getJoueurPremier().getDirection() == Joueur.DirectionDroite){
+			jeu.setJoueur1(tourAvant.getJoueurPremier());
+			jeu.setJoueur2(tourAvant.getJoueurSecond());
+			jeu.getManche().setJoueur1(tourAvant.getJoueurPremier());
+			jeu.getManche().setJoueur2(tourAvant.getJoueurSecond());
+		}else{
+			jeu.setJoueur2(tourAvant.getJoueurPremier());
+			jeu.setJoueur1(tourAvant.getJoueurSecond());
+			jeu.getManche().setJoueur2(tourAvant.getJoueurPremier());
+			jeu.getManche().setJoueur1(tourAvant.getJoueurSecond());
+		}
+
+		try {
+			Figurine figurineDroite = new Figurine(jeu.getJoueur2().getDirection(), jeu.getJoueur2().getPositionDeMaFigurine());
+			Figurine figurineGauche = new Figurine(jeu.getJoueur1().getDirection(), jeu.getJoueur1().getPositionDeMaFigurine());
+
+			figurineGauche.setY(Reglages.lis("PisteHauteur")-figurineGauche.getHauteur()-25);
+			figurineDroite.setY(Reglages.lis("PisteHauteur")-figurineDroite.getHauteur()-25);
+
+			jeu.getPiste().setFigurineDroite(figurineDroite);
+			jeu.getPiste().setFigurineGauche(figurineGauche);
+
+			jeu.setPiste(jeu.getPiste());
+			jeu.getJoueur1().setPiste(jeu.getPiste());
+			jeu.getJoueur2().setPiste(jeu.getPiste());
+
+			jeu.getPiste().setFigurinePosition(tourAvant.getJoueurPremier().getDirection(), tourAvant.getJoueurPremier().getPositionDeMaFigurine());
+			jeu.getPiste().setFigurinePosition(tourAvant.getJoueurSecond().getDirection(), tourAvant.getJoueurSecond().getPositionDeMaFigurine());
+
+			} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		jeu.getManche().setPioche(tourAvant.getPioche());
+		jeu.getManche().setDefausse(tourAvant.getDefausse());
+		nbCartePioche.setText(Integer.toString(jeu.getManche().getPioche().size()));
+
+		gestionTour = PRETAJOUER;
 	}
 
 }

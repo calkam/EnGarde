@@ -32,7 +32,7 @@
             <Font size="18.0" />
          </font>
       </Button>
-      
+
       <!--
       <Button layoutX="289.0" layoutY="16.0" mnemonicParsing="false" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefHeight="40.0" prefWidth="216.0" text="Sauvegarder">
          <font>
@@ -40,7 +40,7 @@
          </font>
       </Button>
       -->
-      
+
       <Button layoutX="549.0" layoutY="16.0" mnemonicParsing="false" onAction="#nouvellePartie" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefHeight="40.0" prefWidth="216.0" text="Nouvelle Partie">
          <font>
             <Font size="18.0" />
@@ -53,7 +53,7 @@
       <Canvas fx:id="mainDroite" height="265.0" layoutX="901.0" layoutY="591.0" width="548.0" />
       <Canvas fx:id="scoreDroit" height="252.0" layoutX="1449.0" layoutY="610.0" width="123.0" />
       <Canvas fx:id="scoreGauche" height="252.0" layoutX="29.0" layoutY="610.0" width="123.0" />
-      <Button alignment="CENTER" layoutX="733.0" layoutY="782.0" mnemonicParsing="false" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefHeight="40.0" prefWidth="145.0" styleClass="finDeTour" text="Annuler Coup">
+      <Button alignment="CENTER" fx:id="buttonAnnuler" layoutX="733.0" layoutY="782.0" onAction="#gestionAnnuler" mnemonicParsing="false" onMouseEntered="#handleIn" onMouseExited="#handleOut" prefHeight="40.0" prefWidth="145.0" styleClass="finDeTour" text="Annuler Coup">
          <font>
             <Font name="MathJax_Caligraphic-Regular" size="18.0" />
          </font>
